@@ -1,5 +1,5 @@
 import {ChartComponent} from "./Chart";
-import {Routes, Route, Link, NavLink, useParams} from "react-router-dom"
+import {NavLink, useParams} from "react-router-dom"
 import {Chart} from "chart.js/auto"
 import React, {useEffect, useState} from "react";
 import {Outlet} from "react-router";
@@ -17,13 +17,22 @@ export default function Profit() {
         startDate: "",
         endDate: ""
     })
-
+    // const [currentPage, setCurrentPage] = useState(0);
+    // const getContractByPage = async (startDate, endDate, page, profitType) => {
+    //     await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, i, profitType || type.type)
+    //     setCurrentPage(i);
+    // }
     const pagination = () => {
         const page = [];
         for (let i = 0; i < totalPage; i++) {
+            // const isCurrentPage = currentPage === i;
+            //
+            // // Thêm lớp tùy chỉnh cho thẻ <a> nếu là trang hiện tại
+            // const pageLinkClassName = isCurrentPage ? 'page-link active' : 'page-link';
+
             page.push(
                 <li className="page-item" key={i}>
-                    <a className="page-link isActive"
+                    <a className="page-link"
                        onClick={() => getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, i, profitType || type.type)}>
                         {i + 1}
                     </a>
@@ -33,21 +42,43 @@ export default function Profit() {
         return page;
     }
     const getProfit = async (startDate, endDate, profitType) => {
-        const res = await axios.get("http://localhost:8080/api/employee/profit/total-profit?startDate=" + startDate + "&endDate=" + endDate + "&profitType=" + profitType)
-        console.log(3)
-        setTotalProfit(res.data)
+        try {
+            const res = await axios.get("http://localhost:8080/api/employee/profit/total-profit?startDate=" + startDate + "&endDate=" + endDate + "&profitType=" + profitType)
+            console.log(3)
+            setTotalProfit(res.data)
+        } catch (e) {
+            setTotalProfit(0)
+        }
+
     }
 
     const getDataProfit = async (startDate, endDate, profitType) => {
-        const res = await axios.get("http://localhost:8080/api/employee/profit/statistics-profit?startDate=" + startDate + "&endDate=" + endDate + "&profitType=" + profitType)
-        console.log(2)
-        setDataProfit(res.data)
+        try {
+            const res = await axios.get("http://localhost:8080/api/employee/profit/statistics-profit?startDate=" + startDate + "&endDate=" + endDate + "&profitType=" + profitType)
+            console.log(2)
+            setDataProfit(res.data)
+        } catch (e) {
+            setDataProfit([{
+                month: null,
+                profit: null
+            }])
+        }
+
     }
     const getContract = async (startDate, endDate, page, profitType) => {
-        const res = await axios.get("http://localhost:8080/api/employee/profit?startDate=" + startDate + "&endDate=" + endDate + "&page=" + (page || 0) + "&profitType=" + profitType)
-        console.log(1)
-        setTotalPage(res.data.totalPages)
-        setContract(res.data.content)
+        try {
+            const res = await axios.get("http://localhost:8080/api/employee/profit?startDate=" + startDate + "&endDate=" + endDate + "&page=" + (page || 0) + "&profitType=" + profitType)
+            console.log(1)
+            setTotalPage(res.data.totalPages)
+            setContract(res.data.content)
+        } catch (e) {
+            setTotalPage(null)
+            setContract(null)
+        }
+
+    }
+    const setProfit = async (profitType) => {
+        await setProfitType(() => profitType)
     }
 
     useEffect(() => {
@@ -55,10 +86,14 @@ export default function Profit() {
             await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, profitType || type.type)
             await getDataProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, profitType || type.type)
             await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, profitType || type.type)
+            await setDateTimeProfit({
+                startDate: "",
+                endDate: ""
+            })
         }
         fectData()
     }, [profitType])
-    if (!dataProfit || !contracts) {
+    if (!dataProfit || !contracts && contracts !== null) {
         return null;
     }
     return (
@@ -99,14 +134,14 @@ export default function Profit() {
                         <div className="row">
                             <div className=" col-lg-12" align="center">
                                 <ul className="d-flex nav-content justify-content-center">
-                                    <li><NavLink onClick={() => setProfitType("interest")} style={({isActive}) => {
+                                    <li><NavLink onClick={() => setProfit("interest")} style={({isActive}) => {
                                         return {
                                             backgroundColor: isActive ? "#27533e" : "",
                                             color: isActive ? "#fff" : ""
                                         }
                                     }} to="/profit/interest/interest" className="btn btn-sm  ">Lợi nhuận từ tiền
                                         lãi</NavLink></li>
-                                    <li><NavLink onClick={() => setProfitType("liquidation")} style={({isActive}) => {
+                                    <li><NavLink onClick={() => setProfit("liquidation")} style={({isActive}) => {
                                         return {
                                             backgroundColor: isActive ? "#27533e" : "",
                                             color: isActive ? "#fff" : ""
@@ -114,7 +149,7 @@ export default function Profit() {
                                     }} to="/profit/liquidation/liquidation" className="btn btn-sm  ">Lợi nhuận từ thanh
                                         lý</NavLink>
                                     </li>
-                                    <li><NavLink onClick={() => setProfitType("foresee")} style={({isActive}) => {
+                                    <li><NavLink onClick={() => setProfit("foresee")} style={({isActive}) => {
                                         return {
                                             backgroundColor: isActive ? "#27533e" : "",
                                             color: isActive ? "#fff" : ""
@@ -160,8 +195,12 @@ export default function Profit() {
                                     </label>
                                 </div>
                             </div>
-                            <div className="container">
-                                <ChartComponent data={dataProfit}/>
+                            <div className="container" style={{height: "45vh"}}>
+                                {
+                                    dataProfit ?
+                                        <ChartComponent data={dataProfit}/>
+                                        : "fsdgfdg"
+                                }
                             </div>
                         </div>
                     </div>
@@ -169,30 +208,35 @@ export default function Profit() {
             </div>
             <div className=" mt-3 container col-12">
                 <Outlet context={contracts}/>
-                <div className="d-flex  col-lg-12 justify-content-end">
-                    <nav aria-label="...">
-                        <ul className="pagination">
-                            <li className="page-item disabled">
-                                <a
-                                    className="page-link"
-                                    href="#"
-                                    tabIndex={-1}
-                                    aria-disabled="true"
-                                >
-                                    Trước
-                                </a>
-                            </li>
-                            {
-                                pagination()
-                            }
-                            <li className="page-item">
-                                <a className="page-link" href="#">
-                                    Sau
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                {
+                    contracts ?
+                        <div className="d-flex  col-lg-12 justify-content-end">
+                            <nav aria-label="...">
+                                <ul className="pagination">
+                                    <li className="page-item disabled">
+                                        <a
+                                            className="page-link"
+                                            href="#"
+                                            tabIndex={-1}
+                                            aria-disabled="true"
+                                        >
+                                            Trước
+                                        </a>
+                                    </li>
+                                    {
+                                        pagination()
+                                    }
+                                    <li className="page-item">
+                                        <a className="page-link" href="#">
+                                            Sau
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        :
+                        ""
+                }
             </div>
             <div align="center" id="footer">
                 <h1>Footer</h1>
