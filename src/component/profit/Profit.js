@@ -23,7 +23,7 @@ export default function Profit() {
         for (let i = 0; i < totalPage; i++) {
             page.push(
                 <li className="page-item" key={i}>
-                    <a className="page-link isActive" href="#"
+                    <a className="page-link isActive"
                        onClick={() => getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, i, profitType || type.type)}>
                         {i + 1}
                     </a>
