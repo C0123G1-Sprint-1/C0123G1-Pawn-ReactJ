@@ -1,24 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
+import {Route, Routes} from "react-router";
+import Profit from "./component/profit/Profit";
+import Interest from "./component/profit/Interest";
+import React from "react";
+import Liquidation from "./component/profit/Liquidation";
+import Foresee from "./component/profit/Foresee";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Routes>
+        <Route path={"/profit"} element={<Profit/>}>
+          <Route path="/profit/interest/:type" element={<Interest/>}/>
+          <Route path="/profit/liquidation/:type" element={<Liquidation/>}/>
+          <Route path="/profit/foresee/:type" element={<Foresee/>}/>
+        </Route>
+      </Routes>
   );
 }
 
