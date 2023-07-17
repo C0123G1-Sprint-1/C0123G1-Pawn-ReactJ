@@ -2,8 +2,6 @@ import {ChartComponent} from "./Chart";
 import {Routes, Route, Link, NavLink, useParams} from "react-router-dom"
 import {Chart} from "chart.js/auto"
 import React, {useEffect, useState} from "react";
-import Interest from "./Interest";
-import Liquidation from "./Liquidation";
 import {Outlet} from "react-router";
 import axios from "axios";
 import {Field, Form, Formik} from "formik";

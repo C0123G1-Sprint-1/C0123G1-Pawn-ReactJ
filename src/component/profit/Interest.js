@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
-import "./interest.css"
-import axios from "axios";
 import {useOutletContext} from "react-router";
-
+import React from "react";
+import "../profit/interest.css"
+import "bootstrap/dist/css/bootstrap-grid.css"
 export default function Interest() {
     const contracts = useOutletContext();
     return (

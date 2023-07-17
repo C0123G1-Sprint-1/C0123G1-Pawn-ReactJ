@@ -1,6 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
-import {Route, Routes} from "react-router";
+import {Route, Routes} from "react-router-dom";
 import Profit from "./component/profit/Profit";
 import Interest from "./component/profit/Interest";
 import React from "react";
