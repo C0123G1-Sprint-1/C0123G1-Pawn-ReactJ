@@ -1,24 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import {Route, Routes} from "react-router";
+import React from "react";
+import {Top10NewContract} from "./component/contract/Top10NewContract";
+import {UpdateContract} from "./component/contract/UpdateContract";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <>
+     <Routes>
+         <Route path="/top10NewContract" element={<Top10NewContract/>}/>
+         <Route path="/updateContract/:id" element={<UpdateContract/>}/>
+     </Routes>
+     </>
   );
 }
 
