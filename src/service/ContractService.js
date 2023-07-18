@@ -16,6 +16,31 @@ export const findAllProductType = async () => {
         console.log(e)
     }
 }
+export const findAllContractStatus = async () => {
+    try {
+        const result = (await axios.get('http://localhost:8080/api/employee/type/contract/contractStatus')).data
+        return result
+    } catch (e) {
+        console.log(e)
+    }
+}
+export const findAllContractType = async () => {
+    try {
+        const result = (await axios.get('http://localhost:8080/api/employee/type/contract/contractType')).data
+        return result
+    } catch (e) {
+        console.log(e)
+    }
+}
+export const findAllAndEmployee = async () => {
+    try {
+        const result = await axios.get(`http://localhost:8080/api/employee`);
+        console.log(result.data);
+        return result.data;
+    }catch (error) {
+        console.log(error)
+    }
+}
 export const findAllCustomer = async () => {
     try {
         const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer`)).data
@@ -39,13 +64,13 @@ export const searchCustomer = async (name) => {
         console.log(e)
     }
 }
-    export const getByIdCustomers = async (id) => {
-        try {
-            const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer/contract/` + id)).data
-            return res
-        } catch (e) {
-            console.log(e)
-        }
+export const getByIdCustomers = async (id) => {
+    try {
+        const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer/contract/` + id)).data
+        return res
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export const createCodeContract = async () => {
