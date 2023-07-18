@@ -6,74 +6,47 @@ import ReactPaginate from "react-paginate";
 import * as Swal from "sweetalert2";
 
 export default function TransactionHistoryList() {
-    const [pageCount, setPageCount] = useState(0);
-    let [count, setCount] = useState(1);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [THList, setTHList] = useState([]);
-    const [deleteTHList, setDeleteTHList] = useState("");
-    const showList = async () => {
-        try {
-            const result = await contractService.findAllTransactionHistory(currentPage);
+    const [contracts, setContract] = useState([]);
+    const [selectedContract, setSelectedContract] = useState(0);
+    const [page, setPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0); // Tổng số trang
 
-            setTHList(result.content);
-            const totalPages = result.totalPages;
-            setPageCount(totalPages);
+    const paginate = (page) => {
+        setSelectedContract(page+1)
+        setPage(page)
+    }
+    const searchTH = async () => {
+        try {
+            const response = await contractService.searchTransactionHistory(page, search)
+            await setContract(response.content)
+            await setTotalPages(response.totalPages)
         } catch (error) {
             console.log(error);
-            setCurrentPage(currentPage - 1);
         }
     };
 
-    // const search = async (value) => {
-    //     try {
-    //         const res = await employeeService.search(value.name, value.page);
-    //         setCurrentPage(res);
-    //         setName(value.name);
-    //         const totalPages = res.totalPages;
-    //         setPageCount(totalPages);
-    //         setTHList(res.content);
-    //         console.log(res.content);
-    //     } catch (e) {
-    //         setTHList([])
-    //     }
-    // };
-
+    let [search, setSearch] = useState({
+        customerName: '',
+        productName: '',
+        startDate: '',
+        endDate: '',
+        contractType: '',
+        contractStatus: ''
+    });
+    const [deleteTHList, setDeleteTHList] = useState("");
     useEffect(() => {
-        showList();
-    }, [currentPage]);
+        searchTH();
+    }, [search, page]);
 
-    const handlePageClick = async (page) => {
-        setCurrentPage(+page.selected);
-        const result = await contractService.findAllTransactionHistory(page.selected);
-        console.log(result.data);
-        setTHList(result.content);
-        setCount(Math.ceil(result.size * page.selected + 1));
-    };
 
     const deleteTransactionHistory = async (id) => {
-        await contractService.deleteTransactionHistoryByID(id).then(e=>{
-            console.log(e)
-            if (e != null) {
-                if (e.data==true) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Xóa thành công !",
-                        timer: 3000
-                    })
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Xóa thất bại !",
-                        timer: 3000
-                    })
-
-                }
-        }});
-        showList();
+        let res = await contractService.deleteTransactionHistoryByID(id);
+        result(res.data)
+        searchTH()
     }
     const result = (res) => {
         if (res != null) {
-            if (res.data=="true") {
+            if (res) {
                 Swal.fire({
                     icon: "success",
                     title: "Xóa thành công !",
@@ -118,14 +91,23 @@ export default function TransactionHistoryList() {
                         </div>
                         <div className="col-xxl-9 col-xl-9">
                             <h1 className="text-center my-5">Lịch sử giao dịch</h1>
-                            <Formik initialValues={{
+                            <Formik initialValues={({
                                 customerName: '',
                                 productName: '',
-                                startDay: '',
-                                endDay: '',
+                                startDate: '',
+                                endDate: '',
                                 contractType: '',
-                                contractStatus: '',
-                            }}
+                                contractStatus: ''
+                            })}
+                                    onSubmit={(values) => {
+                                        const res = async () => {
+                                            await setPage(0)
+                                            await contractService.searchTransactionHistory(page, values)
+                                            setSearch(values)
+                                        }
+                                        res()
+                                        searchTH()
+                                    }}
                             >
                                 <Form>
                                     <div className="row justify-content-center">
@@ -149,19 +131,19 @@ export default function TransactionHistoryList() {
                                     </div>
                                     <div className="row d-flex justify-content-center mt-3">
                                         <div className="col-xxl-4 col-xl-4 col-md-4">
-                                            <label htmlFor="startDay" className="form-label me-2"
+                                            <label htmlFor="startDate" className="form-label me-2"
                                                    style={{color: "black"}}>Giao dịch từ
                                                 ngày:</label>
-                                            <Field style={{borderColor: "black"}} type="date" id="startDay"
+                                            <Field style={{borderColor: "black"}} type="date" id="startDate"
                                                    className="form-control"
-                                                   name="startDay"/>
+                                                   name="startDate"/>
                                         </div>
                                         <div className="col-xxl-4 col-xl-4 col-md-4">
-                                            <label htmlFor="endDay" className="form-label me-2"
+                                            <label htmlFor="endDate" className="form-label me-2"
                                                    style={{color: "black"}}>Đến:</label>
-                                            <Field style={{borderColor: "black"}} type="date" id="endDay"
+                                            <Field style={{borderColor: "black"}} type="date" id="endDate"
                                                    className="form-control"
-                                                   name="endDay"/>
+                                                   name="endDate"/>
                                         </div>
                                     </div>
                                     <div className="row d-flex justify-content-center align-items-center mt-3">
@@ -187,7 +169,7 @@ export default function TransactionHistoryList() {
                                                         <option value={"2"}>Pending</option>
                                                         <option value={"3"}>Close</option>
                                                     </select>
-                                                    <button type="button" className="btn btn-outline-primary">
+                                                    <button type="submit" className="btn btn-outline-primary">
                                                         <i className="bi bi-search"></i>
                                                     </button>
                                                 </div>
@@ -211,7 +193,7 @@ export default function TransactionHistoryList() {
                                     </thead>
                                     <tbody>
                                     {
-                                        THList.map((th, index) => (
+                                        contracts.map((th, index) => (
                                                 <tr key={index}>
                                                     <td>{th.contractCode}</td>
                                                     <td>{th.productName}</td>
@@ -220,9 +202,11 @@ export default function TransactionHistoryList() {
                                                     <td>{th.contractType}</td>
                                                     <td>{th.contractStatus}</td>
                                                     <td>
-                                                        <Link to={""}><i className="bi bi-info-circle me-2"></i></Link>
-                                                        <Link to={""} className="me-2"><i style={{color: "orange"}}
-                                                                                          className="bi bi-pencil-square"></i></Link>
+                                                        <Link to={`/transaction-history/detail/${th?.contractCode}`}><i
+                                                            className="bi bi-info-circle me-2"></i></Link>
+                                                        <Link to={""}
+                                                              className="me-2"><i style={{color: "orange"}}
+                                                                                  className="bi bi-pencil-square"></i></Link>
                                                         <a type="button" data-bs-toggle="modal"
                                                            data-bs-target="#exampleModal" onClick={() => {
                                                             setDeleteTHList(th?.contractCode)
@@ -237,21 +221,58 @@ export default function TransactionHistoryList() {
                                     </tbody>
                                 </table>
                                 <div className="row mt-4">
-                                    <div className="d-grid">
-                                        <ReactPaginate
-                                            breakLabel="..."
-                                            nextLabel=">"
-                                            onPageChange={handlePageClick}
-                                            pageCount={pageCount}
-                                            previousLabel="< "
-                                            containerClassName="pagination"
-                                            pageLinkClassName="page-num"
-                                            nextLinkClassName="page-num"
-                                            previousLinkClassName="page-num"
-                                            activeClassName="active"
-                                            disabledClassName="d-none"
-                                        />
+                                    <div className="d-flex col-12 justify-content-end">
+                                        <nav aria-label="...">
+                                            <ul className="pagination">
+                                                <li hidden={page === 0} className="page-item ">
+                                                    <button className="page-link" tabIndex={-1}
+                                                            onClick={() => paginate(page - 1)}>
+                                                        Trước
+                                                    </button>
+                                                </li>
+                                                {
+                                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
+                                                        <li className="page-item">
+                                                            <button className={selectedContract==page+1?"active page-link":"page-link"} key={page}
+                                                                    onClick={() =>{ paginate(page)
+                                                                    }}>
+                                                                {page + 1}
+                                                            </button>
+                                                        </li>
+                                                    ))
+                                                }
+
+                                                <li hidden= {page + 1 === totalPages}
+                                                    className="page-item">
+                                                    <button className="page-link" tabIndex={-1}
+                                                            onClick={() => paginate(page + 1)}>
+                                                        Tiếp
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </nav>
                                     </div>
+                                    {/*    <ReactPaginate*/}
+                                    {/*        breakLabel="..."*/}
+                                    {/*        nextLabel=">"*/}
+                                    {/*        onPageChange={handlePageClick}*/}
+                                    {/*        pageCount={pageCount}*/}
+                                    {/*        previousLabel="< "*/}
+                                    {/*        activeClassName="active"*/}
+                                    {/*        disabledClassName="d-none"*/}
+                                    {/*        pageClassName="page-item"*/}
+                                    {/*        pageLinkClassName="page-link"*/}
+                                    {/*        previousClassName="page-item"*/}
+                                    {/*        previousLinkClassName="page-link"*/}
+                                    {/*        nextClassName="page-item"*/}
+                                    {/*        nextLinkClassName="page-link"*/}
+                                    {/*        breakClassName="page-item"*/}
+                                    {/*        breakLinkClassName="page-link"*/}
+                                    {/*        marginPagesDisplayed={2}*/}
+                                    {/*        pageRangeDisplayed={5}*/}
+                                    {/*        containerClassName="pagination"*/}
+                                    {/*    />*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
                         </div>
@@ -272,9 +293,9 @@ export default function TransactionHistoryList() {
                                     data-bs-dismiss="modal" aria-label="Close"/>
                         </div>
                         <div className="modal-body">
-                            Bạn muốn xóa lịch sử giao dịch có mã code <b
-                            style={{color: 'red'}}>{deleteTHList}</b>
-                            ?
+
+                            <span>Bạn muốn xóa lịch sử giao dịch có mã code </span><span
+                            style={{color: 'red'}}>{deleteTHList}</span><span> ?</span>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary"
@@ -292,6 +313,5 @@ export default function TransactionHistoryList() {
                 </div>
             </div>
         </>
-    )
-        ;
+    );
 }
