@@ -7,12 +7,13 @@ import "../employee/employee.css";
 import moment from 'moment';
 
 export default function EmployeeList() {
+    const token = localStorage.getItem("token");
+    console.log(token)
     const [employeeList, setEmployeeList] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     let [count, setCount] = useState(1);
     const [currentPage, setCurrentPage] = useState(0);
     const [name, setName] = useState("");
-    const [noResults, setNoResults] = useState(false);
 
     useEffect(() => {
         document.title = "Danh sách nhân viên"; // Thay đổi title
@@ -20,7 +21,7 @@ export default function EmployeeList() {
 
     const showList = async () => {
         try {
-            const result = await employeeService.search(name, currentPage);
+            const result = await employeeService.search(name, currentPage, token);
             console.log(result);
             setEmployeeList(result.content);
             const totalPages = result.totalPages;
@@ -33,7 +34,7 @@ export default function EmployeeList() {
 
     const search = async (value) => {
         try {
-            const res = await employeeService.search(value.name, value.page);
+            const res = await employeeService.search(value.name, value.page, token);
             setCurrentPage(res);
             setName(value.name);
             const totalPages = res.totalPages;
@@ -47,13 +48,13 @@ export default function EmployeeList() {
 
     useEffect(() => {
         showList();
-    }, [currentPage]);
+    }, []);
 
     const handlePageClick = async (page) => {
         setCurrentPage(+page.selected);
 
         const result = await employeeService.search(name, page.selected);
-        console.log(result.data);
+        console.log(result);
         setEmployeeList(result.content);
         setCount(Math.ceil(result.size * page.selected + 1));
     };
