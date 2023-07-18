@@ -10,10 +10,6 @@ import "../../css/home.css"
 export function RegisterPawn() {
 
 
-
-
-
-
     // cần list để hiện ra
     // const getById = async (id) => {
     //     await service.getById(id);
@@ -39,10 +35,13 @@ export function RegisterPawn() {
     //
 
 
-
     const navigate = useNavigate();
     const [productType, setProductType] = useState([]);
-const [name,setName] =useState("")
+    const [name, setName] = useState("")
+    const [phone, setPhone] = useState("")
+    const [email, setEmail] = useState("")
+    const [address, setAddress] = useState("")
+    const [contentNote, setContentNote] = useState("")
     useEffect(() => {
         const getAll = async () => {
             const res = await service.getAllServicePawn()
@@ -61,40 +60,44 @@ const [name,setName] =useState("")
                 phone: "",
                 email: "",
                 address: "",
-                contendNote: "",
+                contentNote: "",
                 productTypeId: 0
             }}
                     validationSchema={yup.object({
-                        name: yup.string().required(),
-                        phone: yup.string().required(),
-                        email: yup.string().required(),
-                        address: yup.string().required(),
-                        contendNote: yup.string().required(),
-                        productTypeId: yup.number().required()
+                        name: yup.string().required("bạn không không thể để trống"),
+                        phone: yup.string().required("bạn không không thể để trống"),
+                        email: yup.string().required("bạn không không thể để trống"),
+                        address: yup.string().required("bạn không không thể để trống"),
+                        contentNote: yup.string().required("bạn không không thể để trống"),
+                        productTypeId: yup.number().required("bạn không không thể để trống").min(1,'vui long chọn')
 
                     })}
-                    onSubmit={(values,{resetForm}) => {
+                    onSubmit={(values, {resetForm}) => {
                         console.log(values)
                         const create = async () => {
                             const serviceCurrent = productType.find(item => item.id === Number(values.productTypeId));
-                            console.log(serviceCurrent, productType);
                             const {productTypeId, ...body} = values;
-                           const er = await service.save({ // spread
+                            const value = await service.save({ // spread
                                 ...body,
                                 productType: serviceCurrent
                             })
-                            setName(er.response.data.name)
-                            console.log(er.response.data.phone)
-                            console.log(er.response.data.email)
-                            console.log(er.response.data.name)
-                            console.log(er.response.data.contendNote)
-                            console.log(er.response.data.address)
-                            await sweat.fire({
-                                icon: "success",
-                                title: `Register ${values.name} successfully !!!`,
-                                timer: "2000"
-                            })
-                            navigate("/")
+
+
+                            if(value && value?.status !== 200){
+                                setName(value.response.data.name)
+                                setPhone(value.response.data.phone)
+                                setEmail(value.response.data.email)
+                                setContentNote(value.response.data.contentNote)
+                                setAddress(value.response.data.address)
+                            }
+                            else {
+                                await sweat.fire({
+                                    icon: "success",
+                                    title: `Register ${values.name} successfully !!!`,
+                                    timer: "2000"
+                                })
+                                navigate("/")
+                            }
                         }
                         create()
                         resetForm();
@@ -114,7 +117,7 @@ const [name,setName] =useState("")
                             <div>
                                 <img
                                     src="https://chovayhanoi.com/wp-content/uploads/2020/02/024060710868.png"
-                                    alt="" style={{backgroundColor: "white"}}/>
+                                    alt="" style={{backgroundColor: "white",marginTop : "3rem"}}/>
                                 <h5 className="uppercase">Kinh Doanh Cầm Đồ</h5>
                             </div>
                         </div>
@@ -128,8 +131,8 @@ const [name,setName] =useState("")
                                         <Form>
                                             <div className="mt-4 inputs">
                                                 <Field as='select' aria-label="Default select example"
-                                                       className="form-select" name='productTypeId'>
-                                                    <option>---chọn----</option>
+                                                    className="form-select" name='productTypeId'>
+                                                    <option value={0}>Chọn</option>
                                                     {
                                                         productType && productType.map((s) => (
                                                             <option key={s.id}
@@ -138,34 +141,42 @@ const [name,setName] =useState("")
                                                     }
 
                                                 </Field>
-                                                <ErrorMessage className='form-err' component='span'  name='productTypeId'/>
+                                                <ErrorMessage className='form-err' component='span'
+                                                              name='productTypeId'/>
                                             </div>
                                             <div className="mt-2 inputs">
                                                 <label>Họ tên</label>
                                                 <Field type="text" className="form-control" name='name'/>
                                                 <ErrorMessage className='form-err' component='span' name='name'/>
-                                                <p>{name}</p>
+                                                <p style={{color: "red"}}>{name}</p>
                                             </div>
                                             <div className="mt-2 inputs">
                                                 <label>Số điện thoại</label>
                                                 <Field type="text" className="form-control" name='phone'/>
                                                 <ErrorMessage className='form-err' component='span' name='phone'/>
+                                                <p style={{color: "red"}}>{phone}</p>
                                             </div>
                                             <div className="mt-2 inputs">
                                                 <label>Email</label>
                                                 <Field type="text" className="form-control" name='email'/>
                                                 <ErrorMessage className='form-err' component='span' name='email'/>
+                                                <p style={{color: "red"}}>{email}</p>
+
                                             </div>
                                             <div className="mt-2 inputs">
                                                 <label>Địa chỉ</label>
                                                 <Field type="text" className="form-control" name='address'/>
                                                 <ErrorMessage className='form-err' component='span' name='address'/>
+                                                <p style={{color: "red"}}>{address}</p>
+
                                             </div>
                                             <div className="mt-2 inputs">
                                                 <label>Nội Dung - Ghi Chú</label>
                                                 <Field as="textarea" type="text" className="form-control"
-                                                       name='contendNote'/>
-                                                <ErrorMessage className='form-err' component='span' name='contendNote'/>
+                                                       name='contentNote'/>
+                                                <ErrorMessage className='form-err' component='span' name='contentNote'/>
+                                                <p style={{color: "red"}}>{contentNote}</p>
+
                                             </div>
                                             <div className="text-center mt-4 btn-group">
                                                 <button type="submit" className=" btn btn-success integration">

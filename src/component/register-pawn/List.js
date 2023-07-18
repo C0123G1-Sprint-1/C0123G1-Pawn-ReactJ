@@ -173,7 +173,7 @@ export function List() {
                                     </div>
                                 </div>
                                 <div className="wrapper-img-option">
-                                    <img src="./anh/home-image-1.jpg" alt=""/>
+                                    <img style={{marginTop :"2rem"}} src="./anh/home-image-1.jpg" alt=""/>
                                 </div>
                             </div>
                         </div>
@@ -203,8 +203,8 @@ export function List() {
                                     </div>
                                 </div>
                                 <div className="wrapper-img-option">
-                                    <img
-                                        src="https://vietsinggroup.com/wp-content/uploads/2021/09/cach-doc-thong-tin-so-do.jpg"
+                                    <img  style={{marginTop :"2rem",height: "85%"}}
+                                          src="https://vietsinggroup.com/wp-content/uploads/2021/09/cach-doc-thong-tin-so-do.jpg"
                                         alt=""
                                     />
                                 </div>
@@ -236,7 +236,7 @@ export function List() {
                                     </div>
                                 </div>
                                 <div className="wrapper-img-option">
-                                    <img
+                                    <img      style={{marginTop :"2rem",height: "85%",marginRight:"1rem"}}
                                         src="https://cdn3.dhht.vn/wp-content/uploads/2022/01/5-vang-999-la-gi-bao-nhieu-1-chi-co-ban-lai-duoc-khong.jpg"
                                         alt=""
                                     />
@@ -269,7 +269,7 @@ export function List() {
                                     </div>
                                 </div>
                                 <div className="wrapper-img-option">
-                                    <img
+                                    <img  style={{marginTop :"2rem",height: "85%"}}
                                         src=" https://2.bp.blogspot.com/-iYgZOlwuoGg/Vu0Go3WxonI/AAAAAAAAXWw/dJEZYCp310UA-Eq0ANX9goiNtz9fQ0_GA/s1600/ASUS-R510.jpg"
                                         alt=""/>
                                 </div>

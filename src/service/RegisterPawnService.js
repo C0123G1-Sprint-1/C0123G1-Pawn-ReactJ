@@ -14,7 +14,7 @@ export async function getById(id) {
 export async function save(registerPawn) {
 
     try {
-         await axios.post("http://localhost:8080/api/register/create", registerPawn);
+        await axios.post("http://localhost:8080/api/register/create", registerPawn);
     }catch (e) {
         return e;
     }
