@@ -5,17 +5,17 @@ export const findAllAndSearch = async (search) => {
         const result = await axios.get(`http://localhost:8080/api/employee?search=${search}`);
         console.log(result.data);
         return result.data;
-    }catch (error) {
+    } catch (error) {
         console.log(error)
     }
 }
 
 export const createEmployee = async (employeeDTO) => {
     try {
-       const result = await axios.post(`http://localhost:8080/api/employee/create-employee`,{...employeeDTO});
+        const result = await axios.post(`http://localhost:8080/api/employee/create-employee`, {...employeeDTO});
         console.log(result.data);
         return result.data;
-    }catch (error) {
+    } catch (error) {
         console.log(error)
     }
 }
@@ -44,7 +44,7 @@ export const checkEmailExists = async (email) => {
     }
 };
 
-export const checkIdentityCardExists = async (citizenCode) => {
+export const checkCitizenCodeExists = async (citizenCode) => {
     try {
         return (
             await axios.get(`http://localhost:8080/api/employee/check-citizen-code/${citizenCode}`)
@@ -55,7 +55,7 @@ export const checkIdentityCardExists = async (citizenCode) => {
         throw new Error("Đã xảy ra lỗi khi kiểm tra CCCD");
     }
 };
-export const checkPhoneExists = async (phone) => {
+export const checkPhoneNumberExists = async (phone) => {
     try {
         return (await axios.get(`http://localhost:8080/api/employee/check-phone/${phone}`))
             .data;

@@ -1,7 +1,8 @@
-img{
+img {
     height: 120px;
     width: 130px
 }
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
 
 
@@ -25,6 +26,7 @@ thead {
     gap: 5px;
     margin-top: 20px;
 }
+
 .pagination .page-num,
 .pagination .page-previous,
 .pagination .page-next {
@@ -34,20 +36,48 @@ thead {
     font-weight: 400;
     display: block;
 }
+
 .pagination .page-num:hover,
 .pagination .page-previous,
 .pagination .page-next {
     background-color: blue;
     color: white;
 }
+
 .pagination a {
     text-decoration: none;
     color: blue;
 }
+
 .pagination .active {
     background-color: blue;
 }
+
 .pagination .active .page-num {
     color: #fff;
     background: blue;
+}
+
+.height {
+    height: 100vh
+}
+
+.card {
+    border: none;
+    padding: 20px;
+    position: relative
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+label {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #222222;
+    margin-bottom: 5px;
+    display: inline-block;
 }

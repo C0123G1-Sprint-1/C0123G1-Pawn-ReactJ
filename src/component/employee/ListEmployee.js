@@ -66,7 +66,7 @@ export default function EmployeeList() {
                         <div style={{marginBottom: 20}}>
                             <h2
                                 className="d-flex justify-content-center"
-                                style={{padding: 16, backgroundColor: "seagreen"}}
+                                style={{padding: 16}}
                             >
                                 Danh Sách Nhân Viên
                             </h2>
@@ -74,7 +74,7 @@ export default function EmployeeList() {
                         <div className="d-flex">
                             <div className="mt-2 m-2 modal-body d-flex justify-content-between">
                                 <NavLink
-                                    to={"/api/employee/create-employee"}
+                                    to={"/create-employee"}
                                     type="button"
                                     className="btn btn-outline-success"
                                     style={{
@@ -140,7 +140,7 @@ export default function EmployeeList() {
                                     <tbody>
                                     {employeeList.map((employee, index) => (
                                         <tr key={index} style={{textAlign: "center"}}>
-                                            <td className="text-center">{count++}</td>
+                                            <td className="text-center" >{count++}</td>
                                             <td className="text-cut">
                                                 {employee.name}
                                             </td>
