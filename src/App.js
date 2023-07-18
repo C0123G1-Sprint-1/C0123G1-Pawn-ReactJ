@@ -6,6 +6,8 @@ import Liquidation from "./component/profit/Liquidation";
 import Foresee from "./component/profit/Foresee";
 import Navbars from "./component/navbar/Navbars";
 import InfoStore from "./component/profit/InfoStore";
+import EmployeeList from "./component/employee/ListEmployee";
+import {CreateEmployee} from "./component/employee/CreateEmployee";
 
 function App() {
     return (
@@ -26,15 +28,16 @@ function App() {
                         <Route path={"/url"} element={<Component/>}/>
                     */}
                     </Route>
-
+                    <Route path="/api/employee" element={<EmployeeList />} />
+                    <Route path="/api/employee/create-employee" element={<CreateEmployee />} />
                     {/*    Đây là các component khác trên thanh navbar
                     <Route path={"/url các navbar"} element={<Component/>}>
                 */}
                 </Route>
             </Routes>
-            <div align="center" id="footer">
-                <h1>Footer</h1>
-            </div>
+            {/*<div align="center" id="footer">*/}
+            {/*    <h1>Footer</h1>*/}
+            {/*</div>*/}
         </>
     );
 }
