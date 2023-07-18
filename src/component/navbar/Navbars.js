@@ -7,14 +7,22 @@ export default function Navbars() {
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{height: "4rem"}}>
-                <div className="container-fluid">
-                    <ul className="navbar-nav">
+            <nav className="navbar navbar-expand-lg p-0" style={{    height: "4rem",
+                boxShadow: "0px 5px 10px #e9e4e4",
+                position: "sticky",
+                left: "0px",
+                top: "0px",
+                zIndex: "1",
+                right: "0px",
+                backgroundColor: "rgb(255, 255, 255)"}}>
+                <div className="container-fluid" style={{height: "100%"}}>
+                    <ul className="navbar-nav d-flex align-items-center" style={{height:"100%"}}>
                         <li className="nav-item">
                             <NavLink style={({isActive})=>{
                                 return {
                                     backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "black": ""
+                                    color: isActive ? "#fff": "",
+                                    borderRadius: "10px"
                                 }
                             }} className="nav-link active" aria-current="page" to={"/pawn"}>
                                 Cầm đồ
@@ -24,7 +32,8 @@ export default function Navbars() {
                             <NavLink style={({isActive})=>{
                                 return {
                                     backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "black": ""
+                                    color: isActive ? "#fff": "",
+                                    borderRadius: "10px"
                                 }
                             }} className="nav-link active" aria-current="page" to={"/liquidation"}>
                                 Thanh lý
@@ -34,7 +43,8 @@ export default function Navbars() {
                             <NavLink style={({isActive})=>{
                                 return {
                                     backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "black": ""
+                                    color: isActive ? "#fff": "",
+                                    borderRadius: "10px"
                                 }
                             }} className="nav-link" to={"/return-pawn"}>
                                 Trả đồ
@@ -44,7 +54,8 @@ export default function Navbars() {
                             <NavLink style={({isActive})=>{
                                 return {
                                     backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "black": ""
+                                    color: isActive ? "#fff": "",
+                                    borderRadius: "10px"
                                 }
                             }} className="nav-link" to={"/info-store"}>
                                 Thông tin cửa hàng
@@ -54,7 +65,8 @@ export default function Navbars() {
                             <NavLink style={({isActive})=>{
                                 return {
                                     backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "black": ""
+                                    color: isActive ? "#fff": "",
+                                    borderRadius: "10px"
                                 }
                             }} className="nav-link" to={"/manager-customer"}>
                                 Quản lý khách hàng
@@ -64,7 +76,8 @@ export default function Navbars() {
                             <NavLink style={({isActive})=>{
                                 return {
                                     backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "black": ""
+                                    color: isActive ? "#fff": "",
+                                    borderRadius: "10px"
                                 }
                             }} className="nav-link" to={"/info"}>
                                 Thông tin cá nhân
@@ -74,7 +87,8 @@ export default function Navbars() {
                             <NavLink style={({isActive})=>{
                                 return {
                                     backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "black": ""
+                                    color: isActive ? "#fff": "",
+                                    borderRadius: "10px"
                                 }
                             }} className="nav-link" to={"/message"}>
                                 Nhắn tin

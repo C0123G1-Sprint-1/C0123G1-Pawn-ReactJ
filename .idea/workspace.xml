@@ -32,12 +32,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
+      <change afterPath="$PROJECT_DIR$/src/service/ProfitService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/navbar/Navbars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/navbar/Navbars.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profit/InfoStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/InfoStore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profit/Interest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Interest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profit/Profit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Profit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profit/interest.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/interest.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -66,6 +80,12 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
+    </key>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -79,6 +99,8 @@
       <updated>1689586311005</updated>
       <workItem from="1689586315620" duration="15000" />
       <workItem from="1689586337533" duration="1020000" />
+      <workItem from="1689658936684" duration="1321000" />
+      <workItem from="1689661891221" duration="7003000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -110,6 +132,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="&quot;add component TransactionHistoryList&quot;" />
@@ -136,9 +159,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1515" height="200" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1689586602727" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1689586761444">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="338" y="150" key="Vcs.Push.Dialog.v2" timestamp="1689651171979">
+      <screen x="0" y="0" width="1440" height="852" />
     </state>
+    <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689651171979" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689586761444" />
   </component>
 </project>

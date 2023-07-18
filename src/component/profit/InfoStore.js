@@ -6,8 +6,8 @@ export default function InfoStore() {
     return (
         <>
             <div id="content" className="container">
-                <div className="row mt-5">
-                    <div className="col-md-12 col-lg-3">
+                <div className="row mt-3" style={{zIndex: "-1"}}>
+                    <div className="col-md-12 col-lg-3" style={{zIndex: "-1"}}>
                         <div className="list-group">
                             <NavLink to={"/"} style={({isActive})=>{
                                 return{
@@ -15,8 +15,7 @@ export default function InfoStore() {
                                     color: isActive ? "#fff": ""
                                 }
                             }}
-                                href="#"
-                                className="list-group-item list-group-item-action active "
+                                className="border-0 list-group-item list-group-item-action active "
                                 id="nav-side-bar"
                                 aria-current="true"
                             >
@@ -27,7 +26,7 @@ export default function InfoStore() {
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""
                                 }
-                            }}  href="#" className="list-group-item list-group-item-action">
+                            }}  className="border-0 list-group-item list-group-item-action">
                                 Tài chính
                             </NavLink>
                             <NavLink to={"/"} style={({isActive})=>{
@@ -35,7 +34,7 @@ export default function InfoStore() {
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""
                                 }
-                            }}  href="#" className="list-group-item list-group-item-action">
+                            }}  className="border-0 list-group-item list-group-item-action">
                                 Danh sách đồ cầm trong kho
                             </NavLink>
                             <NavLink to={"/"} style={({isActive})=>{
@@ -43,7 +42,7 @@ export default function InfoStore() {
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""
                                 }
-                            }}  href="#" className="list-group-item list-group-item-action">
+                            }}  className="border-0 list-group-item list-group-item-action">
                                 Lịch sử giao giao dịch
                             </NavLink>
                             <NavLink to={"/"} style={({isActive})=>{
@@ -51,7 +50,7 @@ export default function InfoStore() {
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""
                                 }
-                            }}  className="list-group-item list-group-item-action ">
+                            }}  className="border-0 list-group-item list-group-item-action ">
                                 Top 10 hợp đồng mới nhất
                             </NavLink>
                             <NavLink to={"/info-store/profit"} style={({isActive})=>{
@@ -59,7 +58,7 @@ export default function InfoStore() {
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""
                                 }
-                            }}  className="list-group-item list-group-item-action" id="statistic-profit">
+                            }}  className="border-0 list-group-item list-group-item-action" id="statistic-profit">
                                 Thống kê lợi nhuận
                             </NavLink>
                         </div>

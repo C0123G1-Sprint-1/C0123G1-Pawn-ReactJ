@@ -17,9 +17,10 @@ function App() {
                 <Route path={""} element={<Navbars/>}>
                     <Route path={"/info-store"} element={<InfoStore/>}>
                         <Route path={"/info-store/profit"} element={<Profit/>}>
-                            <Route path="/info-store/profit/:type" element={<Interest/>}/>
-                            <Route path="/info-store/profit/:type" element={<Liquidation/>}/>
-                            <Route path="/info-store/profit/:type" element={<Foresee/>}/>
+                            <Route path="/info-store/profit" element={<Interest/>}/>
+                            <Route path="/info-store/profit/interest" element={<Interest/>}/>
+                            <Route path="/info-store/profit/liquidation" element={<Liquidation/>}/>
+                            <Route path="/info-store/profit/foresee" element={<Foresee/>}/>
                         </Route>
                         {/*   Đây là component về thông tin cửa hàng
                      Mọi người muốn truyền tới component của mình thì có thể làm theo mẫu
