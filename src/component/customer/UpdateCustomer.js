@@ -14,6 +14,8 @@ export function UpdateCustomer() {
     const params = useParams();
     const [customer, setCustomer] = useState();
     const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
+    const defautImg = "https://icon-library.com/images/no-picture-available-icon/no-picture-available-icon-1.jpg"
+    const [fileUrl, setFileUrl] = useState(null);
 
     const [avatar, setAvatarFile] = useState();
     const [avatarUrl, setAvatarUrl] = useState();
@@ -21,10 +23,17 @@ export function UpdateCustomer() {
     const [frontCitizenUrl, setFrontCitizenUrl] = useState();
     const [backCitizen, setBackCitizenFile] = useState();
     const [backCitizenUrl, setBackCitizenUrl] = useState();
+
     const handleFileSelect = (event, setFile) => {
         const file = event.target.files[0];
         if (file) {
             setFile(file);
+            if (file.size > 0) {
+                const fileUrl = URL.createObjectURL(file);
+                setFileUrl(fileUrl);
+            } else {
+                console.error("File is empty");
+            }
         }
     };
 
@@ -42,6 +51,8 @@ export function UpdateCustomer() {
                     const progress = Math.round(
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                     );
+                    console.log(`Upload progress: ${progress}%`);
+
                 },
                 (error) => {
                     reject(error);
@@ -67,19 +78,19 @@ export function UpdateCustomer() {
         handleFileSelect(event, setBackCitizenFile);
     };
 
-    const handleAvatarFileUpload = () => {
-        setAvatarUrl(avatar)
-        return handleFileUpload(avatar, setAvatarUrl);
+    const handleAvatarFileUpload = async () => {
+        setAvatarUrl(avatar);
+        await handleFileUpload(avatar, setAvatarUrl);
     };
 
-    const handleFrontCitizenFileUpload = () => {
-        setFrontCitizenUrl(frontCitizen)
-        return handleFileUpload(frontCitizen, setFrontCitizenUrl);
+    const handleFrontCitizenFileUpload = async () => {
+        setFrontCitizenUrl(frontCitizen);
+        await handleFileUpload(frontCitizen, setFrontCitizenUrl);
     };
 
-    const handleBackCitizenFileUpload = () => {
-        setBackCitizenUrl(backCitizen)
-        return handleFileUpload(backCitizen, setBackCitizenUrl);
+    const handleBackCitizenFileUpload = async () => {
+        setBackCitizenUrl(backCitizen);
+        await handleFileUpload(backCitizen, setBackCitizenUrl);
     };
 
 
@@ -88,9 +99,9 @@ export function UpdateCustomer() {
             try {
                 const result = await customerService.findByIdCustomer(params.id);
                 setCustomer(result);
-                setAvatarFile(result.image);
-                setFrontCitizenFile(result.frontCitizen);
-                setBackCitizenFile(result.backCitizen);
+                setAvatarUrl(result.image);
+                setFrontCitizenUrl(result.frontCitizen);
+                setBackCitizenUrl(result.backCitizen);
             } catch (error) {
                 console.error(error);
             }
@@ -121,39 +132,45 @@ export function UpdateCustomer() {
                     backCitizen: customer?.backCitizen,
                 }}
                 validationSchema={Yup.object({
-                    name: Yup.string().required("Không được để trống"),
-                    birthday: Yup.string().required("Không được để trống"),
-                    gender: Yup.number().required("Không được để trống"),
-                    phoneNumber: Yup.string().required("Không được để trống"),
-                    email: Yup.string().required("Không được để trống"),
-                    address: Yup.string().required("Không được để trống"),
-                    citizenCode: Yup.string().required("Không được để trống"),
-                    image: Yup.string().required("Không được để trống"),
-                    frontCitizen: Yup.string().required("Không được để trống"),
-                    backCitizen: Yup.string().required("Không được để trống"),
+                    name: Yup.string().required("Tên không được để trống"),
+                    birthday: Yup.string().required("Ngày tháng năm sinh không được để trống"),
+                    gender: Yup.number().required("Giới tính không được để trống"),
+                    phoneNumber: Yup.string().required("Số diện thoại không được để trống"),
+                    email: Yup.string().required("Email không được để trống"),
+                    address: Yup.string().required("Địa chỉ không được để trống"),
+                    citizenCode: Yup.string().required("Căn cước không được để trống"),
+                    image: Yup.string().required("Ảnh chân dung không được để trống"),
+                    frontCitizen: Yup.string().required("Ảnh mặt trước căn cước không được để trống"),
+                    backCitizen: Yup.string().required("Ảnh mặt sau căn cước không được để trống"),
                 })}
                 onSubmit={async (values, {resetForm, setSubmitting}) => {
                     try {
-                        await Promise.all([
+                        const results = await Promise.all([
                             handleAvatarFileUpload(),
                             handleFrontCitizenFileUpload(),
-                            handleBackCitizenFileUpload(),
+                            handleBackCitizenFileUpload()
                         ]);
+
+                        const avatarUrl = results[0];
+                        const frontCitizenUrl = results[1];
+                        const backCitizenUrl = results[2];
+                        console.log(results)
 
                         values.gender = parseInt(values.gender);
                         const newValue = {
                             ...values,
-                            image: avatar,
-                            backCitizen: backCitizen,
-                            frontCitizen: frontCitizen,
+                            image: avatarUrl,
+                            backCitizen: backCitizenUrl,
+                            frontCitizen: frontCitizenUrl,
                         };
+                        console.log(newValue)
                         await customerService.update(newValue);
 
                         setSubmitting(false);
                         await Swal.fire({
                             icon: "success",
                             title: "Thành công",
-                        });
+                        }); debugger
                         resetForm();
                         navigate("/");
                     } catch (error) {
@@ -187,7 +204,7 @@ export function UpdateCustomer() {
                                                 <div>
                                                     <img
                                                         id="avatar-img"
-                                                        src={avatar ? avatar : defaultAvatar}
+                                                        src={avatarUrl ? avatarUrl : (avatar ? URL.createObjectURL(avatar) : defaultAvatar)}
                                                         style={{width: "100%"}}
                                                         alt="avatar"
                                                     />
@@ -195,6 +212,7 @@ export function UpdateCustomer() {
                                                         type="button"
                                                         className="btn btn-danger btn-sm mt-2"
                                                         onClick={() => {
+                                                            setAvatarUrl(null);
                                                             setAvatarFile(null);
                                                         }}
                                                     >
@@ -277,12 +295,11 @@ export function UpdateCustomer() {
                                                             </p>
                                                         )}
 
-                                                        {frontCitizen && (
                                                             <div>
                                                                 <img
                                                                     onChange={handleFrontCitizenFileUpload}
                                                                     className="mt-2"
-                                                                    src={frontCitizen}
+                                                                    src={frontCitizenUrl ? frontCitizenUrl : (frontCitizen ? URL.createObjectURL(frontCitizen) : defautImg)}
                                                                     style={{width: "100%"}}
                                                                     alt=""
                                                                 />
@@ -291,13 +308,12 @@ export function UpdateCustomer() {
                                                                     className="btn btn-danger btn-sm mt-2"
                                                                     onClick={() => {
                                                                         setFrontCitizenFile(null);
-                                                                        setFrontCitizenUrl("");
+                                                                        setFrontCitizenUrl(null);
                                                                     }}
                                                                 >
                                                                     Xoá
                                                                 </button>
                                                             </div>
-                                                        )}
                                                     </div>
                                                     <div className="mb-3">
                                                         <label htmlFor="back-upload" className="custom-file-upload">
@@ -327,12 +343,11 @@ export function UpdateCustomer() {
                                                             </p>
                                                         )}
 
-                                                        {backCitizen && (
                                                             <div>
                                                                 <img
                                                                     onChange={handleBackCitizenFileUpload}
                                                                     className="mt-2"
-                                                                    src={backCitizen}
+                                                                    src={backCitizenUrl ? backCitizenUrl : (backCitizen ? URL.createObjectURL(backCitizen) : defautImg)}
                                                                     style={{width: "100%"}}
                                                                     alt=""
                                                                 />
@@ -341,13 +356,12 @@ export function UpdateCustomer() {
                                                                     className="btn btn-danger btn-sm mt-2"
                                                                     onClick={() => {
                                                                         setBackCitizenFile(null);
-                                                                        setBackCitizenUrl("");
+                                                                        setBackCitizenUrl(null);
                                                                     }}
                                                                 >
                                                                     Xoá
                                                                 </button>
                                                             </div>
-                                                        )}
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">

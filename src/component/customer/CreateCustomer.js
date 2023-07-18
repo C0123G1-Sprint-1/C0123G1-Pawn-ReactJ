@@ -89,16 +89,16 @@ export function CreateCustomer() {
                     backCitizen: "",
                 }}
                 validationSchema={Yup.object({
-                    name: Yup.string().required("Không được để trống"),
-                    birthday: Yup.string().required("Không được để trống"),
-                    gender: Yup.number().required("Không được để trống"),
-                    phoneNumber: Yup.string().required("Không được để trống"),
-                    email: Yup.string().required("Không được để trống"),
-                    address: Yup.string().required("Không được để trống"),
-                    citizenCode: Yup.string().required("Không được để trống"),
-                    image: Yup.string().required("Không được để trống"),
-                    frontCitizen: Yup.string().required("Không được để trống"),
-                    backCitizen: Yup.string().required("Không được để trống"),
+                    name: Yup.string().required("Tên không được để trống"),
+                    birthday: Yup.string().required("Ngày tháng năm sinh không được để trống"),
+                    gender: Yup.number().required("Giới tính không được để trống"),
+                    phoneNumber: Yup.string().required("Số diện thoại khô   ng được để trống"),
+                    email: Yup.string().required("Email không được để trống"),
+                    address: Yup.string().required("Địa chỉ không được để trống"),
+                    citizenCode: Yup.string().required("Căn cước không được để trống"),
+                    image: Yup.string().required("Ảnh chân dung không được để trống"),
+                    frontCitizen: Yup.string().required("Ảnh mặt trước căn cước không được để trống"),
+                    backCitizen: Yup.string().required("Ảnh mặt sau căn cước không được để trống"),
                 })}
                 onSubmit={async (values, {resetForm, setSubmitting}) => {
                     try {
