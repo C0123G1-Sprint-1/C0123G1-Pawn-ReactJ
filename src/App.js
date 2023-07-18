@@ -21,7 +21,15 @@ function App() {
                             <Route path="/info-store/profit/:type" element={<Liquidation/>}/>
                             <Route path="/info-store/profit/:type" element={<Foresee/>}/>
                         </Route>
+                        {/*   Đây là component về thông tin cửa hàng
+                     Mọi người muốn truyền tới component của mình thì có thể làm theo mẫu
+                        <Route path={"/url"} element={<Component/>}/>
+                    */}
                     </Route>
+
+                    {/*    Đây là các component khác trên thanh navbar
+                    <Route path={"/url các navbar"} element={<Component/>}>
+                */}
                 </Route>
             </Routes>
             <div align="center" id="footer">
