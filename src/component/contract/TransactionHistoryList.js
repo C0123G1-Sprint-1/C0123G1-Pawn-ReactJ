@@ -3,25 +3,92 @@ import React, {useEffect, useState} from "react";
 import * as contractService from '../../service/ContractService';
 import {Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import {Modal} from "react-bootstrap";
+import * as Swal from "sweetalert2";
 
 export default function TransactionHistoryList() {
+    const [pageCount, setPageCount] = useState(0);
+    let [count, setCount] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
     const [THList, setTHList] = useState([]);
-    const [deleteTHList, setDeleteTHList] = useState({
-        id: '',
-        name: ''
-    });
-    const getTransactionHistoryListApi = async () => {
-        await contractService.findAllTransactionHistory().then(e => {
-            setTHList(e.content);
-        }).catch(es => {
-            console.log(es)
-        });
+    const [deleteTHList, setDeleteTHList] = useState("");
+    const showList = async () => {
+        try {
+            const result = await contractService.findAllTransactionHistory(currentPage);
 
-    }
+            setTHList(result.content);
+            const totalPages = result.totalPages;
+            setPageCount(totalPages);
+        } catch (error) {
+            console.log(error);
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // const search = async (value) => {
+    //     try {
+    //         const res = await employeeService.search(value.name, value.page);
+    //         setCurrentPage(res);
+    //         setName(value.name);
+    //         const totalPages = res.totalPages;
+    //         setPageCount(totalPages);
+    //         setTHList(res.content);
+    //         console.log(res.content);
+    //     } catch (e) {
+    //         setTHList([])
+    //     }
+    // };
+
     useEffect(() => {
-        getTransactionHistoryListApi();
-    }, [])
+        showList();
+    }, [currentPage]);
+
+    const handlePageClick = async (page) => {
+        setCurrentPage(+page.selected);
+        const result = await contractService.findAllTransactionHistory(page.selected);
+        console.log(result.data);
+        setTHList(result.content);
+        setCount(Math.ceil(result.size * page.selected + 1));
+    };
+
+    const deleteTransactionHistory = async (id) => {
+        await contractService.deleteTransactionHistoryByID(id).then(e=>{
+            console.log(e)
+            if (e != null) {
+                if (e.data==true) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Xóa thành công !",
+                        timer: 3000
+                    })
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Xóa thất bại !",
+                        timer: 3000
+                    })
+
+                }
+        }});
+        showList();
+    }
+    const result = (res) => {
+        if (res != null) {
+            if (res.data=="true") {
+                Swal.fire({
+                    icon: "success",
+                    title: "Xóa thành công !",
+                    timer: 3000
+                })
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Xóa thất bại !",
+                    timer: 3000
+                })
+
+            }
+        }
+    }
     return (
         <>
             <div className="container-fluid">
@@ -103,9 +170,9 @@ export default function TransactionHistoryList() {
                                                 đồng:</label>
                                             <select style={{borderColor: "black"}} name="contractType"
                                                     className="text-center form-select">
-                                                <option value={0}>--Chọn loại HD--</option>
-                                                <option value={1}>Cầm đồ</option>
-                                                <option value={2}>Thanh Lý</option>
+                                                <option value={"0"}>--Chọn loại HD--</option>
+                                                <option value={"1"}>Cầm đồ</option>
+                                                <option value={"2"}>Thanh Lý</option>
                                             </select>
                                         </div>
                                         <div className="col-xxl-4 col-xl-4 col-md-4">
@@ -115,10 +182,10 @@ export default function TransactionHistoryList() {
                                                 <div className="d-flex">
                                                     <select style={{borderColor: "black"}} name="contractStatus"
                                                             className="text-center form-select me-2">
-                                                        <option value="0">--Chọn trạng thái--</option>
-                                                        <option value="1">Open</option>
-                                                        <option value="2">Pending</option>
-                                                        <option value="3">Close</option>
+                                                        <option value={""}>--Chọn trạng thái--</option>
+                                                        <option value={"1"}>Open</option>
+                                                        <option value={"2"}>Pending</option>
+                                                        <option value={"3"}>Close</option>
                                                     </select>
                                                     <button type="button" className="btn btn-outline-primary">
                                                         <i className="bi bi-search"></i>
@@ -145,8 +212,8 @@ export default function TransactionHistoryList() {
                                     <tbody>
                                     {
                                         THList.map((th, index) => (
-                                                <tr>
-                                                    <td key={index}>{th.contractCode}</td>
+                                                <tr key={index}>
+                                                    <td>{th.contractCode}</td>
                                                     <td>{th.productName}</td>
                                                     <td>{th.customers}</td>
                                                     <td>{th.startDate}</td>
@@ -157,11 +224,8 @@ export default function TransactionHistoryList() {
                                                         <Link to={""} className="me-2"><i style={{color: "orange"}}
                                                                                           className="bi bi-pencil-square"></i></Link>
                                                         <a type="button" data-bs-toggle="modal"
-                                                           data-bs-target="#exampleModal" onClick={()=>{
-                                                            setDeleteTHList({
-                                                                id: th?.id,
-                                                                name: th.contractCode
-                                                            })
+                                                           data-bs-target="#exampleModal" onClick={() => {
+                                                            setDeleteTHList(th?.contractCode)
                                                         }}><i
                                                             style={{color: "red"}}
                                                             className="bi bi-trash3"></i></a>
@@ -173,13 +237,12 @@ export default function TransactionHistoryList() {
                                     </tbody>
                                 </table>
                                 <div className="row mt-4">
-                                    <div className="d-flex col-12 justify-content-end">
+                                    <div className="d-grid">
                                         <ReactPaginate
                                             breakLabel="..."
                                             nextLabel=">"
-                                            onPageChange={() => {
-                                            }}
-                                            pageCount={1}
+                                            onPageChange={handlePageClick}
+                                            pageCount={pageCount}
                                             previousLabel="< "
                                             containerClassName="pagination"
                                             pageLinkClassName="page-num"
@@ -209,9 +272,9 @@ export default function TransactionHistoryList() {
                                     data-bs-dismiss="modal" aria-label="Close"/>
                         </div>
                         <div className="modal-body">
-                            Bạn thật sự muốn xóa lịch sử giao dịch có mã code <b
-                            style={{color: 'red'}}>{deleteTHList?.name}</b>
-                             ?
+                            Bạn muốn xóa lịch sử giao dịch có mã code <b
+                            style={{color: 'red'}}>{deleteTHList}</b>
+                            ?
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary"
@@ -219,7 +282,10 @@ export default function TransactionHistoryList() {
                             </button>
                             <button type="button" className="btn btn-danger"
                                     data-bs-dismiss="modal"
-                                    >Xóa
+                                    onClick={() => {
+                                        deleteTransactionHistory(deleteTHList);
+                                    }}
+                            >Xóa
                             </button>
                         </div>
                     </div>
