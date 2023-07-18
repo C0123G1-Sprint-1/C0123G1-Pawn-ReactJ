@@ -2,12 +2,23 @@ import React, {useEffect, useState} from 'react';
 import * as customersService from "../../service/customersService";
 import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
-import {NavLink} from "react-router-dom";
+
 
 export function CustomerList() {
     const [listCustomer, setListCustomer] = useState([]);
     const [nameDelete, setNameDelete] = useState(null);
     const [idDelete, setIdDelete] = useState(null);
+
+    const [registerPawn, setRegisterPawn] = useState([])
+    useEffect(() => {
+        const list = async () => {
+            let rs = await customersService.registerPawn();
+            setRegisterPawn(rs.content)
+            console.log('11')
+            console.log(rs.content+'11')
+        }
+        list()
+    }, [])
 
 // page
     const [pageCount, setPageCount] = useState(0);
@@ -39,7 +50,6 @@ export function CustomerList() {
             const totalPages = res.totalPages;
             setPageCount(totalPages);
             setListCustomer(res.content);
-            console.log(res.content);
             showTable.style.display = "block";
             errMsg.style.display = "none";
         } catch (e) {
@@ -49,7 +59,7 @@ export function CustomerList() {
 
     useEffect(() => {
         showList();
-    }, [currentPage]);
+    },  [currentPage]);
 
     const handlePageClick = async (page) => {
         setCurrentPage(+page.selected);
@@ -118,7 +128,7 @@ export function CustomerList() {
         <>
 
             <div className="row mx-0">
-                <div className="container mx-auto my-5 col-8" style={{width: '80%'}}>
+                <div className="container mx-auto my-5 col-8" style={{width: '85%'}}>
                     <div style={{boxShadow: '1px 3px 10px 5px rgba(0, 0, 0, 0.2)'}}>
                         <div style={{marginBottom: '20px'}}>
                             <h2 className="d-flex justify-content-center"
@@ -129,15 +139,22 @@ export function CustomerList() {
 
                         <div className='container'>
                             <div className="row ">
-                                <div className="col mt-2" style={{marginLeft:"10%",padding:"0px"}}>
-                                    <button className="btn btn-outline-primary" >Thêm khách hàng
+                                <div className="col-6 mt-2">
+                                    <button className="btn btn-outline-primary" style={{marginLeft: "10%"}}>Thêm khách
+                                        hàng
                                     </button>
-
+                                    {/*<NavLink*/}
+                                    {/*    to='/listCustomerRegisterPawn' className="btn btn-outline-primary"*/}
+                                    {/*    style={{marginLeft: '5%'}}>Danh sách khách hàng mới*/}
+                                    {/*</NavLink>*/}
+                                    <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" style={{marginLeft: '5%'}}>
+                                        Danh sách khách hàng mới
+                                    </button>
                                 </div>
-                                <div className='col mt-2' style={{marginRight:"100px",padding:"0px"}}><NavLink to='/listCustomerRegisterPawn' className="btn btn-outline-primary" style={{marginLeft: '5%'}}>Danh sách khách hàng mới
-                                </NavLink></div>
-                                <div className="col  d-flex justify-content"
-                                     style={{alignItems: 'center', marginLeft: '12%'}}>
+
+                                <div className="col-6"
+                                >
                                     <Formik
                                         initialValues={{
                                             name: ''
@@ -146,10 +163,10 @@ export function CustomerList() {
                                             search(value)
                                         }
                                         }>
-                                        <Form className="d-flex m-1" style={{padding:"0,0,0,0",marginBottom:"20px",marginTop:"0%"}}>
+                                        <Form className="d-flex m-1">
                                             <Field
-                                                style={{paddingTop:"5px"}}
-                                                className="form-control"
+                                                style={{paddingTop: "5px", width: '70%'}}
+                                                className="form-control d-flex"
                                                 type="text"
                                                 placeholder="Tìm kiếm theo tên khách hàng"
                                                 aria-label="Search"
@@ -161,12 +178,10 @@ export function CustomerList() {
                                         </Form>
                                     </Formik>
                                 </div>
+                            </div>
+
+
                         </div>
-
-
-
-
-                    </div>
                         <div style={{marginTop: '2%'}}>
                             <div className="row">
                                 <div className="col-12">
@@ -176,84 +191,87 @@ export function CustomerList() {
                                                 Không tìm thấy kết quả {name}
                                             </h3>
                                         ) : (
-                                        <div className="table-responsive" style={{width: '80%'}}>
-                                            <table className="table table-striped">
-                                                <thead>
-                                                <tr>
-                                                    <th>STT</th>
-                                                    <th>Tên khách hàng</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>CMND/Hộ chiếu</th>
-                                                    <th>Số lượng HD</th>
-                                                    <th>Chức năng</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
+                                            <div className="table-responsive" style={{width: '80%'}}>
+                                                <table className="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Tên khách hàng</th>
+                                                        <th>Số điện thoại</th>
+                                                        <th>CMND/Hộ chiếu</th>
+                                                        <th>Số lượng HD</th>
+                                                        <th>Chức năng</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
 
-                                                {
-                                                    listCustomer.map((value, index) => (
-                                                        <tr key={index}>
-                                                            <td>{value.id}</td>
-                                                            <td>{value.name}</td>
-                                                            <td>{value.phoneNumber}</td>
-                                                            <td>{value.citizenCode}</td>
-                                                            <td>{value.contractsSet}</td>
-                                                            <td>
-                                                                <a href className="me-2" data-bs-toggle="modal"
-                                                                   data-bs-target="#staticBackdrop"><i
-                                                                    style={{color: '#4698f9'}}
-                                                                    className="bi bi-info-circle"
-                                                                    onClick={() => getDetail(value.id, value.name, value.birthday, value.gender, value.phoneNumber, value.email, value.address,
-                                                                        value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate,
-                                                                        value.updateDate, value.note)}/></a>
-                                                                <a href className="me-2"><i style={{color: 'orange'}}
-                                                                                            className="bi bi-pencil-square"/></a>
-                                                                <a type="button" data-bs-toggle="modal"
-                                                                   data-bs-target="#staticBackdrop6">
-                                                                    <i style={{color: 'red'}} className="bi bi-trash3"
-                                                                       onClick={() => getDeleteCustomer(value.name, value.id)}/>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    ))
-                                                }
+                                                    {
+                                                        listCustomer.map((value, index) => (
+                                                            <tr key={index}>
+                                                                <td>{value.id}</td>
+                                                                <td>{value.name}</td>
+                                                                <td>{value.phoneNumber}</td>
+                                                                <td>{value.citizenCode}</td>
+                                                                <td>{value.contractsSet}</td>
+                                                                <td>
+                                                                    <a href className="me-2" data-bs-toggle="modal"
+                                                                       data-bs-target="#staticBackdrop"><i
+                                                                        style={{color: '#4698f9'}}
+                                                                        className="bi bi-info-circle"
+                                                                        onClick={() => getDetail(value.id, value.name, value.birthday, value.gender, value.phoneNumber, value.email, value.address,
+                                                                            value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate,
+                                                                            value.updateDate, value.note)}/></a>
+                                                                    <a href className="me-2"><i
+                                                                        style={{color: 'orange'}}
+                                                                        className="bi bi-pencil-square"/></a>
+                                                                    <a type="button" data-bs-toggle="modal"
+                                                                       data-bs-target="#staticBackdrop6">
+                                                                        <i style={{color: 'red'}}
+                                                                           className="bi bi-trash3"
+                                                                           onClick={() => getDeleteCustomer(value.name, value.id)}/>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        ))
+                                                    }
 
-                                                {/* Modal */}
-                                                <div className="modal fade" id="staticBackdrop6"
-                                                     data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1}
-                                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div className="modal-dialog">
-                                                        <div className="modal-content">
-                                                            <div className="modal-header">
-                                                                <h5 className="modal-title"
-                                                                    id="staticBackdropLabel6">Xác nhận
-                                                                    xóa khách hàng</h5>
-                                                                <button type="button" className="btn-close"
-                                                                        data-bs-dismiss="modal" aria-label="Close"/>
-                                                            </div>
-                                                            <div className="modal-body">
-                                                                Bạn thật sự muốn xóa <b
-                                                                style={{color: 'red'}}>{nameDelete}</b>
-                                                                ?
-                                                            </div>
-                                                            <div className="modal-footer">
-                                                                <button type="button" className="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Thoát
-                                                                </button>
-                                                                <button type="button" className="btn btn-danger"
-                                                                        data-bs-dismiss="modal"
-                                                                        onClick={() => deleteCustomers()}>Xóa
-                                                                </button>
+                                                    {/* Modal */}
+                                                    <div className="modal fade" id="staticBackdrop6"
+                                                         data-bs-backdrop="static" data-bs-keyboard="false"
+                                                         tabIndex={-1}
+                                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div className="modal-dialog">
+                                                            <div className="modal-content">
+                                                                <div className="modal-header">
+                                                                    <h5 className="modal-title"
+                                                                        id="staticBackdropLabel6">Xác nhận
+                                                                        xóa khách hàng</h5>
+                                                                    <button type="button" className="btn-close"
+                                                                            data-bs-dismiss="modal" aria-label="Close"/>
+                                                                </div>
+                                                                <div className="modal-body">
+                                                                    Bạn thật sự muốn xóa <b
+                                                                    style={{color: 'red'}}>{nameDelete}</b>
+                                                                    ?
+                                                                </div>
+                                                                <div className="modal-footer">
+                                                                    <button type="button" className="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Thoát
+                                                                    </button>
+                                                                    <button type="button" className="btn btn-danger"
+                                                                            data-bs-dismiss="modal"
+                                                                            onClick={() => deleteCustomers()}>Xóa
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                            )}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="d-grid">
                                         <ReactPaginate
@@ -277,7 +295,7 @@ export function CustomerList() {
                 </div>
             </div>
             {/*chi tiết khách hàng*/}
-            <div className="modal fade bd-example-modal-lg" id="staticBackdrop"
+            <div className="modal fade " id="staticBackdrop"
                  data-bs-backdrop="static"
                  data-bs-keyboard="false" tabIndex={-1}
                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -332,7 +350,7 @@ export function CustomerList() {
                                                 <td className="col-sm-4 fw-bold">Giới
                                                     tính
                                                 </td>
-                                                <td className="col-sm-6"> {gender}</td>
+                                                <td className="col-sm-6"> {gender === 1 ? 'nam' : 'nữ'}</td>
                                             </tr>
                                             <tr>
                                                 <td className="col-sm-4 fw-bold"> Địa
@@ -353,11 +371,86 @@ export function CustomerList() {
                                                 </td>
                                                 <td className="col-sm-6">1</td>
                                             </tr>
+                                            <tr>
+                                                <td className="col-sm-4 fw-bold">Ngày tạo
+                                                </td>
+                                                <td className="col-sm-6">{createDate}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="col-sm-4 fw-bold">Ngày chỉnh sửa
+                                                </td>
+                                                <td className="col-sm-6">{updateDate}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="col-sm-4 fw-bold">Ghi chú
+                                                </td>
+                                                <td className="col-sm-6">{note}</td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/*modal xem danh sách*/}
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div className="modal-dialog modal-xl">
+                    <div className="modal-content">
+                        <div className="modal-header" style={{backgroundColor: 'seagreen'}}>
+                            <h5 className="modal-title"  id="exampleModalLabel">DANH SÁCH KHÁCH HÀNG ĐĂNG KÍ TRÊN
+                                MẠNG</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="col-12">
+                                <div className="d-flex justify-content-center">
+                                    <div className="table-responsive" style={{width: '100%'}}>
+                                        <table className="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên khách hàng</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Email</th>
+                                                <th>Địa chỉ</th>
+                                                <th>Nội dung</th>
+                                                <th>Loại khách</th>
+                                                <th>Ngày tạo</th>
+                                                <th>Ngày chỉnh sửa</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {registerPawn.map((value, index) => (
+                                                <tr key={index}>
+                                                    <td>{value.id}</td>
+                                                    <td>{value.name}</td>
+                                                    <td>{value.phone}</td>
+                                                    <td>{value.email}</td>
+                                                    <td>{value.address}</td>
+                                                    <td>{value.contendNote}</td>
+                                                    <td>{value.productType.name}</td>
+                                                    <td>{value.createTime}</td>
+                                                    <td>{value.updateTime}</td>
+                                                </tr>
+                                            ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

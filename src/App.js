@@ -9,7 +9,6 @@ function App() {
     <>
       <Routes>
         <Route path='/listCustomer' element={<CustomerList/>}/>
-        <Route path='/listCustomerRegisterPawn' element={<RegisterPawn/>}/>
       </Routes>
     </>
   );
