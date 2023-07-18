@@ -2,26 +2,19 @@ import React, {useEffect, useState} from 'react';
 import * as customersService from "../../service/customersService";
 import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
+import {NavLink} from "react-router-dom";
 
 export function CustomerList() {
     const [listCustomer, setListCustomer] = useState([]);
     const [nameDelete, setNameDelete] = useState(null);
     const [idDelete, setIdDelete] = useState(null);
 
-    const [noResults, setNoResults] = useState(false);
 // page
     const [pageCount, setPageCount] = useState(0);
     let [count, setCount] = useState(1);
     const [currentPage, setCurrentPage] = useState(0);
     const [name, setName] = useState("")
-    useEffect(() => {
-        const list = async () => {
-            let rs = await customersService.findByAll();
-            setListCustomer(rs.content)
-            console.log(rs)
-        }
-        list()
-    }, [])
+
 
     const showList = async () => {
         try {
@@ -30,9 +23,6 @@ export function CustomerList() {
             setListCustomer(result.content);
             const totalPages = result.totalPages;
             setPageCount(totalPages);
-            if (result.length === 0) {
-                setNoResults(true);
-            }
         } catch (error) {
             console.log(error);
             setCurrentPage(currentPage - 1);
@@ -48,12 +38,7 @@ export function CustomerList() {
             setName(value.name);
             const totalPages = res.totalPages;
             setPageCount(totalPages);
-            if (res.content.length === 0) {
-                setNoResults(true);
-                setListCustomer([])
-            }
             setListCustomer(res.content);
-
             console.log(res.content);
             showTable.style.display = "block";
             errMsg.style.display = "none";
@@ -74,6 +59,16 @@ export function CustomerList() {
         setListCustomer(result.content);
         setCount(Math.ceil(result.size * page.selected + 1));
     };
+
+
+    useEffect(() => {
+        const list = async () => {
+            let rs = await customersService.findByAll();
+            setListCustomer(rs.content)
+            console.log(rs)
+        }
+        list()
+    }, [])
 
     function getDeleteCustomer(name, id) {
         setIdDelete(id)
@@ -131,42 +126,56 @@ export function CustomerList() {
                                 DANH SÁCH KHÁCH HÀNG
                             </h2>
                         </div>
-                        <div className="row ">
-                            <div className="col-2 col-md-6">
-                                <button className="btn btn-outline-primary" style={{marginLeft: '5%'}}>Thêm khách hàng
-                                </button>
-                            </div>
-                            <div className="col-5 col-md-4  d-flex justify-content"
-                                 style={{alignItems: 'center', marginLeft: '12%'}}>
-                                <Formik
-                                    initialValues={{
-                                        name: ''
-                                    }}
-                                    onSubmit={(value) => {
-                                        search(value)
-                                    }
-                                    }>
-                                    <Form className="d-flex m-1">
-                                        <Field
-                                            className="form-control"
-                                            type="text"
-                                            placeholder="Tìm kiếm theo tên khách hàng"
-                                            aria-label="Search"
-                                            name='name'
-                                        />
-                                        <label htmlFor=""> </label>
-                                        <button type='submit' className="btn btn-outline-success m-2"><i
-                                            className="bi bi-search"/></button>
-                                    </Form>
-                                </Formik>
-                            </div>
-                            <div className="col-2 p-0">
-                            </div>
+
+                        <div className='container'>
+                            <div className="row ">
+                                <div className="col mt-2" style={{marginLeft:"10%",padding:"0px"}}>
+                                    <button className="btn btn-outline-primary" >Thêm khách hàng
+                                    </button>
+
+                                </div>
+                                <div className='col mt-2' style={{marginRight:"100px",padding:"0px"}}><NavLink to='/listCustomerRegisterPawn' className="btn btn-outline-primary" style={{marginLeft: '5%'}}>Danh sách khách hàng mới
+                                </NavLink></div>
+                                <div className="col  d-flex justify-content"
+                                     style={{alignItems: 'center', marginLeft: '12%'}}>
+                                    <Formik
+                                        initialValues={{
+                                            name: ''
+                                        }}
+                                        onSubmit={(value) => {
+                                            search(value)
+                                        }
+                                        }>
+                                        <Form className="d-flex m-1" style={{padding:"0,0,0,0",marginBottom:"20px",marginTop:"0%"}}>
+                                            <Field
+                                                style={{paddingTop:"5px"}}
+                                                className="form-control"
+                                                type="text"
+                                                placeholder="Tìm kiếm theo tên khách hàng"
+                                                aria-label="Search"
+                                                name='name'
+                                            />
+                                            <label htmlFor=""> </label>
+                                            <button type='submit' className="btn btn-outline-success m-2"><i
+                                                className="bi bi-search"/></button>
+                                        </Form>
+                                    </Formik>
+                                </div>
                         </div>
+
+
+
+
+                    </div>
                         <div style={{marginTop: '2%'}}>
                             <div className="row">
                                 <div className="col-12">
                                     <div className="d-flex justify-content-center">
+                                        {listCustomer.length === 0 && name !== "" ? (
+                                            <h3 className={"text-danger text-center my-3"}>
+                                                Không tìm thấy kết quả {name}
+                                            </h3>
+                                        ) : (
                                         <div className="table-responsive" style={{width: '80%'}}>
                                             <table className="table table-striped">
                                                 <thead>
@@ -180,11 +189,7 @@ export function CustomerList() {
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {
-                                                    noResults && (
-                                                        <h6 style={{textAlign: "center", width: "100%", color: 'red'}}><b>Không
-                                                            tìm thấy khách hàng</b></h6>)
-                                                }
+
                                                 {
                                                     listCustomer.map((value, index) => (
                                                         <tr key={index}>
@@ -248,6 +253,7 @@ export function CustomerList() {
                                                 </tbody>
                                             </table>
                                         </div>
+                                            )}
                                     </div>
                                     <div className="d-grid">
                                         <ReactPaginate
