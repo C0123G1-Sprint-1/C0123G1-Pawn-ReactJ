@@ -187,6 +187,8 @@ export default function Profit() {
                                         <div className=" col-lg-2 p-0 d-flex justify-content-end">
                                             <button type="submit" className="btn btn-sm btn-primary">Thống kê
                                             </button>
+                                            <button type="submit" onClick={() => setProfit(profitType)} className="btn btn-sm btn-primary ms-1">Hủy
+                                            </button>
                                         </div>
                                     </div>
                                 </Form>
@@ -201,7 +203,7 @@ export default function Profit() {
                         {
                             dataProfit ?
                                 <ChartComponent data={dataProfit}/>
-                                : "fsdgfdg"
+                                : ""
                         }
                     </div>
                 </div>
@@ -210,7 +212,7 @@ export default function Profit() {
             {/*</div>*/}
             <div className=" mt-3 container col-12">
                 <div align="center">
-                    <h1>Danh sach hop dong</h1>
+                    <h1>Danh sách hợp đồng</h1>
                 </div>
                 <Outlet context={contracts}/>
                 {
