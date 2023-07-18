@@ -7,7 +7,7 @@ export default function InfoStore() {
         <>
             <div id="content" className="container">
                 <div className="row mt-3" style={{zIndex: "-1"}}>
-                    <div className="col-md-12 col-lg-3" style={{zIndex: "-1"}}>
+                    <div className="col-md-12 col-lg-3" style={{zIndex: "0"}}>
                         <div className="list-group">
                             <NavLink to={"/"} style={({isActive})=>{
                                 return{

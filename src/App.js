@@ -31,6 +31,7 @@ function App() {
                     {/*    Đây là các component khác trên thanh navbar
                     <Route path={"/url các navbar"} element={<Component/>}>
                 */}
+                    <Route path="/employee-manager" />
                 </Route>
             </Routes>
             <div align="center" id="footer">

@@ -102,17 +102,7 @@ export default function Navbars() {
                                     </NavLink>
                                 </li>
                         }
-                        <li className="nav-item">
-                            <NavLink style={({isActive})=>{
-                                return {
-                                    backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "#fff": "",
-                                    borderRadius: "10px"
-                                }
-                            }} className="nav-link" to={"/manager-customer"}>
-                                Quản lý khách hàng
-                            </NavLink>
-                        </li>
+
                         <li className="nav-item">
                             <NavLink style={({isActive})=>{
                                 return {
