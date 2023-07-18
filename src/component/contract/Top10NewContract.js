@@ -10,7 +10,8 @@ export function Top10NewContract() {
     const contractsPerPage = 5;
     const fetchTop10NewContract = async () => {
         const result = await contractService.showTop10NewContract();
-        setContract(result);
+        setContract(result.content);
+        console.log(result)
     }
     useEffect(() => {
         fetchTop10NewContract();

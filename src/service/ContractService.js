@@ -18,8 +18,15 @@ export const findContractById = async (id) => {
 }
 export const updateContract=async (contract)=>{
     try {
-        const result=await axios.get("http://localhost:8080/api/employee/contract/update",contract)
+        await axios.patch(`http://localhost:8080/api/employee/contract/update`,contract)
     }catch (err) {
       console.log(err)
+    }
+}
+export const getAllCustomer=async ()=>{
+    try {
+        const result= axios.get("http://localhost:8080/api/employee/contract/")
+    }catch (err) {
+        console.log(err)
     }
 }
