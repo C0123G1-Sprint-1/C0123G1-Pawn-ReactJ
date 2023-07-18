@@ -24,6 +24,7 @@ function App() {
                             <Route path="/info-store/profit/liquidation" element={<Liquidation/>}/>
                             <Route path="/info-store/profit/foresee" element={<Foresee/>}/>
                         </Route>
+
                         {/*   Đây là component về thông tin cửa hàng
                      Mọi người muốn truyền tới component của mình thì có thể làm theo mẫu
                         <Route path={"/url"} element={<Component/>}/>
@@ -34,12 +35,11 @@ function App() {
                     {/*    Đây là các component khác trên thanh navbar
                     <Route path={"/url các navbar"} element={<Component/>}>
                 */}
-                    <Route path="/employee-manager" />
                 </Route>
             </Routes>
-            {/*<div align="center" id="footer">*/}
-            {/*    <h1>Footer</h1>*/}
-            {/*</div>*/}
+            <div align="center" id="footer">
+                <h1>Footer</h1>
+            </div>
         </>
     );
 }

@@ -85,7 +85,7 @@ export default function Navbars() {
                                                 color: isActive ? "#fff": "",
                                                 borderRadius: "10px"
                                             }
-                                        }} className="nav-link" to={"/manager-customer"}>
+                                        }} className="nav-link" to={"/api/employee"}>
                                             Quản lý nhân viên
                                         </NavLink>
                                     </li>
@@ -97,7 +97,7 @@ export default function Navbars() {
                                             color: isActive ? "#fff": "",
                                             borderRadius: "10px"
                                         }
-                                    }} className="nav-link" to={"/manager-customer"}>
+                                    }} className="nav-link" to={"/api/employee"}>
                                         Quản lý nhân viên
                                     </NavLink>
                                 </li>

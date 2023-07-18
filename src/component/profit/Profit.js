@@ -20,7 +20,7 @@ export default function Profit() {
         endDate: ""
     })
     const [currentPage, setCurrentPage] = useState(0);
-
+    const [statisticsStatus,setStatisticsStatus] = useState(true);
 
     const getContractByPage = async (startDate, endDate, page, profitType) => {
         await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, page, profitType || type.type)
@@ -77,15 +77,14 @@ export default function Profit() {
     const setProfit = async (profitType) => {
         await setProfitType(() => profitType)
     }
-
+    const abc = async ()=>{
+        await setDateTimeProfit({
+            startDate: "",
+            endDate: ""
+        })
+    }
     useEffect(() => {
-        // const abc = async ()=>{
-        //     await setDateTimeProfit({
-        //         startDate: "",
-        //         endDate: ""
-        //     })
-        // }
-        // abc()
+        alert(profitType + dateTimeProfit.startDate)
         const fectData = async () => {
             await setCurrentPage(0);
             await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, profitType || type.type)
@@ -93,7 +92,7 @@ export default function Profit() {
             await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, profitType || type.type)
         }
         fectData()
-    }, [profitType])
+    }, [profitType,dateTimeProfit])
     if (!dataProfit || !contracts && contracts !== null) {
         return null;
     }
@@ -132,21 +131,25 @@ export default function Profit() {
                 <div className="row">
                     <div className=" col-lg-12" align="center">
                         <ul className="d-flex nav-content justify-content-center p-0">
-                            <li className="col-4"><NavLink onClick={() => setProfit("interest")} style={({isActive}) => {
-                                return {
-                                    backgroundColor: isActive ? "#27533e" : "",
-                                    color: isActive ? "#fff" : "",
-                                    width: "100%"
-                                }
-                            }} to="/info-store/profit/interest" className="btn btn-sm rounded-4  ">Lợi nhuận từ tiền
+                            <li className="col-4"><NavLink onClick={() => setProfit("interest")}
+                                                           style={({isActive}) => {
+                                                               return {
+                                                                   backgroundColor: isActive ? "#27533e" : "",
+                                                                   color: isActive ? "#fff" : "",
+                                                                   width: "100%"
+                                                               }
+                                                           }} to="/info-store/profit/interest"
+                                                           className="btn btn-sm rounded-4  ">Lợi nhuận từ tiền
                                 lãi</NavLink></li>
-                            <li className="col-4"><NavLink onClick={() => setProfit("liquidation")} style={({isActive}) => {
-                                return {
-                                    backgroundColor: isActive ? "#27533e" : "",
-                                    color: isActive ? "#fff" : "",
-                                    width: "100%"
-                                }
-                            }} to="/info-store/profit/liquidation" className="btn btn-sm rounded-4  ">Lợi nhuận từ thanh
+                            <li className="col-4"><NavLink onClick={() => setProfit("liquidation")}
+                                                           style={({isActive}) => {
+                                                               return {
+                                                                   backgroundColor: isActive ? "#27533e" : "",
+                                                                   color: isActive ? "#fff" : "",
+                                                                   width: "100%"
+                                                               }
+                                                           }} to="/info-store/profit/liquidation"
+                                                           className="btn btn-sm rounded-4  ">Lợi nhuận từ thanh
                                 lý</NavLink>
                             </li>
                             <li className="col-4"><NavLink onClick={() => setProfit("foresee")} style={({isActive}) => {
@@ -155,7 +158,8 @@ export default function Profit() {
                                     color: isActive ? "#fff" : "",
                                     width: "100%"
                                 }
-                            }} to="/info-store/profit/foresee" className="btn btn-sm rounded-4  ">Lợi nhuận dự kiến</NavLink>
+                            }} to="/info-store/profit/foresee" className="btn btn-sm rounded-4  ">Lợi nhuận dự
+                                kiến</NavLink>
                             </li>
                         </ul>
                     </div>
@@ -179,7 +183,7 @@ export default function Profit() {
                                     <div className="d-flex col-lg-12 justify-content-between p-0">
                                         <div className=" col-lg-5 p-0">
                                             {/*Can fix lai ngay khi chuyen component*/}
-                                            <span>Từ ngày : <Field name="startDate" type="date"/></span>
+                                            <span>Từ ngày : <Field name="startDate" type="date" /></span>
                                         </div>
                                         <div className=" col-lg-5">
                                             <span>Đến : <Field name="endDate" type="date"/></span>
@@ -187,7 +191,9 @@ export default function Profit() {
                                         <div className=" col-lg-2 p-0 d-flex justify-content-end">
                                             <button type="submit" className="btn btn-sm btn-primary">Thống kê
                                             </button>
-                                            <button type="submit" onClick={() => setProfit(profitType)} className="btn btn-sm btn-primary ms-1">Hủy
+                                            {/*Fix lai reset ngay*/}
+                                            <button type="button" onClick={() => abc()}
+                                                    className="btn btn-sm btn-primary ms-1">Hủy
                                             </button>
                                         </div>
                                     </div>
@@ -220,23 +226,30 @@ export default function Profit() {
                         <div className="d-flex  col-lg-12 justify-content-end">
                             <nav aria-label="...">
                                 <ul className="pagination">
-                                    <li className="page-item disabled">
-                                        <a
-                                            className="page-link"
-                                            href="#"
-                                            tabIndex={-1}
-                                            aria-disabled="true"
-                                        >
-                                            Trước
-                                        </a>
+                                    <li className="page-item">
+                                        {
+                                            currentPage !== 0 ?
+                                                <a className="page-link"
+                                                   onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage - 1, profitType || type.type)}>
+                                                    Trước
+                                                </a>
+                                                :
+                                                ""
+                                        }
                                     </li>
                                     {
                                         pagination()
                                     }
                                     <li className="page-item">
-                                        <a className="page-link" href="#">
-                                            Sau
-                                        </a>
+                                        {
+                                            currentPage !== totalPage - 1 ?
+                                                <a className="page-link"
+                                                   onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage + 1, profitType || type.type)}>
+                                                    Sau
+                                                </a>
+                                                :
+                                                ""
+                                        }
                                     </li>
                                 </ul>
                             </nav>
