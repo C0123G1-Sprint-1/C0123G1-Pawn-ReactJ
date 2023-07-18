@@ -15,35 +15,35 @@ function RegisterPawn() {
     },[])
 
 // page
-    const [pageCount, setPageCount] = useState(0);
-    let [count, setCount] = useState(1);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [names, setName] = useState("")
+    const [pageCount1, setPageCount1] = useState(0);
+    let [count, setCount1] = useState(1);
+    const [currentPage1, setCurrentPage1] = useState(0);
+    const [names1, setName1] = useState("")
 
 
-    const showList = async () => {
+    const showList1 = async () => {
         try {
-            const result = await customersService.registerPawn(names, currentPage);
+            const result = await customersService.registerPawn(names1, currentPage1);
             console.log(result);
             setRegisterPawn(result.content);
             const totalPages = result.totalPages;
-            setPageCount(totalPages);
+            setPageCount1(totalPages);
         } catch (error) {
             console.log(error);
-            setCurrentPage(currentPage - 1);
+            setCurrentPage1(currentPage1 - 1);
         }
     };
 
-    const search = async (value) => {
+    const search1 = async (value) => {
         let showTable = document.getElementById("showTable");
         let errMsg = document.getElementById("error");
         try {
             const res = await customersService.registerPawn(value.name, value.page);
 
-            setCurrentPage(res.content.number);
-            setName(value.name);
+            setCurrentPage1(res.content.number);
+            setName1(value.name);
             const totalPages = res.totalPages;
-            setPageCount(totalPages);
+            setPageCount1(totalPages);
 
             setRegisterPawn(res.content);
 
@@ -56,16 +56,16 @@ function RegisterPawn() {
     };
 
     useEffect(() => {
-        showList();
-    }, [currentPage]);
+        showList1();
+    }, [currentPage1]);
 
-    const handlePageClick = async (page) => {
-        setCurrentPage(+page.selected);
+    const handlePageClick1 = async (page) => {
+        setCurrentPage1(+page.selected);
 
-        const result = await customersService.registerPawn(names, page.selected);
+        const result = await customersService.registerPawn(names1, page.selected);
         console.log(result.data);
         setRegisterPawn(result.content);
-        setCount(Math.ceil(result.size * page.selected + 1));
+        setCount1(Math.ceil(result.size * page.selected + 1));
     };
 
     return (
@@ -90,7 +90,7 @@ function RegisterPawn() {
                                             name: ''
                                         }}
                                         onSubmit={(value) => {
-                                            search(value)
+                                            search1(value)
                                             console.log(value)
                                         }
                                         }>
@@ -111,9 +111,9 @@ function RegisterPawn() {
                                 </div>
                                 <div className="col-12">
                                     <div className="d-flex justify-content-center">
-                                        {registerPawn.length === 0 && names !== "" ? (
+                                        {registerPawn.length === 0 && names1 !== "" ? (
                                             <h3 className={"text-danger text-center my-3"}>
-                                                Không tìm thấy kết quả {names}
+                                                Không tìm thấy kết quả {names1}
                                             </h3>
                                         ) : (
                                         <div className="table-responsive" style={{width: '80%'}}>
@@ -162,8 +162,8 @@ function RegisterPawn() {
                                 <ReactPaginate
                                     breakLabel="..."
                                     nextLabel=">"
-                                    onPageChange={handlePageClick}
-                                    pageCount={pageCount}
+                                    onPageChange={handlePageClick1}
+                                    pageCount={pageCount1}
                                     previousLabel="< "
                                     containerClassName="pagination"
                                     pageLinkClassName="page-num"

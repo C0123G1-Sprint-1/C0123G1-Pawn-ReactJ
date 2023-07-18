@@ -14,11 +14,62 @@ export function CustomerList() {
         const list = async () => {
             let rs = await customersService.registerPawn();
             setRegisterPawn(rs.content)
-            console.log('11')
-            console.log(rs.content+'11')
         }
         list()
     }, [])
+
+    const [pageCount1, setPageCount1] = useState(0);
+    let [count1, setCount1] = useState(1);
+    const [currentPage1, setCurrentPage1] = useState(0);
+    const [names1, setName1] = useState("")
+
+
+    const showList1 = async () => {
+        try {
+            const result = await customersService.registerPawn(names1, currentPage1);
+            console.log(result);
+            setRegisterPawn(result.content);
+            const totalPages = result.totalPages;
+            setPageCount1(totalPages);
+        } catch (error) {
+            console.log(error);
+            setCurrentPage1(currentPage1 - 1);
+        }
+    };
+
+    const search1 = async (value) => {
+        let showTable = document.getElementById("showTable");
+        let errMsg = document.getElementById("error");
+        try {
+            const res = await customersService.registerPawn(value.name, value.page);
+
+            setCurrentPage1(res.content.number);
+            setName1(value.name);
+            const totalPages = res.totalPages;
+            setPageCount1(totalPages);
+
+            setRegisterPawn(res.content);
+
+            console.log(res.content);
+            showTable.style.display = "block";
+            errMsg.style.display = "none";
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    useEffect(() => {
+        showList1();
+    }, [currentPage1]);
+
+    const handlePageClick1 = async (page) => {
+        setCurrentPage1(+page.selected);
+
+        const result = await customersService.registerPawn(names1, page.selected);
+        console.log(result.data);
+        setRegisterPawn(result.content);
+        setCount1(Math.ceil(result.size * page.selected + 1));
+    };
 
 // page
     const [pageCount, setPageCount] = useState(0);
@@ -447,7 +498,21 @@ export function CustomerList() {
 
                                 </div>
                             </div>
-
+                            <div className="d-grid">
+                                <ReactPaginate
+                                    breakLabel="..."
+                                    nextLabel=">"
+                                    onPageChange={handlePageClick1}
+                                    pageCount={pageCount1}
+                                    previousLabel="< "
+                                    containerClassName="pagination"
+                                    pageLinkClassName="page-num"
+                                    nextLinkClassName="page-num"
+                                    previousLinkClassName="page-num"
+                                    activeClassName="active"
+                                    disabledClassName="d-none"
+                                />
+                            </div>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
