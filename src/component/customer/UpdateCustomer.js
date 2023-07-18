@@ -9,7 +9,7 @@ import { Oval } from "react-loader-spinner";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
-export function CreateCustomer() {
+export function UpdateCustomer() {
     let navigate = useNavigate();
     const [avatar, setAvatarFile] = useState(null);
     const [avatarUrl, setAvatarUrl] = useState(null);
@@ -51,15 +51,15 @@ export function CreateCustomer() {
     };
 
     const handleAvatarFileSelect = (event) => {
-        handleFileSelect(event, setAvatarFile, setAvatarUrl);
+        handleFileSelect(event, setAvatarFile);
     };
 
     const handleFrontCitizenFileSelect = (event) => {
-        handleFileSelect(event, setFrontCitizenFile, setFrontCitizenUrl);
+        handleFileSelect(event, setFrontCitizenFile);
     };
 
     const handleBackCitizenFileSelect = (event) => {
-        handleFileSelect(event, setBackCitizenFile, setBackCitizenUrl);
+        handleFileSelect(event, setBackCitizenFile);
     };
 
     const handleAvatarFileUpload = async () => {
@@ -77,6 +77,7 @@ export function CreateCustomer() {
         <>
             <Formik
                 initialValues={{
+                    id:"",
                     name: "",
                     birthday: "",
                     gender: "",
@@ -89,16 +90,16 @@ export function CreateCustomer() {
                     backCitizen: "",
                 }}
                 validationSchema={Yup.object({
-                    // name: Yup.string().required("Không được để trống"),
-                    // birthday: Yup.string().required("Không được để trống"),
-                    // gender: Yup.number().required("Không được để trống"),
-                    // phoneNumber: Yup.string().required("Không được để trống"),
-                    // email: Yup.string().required("Không được để trống"),
-                    // address: Yup.string().required("Không được để trống"),
-                    // citizenCode: Yup.string().required("Không được để trống"),
-                    // image: Yup.string().required("Không được để trống"),
-                    // frontCitizen: Yup.string().required("Không được để trống"),
-                    // backCitizen: Yup.string().required("Không được để trống"),
+                    name: Yup.string().required("Không được để trống"),
+                    birthday: Yup.string().required("Không được để trống"),
+                    gender: Yup.number().required("Không được để trống"),
+                    phoneNumber: Yup.string().required("Không được để trống"),
+                    email: Yup.string().required("Không được để trống"),
+                    address: Yup.string().required("Không được để trống"),
+                    citizenCode: Yup.string().required("Không được để trống"),
+                    image: Yup.string().required("Không được để trống"),
+                    frontCitizen: Yup.string().required("Không được để trống"),
+                    backCitizen: Yup.string().required("Không được để trống"),
                 })}
                 onSubmit={async (values, { resetForm, setSubmitting }) => {
                     try {
@@ -119,7 +120,7 @@ export function CreateCustomer() {
                             frontCitizen: frontCitizenUrl
                         };
                         console.log(newValue)
-                        await customerService.save(newValue);
+                        await customerService.update(newValue);
 
                         setSubmitting(false);
                         await Swal.fire({

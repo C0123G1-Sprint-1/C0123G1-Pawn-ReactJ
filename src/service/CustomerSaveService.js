@@ -3,13 +3,13 @@ import axios from "axios";
 export const save = async (customer) => {
     try {
         await axios.post(`http://localhost:8080/api/customer/`, {...customer},
-            {
-                headers:
-                    {
-                        'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN"),
-                        //   'Authorization': 'Bearer ' + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUaG9uZ0FkbWluIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODg1NDIxMDcsImV4cCI6MTY4ODYyODUwN30.HvyaQWe8aJdKeByZqB6_8nwVyoVa890IKdiFDMnH5g3YKIt1Leg9Ek8rqsrIVfrR1lDKeIEIttrnZv_mrUydDg"
-                    },
-            }
+            // {
+            //     headers:
+            //         {
+            //             'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN"),
+            //             //   'Authorization': 'Bearer ' + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUaG9uZ0FkbWluIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODg1NDIxMDcsImV4cCI6MTY4ODYyODUwN30.HvyaQWe8aJdKeByZqB6_8nwVyoVa890IKdiFDMnH5g3YKIt1Leg9Ek8rqsrIVfrR1lDKeIEIttrnZv_mrUydDg"
+            //         },
+            // }
         );
     } catch (e) {
         console.log(e)
@@ -18,13 +18,13 @@ export const save = async (customer) => {
 export const update = async (customer) => {
     try {
         await axios.patch(`http://localhost:8080/api/customer/${customer.id}`, {...customer},
-            {
-                headers:
-                    {
-                        'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN"),
-                        //   'Authorization': 'Bearer ' + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUaG9uZ0FkbWluIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODg1NDIxMDcsImV4cCI6MTY4ODYyODUwN30.HvyaQWe8aJdKeByZqB6_8nwVyoVa890IKdiFDMnH5g3YKIt1Leg9Ek8rqsrIVfrR1lDKeIEIttrnZv_mrUydDg"
-                    },
-            }
+            // {
+            //     headers:
+            //         {
+            //             'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN"),
+            //             //   'Authorization': 'Bearer ' + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUaG9uZ0FkbWluIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODg1NDIxMDcsImV4cCI6MTY4ODYyODUwN30.HvyaQWe8aJdKeByZqB6_8nwVyoVa890IKdiFDMnH5g3YKIt1Leg9Ek8rqsrIVfrR1lDKeIEIttrnZv_mrUydDg"
+            //         },
+            // }
         );
     } catch (e) {
         console.log(e)
