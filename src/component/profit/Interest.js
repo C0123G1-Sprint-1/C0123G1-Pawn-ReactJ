@@ -6,7 +6,7 @@ export default function Interest() {
     const contracts = useOutletContext();
     return (
         <>
-            <div style={{height: "55vh"}}>
+            <div style={{height: ""}}>
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
                     <tr>
