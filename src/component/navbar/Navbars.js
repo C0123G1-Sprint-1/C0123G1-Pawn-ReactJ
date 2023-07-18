@@ -2,9 +2,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import {NavLink} from "react-router-dom";
 import {Outlet} from "react-router";
+import jwt from 'jwt-decode';
 
 export default function Navbars() {
-
+    const token = localStorage.getItem('token');
+    const decodedToken = jwt(token);
+    console.log(decodedToken.sub)
     return (
         <>
             <nav className="navbar navbar-expand-lg p-0" style={{    height: "4rem",
@@ -61,6 +64,44 @@ export default function Navbars() {
                                 Thông tin cửa hàng
                             </NavLink>
                         </li>
+                        {
+                            decodedToken.role === "ROLE_ADMIN" ?
+                                <>
+                                    <li className="nav-item">
+                                        <NavLink style={({isActive})=>{
+                                            return {
+                                                backgroundColor: isActive ? "#27533e": "",
+                                                color: isActive ? "#fff": "",
+                                                borderRadius: "10px"
+                                            }
+                                        }} className="nav-link" to={"/manager-customer"}>
+                                            Quản lý khách hàng
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink style={({isActive})=>{
+                                            return {
+                                                backgroundColor: isActive ? "#27533e": "",
+                                                color: isActive ? "#fff": "",
+                                                borderRadius: "10px"
+                                            }
+                                        }} className="nav-link" to={"/manager-customer"}>
+                                            Quản lý nhân viên
+                                        </NavLink>
+                                    </li>
+                                </>:
+                                <li className="nav-item">
+                                    <NavLink style={({isActive})=>{
+                                        return {
+                                            backgroundColor: isActive ? "#27533e": "",
+                                            color: isActive ? "#fff": "",
+                                            borderRadius: "10px"
+                                        }
+                                    }} className="nav-link" to={"/manager-customer"}>
+                                        Quản lý nhân viên
+                                    </NavLink>
+                                </li>
+                        }
                         <li className="nav-item">
                             <NavLink style={({isActive})=>{
                                 return {
