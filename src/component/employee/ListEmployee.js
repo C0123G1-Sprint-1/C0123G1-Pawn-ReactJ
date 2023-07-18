@@ -75,7 +75,7 @@ export default function EmployeeList() {
                         <div className="d-flex">
                             <div className="mt-2 m-2 modal-body d-flex justify-content-between">
                                 <NavLink
-                                    to={"/create-employee"}
+                                    to={"/api/employee/create-employee"}
                                     type="button"
                                     className="btn btn-outline-success"
                                     style={{

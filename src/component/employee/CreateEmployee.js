@@ -163,7 +163,7 @@ export function CreateEmployee() {
                             await createEmployee(newValue);
                             console.log(values)
                             save();
-                            navigate("/");
+                            navigate("/api/employee");
                             resetForm(false);
                         } catch (e) {
                             resetForm(true);
