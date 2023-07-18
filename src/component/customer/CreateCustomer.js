@@ -1,13 +1,13 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as customerService from "../../service/CustomerSaveService";
 import * as Yup from "yup";
-import { useNavigate } from "react-router";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { storage } from "../../firebase";
-import React, { useState } from "react";
-import { Oval } from "react-loader-spinner";
+import {useNavigate} from "react-router";
+import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import {storage} from "../../firebase";
+import React, {useState} from "react";
+import {Oval} from "react-loader-spinner";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export function CreateCustomer() {
     let navigate = useNavigate();
@@ -89,18 +89,18 @@ export function CreateCustomer() {
                     backCitizen: "",
                 }}
                 validationSchema={Yup.object({
-                    // name: Yup.string().required("Không được để trống"),
-                    // birthday: Yup.string().required("Không được để trống"),
-                    // gender: Yup.number().required("Không được để trống"),
-                    // phoneNumber: Yup.string().required("Không được để trống"),
-                    // email: Yup.string().required("Không được để trống"),
-                    // address: Yup.string().required("Không được để trống"),
-                    // citizenCode: Yup.string().required("Không được để trống"),
-                    // image: Yup.string().required("Không được để trống"),
-                    // frontCitizen: Yup.string().required("Không được để trống"),
-                    // backCitizen: Yup.string().required("Không được để trống"),
+                    name: Yup.string().required("Không được để trống"),
+                    birthday: Yup.string().required("Không được để trống"),
+                    gender: Yup.number().required("Không được để trống"),
+                    phoneNumber: Yup.string().required("Không được để trống"),
+                    email: Yup.string().required("Không được để trống"),
+                    address: Yup.string().required("Không được để trống"),
+                    citizenCode: Yup.string().required("Không được để trống"),
+                    image: Yup.string().required("Không được để trống"),
+                    frontCitizen: Yup.string().required("Không được để trống"),
+                    backCitizen: Yup.string().required("Không được để trống"),
                 })}
-                onSubmit={async (values, { resetForm, setSubmitting }) => {
+                onSubmit={async (values, {resetForm, setSubmitting}) => {
                     try {
                         const results = await Promise.all([
                             handleAvatarFileUpload(),
@@ -112,7 +112,8 @@ export function CreateCustomer() {
                         const frontCitizenUrl = results[1];
                         const backCitizenUrl = results[2];
 
-                        const newValue       = {
+                        values.gender = parseInt(values.gender);
+                        const newValue = {
                             ...values,
                             image: avatarUrl,
                             backCitizen: backCitizenUrl,
@@ -137,7 +138,7 @@ export function CreateCustomer() {
                     }
                 }}
             >
-                {({ isSubmitting }) => (
+                {({isSubmitting}) => (
                     <div className="container mt-5 mb-5">
                         <div className="row height d-flex justify-content-center align-items-center">
                             <div className="col-md-8 col-sm-12">
@@ -152,11 +153,29 @@ export function CreateCustomer() {
                                     >
                                         <h1 id="title-h1">Thêm thông tin khách hàng</h1>
                                     </div>
+                                    <Link to={"/update/" + 28}>Update 1</Link>
                                     <Form>
                                         <div className="row">
-                                            <div className="col-md-4" style={{ textAlign: "center", display: "block" }}>
+                                            <div className="col-md-4" style={{textAlign: "center", display: "block"}}>
                                                 {avatar ? (
-                                                    <img onChange={handleAvatarFileUpload} id="avatar-img" src={URL.createObjectURL(avatar)} style={{ width: "100%" }} alt="avatar" />
+                                                    <div>
+                                                        <img
+                                                            id="avatar-img"
+                                                            src={URL.createObjectURL(avatar)}
+                                                            style={{width: "100%"}}
+                                                            alt="avatar"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-danger btn-sm mt-2"
+                                                            onClick={() => {
+                                                                setAvatarFile(null);
+                                                                setAvatarUrl("");
+                                                            }}
+                                                        >
+                                                            Xoá
+                                                        </button>
+                                                    </div>
                                                 ) : (
                                                     <img
                                                         id="avatar-img"
@@ -165,12 +184,13 @@ export function CreateCustomer() {
                                                         alt="avatar"
                                                     />
                                                 )}
-                                                <label className="mt-2" style={{ textAlign: "center", display: "block" }}>
+                                                <label className="mt-2" style={{textAlign: "center", display: "block"}}>
                                                     Ảnh chân dung
                                                 </label>
                                                 {!avatar && (
-                                                    <label htmlFor="file-upload-avatar" className="custom-file-upload mt-4">
-                                                        Thêm ảnh chân dung <span style={{ color: "red" }}>*</span>
+                                                    <label htmlFor="file-upload-avatar"
+                                                           className="custom-file-upload mt-4">
+                                                        Thêm ảnh chân dung <span style={{color: "red"}}>*</span>
                                                     </label>)}
                                                 <Field
                                                     type="file"
@@ -195,18 +215,19 @@ export function CreateCustomer() {
                                                         </label>
                                                     </p>
                                                 )}
-                                                <hr />
+                                                <hr/>
                                                 <div className="mb-3 mt-3">
-                                                    <button id="file-upload-label" type='button' className="btn btn-sm btn-danger" onClick={() => {
+                                                    <button id="file-upload-label" type='button'
+                                                            className="btn btn-sm btn-danger" onClick={() => {
                                                         document.getElementById("front-back-upload").classList.remove("hidden");
                                                     }}>
-                                                        Thêm căn cước <i className="bi bi-person-vcard" />
+                                                        Thêm căn cước <i className="bi bi-person-vcard"/>
                                                     </button>
                                                 </div>
                                                 <div id="front-back-upload" className="hidden">
                                                     <div className="mb-3">
                                                         <label htmlFor="front-upload" className="custom-file-upload">
-                                                            Tải lên mặt trước <span style={{ color: "red" }}>*</span>
+                                                            Tải lên mặt trước <span style={{color: "red"}}>*</span>
                                                         </label>
                                                         <Field
                                                             type="file"
@@ -233,18 +254,30 @@ export function CreateCustomer() {
                                                         )}
 
                                                         {frontCitizen && (
-                                                            <img
-                                                                onChange={handleFrontCitizenFileUpload}
-                                                                className="mt-2"
-                                                                src={URL.createObjectURL(frontCitizen)}
-                                                                style={{ width: "100%" }}
-                                                                alt=""
-                                                            />
+                                                            <div>
+                                                                <img
+                                                                    onChange={handleFrontCitizenFileUpload}
+                                                                    className="mt-2"
+                                                                    src={URL.createObjectURL(frontCitizen)}
+                                                                    style={{width: "100%"}}
+                                                                    alt=""
+                                                                />
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-danger btn-sm mt-2"
+                                                                    onClick={() => {
+                                                                        setFrontCitizenFile(null);
+                                                                        setFrontCitizenUrl("");
+                                                                    }}
+                                                                >
+                                                                    Xoá
+                                                                </button>
+                                                            </div>
                                                         )}
                                                     </div>
                                                     <div className="mb-3">
                                                         <label htmlFor="back-upload" className="custom-file-upload">
-                                                            Tải lên mặt sau <span style={{ color: "red" }}>*</span>
+                                                            Tải lên mặt sau <span style={{color: "red"}}>*</span>
                                                         </label>
                                                         <Field
                                                             type="file"
@@ -271,13 +304,25 @@ export function CreateCustomer() {
                                                         )}
 
                                                         {backCitizen && (
-                                                            <img
-                                                                onChange={handleBackCitizenFileUpload}
-                                                                className="mt-2"
-                                                                src={URL.createObjectURL(backCitizen)}
-                                                                style={{ width: "100%" }}
-                                                                alt=""
-                                                            />
+                                                            <div>
+                                                                <img
+                                                                    onChange={handleBackCitizenFileUpload}
+                                                                    className="mt-2"
+                                                                    src={URL.createObjectURL(backCitizen)}
+                                                                    style={{width: "100%"}}
+                                                                    alt=""
+                                                                />
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-danger btn-sm mt-2"
+                                                                    onClick={() => {
+                                                                        setBackCitizenFile(null);
+                                                                        setBackCitizenUrl("");
+                                                                    }}
+                                                                >
+                                                                    Xoá
+                                                                </button>
+                                                            </div>
                                                         )}
                                                     </div>
                                                 </div>
@@ -296,7 +341,7 @@ export function CreateCustomer() {
                                             <div className="col-md-8">
                                                 <div className="mt-2">
                                                     <label htmlFor="f-name">
-                                                        Họ và tên <span style={{ color: "red" }}>*</span>
+                                                        Họ và tên <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-name"
@@ -305,11 +350,16 @@ export function CreateCustomer() {
                                                         type="text"
                                                         required
                                                     />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="name"
+                                                        className="error-flag"
+                                                    />
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-dateOfBirth">
                                                         Ngày sinh
-                                                        <span style={{ color: "red" }}>*</span>
+                                                        <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-dateOfBirth"
@@ -317,6 +367,11 @@ export function CreateCustomer() {
                                                         name="birthday"
                                                         type="date"
                                                         required
+                                                    />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="birthday"
+                                                        className="error-flag"
                                                     />
                                                 </div>
                                                 <div className="mt-2 row">
@@ -326,19 +381,19 @@ export function CreateCustomer() {
                                                         </label>
                                                         <div>
                                                             <label>
-                                                                <Field type="radio" name="gender" value="0" />
+                                                                <Field type="radio" name="gender" value="0"/>
                                                                 Nam
                                                             </label>
                                                         </div>
                                                         <div>
                                                             <label>
-                                                                <Field type="radio" name="gender" value="1" />
+                                                                <Field type="radio" name="gender" value="1"/>
                                                                 Nữ
                                                             </label>
                                                         </div>
                                                         <div>
                                                             <label>
-                                                                <Field type="radio" name="gender" value="2" />
+                                                                <Field type="radio" name="gender" value="2"/>
                                                                 Khác
                                                             </label>
                                                         </div>
@@ -351,7 +406,7 @@ export function CreateCustomer() {
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-email">
-                                                        Email <span style={{ color: "red" }}>*</span>
+                                                        Email <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-email"
@@ -360,11 +415,16 @@ export function CreateCustomer() {
                                                         type="text"
                                                         required
                                                     />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="email"
+                                                        className="error-flag"
+                                                    />
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-phone">
                                                         Số điện thoại
-                                                        <span style={{ color: "red" }}>*</span>
+                                                        <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-phone"
@@ -373,11 +433,16 @@ export function CreateCustomer() {
                                                         type="text"
                                                         required
                                                     />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="phoneNumber"
+                                                        className="error-flag"
+                                                    />
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-idCard">
                                                         Số căn cước
-                                                        <span style={{ color: "red" }}>*</span>
+                                                        <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-idCard"
@@ -386,11 +451,16 @@ export function CreateCustomer() {
                                                         type="text"
                                                         required
                                                     />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="citizenCode"
+                                                        className="error-flag"
+                                                    />
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-country">
                                                         Nơi thường trú
-                                                        <span style={{ color: "red" }}>*</span>
+                                                        <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-country"
@@ -398,6 +468,11 @@ export function CreateCustomer() {
                                                         name="address"
                                                         type="text"
                                                         required
+                                                    />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="address"
+                                                        className="error-flag"
                                                     />
                                                 </div>
 
