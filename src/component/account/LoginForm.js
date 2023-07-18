@@ -16,7 +16,6 @@ import jwt from 'jwt-decode';
 
 export function LoginForm() {
   const navigate =useNavigate()
-  const [rep,setRep] =useState()
 
 
   return (
@@ -46,12 +45,11 @@ export function LoginForm() {
                 'http://localhost:8080/api/user/authenticate',
                 values
               );
-              setRep(response)
               // Kiểm tra nếu response có chứa token
               if (response.data.token) {
                 // Giải mã token và lấy thông tin payload
                 const decodedToken = jwt(response.data.token);
-                console.logedTok(decodedToken.sub)
+                console.log(decodedToken.sub)
                 // Lưu trữ thông tin người dùng vào localStorage hoặc state
                 localStorage.setItem('token', response.data.token);
                 // localStorage.setItem('userId', decodedToken.userId);
@@ -61,8 +59,7 @@ export function LoginForm() {
               navigate('/forgot');
             } catch (e) {
               // Xử lý lỗi đăng nhập
-              console.log(e.response.data.ErrorMessage)
-              toast.error(e.response.data.message);
+              toast.error(e.response.data);
             } finally {
               setSubmitting(false);
             }

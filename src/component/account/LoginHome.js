@@ -1,7 +1,7 @@
 import "./Style.css";
-import logo from "../login/img/imglogo1.png"
-import { LoginForm } from "./LoginForm";
+import logo from "../account/img/imglogo1.png"
 import {BrowserRouter, Routes,Route} from "react-router-dom"
+import { LoginForm } from "./LoginForm";
 import { ForgotPassword } from "./ForgotPassword";
 import { ConfirmCode } from "./ConfirmCode";
 import { NewPassword } from "./NewPassword";
