@@ -8,6 +8,7 @@ import Navbars from "./component/navbar/Navbars";
 import InfoStore from "./component/profit/InfoStore";
 import EmployeeList from "./component/employee/ListEmployee";
 import {CreateEmployee} from "./component/employee/CreateEmployee";
+import CustomerList from "./component/customer/CustomerList";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                         <Route path={"/url"} element={<Component/>}/>
                     */}
                     </Route>
+                    <Route path="/api/customer" element={<CustomerList/>}/>
                     <Route path="/api/employee" element={<EmployeeList />} />
                     <Route path="/api/employee/create-employee" element={<CreateEmployee />} />
                     {/*    Đây là các component khác trên thanh navbar

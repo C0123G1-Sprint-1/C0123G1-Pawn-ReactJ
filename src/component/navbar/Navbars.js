@@ -56,7 +56,7 @@ export default function Navbars() {
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "black": ""
                                 }
-                            }} className="nav-link" to={"/manager-customer"}>
+                            }} className="nav-link" to={"/api/customer"}>
                                 Quản lý khách hàng
                             </NavLink>
                         </li>
