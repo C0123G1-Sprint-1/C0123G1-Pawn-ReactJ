@@ -1,10 +1,10 @@
-import * as contractService from "../../service/ContractService";
+import * as contractService from "../service/ContractService";
 import React, {useEffect, useState} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {storage} from "../../firebaseContract";
+import {storage} from "../firebase";
 import Swal from "sweetalert2";
 import * as Yup from 'yup';
 
@@ -28,9 +28,9 @@ export const CreateContracts = () => {
     const [code, setCode] = useState('');
     const [idCustomer, setIdCustomer] = useState();
 
-    const [loans, setLoans] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDay] = useState('');
+    const [loans, setLoans] = useState(0);
+    // const [startDate, setStartDate] = useState('');
+    // const [endDate, setEndDay] = useState('');
 
     const n = useNavigate();
 
@@ -38,14 +38,14 @@ export const CreateContracts = () => {
         await setLoans(event.target.value)
         console.log(loans)
     }
-    const handleStartDate = async (event) => {
-        await setStartDate(event.target.value)
-        console.log(startDate)
-    }
-    const handleEndDay = async (event) => {
-        await setEndDay(event.target.value)
-        console.log(endDate)
-    }
+    // const handleStartDate = async (event) => {
+    //     await setStartDate(event.target.value)
+    //     console.log(startDate)
+    // }
+    // const handleEndDay = async (event) => {
+    //     await setEndDay(event.target.value)
+    //     console.log(endDate)
+    // }
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
         setImgErr("");
@@ -145,6 +145,12 @@ export const CreateContracts = () => {
         }
     }
 
+    // const handlePageClick = async (page) => {
+    //     // setCurrent(+page.selected);
+    //     // const res=await contractService.searchCustomer(customers,page.selected);
+    //     // setCustomer(res.content);
+    //     // setPageCount(Math.ceil(res.size*page.selected+1))
+    // }
 
     useEffect(() => {
         getAllProductType()
@@ -169,7 +175,7 @@ export const CreateContracts = () => {
                                 productName: '',
                                 productType: '',
                                 image: '',
-                                loans:'',
+                                loans: '',
                                 startDate: '',
                                 endDate: '',
                                 profit: '',
@@ -186,7 +192,7 @@ export const CreateContracts = () => {
                                             .required('Không được để trống'),
                                         startDate: Yup.date()
                                             .required('Không được để trống')
-                                            .test("order", "Không được chọn quá khứ chỉ chọn hiện tại và tương lai",
+                                            .test("date", "Không được chọn quá khứ chỉ chọn hiện tại và tương lai",
                                                 function (value) {
                                                     const buyDate = value.getDay()
                                                     const month = value.getMonth()
@@ -205,7 +211,11 @@ export const CreateContracts = () => {
                                                 }),
                                         endDate: Yup.date()
                                             .required('Không được để trống')
-                                            .min(new Date(), 'Không được chọn quá khứ chỉ được tương lai')
+                                            .test("date", "Ngày kết thúc phải lớn hơn ngày bắt đầu",
+                                                function (value) {
+                                                    const startDate = this.resolve(Yup.ref('startDate'));
+                                                    return value > startDate;
+                                                }),
                                     })}
 
 
@@ -330,11 +340,11 @@ export const CreateContracts = () => {
                                     <div className="mt-2 inputs">
                                         <label>Tiền cho vay</label>
                                         <Field
-                                            onChange={handleLoans}
                                             type="number"
                                             className="form-control"
                                             name="loans"
                                             style={{height: 35}}
+                                            onChange={handleLoans}
                                             value={loans}
                                         />
                                         <ErrorMessage name="loans" component="p" style={{color: "red"}}/>
@@ -344,12 +354,12 @@ export const CreateContracts = () => {
                                         <div className="col-md-6 form-group">
                                             <label>Ngày bắt đầu</label>
                                             <Field
-                                                onChange={handleStartDate}
+                                                // onChange={handleStartDate}
                                                 type="date"
                                                 className="form-control"
                                                 name="startDate"
                                                 style={{height: 36}}
-                                                value={startDate}
+                                                // value={startDate}
 
                                             />
                                             <ErrorMessage name="startDate" component="p" style={{color: "red"}}/>
@@ -357,12 +367,12 @@ export const CreateContracts = () => {
                                         <div className="col-md-6 form-group">
                                             <label>Ngày kết thúc</label>
                                             <Field
-                                                onChange={handleEndDay}
+                                                // onChange={handleEndDay}
                                                 type="date"
                                                 className="form-control"
                                                 name="endDate"
                                                 style={{height: 36}}
-                                                value={endDate}
+                                                // value={endDate}
 
                                             />
                                             <ErrorMessage name="endDate" component="p" style={{color: "red"}}/>
@@ -511,32 +521,29 @@ export const CreateContracts = () => {
                                         <th className="text-center">Mã khách hàng</th>
                                         <th className="text-center">Tên khách Hàng</th>
                                         <th className="text-center">CMND/Hộ chiếu</th>
-                                        <th className="text-center">Email</th>
                                         <th className="text-center">Chức Năng</th>
                                     </tr>
                                     </thead>
-                                    {customer < 0 ? <p>Khong co dư liẹu</p> :
-                                        <tbody>
-                                        {customer.map((list, index) => (
 
-                                            <tr key={index}>
-                                                <td className="text-center">{list.id}</td>
-                                                <td className="text-center">{list.name}</td>
-                                                <td className="text-center">{list.citizenCode}</td>
-                                                <td className="text-center">{list.email}</td>
-                                                <td className="text-center">
-                                                    <button onClick={() => {
-                                                        setIdCustomer(list.id)
-                                                        handleModalClose(true);
-                                                    }} className="btn btn-success text-center">
-                                                        Chọn
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                        }
-                                        {/* Other table rows */}
-                                        </tbody>}
+                                    <tbody>
+                                    {customer.map((list, index) => (
+                                        <tr key={index}>
+                                            <td className="text-center">{list.id}</td>
+                                            <td className="text-center">{list.name}</td>
+                                            <td className="text-center">{list.citizenCode}</td>
+                                            <td className="text-center">
+                                                <button onClick={() => {
+                                                    setIdCustomer(list.id)
+                                                    handleModalClose(true);
+                                                }} className="btn btn-success text-center">
+                                                    Chọn
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                    }
+                                    {/* Other table rows */}
+                                    </tbody>
                                 </table>
 
                                 <div className="d-flex col-12 justify-content-end">
