@@ -1,7 +1,7 @@
 import * as contractService from "../../service/ContractService";
 import React, {useEffect, useState} from "react";
 import {Button, Modal} from "react-bootstrap";
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../firebaseContract";
@@ -13,12 +13,13 @@ import {FormattedNumber} from "react-intl";
 export const CreateContracts = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0); // Tổng số trang
+    const [current, setCurrent] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
 
     const [selectedFile, setSelectedFile] = useState(null);
     const [firebaseImg, setImg] = useState(null);
     const [progress, setProgress] = useState(0);
     const [imgErr, setImgErr] = useState("");
-
 
     const [showModal, setShowModal] = useState(false);
     const [productType, setProductType] = useState([]);
@@ -100,7 +101,6 @@ export const CreateContracts = () => {
         const getAllCustomer = async () => {
             const res = await contractService.findAllCustomer(page, customerName)
             setCustomer(res.content)
-            await setTotalPages(res.totalPages)
         }
         getAllCustomer()
     }, [page, customerName])
@@ -152,6 +152,12 @@ export const CreateContracts = () => {
         }
     }
 
+    // const handlePageClick = async (page) => {
+    //     // setCurrent(+page.selected);
+    //     // const res=await contractService.searchCustomer(customers,page.selected);
+    //     // setCustomer(res.content);
+    //     // setPageCount(Math.ceil(res.size*page.selected+1))
+    // }
 
     useEffect(() => {
         getAllProductType()
@@ -175,7 +181,7 @@ export const CreateContracts = () => {
                                 customers: '',
                                 contractCode: code,
                                 productName: '',
-                                productType: '',
+                                productType: 0,
                                 image: '',
                                 loans: '',
                                 startDate: '',
