@@ -7,12 +7,10 @@ import * as Swal from "sweetalert2";
 
 export default function TransactionHistoryList() {
     const [contracts, setContract] = useState([]);
-    const [selectedContract, setSelectedContract] = useState(0);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0); // Tổng số trang
 
     const paginate = (page) => {
-        setSelectedContract(page+1)
         setPage(page)
     }
     const searchTH = async () => {
@@ -103,7 +101,7 @@ export default function TransactionHistoryList() {
                                         const res = async () => {
                                             await setPage(0)
                                             await contractService.searchTransactionHistory(page, values)
-                                            setSearch(values)
+                                            await setSearch(values)
                                         }
                                         res()
                                         searchTH()
@@ -231,12 +229,12 @@ export default function TransactionHistoryList() {
                                                     </button>
                                                 </li>
                                                 {
-                                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
+                                                    Array.from({length: totalPages}, (a, index) => index).map((pageNum) => (
                                                         <li className="page-item">
-                                                            <button className={selectedContract==page+1?"active page-link":"page-link"} key={page}
-                                                                    onClick={() =>{ paginate(page)
+                                                            <button className={page===pageNum?"active page-link":"page-link"} key={pageNum}
+                                                                    onClick={() =>{ paginate(pageNum)
                                                                     }}>
-                                                                {page + 1}
+                                                                {pageNum + 1}
                                                             </button>
                                                         </li>
                                                     ))
