@@ -170,7 +170,7 @@ export function CustomerList() {
                     <div style={{boxShadow: '1px 3px 10px 5px rgba(0, 0, 0, 0.2)'}}>
                         <div style={{marginBottom: '20px'}}>
                             <h2 className="d-flex justify-content-center"
-                                style={{padding: '16px', backgroundColor: 'seagreen', color: 'white'}}>
+                                style={{padding: '16px', color: 'black'}}>
                                 DANH SÁCH KHÁCH HÀNG
                             </h2>
                         </div>
@@ -178,14 +178,14 @@ export function CustomerList() {
                         <div className='container'>
                             <div className="row ">
                                 <div className="col-6 mt-2">
-                                    <button className="btn btn-outline-primary" style={{marginLeft: "10%"}}>Thêm khách
+                                    <button className="btn btn-outline-success" style={{marginLeft: "10%"}}>Thêm khách
                                         hàng
                                     </button>
                                     {/*<NavLink*/}
                                     {/*    to='/listCustomerRegisterPawn' className="btn btn-outline-primary"*/}
                                     {/*    style={{marginLeft: '5%'}}>Danh sách khách hàng mới*/}
                                     {/*</NavLink>*/}
-                                    <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal"
+                                    <button type="button" className="btn btn-outline-success" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal" style={{marginLeft: '5%'}}>
                                         Danh sách khách hàng mới
                                     </button>
