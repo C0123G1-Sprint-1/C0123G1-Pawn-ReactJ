@@ -1,3 +1,4 @@
+
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Profit from "./component/profit/Profit";
 import Interest from "./component/profit/Interest";
@@ -18,6 +19,7 @@ function App() {
                 <h1>Header</h1>
             </div>
             <Routes>
+            <Route path='/loginHome'  element={<LoginHome />}/>
                 <Route path={""} element={<Navbars/>}>
                     <Route path={"/info-store"} element={<InfoStore/>}>
                         <Route path={"/info-store/profit"} element={<Profit/>}>
