@@ -29,7 +29,7 @@ export default function InfoStore() {
                             }}  className="border-0 list-group-item list-group-item-action">
                                 Tài chính
                             </NavLink>
-                            <NavLink to={"/"} style={({isActive})=>{
+                            <NavLink to={"/info-store/all-contract"} style={({isActive})=>{
                                 return{
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""

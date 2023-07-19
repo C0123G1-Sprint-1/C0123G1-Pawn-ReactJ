@@ -8,6 +8,7 @@ import Navbars from "./component/navbar/Navbars";
 import InfoStore from "./component/profit/InfoStore";
 import EmployeeList from "./component/employee/ListEmployee";
 import {CreateEmployee} from "./component/employee/CreateEmployee";
+import {ShowContract} from "./component/all_contract/ShowContract";
 
 function App() {
     return (
@@ -24,14 +25,14 @@ function App() {
                             <Route path="/info-store/profit/liquidation" element={<Liquidation/>}/>
                             <Route path="/info-store/profit/foresee" element={<Foresee/>}/>
                         </Route>
-
+                        <Route path={"/info-store/all-contract"} element={<ShowContract/>}/>
                         {/*   Đây là component về thông tin cửa hàng
                      Mọi người muốn truyền tới component của mình thì có thể làm theo mẫu
                         <Route path={"/url"} element={<Component/>}/>
                     */}
                     </Route>
-                    <Route path="/api/employee" element={<EmployeeList />} />
-                    <Route path="/api/employee/create-employee" element={<CreateEmployee />} />
+                    <Route path="/api/employee" element={<EmployeeList/>}/>
+                    <Route path="/api/employee/create-employee" element={<CreateEmployee/>}/>
                     {/*    Đây là các component khác trên thanh navbar
                     <Route path={"/url các navbar"} element={<Component/>}>
                 */}

@@ -77,14 +77,21 @@ export default function Profit() {
     const setProfit = async (profitType) => {
         await setProfitType(() => profitType)
     }
-    const abc = async ()=>{
+    const setDate = async (event)=>{
+        setDateTimeProfit({
+            ...dateTimeProfit,
+            startDate: event.target.value
+        })
+    }
+    const setCancel = async ()=>{
+        await setStatisticsStatus(!statisticsStatus)
         await setDateTimeProfit({
             startDate: "",
             endDate: ""
         })
     }
     useEffect(() => {
-        alert(profitType + dateTimeProfit.startDate)
+        // alert(profitType + dateTimeProfit.startDate)
         const fectData = async () => {
             await setCurrentPage(0);
             await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, profitType || type.type)
@@ -182,8 +189,7 @@ export default function Profit() {
                                 <Form className="p-0 ms-5">
                                     <div className="d-flex col-lg-12 justify-content-between p-0">
                                         <div className=" col-lg-5 p-0">
-                                            {/*Can fix lai ngay khi chuyen component*/}
-                                            <span>Từ ngày : <Field name="startDate" type="date" /></span>
+                                            <span>Từ ngày : <Field name="startDate" type="date" value={dateTimeProfit.startDate}/></span>
                                         </div>
                                         <div className=" col-lg-5">
                                             <span>Đến : <Field name="endDate" type="date"/></span>
@@ -192,7 +198,7 @@ export default function Profit() {
                                             <button type="submit" className="btn btn-sm btn-primary">Thống kê
                                             </button>
                                             {/*Fix lai reset ngay*/}
-                                            <button type="button" onClick={() => abc()}
+                                            <button type="button" onClick={() => setCancel()}
                                                     className="btn btn-sm btn-primary ms-1">Hủy
                                             </button>
                                         </div>
@@ -214,8 +220,6 @@ export default function Profit() {
                     </div>
                 </div>
             </div>
-            {/*    </div>*/}
-            {/*</div>*/}
             <div className=" mt-3 container col-12">
                 <div align="center">
                     <h1>Danh sách hợp đồng</h1>
