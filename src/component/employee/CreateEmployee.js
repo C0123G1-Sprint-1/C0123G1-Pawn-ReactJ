@@ -188,9 +188,10 @@ export function CreateEmployee() {
                                             >
                                                 {selectedFile && (
                                                     <img
-                                                        className={"mt-2"}
                                                         src={URL.createObjectURL(selectedFile)}
-                                                        style={{width: "100%"}}
+                                                        className="rounded-circle mt-2 "
+                                                        style={{ width: "180px",height: "180px", display : "flex", margin: `0 auto`, border: "1px solid" }}
+                                                        height="100px"
                                                     />
                                                 )}
                                             </div>
