@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import * as customersService from "../../service/customersService";
 import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
+import Swal from "sweetalert2";
 
 
 export function CustomerList() {
@@ -21,12 +22,11 @@ export function CustomerList() {
     const [pageCount1, setPageCount1] = useState(0);
     let [count1, setCount1] = useState(1);
     const [currentPage1, setCurrentPage1] = useState(0);
-    const [names1, setName1] = useState("")
 
 
     const showList1 = async () => {
         try {
-            const result = await customersService.registerPawn(names1, currentPage1);
+            const result = await customersService.registerPawn(currentPage1);
             console.log(result);
             setRegisterPawn(result.content);
             const totalPages = result.totalPages;
@@ -37,26 +37,6 @@ export function CustomerList() {
         }
     };
 
-    const search1 = async (value) => {
-        let showTable = document.getElementById("showTable");
-        let errMsg = document.getElementById("error");
-        try {
-            const res = await customersService.registerPawn(value.name, value.page);
-
-            setCurrentPage1(res.content.number);
-            setName1(value.name);
-            const totalPages = res.totalPages;
-            setPageCount1(totalPages);
-
-            setRegisterPawn(res.content);
-
-            console.log(res.content);
-            showTable.style.display = "block";
-            errMsg.style.display = "none";
-        } catch (e) {
-            console.log(e);
-        }
-    };
 
     useEffect(() => {
         showList1();
@@ -65,7 +45,7 @@ export function CustomerList() {
     const handlePageClick1 = async (page) => {
         setCurrentPage1(+page.selected);
 
-        const result = await customersService.registerPawn(names1, page.selected);
+        const result = await customersService.registerPawn( page.selected);
         console.log(result.data);
         setRegisterPawn(result.content);
         setCount1(Math.ceil(result.size * page.selected + 1));
@@ -138,9 +118,16 @@ export function CustomerList() {
 
     async function deleteCustomers() {
         await customersService.deleteCustomer(idDelete)
+        Swal.fire({
+            icon: "success",
+            title: "Xóa thành công !",
+            timer: 3000
+        })
         let rs = await customersService.findByAll(name, currentPage);
         setListCustomer(rs.content)
+
     }
+
 
     const [id, setId] = useState("")
     const [names, setNames] = useState("")
@@ -288,7 +275,7 @@ export function CustomerList() {
 
                                                     {/* Modal */}
                                                     <div className="modal fade" id="staticBackdrop6"
-                                                         data-bs-backdrop="static" data-bs-keyboard="false"
+
                                                          tabIndex={-1}
                                                          aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                         <div className="modal-dialog">
@@ -347,8 +334,7 @@ export function CustomerList() {
             </div>
             {/*chi tiết khách hàng*/}
             <div className="modal fade " id="staticBackdrop"
-                 data-bs-backdrop="static"
-                 data-bs-keyboard="false" tabIndex={-1}
+                  tabIndex={-1}
                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog  modal-dialog-centered modal-lg">
                     <div className="modal-content">
