@@ -11,6 +11,7 @@ import {
     searchCustomerAPI
 } from "../../service/LiquidationService";
 import {useNavigate} from "react-router";
+import * as Swal from "sweetalert2";
 
 export function CreateLiquidation() {
     const navigate = useNavigate();
@@ -119,6 +120,16 @@ export function CreateLiquidation() {
                             products: data.products
                         });
                         navigate("/")
+                        const save = () => {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Thêm mới tin thành công ',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                        save();
                     }}>
                 <div className="container mb-5">
                     <div className="row height d-flex justify-content-center align-items-center">
