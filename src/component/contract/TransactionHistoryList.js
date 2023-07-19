@@ -174,9 +174,12 @@ export default function TransactionHistoryList() {
                     </div>
                 </div>
             </div>
-            <div className="row ">
+            <div className="row mt-5">
                 <div className="col-lg-12">
-                    <table className="table table table-striped text-center mt-5" border="1">
+                    <div>
+                    <Link to={"/contract/create-contract"} className="btn btn-success ms-4 my-4 align-content-center">Thêm mới hợp đồng</Link>
+                    </div>
+                    <table className="table table table-striped text-center" border="1">
                         <thead>
                         <tr>
                             <th>Mã HD</th>
@@ -190,6 +193,7 @@ export default function TransactionHistoryList() {
                         </thead>
                         <tbody>
                         {
+                            contracts.length>0?
                             contracts.map((th, index) => (
                                     <tr key={index}>
                                         <td>{th.contractCode}</td>
@@ -213,7 +217,15 @@ export default function TransactionHistoryList() {
                                         </td>
                                     </tr>
                                 )
-                            )}
+                            ):
+                                <tr>
+                                    <td colSpan="7">
+                                        <div align="center">
+                                            <h1>Không tìm thấy</h1>
+                                        </div>
+                                    </td>
+                                </tr>
+                        }
 
                         </tbody>
                     </table>

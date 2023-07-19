@@ -12,6 +12,7 @@ import { CreateEmployee } from "./component/employee/CreateEmployee";
 import TransactionHistoryList from "./component/contract/TransactionHistoryList";
 import { TransactionHistoryDetail } from "./component/contract/TransactionHistoryDetail";
 import { LoginHome } from "./component/account/LoginHome";
+import {CreateContracts} from "./component/contract/CreateContracts";
 
 function App() {
   return (
@@ -22,14 +23,16 @@ function App() {
       <Routes>
         <Route path='/loginHome' element={<LoginHome />} />
         <Route path={""} element={<Navbars />}>
-          <Route path={"/info-store"} element={<InfoStore />}>
+          <Route path={"/info-store"} element={<InfoStore/>}>
             <Route path={"/info-store/profit"} element={<Profit />}>
               <Route path="/info-store/profit/:type" element={<Interest />} />
               <Route path="/info-store/profit/:type" element={<Liquidation />} />
               <Route path="/info-store/profit/:type" element={<Foresee />} />
             </Route>
-            <Route path={"/info-store/transaction-history"} element={<TransactionHistoryList />}></Route>
+            <Route path={"/info-store/transaction-history"} element={<TransactionHistoryList />}>
+            </Route>
             <Route path={"/info-store/transaction-history/detail/:id"} element={<TransactionHistoryDetail />}></Route>
+
             {/*   Đây là component về thông tin cửa hàng
                      Mọi người muốn truyền tới component của mình thì có thể làm theo mẫu
                         <Route path={"/url"} element={<Component/>}/>
@@ -37,6 +40,7 @@ function App() {
           </Route>
           <Route path="/api/employee" element={<EmployeeList />} />
           <Route path="/api/employee/create-employee" element={<CreateEmployee />} />
+          <Route path={"/contract/create-contract"} element={<CreateContracts/>}></Route>
           {/*    Đây là các component khác trên thanh navbar
                     <Route path={"/url các navbar"} element={<Component/>}>
                 */}
