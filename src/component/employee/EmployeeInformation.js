@@ -6,12 +6,13 @@ import * as Yup from 'yup'
 import Swal from "sweetalert2";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../firebase";
-import positionService from "../../service/positionService"
 import {RotatingLines} from "react-loader-spinner";
+import {useParams} from "react-router";
 
 export default function EmployeeInformation() {
     const [employeeDetail, setEmployeeDetail] = useState()
     const navigate = useNavigate()
+    const params = useParams();
     const [selectedFile, setSelectedFile] = useState(null);
     const [firebaseImg, setImg] = useState(null);
     const [isChangeImg, setIsChangeImg] = useState(false);
@@ -19,6 +20,7 @@ export default function EmployeeInformation() {
     const [avatarErr, setAvatarErr] = useState(false)
     const [showErr, setShowErr] = useState(false)
     const [isAuth, setIsAuth] = useState(false);
+    const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
 
     const getMinDate = () => {
         const today = new Date();
@@ -152,7 +154,7 @@ export default function EmployeeInformation() {
                                 setIsChangeImg(false)
                             }
                             setSubmitting(false)
-                            Swal.fire({
+                            await Swal.fire({
                                 icon: 'success',
                                 title: 'Chỉnh sửa thông tin thành công. Nhân viên ' + value.name,
                                 showConfirmButton: false,
@@ -160,14 +162,6 @@ export default function EmployeeInformation() {
                             })
                         } catch (error) {
                             console.log(error);
-                            if (error) {
-                                setSubmitting(false)
-                            }
-                            if (error.response.data.message === 'Email đã tồn tại') {
-                                setShowErr(true)
-                            } else {
-                                setShowErr(false)
-                            }
                         }
                     }
                     editEmployee()
@@ -175,39 +169,10 @@ export default function EmployeeInformation() {
             >
                 {({values, isSubmitting}) => (
                     <Form>
-                        <div className="container " style={{marginTop: "10%"}}>
-                            <div className="row row-no-gutters col-xs-12 col-md-12">
+                        <div className="container">
+                            <div className="row row-no-gutters col-xs-8 col-md-8">
                                 <div className="col-xs-4 col-md-4" id="a">
-                                    <p className="text-center avatar" style={{marginTop: 10}}>
-                                        {
-                                            avatarErr ? <div>
-                                                    <h5 className="text-danger" width='100%' height='100%'>Sai định dạng
-                                                        ảnh, phải có dạng đuôi .jpg, .jpeg, .png</h5>
-                                                </div> :
-                                                <div>
-                                                    <img
-                                                        src={avatarDetail}
-                                                        className="border-avatar rounded-circle" width='200px'
-                                                        height='200px' alt="image"/>
-                                                </div>
-                                        }
-                                        {
-                                            isAuth && <div className={!avatarErr && "border-camera"}>
-                                                <label htmlFor="avatar" type='button'
-                                                       className="bi bi-camera-fill fs-2"></label>
-                                                <input
-                                                    type="file"
-                                                    onChange={handleFileSelect}
-                                                    className='d-none' id='avatar' name='image'/>
-                                            </div>
-                                        }
-
-                                    </p>
                                     <h3 style={{textAlign: "center"}}>{employeeDetail?.account.nameAccount}</h3>
-                                    <div className="mt-3" style={{textAlign: "center"}}>
-                                        <i className="bi bi-emoji-smile me-1"/>
-                                        Chào mừng bạn trở lại
-                                    </div>
                                     <hr/>
                                     <div className="col-12">
                                         <ul className="datnt-app-menu">
@@ -215,7 +180,7 @@ export default function EmployeeInformation() {
                                                 <NavLink to={`/account/change-password`}
                                                          className="datnt-app-menu__item " href="ChangePassword.html">
                                                     <i className="bi bi-file-lock"/>
-                                                    <span className="datnt-app-menu__label">Đổi mật khẩu</span>
+                                                    <span className="form-control">Đổi mật khẩu</span>
                                                 </NavLink>
                                             </li>
                                         </ul>
@@ -246,7 +211,6 @@ export default function EmployeeInformation() {
                                         </div>
                                         <div className="col-md-9">
                                             <input
-                                                id="tenDangNhap"
                                                 type="text"
                                                 className="form-control"
                                                 placeholder="nhan_vien"
@@ -369,16 +333,7 @@ export default function EmployeeInformation() {
                                     <div className="mt-2 inputs row">
                                         <div className="mt-2 inputs col-md-3"></div>
                                         <div className="mt-2 inputs col-md-9 row">
-                                            <div className="text-center mt-2 btn-group col-md-6">
-                                                <button type="submit" className="btn btn-secondary">
-                                                    <b>Quay lại</b>
-                                                </button>
-                                            </div>
-                                            <div className="text-center mt-2 btn-group col-md-6">
-                                                <button type="button" className="btn btn-success" onClick={update}>
-                                                    <b>Sửa</b>
-                                                </button>
-                                            </div>
+
 
                                             <div className="row">
                                                 {
@@ -395,44 +350,14 @@ export default function EmployeeInformation() {
                                                         </div>
                                                         :
                                                         <>
-                                                            <div className="col-12" style={{textAlign: "center"}}>
-                                                                <Link
-                                                                    to={"/"}
-                                                                    className={"btn-datnt"}
-                                                                    type="button"
-                                                                    style={{
-                                                                        backgroundColor: "#B29A81",
-                                                                        width: 80,
-                                                                        color: "#ffffff",
-                                                                        padding: 5,
-                                                                        textAlign: "center",
-                                                                        marginRight: 10,
-                                                                        paddingRight: 5,
-                                                                        borderRadius: 10,
-                                                                        border: "none",
-                                                                        letterSpacing: '0px',
-                                                                        textDecoration: "none"
-                                                                    }}
-                                                                >
-                                                                    Quay về
-                                                                </Link>
-                                                                <button
-                                                                    className={"btn-datnt"}
-                                                                    type={avatarErr || !isAuth ? "button" : "submit"}
-                                                                    style={{
-                                                                        backgroundColor: "#8C6842",
-                                                                        width: 80,
-                                                                        color: "#ffffff",
-                                                                        padding: 5,
-                                                                        textAlign: "center",
-                                                                        marginRight: 10,
-                                                                        paddingRight: 5,
-                                                                        borderRadius: 10,
-                                                                        border: "none",
-                                                                        letterSpacing: '0px'
-                                                                    }}
-                                                                >
-                                                                    Cập nhật
+                                                            <div className="text-center mt-2 btn-group col-md-6">
+                                                                <button type="submit" className="btn btn-secondary">
+                                                                    <b>Quay lại</b>
+                                                                </button>
+                                                            </div>
+                                                            <div className="text-center mt-2 btn-group col-md-6">
+                                                                <button type="button" className="btn btn-success" >
+                                                                    <b>Sửa</b>
                                                                 </button>
                                                             </div>
                                                         </>

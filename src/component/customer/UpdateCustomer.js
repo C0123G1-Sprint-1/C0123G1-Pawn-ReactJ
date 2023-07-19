@@ -326,6 +326,9 @@ export function UpdateCustomer() {
                                                         />
                                                     </div>
                                                 )}
+                                                {fileSelected ? null : (
+                                                    <span  className="error-flag"> {messageError}</span>
+                                                )}
                                                 <hr/>
                                                 <div className="mb-3 mt-3">
                                                     <button

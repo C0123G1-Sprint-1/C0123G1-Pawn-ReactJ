@@ -139,6 +139,7 @@ export function CreateCustomer() {
                             }),
                     address: Yup.string().required("Địa chỉ không được để trống"),
                     citizenCode: Yup.string().required("Căn cước không được để trống")
+                        .matches(/^(\d{12})$/,"Nhập không đúng định dạng. Vui lòng kiểm tra lại")
                         .test(
                             "check-citizen-code",
                             "Số căn cước đã tồn tại",
@@ -253,9 +254,7 @@ export function CreateCustomer() {
                                                     name="image"
                                                     className="form-control-plaintext d-none"
                                                 />
-                                                {fileSelected ? null : (
-                                                    <span  className="error-flag"> {messageError}</span>
-                                                )}
+
                                                 {!avatar && (
                                                     <p>
                                                         <label
@@ -271,6 +270,9 @@ export function CreateCustomer() {
                                                             Chọn hình ảnh
                                                         </label>
                                                     </p>
+                                                )}
+                                                {fileSelected ? null : (
+                                                    <span  className="error-flag"> {messageError}</span>
                                                 )}
                                                 <hr/>
                                                 <div className="mb-3 mt-3">
