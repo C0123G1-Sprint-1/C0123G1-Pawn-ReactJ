@@ -82,7 +82,8 @@ export default function EmployeeList() {
                                         marginLeft: 10,
                                         display: "flex",
                                         justifyContent: "center",
-                                        alignItems: "center"
+                                        alignItems: "center",
+                                        marginBottom : "10px"
                                     }}>
                                     Thêm mới nhân viên
                                 </NavLink>
@@ -99,7 +100,7 @@ export default function EmployeeList() {
                             >
                                 <Form className="d-flex m-1">
                                     <Field
-                                        style={{width: "18vw"}}
+                                        style={{width: "18vw",marginBottom : "10px"}}
                                         className="form-control me-3"
                                         type="text"
                                         placeholder="Tìm kiếm theo tên nhân viên"
@@ -108,7 +109,7 @@ export default function EmployeeList() {
                                     />
                                     <button
                                         className="btn btn-outline-success"
-                                        style={{marginRight: 10}}
+                                        style={{marginRight: 10,marginBottom : "10px"}}
                                         type="submit"
                                     >
                                         <i className="bi bi-search"/>
@@ -155,7 +156,7 @@ export default function EmployeeList() {
                                             <td>{employee.citizenCode}</td>
                                             <td>{(+employee.salary).toLocaleString()} VND</td>
                                             <td><img className="rounded-circle"
-                                                     style={{ width: "140px",height: "140px", margin: `0 auto`, border: "1px solid" }}
+                                                     style={{ width: "120px",height: "110px", margin: `0 auto`, border: "1px solid" }}
                                                      height="100px" src={employee.image} alt=""/></td>
                                         </tr>
                                     ))}
