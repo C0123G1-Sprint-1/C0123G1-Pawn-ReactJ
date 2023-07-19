@@ -22,10 +22,13 @@ export function NewPassword() {
     const data = location.state && location.state.data;
     const [matchError, setMatchError] = useState(false);
 
-    const passwordInputHandler = (event) => {
-        setConfirmPassword(event.target.value);
-        setMatchError(event.target.value !== password1); // Kiểm tra nếu password1 và confirmPassword không khớp
+    const passwordInputHandler = (val) => {
+        setConfirmPassword(val);
+        setMatchError(val !== password1); // Kiểm tra nếu password1 và confirmPassword không khớp
     };
+    useEffect(()=>{
+        passwordInputHandler(confirmPassword)
+    },[password1])
     return (
         <>
             <div className="col-md-6 right-box">
@@ -73,6 +76,7 @@ export function NewPassword() {
                                 <input
                                     name="password"
                                     onChange={(e) => setPassword1(e.target.value)}
+                                    
                                     type="password"
                                     className="form-control form-control-lg bg-light fs-6"
                                     placeholder="Mật khẩu"
@@ -84,7 +88,7 @@ export function NewPassword() {
                             <div className="input-group mb-1">
                                 <input
                                     name="confirmP"
-                                    onChange={passwordInputHandler}
+                                    onChange={(v) => passwordInputHandler(v.target.value)}
 
                                     type="password"
                                     className="form-control form-control-lg bg-light fs-6"
