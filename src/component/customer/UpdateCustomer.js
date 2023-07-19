@@ -8,13 +8,14 @@ import React, {useEffect, useState} from "react";
 import {Oval} from "react-loader-spinner";
 import Swal from "sweetalert2";
 import {Link} from "react-router-dom";
+import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
 
 export function UpdateCustomer() {
     let navigate = useNavigate();
     const params = useParams();
     const [customer, setCustomer] = useState();
     const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
-    const defautImg = "https://icon-library.com/images/no-picture-available-icon/no-picture-available-icon-1.jpg"
+    const defaultImag = "https://icon-library.com/images/no-picture-available-icon/no-picture-available-icon-1.jpg"
     const [fileUrl, setFileUrl] = useState(null);
 
     const [avatar, setAvatarFile] = useState();
@@ -23,7 +24,9 @@ export function UpdateCustomer() {
     const [frontCitizenUrl, setFrontCitizenUrl] = useState();
     const [backCitizen, setBackCitizenFile] = useState();
     const [backCitizenUrl, setBackCitizenUrl] = useState();
-
+    const [fileSelected, setFileSelected] = useState(false);
+    const messageError = "Các trường ảnh không được để trống!!";
+    console.log(fileSelected,"1 lan")
     const handleFileSelect = (event, setFile) => {
         const file = event.target.files[0];
         if (file) {
@@ -42,7 +45,8 @@ export function UpdateCustomer() {
             if (!file) {
                 return reject("No file selected");
             }
-            const storageRef = ref(storage, `files/${file.name}`);
+            const newName = "pawn_shop_topvn" + Date.now() + "_" + file.name;
+            const storageRef = ref(storage, `files/${newName}`);
             const uploadTask = uploadBytesResumable(storageRef, file);
 
             uploadTask.on(
@@ -61,6 +65,7 @@ export function UpdateCustomer() {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
                     setFileUrl(downloadURL);
                     resolve(downloadURL);
+                    return downloadURL;
                 }
             );
         });
@@ -79,20 +84,28 @@ export function UpdateCustomer() {
     };
 
     const handleAvatarFileUpload = async () => {
-        setAvatarUrl(avatar);
-        await handleFileUpload(avatar, setAvatarUrl);
+        if (avatarUrl) {
+            return avatarUrl
+        } else
+        return await handleFileUpload(avatar, setAvatarUrl);
     };
 
     const handleFrontCitizenFileUpload = async () => {
-        setFrontCitizenUrl(frontCitizen);
-        await handleFileUpload(frontCitizen, setFrontCitizenUrl);
+        if (frontCitizenUrl) {
+            return frontCitizenUrl
+        } else
+        return await handleFileUpload(frontCitizen, setFrontCitizenUrl);
     };
 
     const handleBackCitizenFileUpload = async () => {
-        setBackCitizenUrl(backCitizen);
-        await handleFileUpload(backCitizen, setBackCitizenUrl);
+        if (backCitizenUrl) {
+            return backCitizenUrl
+        } else
+        return await handleFileUpload(backCitizen, setBackCitizenUrl);
     };
 
+
+    console.log({customer})
 
     useEffect(() => {
         const fetchData = async () => {
@@ -114,6 +127,23 @@ export function UpdateCustomer() {
         return null;
     }
 
+    const getMinDate = () => {
+        const today = new Date();
+        return new Date(
+            today.getFullYear() - 18,
+            today.getMonth(),
+            today.getDate()
+        );
+    };
+    const getMaxDate = () => {
+        const today = new Date();
+        return new Date(
+            today.getFullYear() - 100,
+            today.getMonth(),
+            today.getDate()
+        );
+    };
+
     return (
         <>
             <Formik
@@ -122,7 +152,7 @@ export function UpdateCustomer() {
                     id: params.id,
                     name: customer?.name,
                     birthday: customer?.birthday,
-                    gender: customer?.gender,
+                    gender: customer?.gender.toString(),
                     phoneNumber: customer?.phoneNumber,
                     email: customer?.email,
                     address: customer?.address,
@@ -132,18 +162,57 @@ export function UpdateCustomer() {
                     backCitizen: customer?.backCitizen,
                 }}
                 validationSchema={Yup.object({
-                    name: Yup.string().required("Tên không được để trống"),
-                    birthday: Yup.string().required("Ngày tháng năm sinh không được để trống"),
+                    name: Yup.string().required("Tên không được để trống").matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
+                        .min(5, 'Ký tự phải nhiều hơn 5')
+                        .max(100, 'Ký tự phải ít hơn 100'),
+                    birthday: Yup.date().required("Ngày tháng năm sinh không được để trống").max(getMinDate(), 'Người dùng phải từ 18 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
                     gender: Yup.number().required("Giới tính không được để trống"),
-                    phoneNumber: Yup.string().required("Số diện thoại không được để trống"),
-                    email: Yup.string().required("Email không được để trống"),
+                    phoneNumber: Yup.string().required("Số diện thoại không được để trống").matches(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/, 'Nhập đúng định dạng SDT VD: 098XXXXXXX (X là chữ số)')
+                        .test(
+                            "check-phone-number",
+                            "Số điện thoại đã tồn tại",
+                            async function (value) {
+                                if (value === customer.phoneNumber) {
+                                    return true
+                                } else if (!value) {
+                                    return true;
+                                } else {
+                                    const isPhoneNumberExists = await checkPhoneNumberExists(value);
+                                    return !isPhoneNumberExists;
+                                }
+                            }),
+                    email: Yup.string().required("Email không được để trống").email('Nhập đúng định dạng email')
+                        .test(
+                            "check-email",
+                            "Email đã tồn tại",
+                            async function (value) {
+                                if (value === customer.email) {
+                                    return true
+                                } else if (!value) {
+                                    return true;
+                                }
+                                const isEmailExists = await checkEmailExists(value);
+                                return !isEmailExists;
+                            }),
                     address: Yup.string().required("Địa chỉ không được để trống"),
-                    citizenCode: Yup.string().required("Căn cước không được để trống"),
-                    image: Yup.string().required("Ảnh chân dung không được để trống"),
-                    frontCitizen: Yup.string().required("Ảnh mặt trước căn cước không được để trống"),
-                    backCitizen: Yup.string().required("Ảnh mặt sau căn cước không được để trống"),
+                    citizenCode: Yup.string().required("Căn cước không được để trống")
+                        .length(12, "Bạn không được nhập quá 12 ký tự")
+                        .matches(/^(\d{12})$/, "Số CCCD không đúng định dạng.")
+                        .test(
+                            "check-citizen-code",
+                            "Số căn cước đã tồn tại",
+                            async function (value) {
+                                if (value === customer.citizenCode) {
+                                    return true
+                                } else if (!value) {
+                                    return true;
+                                }
+                                const isCitizenCodeExists = await checkCitizenCodeExists(value);
+                                return !isCitizenCodeExists;
+                            }),
                 })}
                 onSubmit={async (values, {resetForm, setSubmitting}) => {
+                    console.log(values)
                     try {
                         const results = await Promise.all([
                             handleAvatarFileUpload(),
@@ -154,23 +223,21 @@ export function UpdateCustomer() {
                         const avatarUrl = results[0];
                         const frontCitizenUrl = results[1];
                         const backCitizenUrl = results[2];
-                        console.log(results)
 
                         values.gender = parseInt(values.gender);
                         const newValue = {
                             ...values,
                             image: avatarUrl,
-                            backCitizen: backCitizenUrl,
                             frontCitizen: frontCitizenUrl,
+                            backCitizen: backCitizenUrl,
                         };
-                        console.log(newValue)
                         await customerService.update(newValue);
-
+                        console.log(newValue)
                         setSubmitting(false);
                         await Swal.fire({
                             icon: "success",
-                            title: "Thành công",
-                        }); debugger
+                            title: "Chỉnh sửa thành công. Khách hàng " + newValue.name,
+                        });
                         resetForm();
                         navigate("/");
                     } catch (error) {
@@ -208,22 +275,25 @@ export function UpdateCustomer() {
                                                         style={{width: "100%"}}
                                                         alt="avatar"
                                                     />
-                                                    <button
+                                                    {avatarUrl && (
+                                                        <button
                                                         type="button"
                                                         className="btn btn-danger btn-sm mt-2"
                                                         onClick={() => {
                                                             setAvatarUrl(null);
                                                             setAvatarFile(null);
+                                                            setFileSelected(false);
                                                         }}
                                                     >
                                                         Xoá
                                                     </button>
+                                                    )}
                                                 </div>
 
                                                 <label className="mt-2" style={{textAlign: "center", display: "block"}}>
                                                     Ảnh chân dung
                                                 </label>
-                                                {!avatar && (
+                                                {!avatarUrl && (
                                                     <label htmlFor="file-upload-avatar"
                                                            className="custom-file-upload mt-4">
                                                         Thêm ảnh chân dung <span style={{color: "red"}}>*</span>
@@ -231,12 +301,15 @@ export function UpdateCustomer() {
                                                 )}
                                                 <input
                                                     type="file"
-                                                    onChange={handleAvatarFileSelect}
+                                                    onChange={(event) => {
+                                                        handleAvatarFileSelect(event);
+                                                        setFileSelected(true);
+                                                    }}
                                                     id="image"
                                                     name="image"
                                                     className="form-control-plaintext d-none"
                                                 />
-                                                {!avatar && (
+                                                {!avatarUrl && (
                                                     <div>
                                                         <input
                                                             type="button"
@@ -273,12 +346,15 @@ export function UpdateCustomer() {
                                                         </label>
                                                         <input
                                                             type="file"
-                                                            onChange={handleFrontCitizenFileSelect}
+                                                            onChange={(event) => {
+                                                                handleFrontCitizenFileSelect(event);
+                                                                setFileSelected(true);
+                                                            }}
                                                             id="front-citizen-file"
                                                             name="frontCitizen"
                                                             className="form-control-plaintext d-none"
                                                         />
-                                                        {!frontCitizen && (
+                                                        {!frontCitizenUrl && (
                                                             <p>
                                                                 <label
                                                                     htmlFor="front-citizen-file"
@@ -295,25 +371,26 @@ export function UpdateCustomer() {
                                                             </p>
                                                         )}
 
-                                                            <div>
-                                                                <img
-                                                                    onChange={handleFrontCitizenFileUpload}
-                                                                    className="mt-2"
-                                                                    src={frontCitizenUrl ? frontCitizenUrl : (frontCitizen ? URL.createObjectURL(frontCitizen) : defautImg)}
-                                                                    style={{width: "100%"}}
-                                                                    alt=""
-                                                                />
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn btn-danger btn-sm mt-2"
-                                                                    onClick={() => {
-                                                                        setFrontCitizenFile(null);
-                                                                        setFrontCitizenUrl(null);
-                                                                    }}
-                                                                >
-                                                                    Xoá
-                                                                </button>
-                                                            </div>
+                                                        <div>
+                                                            <img
+                                                                onChange={handleFrontCitizenFileUpload}
+                                                                className="mt-2"
+                                                                src={frontCitizenUrl ? frontCitizenUrl : (frontCitizen ? URL.createObjectURL(frontCitizen) : defaultImag)}
+                                                                style={{width: "100%"}}
+                                                                alt=""
+                                                            />
+                                                            {frontCitizenUrl && (  <button
+                                                                type="button"
+                                                                className="btn btn-danger btn-sm mt-2"
+                                                                onClick={() => {
+                                                                    setFrontCitizenFile(null);
+                                                                    setFrontCitizenUrl(null);
+                                                                    setFileSelected(false);
+                                                                }}
+                                                            >
+                                                                Xoá
+                                                            </button>)}
+                                                        </div>
                                                     </div>
                                                     <div className="mb-3">
                                                         <label htmlFor="back-upload" className="custom-file-upload">
@@ -321,12 +398,15 @@ export function UpdateCustomer() {
                                                         </label>
                                                         <input
                                                             type="file"
-                                                            onChange={handleBackCitizenFileSelect}
+                                                            onChange={(event) => {
+                                                                handleBackCitizenFileSelect(event);
+                                                                setFileSelected(true);
+                                                            }}
                                                             id="back-citizen-file"
                                                             name="backCitizen"
                                                             className="form-control-plaintext d-none"
                                                         />
-                                                        {!backCitizen && (
+                                                        {!backCitizenUrl && (
                                                             <p>
                                                                 <label
                                                                     htmlFor="back-citizen-file"
@@ -343,36 +423,27 @@ export function UpdateCustomer() {
                                                             </p>
                                                         )}
 
-                                                            <div>
-                                                                <img
-                                                                    onChange={handleBackCitizenFileUpload}
-                                                                    className="mt-2"
-                                                                    src={backCitizenUrl ? backCitizenUrl : (backCitizen ? URL.createObjectURL(backCitizen) : defautImg)}
-                                                                    style={{width: "100%"}}
-                                                                    alt=""
-                                                                />
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn btn-danger btn-sm mt-2"
-                                                                    onClick={() => {
-                                                                        setBackCitizenFile(null);
-                                                                        setBackCitizenUrl(null);
-                                                                    }}
-                                                                >
-                                                                    Xoá
-                                                                </button>
-                                                            </div>
+                                                        <div>
+                                                            <img
+                                                                onChange={handleBackCitizenFileUpload}
+                                                                className="mt-2"
+                                                                src={backCitizenUrl ? backCitizenUrl : (backCitizen ? URL.createObjectURL(backCitizen) : defaultImag)}
+                                                                style={{width: "100%"}}
+                                                                alt=""
+                                                            />
+                                                            {backCitizenUrl && ( <button
+                                                                type="button"
+                                                                className="btn btn-danger btn-sm mt-2"
+                                                                onClick={() => {
+                                                                    setBackCitizenFile(null);
+                                                                    setBackCitizenUrl(null);
+                                                                    setFileSelected(false);
+                                                                }}
+                                                            >
+                                                                Xoá
+                                                            </button>)}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="mt-3">
-                                                    <button
-                                                        id="show-alert-button"
-                                                        type="button"
-                                                        className="btn btn-sm btn-success"
-                                                        // onClick={analyzeImage}
-                                                    >
-                                                        Phân tích hình ảnh lấy dữ liệu
-                                                    </button>
                                                 </div>
                                             </div>
                                             <Field
@@ -394,6 +465,9 @@ export function UpdateCustomer() {
                                                         type="text"
                                                         required
                                                     />
+                                                    <ErrorMessage component="span"
+                                                                  name="name"
+                                                                  className="error-flag"/>
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-dateOfBirth">
@@ -421,21 +495,21 @@ export function UpdateCustomer() {
                                                         <div>
                                                             <label>
                                                                 <Field type="radio" name="gender" value="0"
-                                                                       checked={customer.gender === 0}/>
+                                                                />
                                                                 Nam
                                                             </label>
                                                         </div>
                                                         <div>
                                                             <label>
                                                                 <Field type="radio" name="gender" value="1"
-                                                                       checked={customer.gender === 1}/>
+                                                                />
                                                                 Nữ
                                                             </label>
                                                         </div>
                                                         <div>
                                                             <label>
                                                                 <Field type="radio" name="gender" value="2"
-                                                                       checked={customer.gender === 2}/>
+                                                                />
                                                                 Khác
                                                             </label>
                                                         </div>
@@ -474,6 +548,11 @@ export function UpdateCustomer() {
                                                         name="phoneNumber"
                                                         type="text"
                                                         required
+                                                    />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="phoneNumber"
+                                                        className="error-flag"
                                                     />
                                                 </div>
                                                 <div className="mt-2">

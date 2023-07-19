@@ -8,6 +8,7 @@ import React, {useState} from "react";
 import {Oval} from "react-loader-spinner";
 import Swal from "sweetalert2";
 import {Link} from "react-router-dom";
+import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
 
 export function CreateCustomer() {
     let navigate = useNavigate();
@@ -17,7 +18,8 @@ export function CreateCustomer() {
     const [frontCitizenUrl, setFrontCitizenUrl] = useState(null);
     const [backCitizen, setBackCitizenFile] = useState(null);
     const [backCitizenUrl, setBackCitizenUrl] = useState(null);
-
+    const [fileSelected, setFileSelected] = useState(false);
+    const messageError = "Các trường ảnh không được để trống!!";
     const handleFileSelect = (event, setFile, setFileUrl) => {
         const file = event.target.files[0];
         if (file) {
@@ -28,7 +30,8 @@ export function CreateCustomer() {
     const handleFileUpload = async (file, setFile, setFileUrl) => {
         return new Promise((resolve, reject) => {
             if (!file) return reject("No file selected");
-            const storageRef = ref(storage, `files/${file.name}`);
+            const newName = "pawn_shop_topvn" + Date.now() + "_" + file.name;
+            const storageRef = ref(storage, `files/${newName}`);
             const uploadTask = uploadBytesResumable(storageRef, file);
 
             uploadTask.on(
@@ -73,6 +76,23 @@ export function CreateCustomer() {
         return handleFileUpload(backCitizen, setBackCitizenUrl);
     };
 
+    const getMinDate = () => {
+        const today = new Date();
+        return new Date(
+            today.getFullYear() - 18,
+            today.getMonth(),
+            today.getDate()
+        );
+    };
+    const getMaxDate = () => {
+        const today = new Date();
+        return new Date(
+            today.getFullYear() - 100,
+            today.getMonth(),
+            today.getDate()
+        );
+    };
+
     return (
         <>
             <Formik
@@ -89,16 +109,46 @@ export function CreateCustomer() {
                     backCitizen: "",
                 }}
                 validationSchema={Yup.object({
-                    name: Yup.string().required("Tên không được để trống"),
-                    birthday: Yup.string().required("Ngày tháng năm sinh không được để trống"),
+                    name: Yup.string().required("Tên không được để trống").matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
+                        .min(5, 'Ký tự phải nhiều hơn 5')
+                        .max(100, 'Ký tự phải ít hơn 100'),
+                    birthday: Yup.date().required("Ngày tháng năm sinh không được để trống").max(getMinDate(), 'Người dùng phải từ 18 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
                     gender: Yup.number().required("Giới tính không được để trống"),
-                    phoneNumber: Yup.string().required("Số diện thoại khô   ng được để trống"),
-                    email: Yup.string().required("Email không được để trống"),
+                    phoneNumber: Yup.string().required("Số diện thoại không được để trống")
+                        .matches(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/, 'Nhập đúng định dạng SDT VD: 098XXXXXXX (X là chữ số)')
+                        .test(
+                            "check-phone-number",
+                            "Số điện thoại đã tồn tại",
+                            async function (value) {
+                                if (!value) {
+                                    return true;
+                                }
+                                const isPhoneNumberExists = await checkPhoneNumberExists(value);
+                                return !isPhoneNumberExists;
+                            }),
+                    email: Yup.string().required("Email không được để trống").email('Nhập đúng định dạng email')
+                        .test(
+                            "check-email",
+                            "Email đã tồn tại",
+                            async function (value) {
+                                if (!value) {
+                                    return true;
+                                }
+                                const isEmailExists = await checkEmailExists(value);
+                                return !isEmailExists;
+                            }),
                     address: Yup.string().required("Địa chỉ không được để trống"),
-                    citizenCode: Yup.string().required("Căn cước không được để trống"),
-                    image: Yup.string().required("Ảnh chân dung không được để trống"),
-                    frontCitizen: Yup.string().required("Ảnh mặt trước căn cước không được để trống"),
-                    backCitizen: Yup.string().required("Ảnh mặt sau căn cước không được để trống"),
+                    citizenCode: Yup.string().required("Căn cước không được để trống")
+                        .test(
+                            "check-citizen-code",
+                            "Số căn cước đã tồn tại",
+                            async function (value) {
+                                if (!value) {
+                                    return true;
+                                }
+                                const isCitizenCodeExists = await checkCitizenCodeExists(value);
+                                return !isCitizenCodeExists;
+                            }),
                 })}
                 onSubmit={async (values, {resetForm, setSubmitting}) => {
                     try {
@@ -125,7 +175,7 @@ export function CreateCustomer() {
                         setSubmitting(false);
                         await Swal.fire({
                             icon: "success",
-                            title: "Thành công",
+                            title: "Thêm mới thành công. Khách hàng " + newValue.name,
                         });
                         resetForm();
                         navigate("/");
@@ -171,6 +221,7 @@ export function CreateCustomer() {
                                                             onClick={() => {
                                                                 setAvatarFile(null);
                                                                 setAvatarUrl("");
+                                                                setFileSelected(false);
                                                             }}
                                                         >
                                                             Xoá
@@ -194,11 +245,17 @@ export function CreateCustomer() {
                                                     </label>)}
                                                 <Field
                                                     type="file"
-                                                    onChange={handleAvatarFileSelect}
+                                                    onChange={(event) => {
+                                                        handleAvatarFileSelect(event);
+                                                        setFileSelected(true);
+                                                    }}
                                                     id="image"
                                                     name="image"
                                                     className="form-control-plaintext d-none"
                                                 />
+                                                {fileSelected ? null : (
+                                                    <span  className="error-flag"> {messageError}</span>
+                                                )}
                                                 {!avatar && (
                                                     <p>
                                                         <label
@@ -231,10 +288,18 @@ export function CreateCustomer() {
                                                         </label>
                                                         <Field
                                                             type="file"
-                                                            onChange={handleFrontCitizenFileSelect}
+                                                            onChange={(event) => {
+                                                                handleFrontCitizenFileSelect(event);
+                                                                setFileSelected(true);
+                                                            }}
                                                             id="front-citizen-file"
                                                             name="frontCitizen"
                                                             className="form-control-plaintext d-none"
+                                                        />
+                                                        <ErrorMessage
+                                                            component="span"
+                                                            name="frontCitizen"
+                                                            className="error-flag"
                                                         />
                                                         {!frontCitizen && (
                                                             <p>
@@ -268,6 +333,7 @@ export function CreateCustomer() {
                                                                     onClick={() => {
                                                                         setFrontCitizenFile(null);
                                                                         setFrontCitizenUrl("");
+                                                                        setFileSelected(false);
                                                                     }}
                                                                 >
                                                                     Xoá
@@ -281,10 +347,18 @@ export function CreateCustomer() {
                                                         </label>
                                                         <Field
                                                             type="file"
-                                                            onChange={handleBackCitizenFileSelect}
+                                                            onChange={(event) => {
+                                                                handleBackCitizenFileSelect(event);
+                                                                setFileSelected(true);
+                                                            }}
                                                             id="back-citizen-file"
                                                             name="backCitizen"
                                                             className="form-control-plaintext d-none"
+                                                        />
+                                                        <ErrorMessage
+                                                            component="span"
+                                                            name="backCitizen"
+                                                            className="error-flag"
                                                         />
                                                         {!backCitizen && (
                                                             <p>
@@ -318,6 +392,7 @@ export function CreateCustomer() {
                                                                     onClick={() => {
                                                                         setBackCitizenFile(null);
                                                                         setBackCitizenUrl("");
+                                                                        setFileSelected(false);
                                                                     }}
                                                                 >
                                                                     Xoá
@@ -326,16 +401,16 @@ export function CreateCustomer() {
                                                         )}
                                                     </div>
                                                 </div>
-                                                <div className="mt-3">
-                                                    <button
-                                                        id="show-alert-button"
-                                                        type="button"
-                                                        className="btn btn-sm btn-success"
-                                                        // onClick={analyzeImage}
-                                                    >
-                                                        Phân tích hình ảnh lấy dữ liệu
-                                                    </button>
-                                                </div>
+                                                {/*<div className="mt-3">*/}
+                                                {/*    <button*/}
+                                                {/*        id="show-alert-button"*/}
+                                                {/*        type="button"*/}
+                                                {/*        className="btn btn-sm btn-success"*/}
+                                                {/*        // onClick={analyzeImage}*/}
+                                                {/*    >*/}
+                                                {/*        Phân tích hình ảnh lấy dữ liệu*/}
+                                                {/*    </button>*/}
+                                                {/*</div>*/}
                                             </div>
 
                                             <div className="col-md-8">
