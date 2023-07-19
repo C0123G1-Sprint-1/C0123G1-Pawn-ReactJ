@@ -52,6 +52,7 @@ export function NewPassword() {
                             try {
                                 values = {
                                     ...values,
+                                    password:password1,
                                     id: data
                                 }
                                 const response = await axios.patch(
@@ -59,7 +60,6 @@ export function NewPassword() {
                                     values
                                 )
                                 console.log(response)
-
                                 toast.success("Đổi mật khẩu thành công");
                                 navigate('/login');
                             } catch (error) {
