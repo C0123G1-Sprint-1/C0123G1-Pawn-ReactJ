@@ -11,11 +11,11 @@ export default function Foresee() {
                     <thead>
                     <tr>
                         <th>Mã Hd</th>
-                        <th>Tiền cho vay</th>
-                        <th>Tiền lãi</th>
+                        <th>Tiền cho vay(VND)</th>
+                        <th>Tiền lãi(VND)</th>
                         <th>Ngày bắt đầu</th>
                         <th>Ngày kết thúc</th>
-                        <th>Lợi nhuận dự kiến</th>
+                        <th>Lợi nhuận dự kiến(VND)</th>
                         <th id="actions">Tùy chọn</th>
                     </tr>
                     </thead>
@@ -25,11 +25,11 @@ export default function Foresee() {
                             contracts.map((contract, index) =>
                                 <tr key={index}>
                                     <td>{contract.contractCode}</td>
-                                    <td>{contract.loans}</td>
-                                    <td>{contract.interest}</td>
+                                    <td>{contract.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td>{contract.interest?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                     <td>{contract.startDate}</td>
                                     <td>{contract.endDate}</td>
-                                    <td>{contract.profitForesee}</td>
+                                    <td>{contract.profitForesee?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                     <td className="detail-button">
                                         <a href="#">
                                             <i className="bi bi-info-circle detail" title="Chi tiết"/>

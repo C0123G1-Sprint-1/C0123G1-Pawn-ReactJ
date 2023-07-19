@@ -1,5 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "bootstrap/dist/js/bootstrap"
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import "bootstrap/dist/js/bootstrap"
 import React from "react";
 import {NavLink} from "react-router-dom";
 import {Outlet} from "react-router";
@@ -57,7 +57,7 @@ export default function Navbars() {
                                     color: isActive ? "#fff" : "",
                                     borderRadius: "10px"
                                 }
-                            }} className="nav-link" to={"/redeem"}>
+                            }} className="nav-link" to={"/nav/redeem"}>
                                 Trả đồ
                             </NavLink>
                         </li>
@@ -68,7 +68,7 @@ export default function Navbars() {
                                     color: isActive ? "#fff" : "",
                                     borderRadius: "10px"
                                 }
-                            }} className="nav-link" to={"/info-store"}>
+                            }} className="nav-link" to={"/nav/info-store"}>
                                 Thông tin cửa hàng
                             </NavLink>
                         </li>
@@ -93,7 +93,7 @@ export default function Navbars() {
                                                 color: isActive ? "#fff" : "",
                                                 borderRadius: "10px"
                                             }
-                                        }} className="nav-link" to={"/api/employee"}>
+                                        }} className="nav-link" to={"/nav/api/employee"}>
                                             Quản lý nhân viên
                                         </NavLink>
                                     </li>
@@ -105,7 +105,7 @@ export default function Navbars() {
                                             color: isActive ? "#fff" : "",
                                             borderRadius: "10px"
                                         }
-                                    }} className="nav-link" to={"/api/employee"}>
+                                    }} className="nav-link" to={"/nav/api/employee"}>
                                         Quản lý nhân viên
                                     </NavLink>
                                 </li>

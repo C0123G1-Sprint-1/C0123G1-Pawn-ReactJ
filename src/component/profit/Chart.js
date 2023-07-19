@@ -6,14 +6,14 @@ export const ChartComponent = ({data}) => {
         labels: data.map((row) => row.month),
         datasets: [
             {
-                label: "Lợi nhuận theo tháng",
+                label: "Lợi nhuận",
                 data: data.map((row) => row.profit),
-                backgroundColor: ['rgb(177,239,173)'],
-                hoverBackgroundColor: 'rgb(57,120,49)',
+                backgroundColor: ['#0a9a4e'],
+                hoverBackgroundColor: '#27533e',
                 borderColor: ['black'],
                 borderWidth: 1,
-                maxBarThickness: 40,
-                indexAxis: "x",
+                maxBarThickness: 30,
+                indexAxis: "x"
             },
         ],
     };

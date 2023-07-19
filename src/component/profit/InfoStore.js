@@ -29,7 +29,7 @@ export default function InfoStore() {
                             }}  className="border-0 list-group-item list-group-item-action">
                                 Tài chính
                             </NavLink>
-                            <NavLink to={"/info-store/all-contract"} style={({isActive})=>{
+                            <NavLink to={"/nav/info-store/all-contract"} style={({isActive})=>{
                                 return{
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""
@@ -53,7 +53,7 @@ export default function InfoStore() {
                             }}  className="border-0 list-group-item list-group-item-action ">
                                 Top 10 hợp đồng mới nhất
                             </NavLink>
-                            <NavLink to={"/info-store/profit"} style={({isActive})=>{
+                            <NavLink to={"/nav/info-store/profit"} style={({isActive})=>{
                                 return{
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""

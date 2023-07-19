@@ -18,20 +18,20 @@ function App() {
                 <h1>Header</h1>
             </div>
             <Routes>
-                <Route path={""} element={<Navbars/>}>
-                    <Route path={"/info-store"} element={<InfoStore/>}>
-                        <Route path={"/info-store/profit"} element={<Profit/>}>
-                            <Route path="/info-store/profit" element={<Interest/>}/>
-                            <Route path="/info-store/profit/interest/:profitType" element={<Interest/>}/>
-                            <Route path="/info-store/profit/liquidation/:profitType" element={<Liquidation/>}/>
-                            <Route path="/info-store/profit/foresee/:profitType" element={<Foresee/>}/>
+                <Route path={"/nav"} element={<Navbars/>}>
+                    <Route path={"/nav/info-store"} element={<InfoStore/>}>
+                        <Route path={"/nav/info-store/profit"} element={<Profit/>}>
+                            <Route path="/nav/info-store/profit" element={<Interest/>}/>
+                            <Route path="/nav/info-store/profit/interest/:profitType" element={<Interest/>}/>
+                            <Route path="/nav/info-store/profit/liquidation/:profitType" element={<Liquidation/>}/>
+                            <Route path="/nav/info-store/profit/foresee/:profitType" element={<Foresee/>}/>
                         </Route>
-                        <Route path={"/info-store/all-contract"} element={<ShowContract/>}/>
+                        <Route path={"/nav/info-store/all-contract"} element={<ShowContract/>}/>
 
                     </Route>
-                    <Route path="/api/employee" element={<EmployeeList/>}/>
-                    <Route path="/api/employee/create-employee" element={<CreateEmployee/>}/>
-                    <Route path="/redeem" element={<Redeeming/>}/>
+                    <Route path="/nav/api/employee" element={<EmployeeList/>}/>
+                    <Route path="/nav/api/employee/create-employee" element={<CreateEmployee/>}/>
+                    <Route path="/nav/redeem" element={<Redeeming/>}/>
                 </Route>
             </Routes>
             <div align="center" id="footer">

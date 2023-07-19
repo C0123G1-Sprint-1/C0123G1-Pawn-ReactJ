@@ -36,7 +36,7 @@
     list-style: none;
 }
 
-.page-link .active {
+.page-item .page-link .active {
     background-color: #007bff;
     color: #fff;
 }
