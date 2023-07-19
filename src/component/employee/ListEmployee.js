@@ -154,7 +154,9 @@ export default function EmployeeList() {
                                             <td>{employee.phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')}</td>
                                             <td>{employee.citizenCode}</td>
                                             <td>{(+employee.salary).toLocaleString()} VND</td>
-                                            <td><img src={employee.image} alt=""/></td>
+                                            <td><img className="rounded-circle"
+                                                     style={{ width: "140px",height: "140px", margin: `0 auto`, border: "1px solid" }}
+                                                     height="100px" src={employee.image} alt=""/></td>
                                         </tr>
                                     ))}
                                     </tbody>
