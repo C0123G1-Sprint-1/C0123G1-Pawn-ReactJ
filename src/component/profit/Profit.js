@@ -3,7 +3,6 @@ import {NavLink, useParams} from "react-router-dom"
 import {Chart} from "chart.js/auto"
 import React, {useEffect, useState} from "react";
 import {Outlet} from "react-router";
-import axios from "axios";
 import {Field, Form, Formik} from "formik";
 import * as ProfitService from "../../service/ProfitService"
 import "../../css/interest.css"
@@ -13,17 +12,17 @@ export default function Profit() {
     const [profitType, setProfitType] = useState("interest");
     const [totalPage, setTotalPage] = useState();
     const [totalProfit, setTotalProfit] = useState(0);
-    const type = useParams();
+    const params = useParams();
     const [dataProfit, setDataProfit] = useState();
     const [dateTimeProfit, setDateTimeProfit] = useState({
         startDate: "",
         endDate: ""
     })
     const [currentPage, setCurrentPage] = useState(0);
-    const [statisticsStatus,setStatisticsStatus] = useState(true);
+    const [statisticsStatus, setStatisticsStatus] = useState(true);
 
     const getContractByPage = async (startDate, endDate, page, profitType) => {
-        await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, page, profitType || type.type)
+        await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, page, profitType || params.profitType)
         setCurrentPage(page);
     }
     const pagination = () => {
@@ -35,7 +34,7 @@ export default function Profit() {
             page.push(
                 <li className="page-item" key={i}>
                     <a className={pageLinkClassName}
-                       onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, i, profitType || type.type)}>
+                       onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, i, profitType || params.profitType)}>
                         {i + 1}
                     </a>
                 </li>
@@ -75,31 +74,43 @@ export default function Profit() {
         }
     }
     const setProfit = async (profitType) => {
+        await setCancel()
         await setProfitType(() => profitType)
     }
-    const setDate = async (event)=>{
-        setDateTimeProfit({
+    const setDate = async (event) => {
+        await setDateTimeProfit({
             ...dateTimeProfit,
             startDate: event.target.value
         })
     }
-    const setCancel = async ()=>{
+    const setCancel = async () => {
         await setStatisticsStatus(!statisticsStatus)
         await setDateTimeProfit({
             startDate: "",
             endDate: ""
         })
     }
+
     useEffect(() => {
-        // alert(profitType + dateTimeProfit.startDate)
+        // alert(profitType || params.profitType  + " " + dateTimeProfit.startDate)
         const fectData = async () => {
             await setCurrentPage(0);
-            await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, profitType || type.type)
-            await getDataProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, profitType || type.type)
-            await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, profitType || type.type)
+            await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, profitType || params.profitType)
+            await getDataProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, profitType || params.profitType)
+            await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, profitType || params.profitType)
         }
         fectData()
-    }, [profitType,dateTimeProfit])
+    }, [profitType, dateTimeProfit])
+    // useEffect(()=>{
+    //     alert(profitType || params.profitType+2 + dateTimeProfit.startDate)
+    //     const fectData = async () => {
+    //         await setCurrentPage(0);
+    //         await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, profitType || params.profitType)
+    //         await getDataProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, profitType || params.profitType)
+    //         await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, profitType || params.profitType)
+    //     }
+    //     fectData()
+    // },[dateTimeProfit])
     if (!dataProfit || !contracts && contracts !== null) {
         return null;
     }
@@ -145,7 +156,7 @@ export default function Profit() {
                                                                    color: isActive ? "#fff" : "",
                                                                    width: "100%"
                                                                }
-                                                           }} to="/info-store/profit/interest"
+                                                           }} to="/info-store/profit/interest/interest"
                                                            className="btn btn-sm rounded-4  ">Lợi nhuận từ tiền
                                 lãi</NavLink></li>
                             <li className="col-4"><NavLink onClick={() => setProfit("liquidation")}
@@ -155,7 +166,7 @@ export default function Profit() {
                                                                    color: isActive ? "#fff" : "",
                                                                    width: "100%"
                                                                }
-                                                           }} to="/info-store/profit/liquidation"
+                                                           }} to="/info-store/profit/liquidation/liquidation"
                                                            className="btn btn-sm rounded-4  ">Lợi nhuận từ thanh
                                 lý</NavLink>
                             </li>
@@ -165,7 +176,7 @@ export default function Profit() {
                                     color: isActive ? "#fff" : "",
                                     width: "100%"
                                 }
-                            }} to="/info-store/profit/foresee" className="btn btn-sm rounded-4  ">Lợi nhuận dự
+                            }} to="/info-store/profit/foresee/foresee" className="btn btn-sm rounded-4  ">Lợi nhuận dự
                                 kiến</NavLink>
                             </li>
                         </ul>
@@ -178,10 +189,10 @@ export default function Profit() {
                                     endDate: ""
                                 }}
                                 onSubmit={async (values) => {
-                                    await getContract(values.startDate, values.endDate, 0, profitType || type.type)
-                                    await getDataProfit(values.startDate, values.endDate, profitType || type.type)
-                                    await getProfit(values.startDate, values.endDate, profitType || type.type)
-                                    setDateTimeProfit({
+                                    await getContract(values.startDate, values.endDate, 0, profitType || params.profitType)
+                                    await getDataProfit(values.startDate, values.endDate, profitType || params.profitType)
+                                    await getProfit(values.startDate, values.endDate, profitType || params.profitType)
+                                    await setDateTimeProfit({
                                         startDate: values.startDate,
                                         endDate: values.endDate
                                     })
@@ -189,7 +200,9 @@ export default function Profit() {
                                 <Form className="p-0 ms-5">
                                     <div className="d-flex col-lg-12 justify-content-between p-0">
                                         <div className=" col-lg-5 p-0">
-                                            <span>Từ ngày : <Field name="startDate" type="date" value={dateTimeProfit.startDate}/></span>
+                                            <span>Từ ngày : <Field name="startDate" type="date"
+                                                onChange={(event)=>setDate(event)}
+                                                                   value={dateTimeProfit?.startDate}/></span>
                                         </div>
                                         <div className=" col-lg-5">
                                             <span>Đến : <Field name="endDate" type="date"/></span>
@@ -197,7 +210,6 @@ export default function Profit() {
                                         <div className=" col-lg-2 p-0 d-flex justify-content-end">
                                             <button type="submit" className="btn btn-sm btn-primary">Thống kê
                                             </button>
-                                            {/*Fix lai reset ngay*/}
                                             <button type="button" onClick={() => setCancel()}
                                                     className="btn btn-sm btn-primary ms-1">Hủy
                                             </button>
@@ -207,7 +219,9 @@ export default function Profit() {
                             </Formik>
                             <label className="mt-3 p-0 ms-5" style={{color: "indianred"}}>
                                 Tổng lợi nhuận :{" "}
-                                <input type="text" disabled value={totalProfit}/>
+                                <input type="text" disabled value={
+                                    totalProfit
+                                }/>
                             </label>
                         </div>
                     </div>
@@ -234,7 +248,7 @@ export default function Profit() {
                                         {
                                             currentPage !== 0 ?
                                                 <a className="page-link"
-                                                   onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage - 1, profitType || type.type)}>
+                                                   onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage - 1, profitType || params.profitType)}>
                                                     Trước
                                                 </a>
                                                 :
@@ -248,7 +262,7 @@ export default function Profit() {
                                         {
                                             currentPage !== totalPage - 1 ?
                                                 <a className="page-link"
-                                                   onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage + 1, profitType || type.type)}>
+                                                   onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage + 1, profitType || params.profitType)}>
                                                     Sau
                                                 </a>
                                                 :

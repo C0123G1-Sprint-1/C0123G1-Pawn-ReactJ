@@ -22,8 +22,12 @@ export default function Navbars() {
                 right: "0px",
                 backgroundColor: "rgb(255, 255, 255)"
             }}>
-                <div className="container-fluid" style={{height: "100%"}}>
-                    <ul className="navbar-nav d-flex align-items-center" style={{height: "100%"}}>
+                <div className="container-fluid" style={{height: "100%", justifyContent: "center"}}>
+                    <ul className="navbar-nav d-flex align-items-center" style={{height: "100%",  display: "flex",
+                        justifyContent: "center" ,
+                        flexDirection: "row",
+                        gap: "50px",
+                    }}>
                         <li className="nav-item">
                             <NavLink style={({isActive}) => {
                                 return {
@@ -53,7 +57,7 @@ export default function Navbars() {
                                     color: isActive ? "#fff" : "",
                                     borderRadius: "10px"
                                 }
-                            }} className="nav-link" to={"/return-pawn"}>
+                            }} className="nav-link" to={"/redeem"}>
                                 Trả đồ
                             </NavLink>
                         </li>
