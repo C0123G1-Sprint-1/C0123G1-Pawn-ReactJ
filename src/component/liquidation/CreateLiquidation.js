@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Field, Form, Formik} from "formik";
-
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import * as yup from "yup";
 import {Modal} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"
 import '../../css/liquidation.css';
@@ -10,37 +10,74 @@ import {
     getListProductTypeAPI, saveLiquidationAPI, searchContractAPI,
     searchCustomerAPI
 } from "../../service/LiquidationService";
+import {useNavigate} from "react-router";
 
 export function CreateLiquidation() {
-    const [customers, setCustomers] = useState();
+    const navigate = useNavigate();
+    const [customers, setCustomers] = useState([]);
     const [idCustomer, setIdCustomer] = useState(0);
-    const [contracts, setContracts] = useState();
+    const [contracts, setContracts] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [showModal1, setShowModal1] = useState(false);
     const [productType, setProductType] = useState([]);
     const [listProduct, setListProduct] = useState([]);
-    const list = [];
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [page, setPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+
+    const getListCustomer = async () => {
+        try {
+            const response = await getListCustomerAPI(page);
+            setCustomers(response.data.content);
+            setTotalPages(response.data.totalPages);
+        } catch (error) {
+            console.error('Error while loading customers:', error);
+        }
+    };
+
+    const getListProduct = async () => {
+        try {
+            const response = await getListProductAPI(page);
+            setContracts(response.data.content);
+            setTotalPages(response.data.totalPages);
+        } catch (error) {
+            console.error('Error while loading products:', error);
+        }
+    };
     const getListProductType = async () => {
         const res = await getListProductTypeAPI();
         setProductType(res.data);
     }
-    const getListCustomer = async () => {
-        const res = await getListCustomerAPI();
-        setCustomers(res.data.content);
-    };
-    const getListProduct = async () => {
-        const res = await getListProductAPI();
-        setContracts(res.data.content);
-    };
+    const paginate = (page) => {
+        setPage(page)
+    }
     useEffect(() => {
         getListCustomer();
         getListProduct()
         getListProductType();
-    }, []);
+    }, [page]);
 
     const getProduct = (id) => {
-        setListProduct(list = {...listProduct, contracts.find((c) => c.id == id)})
-    }
+        const selectedContract = contracts.find((c) => c.id === id);
+        if (selectedContract) {
+            setListProduct([...listProduct, selectedContract]);
+        }
+    };
+
+    useEffect(() => {
+        const calculateTotalPrice = () => {
+            const totalPrice = listProduct.reduce(
+                (accumulator, product) => accumulator + parseInt(product.loans),
+                0
+            );
+            setTotalPrice(totalPrice);
+        };
+        calculateTotalPrice();
+    }, [listProduct]);
+
+    const data = {
+        products: listProduct.map((p) => p.productName).join(",")
+    };
 
     const handleModalClose = () => {
         setShowModal(false);
@@ -64,12 +101,25 @@ export function CreateLiquidation() {
     return (
         <>
             <Formik initialValues={{
-                customers: "",
-                contracts: "",
-                totalPrice: "",
-            }} onSubmit={async (values) => {
-                await saveLiquidationAPI({...values})
-            }}>
+                id: '',
+                customers: '',
+                products: [''],
+                totalPrice: 0,
+                createTime: null
+            }}
+                // validationSchema={yup.object({
+                //     customers: yup.number().required("Vui lòng chọn khách hàng."),
+                //     products: yup.array().required("Vui lòng chọn sản phẩm.")
+                // })}
+                    onSubmit={async (values) => {
+                        await saveLiquidationAPI({
+                            ...values,
+                            totalPrice: totalPrice,
+                            customers: customers.find((c) => c.id === idCustomer),
+                            products: data.products
+                        });
+                        navigate("/")
+                    }}>
                 <div className="container mb-5">
                     <div className="row height d-flex justify-content-center align-items-center">
                         <div className="col-md-6">
@@ -86,8 +136,12 @@ export function CreateLiquidation() {
                                             </button>
                                         </div>
                                     </div>
+                                    <ErrorMessage name="customers" component="span" style={{color: "red"}}/>
+                                    <Field type="text" className="form-control" id="name" name="customers" hidden
+                                           value={customers.find((c) => c.id === idCustomer)?.id}/>
+
                                     <div className="mt-4 inputs"><label>Tên khách hàng</label>
-                                        <Field type="text" className="form-control" id="name" name="customers" disabled
+                                        <Field type="text" className="form-control" id="name" name="name" disabled
                                                value={customers.find((c) => c.id === idCustomer)?.name}/>
                                     </div>
                                     <div className="mt-4 inputs"><label>CMND</label>
@@ -95,7 +149,7 @@ export function CreateLiquidation() {
                                                disabled
                                                value={customers.find((c) => c.id === idCustomer)?.citizenCode}/>
                                     </div>
-                                    <div className="mt-2 inputs">
+                                    <div className="mt-4 inputs">
                                         <label>Đồ thanh lý</label>
                                         <div className="text-center m-auto">
                                             <button type="button" className="btn btn-outline-success"
@@ -103,16 +157,27 @@ export function CreateLiquidation() {
                                                 <b className="text-center">Chọn đồ thanh lý</b>
                                             </button>
                                         </div>
+                                        <ErrorMessage name="products" component="span" style={{color: "red"}}/>
                                         <div className="justify-content-between mt-4">
                                             <div className="input-group">
-                                                <Field type="text" className="form-control" id="cmnd" name="productName"
-                                                       disabled/>
+                                                <div className="product-list">
+                                                    {listProduct.map((p) => (
+                                                        <Field
+                                                            key={p.id}
+                                                            name="products"
+                                                            type="text"
+                                                            className="product-item"
+                                                            value={p.productName}
+                                                        />
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="mt-2 inputs"><label>Tổng tiền</label>
-                                        <Field type="text" className="form-control" id="" name="totalPrice" disabled/>
+                                        <Field type="text" className="form-control" id="" name="totalPrice"
+                                               value={totalPrice} disabled/>
                                     </div>
                                     <div className="text-center mt-4 btn-group p-3 m-l-2">
                                         <div className="text-center" style={{marginLeft: "23%"}}>
@@ -215,30 +280,28 @@ export function CreateLiquidation() {
                     <div className="d-flex col-12 justify-content-end" style={{marginLeft: "-5%"}}>
                         <nav aria-label="...">
                             <ul className="pagination">
-                                <li className="page-item disabled">
-                                    <a className="page-link" href="#" tabIndex="-1" aria-disabled="true">
+                                <li hidden={page === 0} className="page-item ">
+                                    <button className="page-link" tabIndex={-1}
+                                            onClick={() => paginate(page - 1)}>
                                         Trước
-                                    </a>
+                                    </button>
                                 </li>
-                                <li className="page-item" aria-current="page">
-                                    <a className="page-link active" href="#">
-                                        1
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a className="page-link" href="#">
-                                        2
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a className="page-link" href="#">
-                                        3
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a className="page-link" href="#">
-                                        Sau
-                                    </a>
+                                {
+                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
+                                        <li className="page-item">
+                                            <button className="page-link " key={page}
+                                                    onClick={() => paginate(page)}>
+                                                {page + 1}
+                                            </button>
+                                        </li>
+                                    ))
+                                }
+                                <li disabled={page + 1 === totalPages}
+                                    className="page-item">
+                                    <button className="page-link" tabIndex={-1}
+                                            onClick={() => paginate(page + 1)}>
+                                        Tiếp
+                                    </button>
                                 </li>
                             </ul>
                         </nav>
@@ -306,11 +369,17 @@ export function CreateLiquidation() {
                                         <div className="col-lg-3">
                                             <div className="form-group">
                                                 <label>Giá</label>
-                                                <Field style={{borderColor: "black"}} type="number"
-                                                       name="loans"
-                                                       className="form-control" as="select">
+                                                <Field
+                                                    as="select"
+                                                    style={{borderColor: 'black'}}
+                                                    name="loans"
+                                                    className="form-control"
+                                                >
                                                     <option value="">--Chọn--</option>
-                                                    <option value="0">1</option>
+                                                    <option value="1">Dưới 5 triệu</option>
+                                                    <option value="2">5 triệu - 10 triệu</option>
+                                                    <option value="3">10 triệu - 20 triệu</option>
+                                                    <option value="4">Trên 20 triệu</option>
                                                 </Field>
                                             </div>
                                         </div>
@@ -346,7 +415,10 @@ export function CreateLiquidation() {
                                         <td className="text-center">1</td>
                                         <td className="text-center">{ct.loans}</td>
                                         <td className="text-center">
-                                            <button type="button" onClick={() => getProduct(ct.id)}
+                                            <button type="button" onClick={() => {
+                                                getProduct(ct.id);
+                                                handleModalClose1(true);
+                                            }}
                                                     className="btn btn-success text-center">Chọn
                                             </button>
                                         </td>
@@ -362,30 +434,28 @@ export function CreateLiquidation() {
                     <div className="d-flex col-12 justify-content-end" style={{marginLeft: '-5%'}}>
                         <nav aria-label="...">
                             <ul className="pagination">
-                                <li className="page-item disabled">
-                                    <a className="page-link" href="#" tabIndex="-1" aria-disabled="true">
+                                <li hidden={page === 0} className="page-item ">
+                                    <button className="page-link" tabIndex={-1}
+                                            onClick={() => paginate(page - 1)}>
                                         Trước
-                                    </a>
+                                    </button>
                                 </li>
-                                <li className="page-item" aria-current="page">
-                                    <a className="page-link active" href="#">
-                                        1
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a className="page-link" href="#">
-                                        2
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a className="page-link" href="#">
-                                        3
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a className="page-link" href="#">
-                                        Sau
-                                    </a>
+                                {
+                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
+                                        <li className="page-item">
+                                            <button className="page-link " key={page}
+                                                    onClick={() => paginate(page)}>
+                                                {page + 1}
+                                            </button>
+                                        </li>
+                                    ))
+                                }
+                                <li disabled={page + 1 === totalPages}
+                                    className="page-item">
+                                    <button className="page-link" tabIndex={-1}
+                                            onClick={() => paginate(page + 1)}>
+                                        Tiếp
+                                    </button>
                                 </li>
                             </ul>
                         </nav>
