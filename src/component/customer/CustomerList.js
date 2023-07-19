@@ -3,8 +3,12 @@ import * as customersService from "../../service/customersService";
 import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
+import jwt from 'jwt-decode';
 
-
+const token = localStorage.getItem('token');
+const decodedToken = jwt(token);
+console.log(decodedToken.sub)
+console.log(decodedToken.role)
 export function CustomerList() {
     const [listCustomer, setListCustomer] = useState([]);
     const [nameDelete, setNameDelete] = useState(null);
@@ -143,9 +147,10 @@ export function CustomerList() {
     const [createDate, setCreateDate] = useState("")
     const [updateDate, setUpdateDate] = useState("")
     const [note, setNote] = useState("")
+    const [contractsSet, setContractsSet] = useState("")
 
     function getDetail(id, name, birthday, gender, phoneNumber, email, address, citizenCode, image,
-                       frontCitizen, backCitizen, createDate, updateDate, note) {
+                       frontCitizen, backCitizen, createDate, updateDate, note,contractsSet) {
         setId(id);
         setNames(name);
         setBirthday(birthday);
@@ -160,6 +165,7 @@ export function CustomerList() {
         setCreateDate(createDate);
         setUpdateDate(updateDate)
         setNote(note);
+        setContractsSet(contractsSet)
     }
 
     return (
@@ -178,14 +184,14 @@ export function CustomerList() {
                         <div className='container'>
                             <div className="row ">
                                 <div className="col-6 mt-2">
-                                    <button className="btn btn-outline-primary" style={{marginLeft: "10%"}}>Thêm khách
+                                    <button className="btn btn-success" style={{marginLeft: "10%"}}>Thêm khách
                                         hàng
                                     </button>
                                     {/*<NavLink*/}
                                     {/*    to='/listCustomerRegisterPawn' className="btn btn-outline-primary"*/}
                                     {/*    style={{marginLeft: '5%'}}>Danh sách khách hàng mới*/}
                                     {/*</NavLink>*/}
-                                    <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal"
+                                    <button type="button" className="btn btn-success" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal" style={{marginLeft: '5%'}}>
                                         Danh sách khách hàng mới
                                     </button>
@@ -237,7 +243,7 @@ export function CustomerList() {
                                                         <th>Tên khách hàng</th>
                                                         <th>Số điện thoại</th>
                                                         <th>CMND/Hộ chiếu</th>
-                                                        <th>Số lượng HD</th>
+                                                        <th>Số lượng hợp đồng</th>
                                                         <th>Chức năng</th>
                                                     </tr>
                                                     </thead>
@@ -257,7 +263,7 @@ export function CustomerList() {
                                                                         style={{color: '#4698f9'}}
                                                                         className="bi bi-info-circle"
                                                                         onClick={() => getDetail(value.id, value.name, value.birthday, value.gender, value.phoneNumber, value.email, value.address,
-                                                                            value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate,
+                                                                            value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate,value.contrastsSet,
                                                                             value.updateDate, value.note)}/></a>
                                                                     <a href className="me-2"><i
                                                                         style={{color: 'orange'}}
@@ -314,10 +320,10 @@ export function CustomerList() {
                                     <div className="d-grid">
                                         <ReactPaginate
                                             breakLabel="..."
-                                            nextLabel=">"
+                                            nextLabel="Trước"
                                             onPageChange={handlePageClick}
                                             pageCount={pageCount}
-                                            previousLabel="< "
+                                            previousLabel="Sau"
                                             containerClassName="pagination"
                                             pageLinkClassName="page-num"
                                             nextLinkClassName="page-num"
@@ -341,7 +347,7 @@ export function CustomerList() {
                         <div className="modal-header" align="center">
                             <h2 className="modal-title text-center"
                                 id="staticBackdropLabel"> Chi tiết khách
-                                hàng <span style={{color: 'red'}}>{names}</span></h2>
+                                hàng <span style={{color: 'green'}}>{names}</span></h2>
                             <button type="button" className="btn-close"
                                     data-bs-dismiss="modal" aria-label="Close"/>
                         </div>
@@ -404,9 +410,9 @@ export function CustomerList() {
                                             </tr>
                                             <tr>
                                                 <td className="col-sm-4 fw-bold">Số
-                                                    lượng HD
+                                                    lượng hợp đồng
                                                 </td>
-                                                <td className="col-sm-6">1</td>
+                                                <td className="col-sm-6">{contractsSet}</td>
                                             </tr>
                                             <tr>
                                                 <td className="col-sm-4 fw-bold">Ngày tạo
@@ -414,14 +420,12 @@ export function CustomerList() {
                                                 <td className="col-sm-6">{createDate}</td>
                                             </tr>
                                             <tr>
-                                                <td className="col-sm-4 fw-bold">Ngày chỉnh sửa
-                                                </td>
-                                                <td className="col-sm-6">{updateDate}</td>
+                                                <td className="col-sm-4 fw-bold">Ngày chỉnh sửa</td>
+                                                <td className="col-sm-6">{note}</td>
                                             </tr>
                                             <tr>
-                                                <td className="col-sm-4 fw-bold">Ghi chú
-                                                </td>
-                                                <td className="col-sm-6">{note}</td>
+                                                <td className="col-sm-4 fw-bold">Ghi chú</td>
+                                                <td className="col-sm-6">{updateDate}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -430,7 +434,7 @@ export function CustomerList() {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
                         </div>
                     </div>
                 </div>
@@ -487,10 +491,10 @@ export function CustomerList() {
                             <div className="d-grid">
                                 <ReactPaginate
                                     breakLabel="..."
-                                    nextLabel=">"
+                                    nextLabel="Trước"
                                     onPageChange={handlePageClick1}
                                     pageCount={pageCount1}
-                                    previousLabel="< "
+                                    previousLabel="Sau"
                                     containerClassName="pagination"
                                     pageLinkClassName="page-num"
                                     nextLinkClassName="page-num"
@@ -501,7 +505,7 @@ export function CustomerList() {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
                         </div>
                     </div>
                 </div>

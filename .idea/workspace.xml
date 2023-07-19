@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -22,24 +19,41 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:customers" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
         <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="Merge remote-tracking branch 'origin/customers/list-delete-QuocNHA' into customers/list-delete-QuocNHA">
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/customer/CustomerList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CustomerList.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Dev" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,34 +66,27 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/App.css" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/component/navbar/Navbars.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../prototype/CustomerList.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/service/ContractService.js" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Sh693BP9nEjLgotYAFb7JAd4mI" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -92,7 +99,13 @@
       <updated>1689586311005</updated>
       <workItem from="1689586315620" duration="15000" />
       <workItem from="1689586337533" duration="1020000" />
-      <workItem from="1689733644660" duration="1947000" />
+      <workItem from="1689587731303" duration="828000" />
+      <workItem from="1689600955098" duration="9110000" />
+      <workItem from="1689643872923" duration="10317000" />
+      <workItem from="1689658256280" duration="10641000" />
+      <workItem from="1689670828800" duration="4866000" />
+      <workItem from="1689678562697" duration="15188000" />
+      <workItem from="1689729417178" duration="4669000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -108,33 +121,33 @@
       <option name="project" value="LOCAL" />
       <updated>1689586961159</updated>
     </task>
-    <task id="LOCAL-00003" summary="Merge remote-tracking branch 'origin/customers/list-delete-QuocNHA' into customers/list-delete-QuocNHA">
-      <created>1689737494181</created>
+    <task id="LOCAL-00003" summary="&quot;add component TransactionHistoryList&quot;">
+      <created>1689652418195</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1689737494181</updated>
+      <updated>1689652418195</updated>
     </task>
-    <task id="LOCAL-00004" summary="Merge remote-tracking branch 'origin/customers/list-delete-QuocNHA' into customers/list-delete-QuocNHA">
-      <created>1689737510011</created>
+    <task id="LOCAL-00004" summary="&quot;add component TransactionHistoryList&quot;">
+      <created>1689699677859</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1689737510011</updated>
+      <updated>1689699677859</updated>
     </task>
-    <task id="LOCAL-00005" summary="Merge remote-tracking branch 'origin/customers/list-delete-QuocNHA' into customers/list-delete-QuocNHA">
-      <created>1689737514496</created>
+    <task id="LOCAL-00005" summary="&quot;add component TransactionHistoryList&quot;">
+      <created>1689730633090</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1689737514496</updated>
+      <updated>1689730633090</updated>
     </task>
-    <task id="LOCAL-00006" summary="Merge remote-tracking branch 'origin/customers/list-delete-QuocNHA' into customers/list-delete-QuocNHA">
-      <created>1689737524751</created>
+    <task id="LOCAL-00006" summary="&quot;add component TransactionHistoryList&quot;">
+      <created>1689730970412</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1689737524751</updated>
+      <updated>1689730970412</updated>
     </task>
     <option name="localTasksCounter" value="7" />
     <servers />
@@ -147,19 +160,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="customers/list-delete-QuocNHA" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -167,8 +168,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="&quot;add component TransactionHistoryList&quot;" />
-    <MESSAGE value="quoc update coding" />
-    <MESSAGE value="Merge remote-tracking branch 'origin/customers/list-delete-QuocNHA' into customers/list-delete-QuocNHA" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/customers/list-delete-QuocNHA' into customers/list-delete-QuocNHA" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;add component TransactionHistoryList&quot;" />
   </component>
 </project>
