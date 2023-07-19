@@ -41,7 +41,7 @@ export function ConfirmCode() {
                                 }
                                 const response = await axios.post('http://localhost:8080/api/user/checkCode', values)
                                 console.log(response)
-                                navigate("/newPassword", { state: { data: response.data } })
+                                navigate("/login/newPassword", { state: { data: response.data } })
                             } catch (error) {
                                 console.log(error)
                                 toast.error(error.response.data.error);

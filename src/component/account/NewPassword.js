@@ -61,7 +61,7 @@ export function NewPassword() {
                                 console.log(response)
 
                                 toast.success("Đổi mật khẩu thành công");
-                                navigate('/');
+                                navigate('/login');
                             } catch (error) {
                                 console.log(error)
                                 console.log(password1)
