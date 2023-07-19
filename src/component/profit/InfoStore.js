@@ -38,12 +38,12 @@ export default function InfoStore() {
                             }}  href="#" className="list-group-item list-group-item-action">
                                 Danh sách đồ cầm trong kho
                             </NavLink>
-                            <NavLink to={"/"} style={({isActive})=>{
+                            <NavLink to={"/info-store/transaction-history"} style={({isActive})=>{
                                 return{
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""
                                 }
-                            }}  href="#" className="list-group-item list-group-item-action">
+                            }}  className="list-group-item list-group-item-action">
                                 Lịch sử giao giao dịch
                             </NavLink>
                             <NavLink to={"/"} style={({isActive})=>{

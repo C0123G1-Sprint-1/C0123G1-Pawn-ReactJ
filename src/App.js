@@ -8,6 +8,8 @@ import Navbars from "./component/navbar/Navbars";
 import InfoStore from "./component/profit/InfoStore";
 import EmployeeList from "./component/employee/ListEmployee";
 import {CreateEmployee} from "./component/employee/CreateEmployee";
+import TransactionHistoryList from "./component/contract/TransactionHistoryList";
+import {TransactionHistoryDetail} from "./component/contract/TransactionHistoryDetail";
 
 function App() {
     return (
@@ -23,6 +25,8 @@ function App() {
                             <Route path="/info-store/profit/:type" element={<Liquidation/>}/>
                             <Route path="/info-store/profit/:type" element={<Foresee/>}/>
                         </Route>
+                        <Route path={"/info-store/transaction-history"} element={<TransactionHistoryList/>}></Route>
+                        <Route path={"/info-store/transaction-history/detail/:id"} element={<TransactionHistoryDetail/>}></Route>
                         {/*   Đây là component về thông tin cửa hàng
                      Mọi người muốn truyền tới component của mình thì có thể làm theo mẫu
                         <Route path={"/url"} element={<Component/>}/>
