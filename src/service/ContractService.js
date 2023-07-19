@@ -41,9 +41,9 @@ export const findAllAndEmployee = async () => {
         console.log(error)
     }
 }
-export const findAllCustomer = async () => {
+export const findAllCustomer = async (page) => {
     try {
-        const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer`)).data
+        const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer?page=${page}`)).data
         return res;
     } catch (e) {
         console.log(e)
@@ -56,9 +56,9 @@ export const createContract = async (contract) => {
         console.log(e)
     }
 }
-export const searchCustomer = async (name) => {
+export const searchCustomer = async (name,page) => {
     try {
-        const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer/contract/search?name=${name}`)).data
+        const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer/contract/search?name=${name}&page=${page}`)).data
         return res
     } catch (e) {
         console.log(e)
@@ -76,15 +76,15 @@ export const getByIdCustomers = async (id) => {
 export const createCodeContract = async () => {
     try {
         let code = (Math.floor(Math.random() * 10000) + 1);
-        if(code>=10000){
+        if (code >= 10000) {
             code = code.toString();
-        }else if(code>=1000){
-            code = "0"+ code.toString();
-        }else if(code>=100){
-            code = "00"+code.toString();
-        }else if (code>=10){
+        } else if (code >= 1000) {
+            code = "0" + code.toString();
+        } else if (code >= 100) {
+            code = "00" + code.toString();
+        } else if (code >= 10) {
             code = "000" + code.toString();
-        }else {
+        } else {
             code = "0000" + code.toString();
         }
         return code;
