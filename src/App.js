@@ -1,10 +1,14 @@
+import { Route, Routes } from 'react-router';
 import './App.css';
 import { LoginHome } from './component/account/LoginHome';
 
 function App() {
   return (
     <>
-   <LoginHome />
+    <Routes>
+   
+      <Route path='/loginHome'  element={<LoginHome />}/>
+   </Routes>
    </>
   );
 }
