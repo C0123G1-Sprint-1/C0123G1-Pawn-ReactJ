@@ -9,10 +9,12 @@ import Navbars from "./component/navbar/Navbars";
 import InfoStore from "./component/profit/InfoStore";
 import EmployeeList from "./component/employee/ListEmployee";
 import { CreateEmployee } from "./component/employee/CreateEmployee";
-import TransactionHistoryList from "./component/contract/TransactionHistoryList";
-import { TransactionHistoryDetail } from "./component/contract/TransactionHistoryDetail";
+import CustomerList from "./component/customer/CustomerList";
 import { LoginHome } from "./component/account/LoginHome";
-import {CreateContracts} from "./component/contract/CreateContracts";
+import { LoginForm } from "./component/account/LoginForm";
+import { ForgotPassword } from "./component/account/ForgotPassword";
+import { ConfirmCode } from "./component/account/ConfirmCode";
+import { NewPassword } from "./component/account/NewPassword";
 
 function App() {
   return (
@@ -22,6 +24,12 @@ function App() {
       </div>
       <Routes>
         <Route path='/loginHome' element={<LoginHome />} />
+        <Route path={"/login"} element={<LoginHome />}>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/login/forgot" element={<ForgotPassword />} />
+          <Route path="/login/confirmCode" element={<ConfirmCode />} />
+          <Route path="/login/newPassword" element={<NewPassword />} />
+        </Route>
         <Route path={""} element={<Navbars />}>
           <Route path={"/info-store"} element={<InfoStore/>}>
             <Route path={"/info-store/profit"} element={<Profit />}>

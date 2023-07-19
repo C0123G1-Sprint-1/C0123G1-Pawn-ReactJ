@@ -101,7 +101,7 @@ export function LoginForm() {
                 </div>
                 <div className="forgot">
                   <small>
-                    <NavLink to="/forgot">Quên mật khẩu?</NavLink>
+                    <NavLink to="/login/forgot">Quên mật khẩu?</NavLink>
                   </small>
                 </div>
               </div>

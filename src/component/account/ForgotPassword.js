@@ -35,7 +35,7 @@ export function ForgotPassword() {
                         onSubmit={async (values, { setSubmitting }) => {
                             try {
                                 const response = await axios.post('http://localhost:8080/api/user/checkEmail', values)
-                                navigate("/confirmCode", { state: { data: response.data } })
+                                navigate("/login/confirmCode", { state: { data: response.data } })
                             } catch (error) {
                                 console.log(error.response.data)
                                 toast.error(error.response.data);
@@ -70,7 +70,7 @@ export function ForgotPassword() {
                     </Formik>
                     <div className="card-footer border-0">
                         <p className="float-sm-left text-center">
-                            <NavLink to="/" className="card-link blue">
+                            <NavLink to="/login" className="card-link blue">
                                 Đăng nhập
                             </NavLink>
                         </p>
