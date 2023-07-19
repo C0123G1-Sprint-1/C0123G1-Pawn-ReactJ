@@ -35,4 +35,58 @@
   to {
     transform: rotate(360deg);
   }
+
+
+}
+
+.pagination {
+  list-style: none;
+  display: flex;
+  justify-self: right;
+  align-items: center;
+  font-size: 1.2rem;
+  gap: 5px;
+  margin-top: 20px;
+}
+.pagination .page-num,
+.pagination .page-previous,
+.pagination .page-next {
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+  display: block;
+}
+.pagination .page-num:hover,
+.pagination .page-previous,
+.pagination .page-next {
+  background-color: blue;
+  color: white;
+}
+.pagination a {
+  text-decoration: none;
+  color: blue;
+}
+/* .pagination .active {
+    background-color: orangered;
+} */
+.pagination .active .page-num {
+  color: #fff;
+  background: blue;
+}
+
+@media screen and (max-width: 768px) {
+
+  body {
+    font-size: 14px;
+    background-color: #eee;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300
+  }
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+body {
+  background-color: #eee;
+  font-family: "Poppins", sans-serif;
+  font-weight: 300
 }
