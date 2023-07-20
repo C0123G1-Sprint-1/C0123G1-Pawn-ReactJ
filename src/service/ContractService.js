@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const showTop10NewContract = async () => {
     try {
-        const result = await axios.get("http://localhost:8080/api/employee/contract/top10?_sort=createDate&_order=desc&_limit=10");
+        const result = await axios.get("http://localhost:8080/api/employee/contract/top10?_sort=createTime&_order=desc&_limit=10");
         return result.data;
     } catch (err) {
         console.log(err);
@@ -23,10 +23,4 @@ export const updateContract=async (contract)=>{
       console.log(err)
     }
 }
-export const getAllCustomer=async ()=>{
-    try {
-        const result= axios.get("http://localhost:8080/api/employee/contract/")
-    }catch (err) {
-        console.log(err)
-    }
-}
+

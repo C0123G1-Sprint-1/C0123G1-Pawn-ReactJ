@@ -1,8 +1,11 @@
 import {useNavigate, useParams} from "react-router";
 import React, {useEffect, useState} from "react";
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as contractService from "../../service/ContractService";
 import * as productTypeService from "../../service/ProductTypeService"
+import "../../css/UpdateContract.css"
+import * as Yup from "yup"
+import {NavLink} from "react-router-dom";
 
 export function UpdateContract() {
     const param = useParams();
@@ -15,8 +18,6 @@ export function UpdateContract() {
     const fetchContractById = async () => {
         const result = await contractService.findContractById(param.id)
         setContract(result);
-
-        console.log(result);
     }
     useEffect(() => {
         fetchContractById()
@@ -60,8 +61,8 @@ export function UpdateContract() {
                     loans:contract?.loans,
                     profit:contract?.profit,
                     image:contract?.image,
-                    createDate:contract?.createDate,
-                    updateDate:new Date(),
+                    createTime:contract.createTime,
+                    updateTime:new Date(),
                     isDelete:contract?.isDelete,
                     customers: contract?.customers.id,
                     productType: contract?.productType.id,
@@ -71,7 +72,25 @@ export function UpdateContract() {
                     contractStatus: contract?.contractStatus.id,
                     employees:contract?.employees
                 }}
+                validationSchema={Yup.object({
+                    productName:Yup.string().required("Không được để trống"),
+                    contractCode:Yup.string().required("Không được để trống"),
+                    startDate: Yup
+                        .date()
+                        .typeError('Vui lòng nhập một ngày hợp lệ')
+                        .required('Không được để trống')
+                        .test('startDateBeforeEndDate', 'Ngày bắt đầu phải trước ngày kết thúc', function (value) {
+                            const endDate = Yup.date().typeError('Vui lòng nhập một ngày hợp lệ').cast(this.parent.endDate, value);
+                            if (!value || !endDate) return true;
+
+                            return value <= endDate;
+                        }),
+                    endDate:Yup.date().required("Không được để trống")
+
+                })}
                 onSubmit={(values) => {
+
+                    console.log(values)
                     console.log(values.productType)
                     console.log(values.customers)
                     console.log(values.contractType)
@@ -79,11 +98,12 @@ export function UpdateContract() {
 
                     values = {
                         ...values,
-                        customers: customer.find((c) => c.id === values.customers),
-                        productType: productTypes.find((pt) => pt.id === values.productType),
-                        contractType: contractType.find((ct) => ct.id === values.contractType),
-                        contractStatus:contractStatus.find((cs) => cs.id === values.contractStatus)
+                        customers: customer.find((c) => c.id == values.customers),
+                        productType: productTypes.find((pt) => pt.id == values.productType),
+                        contractType: contractType.find((ct) => ct.id == values.contractType),
+                        contractStatus:contractStatus.find((cs) => cs.id == values.contractStatus)
                     }
+                    console.log(values)
                     const updateContract = async () => {
                         await contractService.updateContract(values);
                         navigate("/top10NewContract")
@@ -91,30 +111,10 @@ export function UpdateContract() {
                     updateContract();
                 }}>
 
-
-                {/*<div>*/}
-                {/*    <label htmlFor="productName">Product Name</label>*/}
-                {/*</div>*/}
-                {/*<div>*/}
-                {/*    <Field name="productName" type="text" id="productName"/>*/}
-                {/*</div>*/}
-                {/*<div>*/}
-                {/*    <label htmlFor="productType">Product Type</label>*/}
-                {/*</div>*/}
-                {/*<div>*/}
-                {/*    <Field as="select" name="productType" type="number" id="productType">*/}
-                {/*        {*/}
-                {/*            productTypes.map((productType) => (*/}
-                {/*                <option key={productType.id} value={productType.id}>{productType.name}</option>*/}
-                {/*            ))*/}
-                {/*        }*/}
-                {/*    </Field>*/}
-                {/*</div>*/}
-                {/*<button type="submit">update</button>*/}
                 <div className="container mt-5 " style={{marginBottom: "5rem"}}>
-                    <div className="row height d-flex justify-content-center align-items-center">
+                    <div className="row height-tri d-flex justify-content-center align-items-center">
                         <div className="col-md-6">
-                            <div className="card px-5 py-4">
+                            <div className="card-tri px-5 py-4">
                                 <div style={{textAlign: "center"}}>
                                     <h1>Chỉnh Sửa Hợp Đồng</h1>
                                 </div>
@@ -124,6 +124,7 @@ export function UpdateContract() {
                                         <Field type="text" className="form-control" id="contractCode"
                                                name="contractCode"
                                         />
+                                        <ErrorMessage name="contractCode" component="span" className="err-mess"/>
                                     </div>
 
                                     <div className="mt-2 inputs"><label htmlFor="productName">Tên Đồ <span
@@ -131,9 +132,10 @@ export function UpdateContract() {
                                         <Field type="text" className="form-control" name="productName"
                                         />
                                     </div>
-                                    <div className="mt-2 inputs"><label>Tên khách hàng<span
+
+                                    <div className="mt-2 inputs"><label htmlFor="customers">Tên khách hàng<span
                                         style={{color: "red"}}>*</span></label>
-                                    <Field as="select" name="customers"  id="productType">
+                                    <Field as="select" name="customers"  id="customers"  className="form-control">
                                         {
                                             customer.map((customer) => (
                                                 <option key={customer.id} value={customer.id}>{customer.name}</option>
@@ -154,11 +156,12 @@ export function UpdateContract() {
 
                                     <div className="mt-2 inputs"><label htmlFor="startDate">Ngày bắt đầu <span
                                         style={{color: "red"}}>*</span></label>
-                                        <Field type="text" className="form-control" name="startDate" id="startDate"/>
+                                        <Field type="date" className="form-control" name="startDate" id="startDate"/>
+                                        <ErrorMessage name="startDate" component="span" className="err-mess"/>
                                     </div>
                                     <div className="mt-2 inputs"><label htmlFor="endDate">Ngày kết thúc <span
                                         style={{color: "red"}}>*</span></label>
-                                        <Field type="text" className="form-control" name="endDate" id="endDate"
+                                        <Field type="date" className="form-control" name="endDate" id="endDate"
                                               />
                                     </div>
                                     <div className="mt-2 inputs"><label htmlFor="contractType">Loại hợp đồng <span
@@ -180,10 +183,11 @@ export function UpdateContract() {
                                             }
                                         </Field>
                                     </div>
-                                    <div className=" mt-4 btn-group">
+                                    <div className=" mt-4 btn-group-tri">
                                         <div className="text-center m-auto">
-                                            <button type="button" className="btn btn-secondary">
-                                                <b className="text-center ">Quay lại</b>
+                                            <button type="button" className="btn btn-secondary" style={{marginRight: "76px",
+                                                marginLeft: "15px"}}>
+                                                <NavLink to="/top10NewContract" className="text-decoration-none"><b className="text-center text-white">Quay lại</b></NavLink>
                                             </button>
                                         </div>
                                         <div className="text-center m-auto">
