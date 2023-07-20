@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import {useNavigate} from "react-router";
 import {NavLink} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {storage} from "../../firebasePosts";
+import {storage} from "../../firebase";
 import Swal from "sweetalert2";
 
 export function CreatePosts() {
@@ -80,7 +80,7 @@ export function CreatePosts() {
     return (
         <>
             <div className="container mt-5 d-flex justify-content-center">
-                <div className="card">
+                <div className="card-post">
                     <Formik initialValues={{title: '', content: '', createDate: new Date(), image: '', employees: ''}}
                             validationSchema={Yup.object({
                                 title: Yup.string().required("Bắt buộc nhập"),
@@ -108,11 +108,7 @@ export function CreatePosts() {
                                         resetForm(true);
                                     }
                                 };
-
                                 create();
-
-
-
                             }}
                     >
                         <Form>
@@ -122,31 +118,31 @@ export function CreatePosts() {
                                     height: "60px",
                                     backgroundColor: "#00833e",
                                     color: "#fff",
-                                    display: "flex"
+                                    display: "flex",fontSize: "33px", fontWeight: "500"
                                 }}>
                                 <b>THÊM TIN TỨC MỚI</b>
                             </h2>
                             <div className="row">
                                 <div className="col-lg-7">
                                     <div className="form-group ms-2">
-                                        <label htmlFor="title" className="form-label">Tiêu đề <span
+                                        <label htmlFor="title" className="form-label label-post">Tiêu đề <span
                                             className="err-class">*</span></label>
                                         <Field id="title" type="text" name="title" className="form-control"
                                                placeholder="Nhập tiêu đề tin tức"/>
                                         <ErrorMessage name="title" component="span" className="err-class"/>
                                     </div>
                                     <div className="form-group mt-2 ms-2">
-                                        <label htmlFor="content">Nội dung <span className="err-class">*</span></label>
+                                        <label className="label-post" htmlFor="content">Nội dung <span className="err-class">*</span></label>
                                         <Field as="textarea" id="content" name="content"
                                                placeholder="Nhập nội dung tin tức" rows="15"/>
                                         <ErrorMessage name="content" component="span" className="err-class"/>
                                     </div>
                                     <div className="mt-2 ms-2">
-                                        <label htmlFor="createDate" className="form-label">Ngày đăng</label>
+                                        <label htmlFor="createDate" className="form-label label-post">Ngày đăng</label>
                                         <Field id="createDate" name="createDate" className="form-control"/>
                                     </div>
                                     <div className="mt-2 ms-2">
-                                        <label htmlFor="employees"> Nhân viên</label>
+                                        <label className="label-post" htmlFor="employees"> Nhân viên</label>
                                         <Field id="employees" name="employees" as="select">
                                             <option value="0">Chọn</option>
                                             {
@@ -180,7 +176,7 @@ export function CreatePosts() {
                                                 className="form-control-plaintext d-none "
                                             />
                                             <p>
-                                                <label
+                                                <label className="label-post"
                                                     htmlFor="image"
                                                     style={{
                                                         textAlign: "center",

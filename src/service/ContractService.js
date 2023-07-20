@@ -1,5 +1,28 @@
 import axios from "axios";
 
+// export const showTop10NewContract = async () => {
+//     try {
+//         const result = await axios.get("http://localhost:8080/api/employee/contract/top10?_sort=createTime&_order=desc&_limit=10");
+//         return result.data;
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
+// export const findContractById = async (id) => {
+//     try {
+//         const result = await axios.get(`http://localhost:8080/api/employee/contract/findContractById/${id}`);
+//         return result.data;
+//     } catch (err) {
+//         console.log(err)
+//     }
+// }
+// export const updateContract=async (contract)=>{
+//     try {
+//         await axios.patch(`http://localhost:8080/api/employee/contract/update`,contract)
+//     }catch (err) {
+//       console.log(err)
+//     }
+// }
 export const deleteTransactionHistoryByID = async (id) => {
     try {
         const res = await axios.delete(`http://localhost:8080/api/employee/contract/delete/${id}`);
@@ -12,7 +35,7 @@ export const deleteTransactionHistoryByID = async (id) => {
 export const findAllContractStatus = async () => {
     try {
         const res = await axios.get("http://localhost:8080/api/employee/contract/list-contract-status");
-        return res.data;
+        return res;
     } catch (e) {
         console.log(e)
     }
@@ -21,7 +44,7 @@ export const findAllContractStatus = async () => {
 export const findAllContractType = async () => {
     try {
         const res = await axios.get("http://localhost:8080/api/employee/contract/list-contract-type");
-        return res.data;
+        return res;
     } catch (e) {
         console.log(e)
     }
@@ -37,6 +60,7 @@ export const getTransactionHistoryById = async (id) => {
 }
 
 export const searchTransactionHistory = async (page, value) => {
+    console.log(value)
     try {
         const res = await axios.post(`http://localhost:8080/api/employee/contract/transaction-history?page=${page}&limit=5`, value);
         return res;
@@ -63,9 +87,9 @@ export const findAllAndEmployee = async () => {
         console.log(error)
     }
 }
-export const findAllCustomer = async (page) => {
+export const findAllCustomer = async (page,name) => {
     try {
-        const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer?page=${page}`)).data
+        const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer/?page=${page}&name=${name}`)).data
         return res;
     } catch (e) {
         console.log(e)
@@ -140,4 +164,14 @@ export const updateContract=async (contract)=>{
         console.log(err)
     }
 }
+
+
+
+
+
+
+
+
+
+
 

@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import * as Yup from "yup"
+import "./Style.css"
 import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-bootstrap/Modal';
@@ -23,7 +24,7 @@ export function LoginForm() {
       <div className="col-md-6 right-box">
         <div className="row align-items-center">
           <div className="header-text mb-4">
-            <h2>Đăng nhập hệ thống</h2>
+            <h2 style={{textAlign:"center"}}>Đăng nhập hệ thống</h2>
           </div>
           <Formik
             initialValues={{

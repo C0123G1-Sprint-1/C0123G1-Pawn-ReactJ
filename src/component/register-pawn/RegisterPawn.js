@@ -105,7 +105,7 @@ export function RegisterPawn() {
                 {
                     <div className="card-register" style={{backgroundColor: "white"}}>
                         <div className="card-register-left">
-                            <div className="title">ĐIỀU KIỆN ĐẢM BẢO AN TOÀN</div>
+                            <div style={{padding : "1.5rem",marginTop:"0rem"}} className="title">ĐIỀU KIỆN ĐẢM BẢO AN TOÀN</div>
                             <div className="content">
                                 Tiệm cầm đồ <span style={{color: "red"}}>Pawn Shop</span> tuân thủ
                                 nghiêm ngặt quy trình của Nhà nước về lĩnh vực cầm đồ, cầm cố tài sản
@@ -118,7 +118,7 @@ export function RegisterPawn() {
                                 <img
                                     src="https://chovayhanoi.com/wp-content/uploads/2020/02/024060710868.png"
                                     alt="" style={{backgroundColor: "white",marginTop : "3rem"}}/>
-                                <h5 className="uppercase">Kinh Doanh Cầm Đồ</h5>
+                                <h5 style={{textAlign :"center"}} className="uppercase">Kinh Doanh Cầm Đồ</h5>
                             </div>
                         </div>
                         <div id="create" className="card-register-right">

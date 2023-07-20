@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
-import * as employeeService from "../../service/employee/employeeService";
+import * as employeeService from "../../service/employeeService";
 import ReactPaginate from "react-paginate";
 import {NavLink} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import "../employee/employee.css";
 import moment from 'moment';
+import {Footer} from "../register-pawn/Footer";
+
 
 export default function EmployeeList() {
     const token = localStorage.getItem("token");
@@ -63,7 +65,7 @@ export default function EmployeeList() {
         <>
             <div className="row mx-0">
                 <div className="container mx-auto my-5 col-8" style={{width: "97%"}}>
-                    <div style={{boxShadow: "1px 3px 10px 5px rgba(0, 0, 0, 0.2)", height: "150px"}}>
+                    <div style={{boxShadow: "1px 3px 10px 5px rgba(0, 0, 0, 0.2)", height: "160px"}}>
                         <div style={{marginBottom: 20}}>
                             <h2
                                 className="d-flex justify-content-center"
@@ -75,7 +77,7 @@ export default function EmployeeList() {
                         <div className="d-flex">
                             <div className="mt-2 m-2 modal-body d-flex justify-content-between">
                                 <NavLink
-                                    to={"/api/employee/create-employee"}
+                                    to={"/nav/api/employee/create-employee"}
                                     type="button"
                                     className="btn btn-outline-success"
                                     style={{
@@ -83,7 +85,10 @@ export default function EmployeeList() {
                                         display: "flex",
                                         justifyContent: "center",
                                         alignItems: "center",
-                                        marginBottom : "10px"
+                                        marginBottom: "20px",
+                                        width: "20%",
+                                        background: "var(--bs-btn-hover-bg)",
+                                        color: "white",
                                     }}>
                                     Thêm mới nhân viên
                                 </NavLink>
@@ -100,7 +105,7 @@ export default function EmployeeList() {
                             >
                                 <Form className="d-flex m-1">
                                     <Field
-                                        style={{width: "18vw",marginBottom : "10px"}}
+                                        style={{width: "18vw", marginBottom: "20px", height: "50px"}}
                                         className="form-control me-3"
                                         type="text"
                                         placeholder="Tìm kiếm theo tên nhân viên"
@@ -109,7 +114,14 @@ export default function EmployeeList() {
                                     />
                                     <button
                                         className="btn btn-outline-success"
-                                        style={{marginRight: 10,marginBottom : "10px"}}
+                                        style={{
+                                            marginRight: 10,
+                                            marginBottom: "20px",
+                                            height: "50px",
+                                            background: "var(--bs-btn-hover-bg)",
+                                            color: "white",
+                                            width: "50px"
+                                        }}
                                         type="submit"
                                     >
                                         <i className="bi bi-search"/>
@@ -117,58 +129,69 @@ export default function EmployeeList() {
                                 </Form>
                             </Formik>
                         </div>
-                        {employeeList.length === 0 && name !== "" ? (
-                            <h3 className={"text-danger text-center my-3"}>
-                                Không tìm thấy kết quả {name}
-                            </h3>
-                        ) : (
-                            <div className="table-responsive">
-                                <table className="table table-striped table-responsive">
-                                    <thead>
-                                    <tr>
-                                        <th>Mã nhân viên</th>
-                                        <th>Tên nhân viên</th>
-                                        <th>Ngày sinh</th>
-                                        <th>Giới tính</th>
-                                        <th>Email</th>
-                                        <th>Địa chỉ</th>
-                                        <th>Số điện thoại</th>
-                                        <th>CMND/Hộ chiếu</th>
-                                        <th>Tiền lương (VND)</th>
-                                        <th>Hình ảnh</th>
-                                        <th/>
+                    </div>
+                        <div className="table-responsive">
+                            <table className="table table-striped table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>Mã nhân viên</th>
+                                    <th>Tên nhân viên</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Giới tính</th>
+                                    <th>Email</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Số điện thoại</th>
+                                    <th>CMND/Hộ chiếu</th>
+                                    <th>Tiền lương (VND)</th>
+                                    <th>Hình ảnh</th>
+                                    <th/>
+                                </tr>
+                                </thead>
+                                {employeeList.length === 0 && name !== "" ? (
+                                      <td colSpan="10">
+                                          <h4 className={"text-danger text-center my-3"}>
+                                            Dữ liệu không tồn tại
+                                          </h4>
+                                      </td>
+                                ) : (
+                                <tbody>
+                                {employeeList.map((employee, index) => (
+                                    <tr key={index} style={{textAlign: "center"}}>
+                                        <td className="text-center">{count++}</td>
+                                        <td className="text-cut">
+                                            {employee.name}
+                                        </td>
+                                        <td>{
+                                            moment(employee.birthDay, 'YYYY/MM/DD').format('DD/MM/YYYY')
+                                        }</td>
+                                        <td>{employee.gender === 0 ? "Nữ" : "Nam"}</td>
+                                        <td>{employee.email}</td>
+                                        <td>{employee.address}</td>
+                                        <td>{employee.phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')}</td>
+                                        <td>{employee.citizenCode}</td>
+                                        <td>{(+employee.salary).toLocaleString()} VND</td>
+                                        <td><img className="rounded-circle"
+                                                 style={{
+                                                     width: "120px",
+                                                     height: "110px",
+                                                     margin: `0 auto`,
+                                                     border: "1px solid"
+                                                 }}
+                                                 height="100px" src={employee.image} alt=""/></td>
                                     </tr>
-                                    </thead>
-                                    <tbody>
-                                    {employeeList.map((employee, index) => (
-                                        <tr key={index} style={{textAlign: "center"}}>
-                                            <td className="text-center" >{count++}</td>
-                                            <td className="text-cut">
-                                                {employee.name}
-                                            </td>
-                                            <td>{
-                                                moment(employee.birthDay, 'YYYY/MM/DD').format('DD/MM/YYYY')
-                                            }</td>
-                                            <td>{employee.gender === 0 ? "Nữ" : "Nam"}</td>
-                                            <td>{employee.email}</td>
-                                            <td>{employee.address}</td>
-                                            <td>{employee.phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')}</td>
-                                            <td>{employee.citizenCode}</td>
-                                            <td>{(+employee.salary).toLocaleString()} VND</td>
-                                            <td><img className="rounded-circle"
-                                                     style={{ width: "120px",height: "110px", margin: `0 auto`, border: "1px solid" }}
-                                                     height="100px" src={employee.image} alt=""/></td>
-                                        </tr>
-                                    ))}
-                                    </tbody>
-                                </table>
+                                ))}
+                                </tbody>
+                                )}
+                            </table>
+                            {employeeList.length === 0 ? ""
+                                :
                                 <div className="d-grid">
                                     <ReactPaginate
                                         breakLabel="..."
-                                        nextLabel=">"
+                                        nextLabel=" Tiếp"
                                         onPageChange={handlePageClick}
                                         pageCount={pageCount}
-                                        previousLabel="< "
+                                        previousLabel="Trước "
                                         containerClassName="pagination"
                                         pageLinkClassName="page-num"
                                         nextLinkClassName="page-num"
@@ -177,9 +200,9 @@ export default function EmployeeList() {
                                         disabledClassName="d-none"
                                     />
                                 </div>
-                            </div>
-                        )}
-                    </div>
+                            }
+                        </div>
+
                 </div>
             </div>
         </>

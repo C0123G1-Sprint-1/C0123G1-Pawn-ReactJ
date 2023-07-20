@@ -10,10 +10,10 @@ export default function Liquidation() {
                     <thead>
                     <tr>
                         <th>Mã Hd</th>
-                        <th>Tiền mua</th>
-                        <th>Tiền bán</th>
+                        <th>Tiền mua(VND)</th>
+                        <th>Tiền bán(VND)</th>
                         <th>Ngày thanh lý</th>
-                        <th>Lợi nhuận</th>
+                        <th>Lợi nhuận(VND)</th>
                         <th id="actions">Tùy chọn</th>
                     </tr>
                     </thead>
@@ -23,10 +23,10 @@ export default function Liquidation() {
                             liquidations.map((liquidation, index) =>
                                 <tr key={index}>
                                     <td>{liquidation.contractCode}</td>
-                                    <td>{liquidation.loans}</td>
-                                    <td>{liquidation.proceedsOfSale}</td>
+                                    <td>{liquidation.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td>{liquidation.proceedsOfSale?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                     <td>{liquidation.createDate}</td>
-                                    <td>{liquidation.profit}</td>
+                                    <td>{liquidation.profit?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                     <td className="detail-button">
                                         <a href="#">
                                             <i
@@ -41,7 +41,7 @@ export default function Liquidation() {
                             <tr>
                                 <td colSpan="7">
                                     <div align="center">
-                                        <h1>Data Not Found</h1>
+                                        <h4 className="text-danger">Dữ liệu không tồn tại</h4>
                                     </div>
                                 </td>
                             </tr>

@@ -11,29 +11,36 @@ export default function Navbars() {
     console.log(decodedToken.sub)
     return (
         <>
+            <nav className="navbar-expand-lg p-0"
+                 style={{
+                     height: "8vh",
+                     boxShadow: "0px 5px 10px #e9e4e4",
+                     position: "sticky",
+                     left: "0px",
+                     top: "0px",
+                     zIndex: "1",
+                     right: "0px",
+                     backgroundColor: "rgb(255, 255, 255)",
 
-            <nav className="navbar navbar-expand-lg p-0" style={{
-                height: "8vh",
-                boxShadow: "0px 5px 10px #e9e4e4",
-                position: "sticky",
-                left: "0px",
-                top: "0px",
-                zIndex: "1",
-                right: "0px",
-                backgroundColor: "rgb(255, 255, 255)"
-            }}>
+                 }}>
                 <div className="container-fluid" style={{height: "100%", justifyContent: "center"}}>
-                    <ul className="navbar-nav d-flex align-items-center" style={{height: "100%",  display: "flex",
-                        justifyContent: "center" ,
-                        flexDirection: "row",
-                        gap: "50px",
-                    }}>
+                    <ul className=""
+                        style={{height: "100%",  display: "flex",
+                            justifyContent: "center" ,
+                            flexDirection: "row",
+                            listStyle: "none",
+                            alignItems: "center"
+                        }}>
                         <li className="nav-item">
                             <NavLink style={({isActive}) => {
                                 return {
                                     backgroundColor: isActive ? "#27533e" : "",
                                     color: isActive ? "#fff" : "",
-                                    borderRadius: "10px"
+                                    borderRadius: "10px",
+                                    height: "5vh",
+                                    alignItems: "center",
+                                    display: "flex",
+                                    padding: "10px"
                                 }
                             }} className="nav-link active" aria-current="page" to={"/pawn"}>
                                 Cầm đồ
@@ -44,9 +51,13 @@ export default function Navbars() {
                                 return {
                                     backgroundColor: isActive ? "#27533e" : "",
                                     color: isActive ? "#fff" : "",
-                                    borderRadius: "10px"
+                                    borderRadius: "10px",
+                                    height: "5vh",
+                                    alignItems: "center",
+                                    display: "flex",
+                                    padding: "10px"
                                 }
-                            }} className="nav-link active" aria-current="page" to={"/nav/info-store/liquidation"}>
+                            }} className="nav-link active" aria-current="page" to={"/nav/liquidation"}>
                                 Thanh lý
                             </NavLink>
                         </li>
@@ -55,9 +66,13 @@ export default function Navbars() {
                                 return {
                                     backgroundColor: isActive ? "#27533e" : "",
                                     color: isActive ? "#fff" : "",
-                                    borderRadius: "10px"
+                                    borderRadius: "10px",
+                                    height: "5vh",
+                                    alignItems: "center",
+                                    display: "flex",
+                                    padding: "10px"
                                 }
-                            }} className="nav-link" to={"/redeem"}>
+                            }} className="nav-link" to={"/nav/redeem"}>
                                 Trả đồ
                             </NavLink>
                         </li>
@@ -66,7 +81,11 @@ export default function Navbars() {
                                 return {
                                     backgroundColor: isActive ? "#27533e" : "",
                                     color: isActive ? "#fff" : "",
-                                    borderRadius: "10px"
+                                    borderRadius: "10px",
+                                    height: "5vh",
+                                    alignItems: "center",
+                                    display: "flex",
+                                    padding: "10px"
                                 }
                             }} className="nav-link" to={"/nav/info-store"}>
                                 Thông tin cửa hàng
@@ -80,9 +99,13 @@ export default function Navbars() {
                                             return {
                                                 backgroundColor: isActive ? "#27533e" : "",
                                                 color: isActive ? "#fff" : "",
-                                                borderRadius: "10px"
+                                                borderRadius: "10px",
+                                                height: "5vh",
+                                                alignItems: "center",
+                                                display: "flex",
+                                                padding: "10px"
                                             }
-                                        }} className="nav-link" to={"/manager-customer"}>
+                                        }} className="nav-link" to={"/nav/manager-customer"}>
                                             Quản lý khách hàng
                                         </NavLink>
                                     </li>
@@ -91,9 +114,13 @@ export default function Navbars() {
                                             return {
                                                 backgroundColor: isActive ? "#27533e" : "",
                                                 color: isActive ? "#fff" : "",
-                                                borderRadius: "10px"
+                                                borderRadius: "10px",
+                                                height: "5vh",
+                                                alignItems: "center",
+                                                display: "flex",
+                                                padding: "10px"
                                             }
-                                        }} className="nav-link" to={"/api/employee"}>
+                                        }} className="nav-link" to={"/nav/api/employee"}>
                                             Quản lý nhân viên
                                         </NavLink>
                                     </li>
@@ -103,9 +130,13 @@ export default function Navbars() {
                                         return {
                                             backgroundColor: isActive ? "#27533e" : "",
                                             color: isActive ? "#fff" : "",
-                                            borderRadius: "10px"
+                                            borderRadius: "10px",
+                                            height: "5vh",
+                                            alignItems: "center",
+                                            display: "flex",
+                                            padding: "10px"
                                         }
-                                    }} className="nav-link" to={"/api/employee"}>
+                                    }} className="nav-link" to={"/nav/api/employee"}>
                                         Quản lý nhân viên
                                     </NavLink>
                                 </li>
@@ -116,9 +147,13 @@ export default function Navbars() {
                                 return {
                                     backgroundColor: isActive ? "#27533e" : "",
                                     color: isActive ? "#fff" : "",
-                                    borderRadius: "10px"
+                                    borderRadius: "10px",
+                                    height: "5vh",
+                                    alignItems: "center",
+                                    display: "flex",
+                                    padding: "10px"
                                 }
-                            }} className="nav-link" to={"/info"}>
+                            }} className="nav-link" to={"/nav/detail/employee/4"}>
                                 Thông tin cá nhân
                             </NavLink>
                         </li>
@@ -127,7 +162,11 @@ export default function Navbars() {
                                 return {
                                     backgroundColor: isActive ? "#27533e" : "",
                                     color: isActive ? "#fff" : "",
-                                    borderRadius: "10px"
+                                    borderRadius: "10px",
+                                    height: "5vh",
+                                    alignItems: "center",
+                                    display: "flex",
+                                    padding: "10px"
                                 }
                             }} className="nav-link" to={"/message"}>
                                 Nhắn tin

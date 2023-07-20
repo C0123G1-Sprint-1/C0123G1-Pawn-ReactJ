@@ -1,10 +1,10 @@
-import {Field, Form, Formik} from "formik";
 import React, {useEffect, useState} from "react";
 import * as contractService from '../../service/ContractService';
 import {Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as Swal from "sweetalert2";
 import moment from "moment";
+import {Field, Form, Formik} from "formik";
 
 export default function TransactionHistoryList() {
     const [contractStatus, setContractStatus] = useState([])
@@ -15,11 +15,11 @@ export default function TransactionHistoryList() {
     const [deleteTHList, setDeleteTHList] = useState("");
     const getContractStatusApi = async () => {
         const res = await contractService.findAllContractStatus();
-        setContractStatus(res)
+        setContractStatus(res.data)
     }
     const getContractTypeApi = async () => {
         const res = await contractService.findAllContractType();
-        setContractType(res)
+        setContractType(res.data)
     }
 
     const paginate = (page) => {
@@ -80,7 +80,7 @@ export default function TransactionHistoryList() {
             <div className="col-lg-9 col-md-12 ">
                 <div className="row">
                     <div className="col-lg-12 col-md-12">
-                        <h1 className="text-center my-5">Lịch sử giao dịch</h1>
+                        <h1 className="text-center">LỊCH SỬ GIAO DỊCH</h1>
                         <Formik initialValues={({
                             customerName: search?.customerName,
                             productName: search?.productName,
@@ -96,7 +96,6 @@ export default function TransactionHistoryList() {
                                         await setSearch(values)
                                     }
                                     res()
-                                    getTransactionHistoryApi()
                                 }}
                         >
                             <Form>
@@ -144,9 +143,9 @@ export default function TransactionHistoryList() {
                                                className="text-center form-select">
                                             <option value={""}>--Chọn loại hợp đồng--</option>
                                             {
-                                                contractType.map((ct, index) => {
-                                                    <option key={index} value={ct.id}>{ct.name}</option>
-                                                })
+                                                contractType.map((ct, index) => (
+                                                    <option key={index} value={ct.id}>{ct?.name}</option>
+                                                ))
                                             }
                                         </Field>
                                     </div>
@@ -156,24 +155,33 @@ export default function TransactionHistoryList() {
                                                 thái: </label>
                                             <div className="d-flex">
                                                 <Field style={{borderColor: "black"}} name="contractStatus" as="select"
-                                                       className="text-center form-select me-2">
+                                                       className="text-center form-select">
                                                     <option value={""}>--Chọn trạng thái--</option>
                                                     {
-                                                        contractStatus.map((cs, index) => {
-                                                            <option key={index} value={cs.id}>{cs.name}</option>
-                                                        })
+                                                        contractStatus.map((cs, index) => (
+                                                            <option key={index} value={cs.id}>{cs?.name}</option>
+                                                        ))
                                                     }
                                                 </Field>
-                                                <button type="submit" className="btn btn-outline-primary">
-                                                    <i className="bi bi-search"></i>
-                                                </button>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className=" col-lg-10 mt-4">
+                                        <div className="d-flex justify-content-between">
+                                            <Link type="button"
+                                                  to={"/nav/info-store/transaction-history/create-contract"}
+                                                  className="btn btn-success">Thêm mới hợp đồng</Link>
+                                            <button type="reset" className="col-lg-3 btn btn-secondary"
+                                            ><i
+                                                className="bi bi-arrow-counterclockwise"/></button>
+                                            <button type="submit" className="col-lg-3 btn btn-info">
+                                                <i className="bi bi-search"/>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </Form>
                         </Formik>
-
                     </div>
                 </div>
             </div>
@@ -183,7 +191,7 @@ export default function TransactionHistoryList() {
                         <thead>
                         <tr>
                             <th>Mã hợp đồng</th>
-                            <th>Tên đồ cầm</th>
+                            <th>Tên đồ</th>
                             <th>Tên khách hàng</th>
                             <th>Ngày làm hợp đồng</th>
                             <th>Loại hợp đồng</th>
@@ -193,39 +201,39 @@ export default function TransactionHistoryList() {
                         </thead>
                         <tbody>
                         {
-                            contracts.length>0 ?
-                                contracts.map((th, index) => (
-                                        <tr key={index}>
-                                            <td>{th?.contractCode}</td>
-                                            <td>{th?.productName}</td>
-                                            <td>{th?.customers}</td>
-                                            <td>{
-                                                moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
-                                            }</td>
-                                            <td>{th?.contractType}</td>
-                                            <td>{th?.contractStatus}</td>
-                                            <td>
-                                                <Link to={`/nav/info-store/transaction-history/detail/${th?.contractCode}`}><i
-                                                    className="bi bi-info-circle me-2"></i></Link>
-                                                <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}
-                                                      className="me-2"><i style={{color: "orange"}}
-                                                                          className="bi bi-pencil-square"></i></Link>
-                                                <a type="button" data-bs-toggle="modal"
-                                                   data-bs-target="#exampleModal" onClick={() => {
-                                                    setDeleteTHList(th?.contractCode)
-                                                }}><i
-                                                    style={{color: "red"}}
-                                                    className="bi bi-trash3"></i></a>
-                                            </td>
-                                        </tr>
-                                    )
-                                ) : (
+                            contracts?.length === 0 && (search.customerName !== "" || search.productName !== "" || search.contractType !== ""
+                                || search.contractStatus !== "" || search.startDate !== "" || search.endDate !== "") ? (
                                     <tr>
                                         <td colSpan={7}>
-                                            <h3 style={{color: "red"}}>Không có dữ liệu</h3>
+                                            <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
                                         </td>
                                     </tr>
-                                )}
+                                ) :
+                                contracts.map((th, index) => (
+                                    <tr key={index}>
+                                        <td>HD-{th?.contractCode}</td>
+                                        <td>{th?.productName}</td>
+                                        <td>{th?.customers}</td>
+                                        <td>{
+                                            moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
+                                        }</td>
+                                        <td>{th?.contractType}</td>
+                                        <td>{th?.contractStatus}</td>
+                                        <td>
+                                            <Link to={`/nav/info-store/transaction-history/detail/${th?.contractCode}`}><i
+                                                className="bi bi-info-circle me-2"/></Link>
+                                            <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}
+                                                  className="me-2"><i style={{color: "orange"}}
+                                                                      className="bi bi-pencil-square"/></Link>
+                                            <a type="button" data-bs-toggle="modal"
+                                               data-bs-target="#exampleModal" onClick={() => {
+                                                setDeleteTHList(th?.contractCode)
+                                            }}><i
+                                                style={{color: "red"}}
+                                                className="bi bi-trash3"/></a>
+                                        </td>
+                                    </tr>
+                                ))}
 
                         </tbody>
                     </table>
@@ -275,14 +283,14 @@ export default function TransactionHistoryList() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title"
-                                id="staticBackdropLabel6">Xác nhận
-                                xóa lịch sử giao dịch</h5>
+                                id="staticBackdropLabel6">
+                                Xóa lịch sử giao dịch</h5>
                             <button type="button" className="btn-close"
                                     data-bs-dismiss="modal" aria-label="Close"/>
                         </div>
                         <div className="modal-body">
                             <span>Bạn muốn xóa lịch sử giao dịch có mã code </span><span
-                            style={{color: 'red'}}>{deleteTHList}</span><span> ?</span>
+                            style={{color: 'red'}}>HD-{deleteTHList}</span><span> ?</span>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary"

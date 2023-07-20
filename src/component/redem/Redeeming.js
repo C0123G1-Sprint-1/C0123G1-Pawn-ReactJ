@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Modal} from 'react-bootstrap';
 import * as redeemingService from '../../service/RedeemingService'
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Swal from "sweetalert2";
 import {getTimerProgressBar} from "sweetalert2";
+import * as Yup from "yup"
 import {ThreeCircles} from "react-loader-spinner";
 
 
@@ -20,6 +21,12 @@ export const Redeeming = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0); // Tổng số trang
 
+    const getToday = () => {
+        const today = new Date();
+        // Đặt giờ, phút, giây và mili giây về 0 để so sánh ngày mà không tính đến thời gian.
+        today.setHours(0, 0, 0, 0);
+        return today;
+    };
     const handleModalClose = () => {
         setShowModal(false);
     };
@@ -68,11 +75,7 @@ export const Redeeming = () => {
 
 
     const reset = async () => {
-        await setContractCode('');
-        await  setCustomerName('');
-        await setProductName('');
-        await  setStartDate('');
-        await setSelectedContract(0);
+        window.location.reload(false);
     }
 
     return (
@@ -105,7 +108,7 @@ export const Redeeming = () => {
             {/*top: "50%",*/}
             {/*transform: "translate(-50%, -50%)",*/}
             {/*paddingRight: "20px"}}*/}
-            <div className="container mt-5 mb-5" >
+            <div className="container mt-5 mb-5">
                 <div className="row height d-flex justify-content-center align-items-center">
                     <div className="col-md-6">
                         <div className="card px-5 py-4">
@@ -134,11 +137,13 @@ export const Redeeming = () => {
                                         backdrop="static"
                                         keyboard={false}
                                         centered
-                                        style={{position: "fixed",
+                                        style={{
+                                            position: "fixed",
                                             left: "50%",
                                             top: "50%",
                                             transform: "translate(-50%, -50%)",
-                                            paddingRight: "20px"}}
+                                            paddingRight: "20px"
+                                        }}
 
                                     >
                                         <Modal.Header style={{backgroundColor: "#00833e", color: "white"}}>
@@ -217,7 +222,7 @@ export const Redeeming = () => {
                                                         <div className="row">
                                                             <div className="col-md-12 d-flex justify-content-end">
                                                                 <button type="submit"
-                                                                        className="btn btn-outline-primary "><i
+                                                                        className="btn btn-outline-primary " style={{width: "auto"}}><i
                                                                     className="bi bi-search"></i>
                                                                 </button>
 
@@ -239,73 +244,81 @@ export const Redeeming = () => {
                                                     <th className="text-center">Chức Năng</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
 
                                                 {
-                                                    contracts.map((contract) => (
-                                                        <tr key={contract.contractId}>
-                                                            <td className="text-center">{contract.contractCode}</td>
-                                                            <td className="text-center">{contract.customerName}</td>
-                                                            <td className="text-center">{contract.productName}</td>
-                                                            <td className="text-center">{contract.loans}</td>
-                                                            <td className="text-center">{contract.startDate}</td>
-                                                            <td className="text-center">
-                                                                <button onClick={() => {
-                                                                    handleModalClose(true);
-                                                                    setSelectedContract(contract.contractId)
-                                                                }} className="btn btn-success text-center">
-                                                                    Chọn
-                                                                </button>
+                                                    contracts.length === 0 ?
+                                                        <tr>
+                                                            <td colSpan="6" className="text-center">
+                                                                <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
                                                             </td>
                                                         </tr>
-                                                    ))
-                                                }
+                                                        :
+                                                        <tbody>
 
-
-                                                {/* Other table rows */}
-                                                </tbody>
-                                            </table>
-                                            <div className="d-flex col-12 justify-content-end">
-                                                <nav aria-label="...">
-                                                    <ul className="pagination">
-                                                        <li hidden={page === 0} className="page-item ">
-                                                            <button className="page-link" tabIndex={-1}
-                                                                    onClick={() => paginate(page - 1)}>
-                                                                Trước
-                                                            </button>
-                                                        </li>
-                                                        {/*<li className="page-item active" aria-current="page">*/}
-                                                        {/*    <a className="page-link" href="#">*/}
-                                                        {/*        1*/}
-                                                        {/*    </a>*/}
-                                                        {/*</li>*/}
                                                         {
-                                                            Array.from({length: totalPages}, (a, index) => index).map((page) => (
-                                                                <li className="page-item">
-                                                                    <button className="page-link " key={page}
-                                                                            onClick={() => paginate(page)}>
-                                                                        {page + 1}
-                                                                    </button>
-                                                                </li>
+                                                            contracts.map((contract) => (
+                                                                <tr key={contract.contractId}>
+                                                                    <td className="text-center">{contract.contractCode}</td>
+                                                                    <td className="text-center">{contract.customerName}</td>
+                                                                    <td className="text-center">{contract.productName}</td>
+                                                                    <td className="text-center">{contract.loans}</td>
+                                                                    <td className="text-center">{contract.startDate}</td>
+                                                                    <td className="text-center">
+                                                                        <button onClick={() => {
+                                                                            handleModalClose(true);
+                                                                            setSelectedContract(contract.contractId)
+                                                                        }} className="btn btn-success text-center">
+                                                                            Chọn
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
                                                             ))
                                                         }
 
 
-                                                        {/*<li className="page-item">*/}
-                                                        {/*    <a className="page-link" href="#">*/}
-                                                        {/*        3*/}
-                                                        {/*    </a>*/}
-                                                        {/*</li>*/}
-                                                        <li hidden={page + 1 === totalPages}
-                                                            className="page-item">
-                                                            <button className="page-link" tabIndex={-1}
-                                                                    onClick={() => paginate(page + 1)}>
-                                                                Tiếp
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
+                                                        {/* Other table rows */}
+                                                        </tbody>
+
+                                                }
+
+
+                                                {/* Other table rows */}
+                                            </table>
+                                            {
+                                                contracts.length === 0 ? '' :
+                                                    <div className="d-flex col-12 justify-content-end">
+                                                        <nav aria-label="...">
+                                                            <ul className="pagination">
+                                                                <li hidden={page === 0} className="page-item ">
+                                                                    <button className="page-link" tabIndex={-1}
+                                                                            onClick={() => paginate(page - 1)}>
+                                                                        Trước
+                                                                    </button>
+                                                                </li>
+
+
+                                                                {
+                                                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
+                                                                        <li className="page-item">
+                                                                            <button className="page-link " key={page}
+                                                                                    onClick={() => paginate(page)}>
+                                                                                {page + 1}
+                                                                            </button>
+                                                                        </li>
+                                                                    ))
+                                                                }
+
+                                                                <li hidden={page + 1 === totalPages}
+                                                                    className="page-item">
+                                                                    <button className="page-link" tabIndex={-1}
+                                                                            onClick={() => paginate(page + 1)}>
+                                                                        Tiếp
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                            }
                                         </Modal.Body>
                                     </Modal>
                                 </div>
@@ -324,28 +337,31 @@ export const Redeeming = () => {
                                 endDate: '',
 
 
+                            }}
+                                    validationSchema={Yup.object({
+                                        redeemDate: Yup.date().required("Vui lòng nhập ngày trả đồ").min(getToday(), "Vui Lòng chọn ngày hiện tại").max(getToday(), "Vui Lòng chọn ngày hiện tại")
+                                    })}
 
+                                    onSubmit={(value, {setSubmitting}) => {
+                                        setTimeout(() => {
+                                            setSubmitting(false)
+                                        }, 5000)
+                                        const res = async () => {
+                                            try {
+                                                const rs = await redeemingService.redeem(selectedContract, value.redeemDate);
+                                            } catch (e) {
+                                                console.log(e)
+                                            }
+                                        }
+                                        res().then(Swal.fire({
+                                            icon: "success",
+                                            title: "Đã chuộc thành công",
 
-                            }} onSubmit={(value, {setSubmitting}) => {
-                                setTimeout(() => {
-                                    setSubmitting(false)
-                                }, 5000)
-                                const res = async () => {
-                                    try {
-                                        const rs = await redeemingService.redeem(selectedContract, value.redeemDate);
-                                    } catch (e) {
-                                        console.log(e)
-                                    }
-                                }
-                                res().then(Swal.fire({
-                                    icon: "success",
-                                    title: "Đã chuộc thành công",
+                                        }))
+                                        reset()
+                                        fetchContract()
 
-                                }))
-                                reset()
-                                fetchContract()
-
-                            }}>
+                                    }}>
                                 {
                                     ({isSubmitting}) => (
                                         <>
@@ -453,6 +469,7 @@ export const Redeeming = () => {
                                                         className="form-control"
                                                         name="redeemDate"
                                                     />
+                                                    <ErrorMessage name="redeemDate" component="p" style={{color:"red"}}/>
                                                 </div>
                                                 <div className="text-center mt-4 btn-group p-3 m-l-2">
                                                     {/*<div className="text-center m-auto">*/}
@@ -466,29 +483,30 @@ export const Redeeming = () => {
                                                     {/*    </button>*/}
                                                     {/*</div>*/}
 
-                                                    <div  className="text-center m-auto">
-                                                    {
-                                                      isSubmitting ? (<ThreeCircles
-                                                                height="100"
-                                                                width="100"
-                                                                color="#4fa94d"
-                                                                wrapperStyle={{}}
-                                                                wrapperClass=""
-                                                                visible={true}
-                                                                ariaLabel="three-circles-rotating"
-                                                                outerCircleColor=""
-                                                                innerCircleColor=""
-                                                                middleCircleColor=""
-                                                            />) :
-                                                            ( <div  className="text-center m-auto">
-                                                                    <button onClick={() => fetchContract()} hidden={!selectedContract} type="submit"
-                                                                            className="btn btn-success">
-                                                                        <b className="text-center">Thanh toán</b>
-                                                                    </button>
-                                                                </div>
-                                                            )
+                                                    <div className="text-center m-auto">
+                                                        {
+                                                            isSubmitting ? (<ThreeCircles
+                                                                    height="100"
+                                                                    width="100"
+                                                                    color="#4fa94d"
+                                                                    wrapperStyle={{}}
+                                                                    wrapperClass=""
+                                                                    visible={true}
+                                                                    ariaLabel="three-circles-rotating"
+                                                                    outerCircleColor=""
+                                                                    innerCircleColor=""
+                                                                    middleCircleColor=""
+                                                                />) :
+                                                                (<div className="text-center m-auto">
+                                                                        <button onClick={() => fetchContract()}
+                                                                                hidden={!selectedContract} type="submit"
+                                                                                className="btn btn-success">
+                                                                            <b className="text-center">Thanh toán</b>
+                                                                        </button>
+                                                                    </div>
+                                                                )
 
-                                                    }
+                                                        }
                                                     </div>
 
                                                 </div>

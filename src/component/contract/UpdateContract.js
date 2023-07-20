@@ -82,6 +82,7 @@ export function UpdateContract() {
                         .test('startDateBeforeEndDate', 'Ngày bắt đầu phải trước ngày kết thúc', function (value) {
                             const endDate = Yup.date().typeError('Vui lòng nhập một ngày hợp lệ').cast(this.parent.endDate, value);
                             if (!value || !endDate) return true;
+
                             return value <= endDate;
                         }),
                     endDate:Yup.date().required("Không được để trống")
@@ -105,15 +106,15 @@ export function UpdateContract() {
                     console.log(values)
                     const updateContract = async () => {
                         await contractService.updateContract(values);
-                        navigate("/nav/info-store/transaction-history")
+                        navigate("/top10NewContract")
                     }
                     updateContract();
                 }}>
 
                 <div className="container mt-5 " style={{marginBottom: "5rem"}}>
-                    <div className="row height d-flex justify-content-center align-items-center">
+                    <div className="row height-tri d-flex justify-content-center align-items-center">
                         <div className="col-md-6">
-                            <div className="card px-5 py-4">
+                            <div className="card-tri px-5 py-4">
                                 <div style={{textAlign: "center"}}>
                                     <h1>Chỉnh Sửa Hợp Đồng</h1>
                                 </div>
@@ -131,25 +132,16 @@ export function UpdateContract() {
                                         <Field type="text" className="form-control" name="productName"
                                         />
                                     </div>
-                                    {/*<div className="mt-2 inputs"><label>Tên khách hàng<span*/}
-                                    {/*    style={{color: "red"}}>*</span></label>*/}
-                                    {/*<Field as="select" name="customers"  id="productType">*/}
-                                    {/*    {*/}
-                                    {/*        customer.map((customer) => (*/}
-                                    {/*            <option key={customer.id} value={customer.id}>{customer.name}</option>*/}
-                                    {/*        ))*/}
-                                    {/*    }*/}
-                                    {/*</Field>*/}
-                                    {/*</div> */}
+
                                     <div className="mt-2 inputs"><label htmlFor="customers">Tên khách hàng<span
                                         style={{color: "red"}}>*</span></label>
-                                        <Field as="select" name="customers"  id="customers"  className="form-control">
-                                            {
-                                                customer.map((customer) => (
-                                                    <option key={customer.id} value={customer.id}>{customer.name}</option>
-                                                ))
-                                            }
-                                        </Field>
+                                    <Field as="select" name="customers"  id="customers"  className="form-control">
+                                        {
+                                            customer.map((customer) => (
+                                                <option key={customer.id} value={customer.id}>{customer.name}</option>
+                                            ))
+                                        }
+                                    </Field>
                                     </div>
                                     <div className="mt-2 inputs"><label>Loại đồ<span
                                         style={{color: "red"}}>*</span></label>
@@ -170,7 +162,7 @@ export function UpdateContract() {
                                     <div className="mt-2 inputs"><label htmlFor="endDate">Ngày kết thúc <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field type="date" className="form-control" name="endDate" id="endDate"
-                                        />
+                                              />
                                     </div>
                                     <div className="mt-2 inputs"><label htmlFor="contractType">Loại hợp đồng <span
                                         style={{color: "red"}}>*</span></label>
@@ -191,7 +183,7 @@ export function UpdateContract() {
                                             }
                                         </Field>
                                     </div>
-                                    <div className=" mt-4 btn-group">
+                                    <div className=" mt-4 btn-group-tri">
                                         <div className="text-center m-auto">
                                             <button type="button" className="btn btn-secondary" style={{marginRight: "76px",
                                                 marginLeft: "15px"}}>
@@ -207,6 +199,7 @@ export function UpdateContract() {
                                         </div>
                                     </div>
                                 </Form>
+
                             </div>
 
                         </div>

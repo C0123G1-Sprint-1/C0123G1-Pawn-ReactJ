@@ -8,7 +8,6 @@ import {storage} from "../../firebase";
 import Swal from "sweetalert2";
 import * as Yup from 'yup';
 
-
 export const CreateContracts = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0); // Tổng số trang
@@ -27,8 +26,36 @@ export const CreateContracts = () => {
     const [customer, setCustomer] = useState([]);
     const [code, setCode] = useState('');
     const [idCustomer, setIdCustomer] = useState();
+    const [customerName, setCustomerName] = useState('');
+
+    // const [loans, setLoans] = useState('');
+    // const [startDate, setStartDate] = useState('');
+    // const [endDate, setEndDay] = useState('');
+
     const n = useNavigate();
 
+    // const handleLoans = async (event) => {
+    //     await setLoans(event.target.value)
+    // }
+    // const handleStartDate = async (event) => {
+    //     const {loans,value}=event.target;
+    //     await setStartDate((p)=>({
+    //         ...p,
+    //         [loans]:value
+    //     }))
+    // }
+    //
+    // const handleEndDay = async (event) => {
+    //     await setEndDay(event.target.value)
+    // }
+
+    // let percent = 0.067;
+    // const moment = require('moment');
+    // const startDates = moment(startDate);
+    // const endDates = moment(endDate);
+    // // tính khoảng cách ngày
+    // const duration = endDates.diff(startDates, 'days');
+    // const profits = +(loans * percent * duration)
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
         setImgErr("");
@@ -37,7 +64,7 @@ export const CreateContracts = () => {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmitAsync = async () => {
         return new Promise((resolve, reject) => {
             const file = selectedFile;
             if (!file) return reject("Chưa có file nào được chọn ");
@@ -67,12 +94,12 @@ export const CreateContracts = () => {
 
     useEffect(() => {
         const getAllCustomer = async () => {
-            const res = await contractService.findAllCustomer(page)
+            const res = await contractService.findAllCustomer(page,customerName)
             setCustomer(res.content)
             await setTotalPages(res.totalPages)
         }
         getAllCustomer()
-    }, [page])
+    }, [page,customerName])
 
 
     const handleModalClose = () => {
@@ -136,9 +163,9 @@ export const CreateContracts = () => {
         getAllEmployee()
         createContractCodeApi()
     }, [])
-    if (!customer){
-        return null;
-    }
+
+
+
     return (
         <>
             <div className="container">
@@ -155,7 +182,7 @@ export const CreateContracts = () => {
                                 productType: '',
                                 image: '',
                                 loans: '',
-                                startDate: '',
+                                startDate:'' ,
                                 endDate: '',
                                 profit: '',
                                 contractStatus: 1,
@@ -165,10 +192,13 @@ export const CreateContracts = () => {
                                     validationSchema={Yup.object({
                                         productName: Yup.string()
                                             .trim()
-                                            .required('Không được để trống'),
+                                            .required('Không được để trống')
+                                            .matches(/^[A-Z][a-z]*(\s[A-Z][a-z]*)|(\s[0-9]*)+$/, 'Chữ đầu tiên phải viết hoa'),
+
                                         loans: Yup.number()
+                                            .required('Không được để trống')
                                             .min(500000, 'Tiền cho vay phải > 500.000 hoặc = 500.000')
-                                            .required('Không được để trống'),
+                                            ,
                                         startDate: Yup.date()
                                             .required('Không được để trống')
                                             .test("date", "Không được chọn quá khứ chỉ chọn hiện tại và tương lai",
@@ -199,21 +229,19 @@ export const CreateContracts = () => {
 
 
                                     onSubmit={async (values, {resetForm}) => {
-                                        await setPage(0)
-                                        await contractService.findAllCustomer(page)
-                                        let percent = 0.00065;
+                                        let percent = 0.067;
                                         const moment = require('moment');
                                         const startDates = moment(values.startDate);
                                         const endDates = moment(values.endDate);
                                         // tính khoảng cách ngày
                                         const duration = endDates.diff(startDates, 'days');
-                                        // const profits = values.loans * percent * duration; // Tiền lãi
+                                        const profits = +(values.loans * percent * duration)
                                         const createContracts = async () => {
                                             const newValue = {
                                                 ...values,
                                                 image: firebaseImg,
                                             };
-                                            newValue.image = await handleSubmit();
+                                            newValue.image = await handleSubmitAsync();
 
                                             await contractService.createContract({
                                                 ...newValue,
@@ -223,20 +251,24 @@ export const CreateContracts = () => {
                                                 contractStatus: getIdContractStatus(+values.contractStatus),
                                                 contractCode: code + values.contractCode,
                                                 productType: getIdProductTypes(+values.productType),
-                                                profit: +(values.loans * percent * duration),
+                                                profit: +(profits),
+                                                // startDate: startDate,
+                                                // endDate: endDate,
+                                                // loans: +loans
                                             })
+                                            console.log(newValue.image)
                                         }
                                         Swal.fire({
                                             icon: "success",
                                             title: "Thêm mới thành công",
                                             timer: 3000
                                         })
-                                        n("/")
+                                        n("/nav/info-store/transaction-history")
                                         resetForm(false)
                                         await createContracts()
                                     }}
                             >
-                                <Form>
+                                <Form >
                                     <div className="text-center m-2">
                                         <button
                                             type="button"
@@ -294,7 +326,7 @@ export const CreateContracts = () => {
                                             data-error="Please specify your need."
                                             style={{height: 35}}
                                         >
-                                            <option value={0} selected="">-+-Chọn loại-+-</option>
+                                            <option value={0} selected="">---Chọn loại---</option>
                                             {productType.map((list, index) => (
                                                 <option key={index} value={list.id}>{list.name}</option>
                                             ))}
@@ -308,7 +340,7 @@ export const CreateContracts = () => {
                                             type="file"
                                             className="form-control"
                                             name="image"
-                                            onChange={(e) => handleFileSelect(e)}
+                                            onChange={handleFileSelect}
                                             id="image"
                                             style={{height: 35}}
                                             value={firebaseImg}
@@ -324,8 +356,14 @@ export const CreateContracts = () => {
                                             name="loans"
                                             style={{height: 35}}
                                             // onChange={handleLoans}
-                                            // value={loans}
+                                            // value={loans.loans}
+
+
                                         />
+                                        {/*<FormattedNumber value={loans} disabled*/}
+                                        {/*                 thousandSeparator={true} currency="VND"*/}
+                                        {/*                 minimumFractionDigits={0}/>*/}
+
                                         <ErrorMessage name="loans" component="p" style={{color: "red"}}/>
 
                                     </div>
@@ -333,12 +371,12 @@ export const CreateContracts = () => {
                                         <div className="col-md-6 form-group">
                                             <label>Ngày bắt đầu</label>
                                             <Field
-                                                // onChange={handleStartDate}
                                                 type="date"
                                                 className="form-control"
                                                 name="startDate"
                                                 style={{height: 36}}
-                                                // value={startDate}
+                                                // onChange={handleStartDate}
+                                                // value={startDate.startDate}
 
                                             />
                                             <ErrorMessage name="startDate" component="p" style={{color: "red"}}/>
@@ -346,11 +384,11 @@ export const CreateContracts = () => {
                                         <div className="col-md-6 form-group">
                                             <label>Ngày kết thúc</label>
                                             <Field
-                                                // onChange={handleEndDay}
                                                 type="date"
                                                 className="form-control"
                                                 name="endDate"
                                                 style={{height: 36}}
+                                                // onChange={handleEndDay}
                                                 // value={endDate}
 
                                             />
@@ -365,8 +403,14 @@ export const CreateContracts = () => {
                                             type="number"
                                             className="form-control"
                                             name="profit"
-                                            style={{height: 35}}
+                                            style={{height: 36}}
+                                            // value={profits}
+
                                         />
+                                        {/*<FormattedNumber value={profits} disabled*/}
+                                        {/*                 thousandSeparator={true} currency="VND"*/}
+                                        {/*                 minimumFractionDigits={0}*/}
+                                        {/*/>*/}
                                     </div>
                                     <div className="mt-2 inputs">
                                         {/*<label>Trạng thái</label>*/}
@@ -463,17 +507,20 @@ export const CreateContracts = () => {
                             <Modal.Body>
                                 <div className="controlsmodal-body d-flex justify-content-between">
                                     <div style={{marginTop: "0.6%"}}>
-                                        <button type="submit" className="btn btn-outline-success ">
+                                        <Link to='/nav/create' type="submit" className="btn btn-outline-success ">
                                             <b className="textcenter">Thêm khách hàng</b>
-                                        </button>
+                                        </Link>
                                     </div>
                                     <Formik initialValues={{
                                         name: ""
                                     }}
                                             onSubmit={async (values) => {
+
                                                 const search = async () => {
-                                                    const res = await contractService.searchCustomer(values.name)
+                                                    await setCustomerName(values.name)
+                                                    const res = await contractService.findAllCustomer(page,values.name)
                                                     setCustomer(res.content)
+                                                    setPage(0)
                                                     console.log(values)
                                                 }
                                                 search()
@@ -487,6 +534,7 @@ export const CreateContracts = () => {
                                                 name="name"
                                                 placeholder="Tìm kiếm theo tên khách hàng"
                                                 aria-label="Search"
+
                                             />
                                             <button className="btn btn-outline-primary" type="submit">
                                                 <i className="bi bi-search"/>
@@ -503,62 +551,70 @@ export const CreateContracts = () => {
                                         <th className="text-center">Chức Năng</th>
                                     </tr>
                                     </thead>
-
-                                    <tbody>
-                                    {customer.map((list, index) => (
-                                        <tr key={index}>
-                                            <td className="text-center">{list.id}</td>
-                                            <td className="text-center">{list.name}</td>
-                                            <td className="text-center">{list.citizenCode}</td>
-                                            <td className="text-center">
-                                                <button onClick={() => {
-                                                    setIdCustomer(list.id)
-                                                    handleModalClose(true);
-                                                }} className="btn btn-success text-center">
-                                                    Chọn
-                                                </button>
+                                    {customer.length === 0 ?
+                                        <tr>
+                                            <td colSpan="4" className="text-center">
+                                                <h4 style={{color: "red"}}>Dữ liêu không tồn tại</h4>
                                             </td>
                                         </tr>
-                                    ))
-                                    }
-                                    {/* Other table rows */}
-                                    </tbody>
-                                </table>
-
-                                <div className="d-flex col-12 justify-content-end">
-                                    <nav aria-label="...">
-                                        <ul className="pagination">
-                                            <li hidden={page === 0} className="page-item ">
-                                                <button className="page-link" tabIndex={-1}
-                                                        onClick={() => paginate(page - 1)}>
-                                                    Trước
-                                                </button>
-                                            </li>
-
-                                            {
-                                                Array.from({length: totalPages}, (a, index) => index).map((pageNumber) => (
-                                                    <li className="page-item">
-                                                        <button
-                                                            className={pageNumber === page ? "page-link active" : "page-link "}
-                                                            key={pageNumber}
-                                                            onClick={() => paginate(pageNumber)}>
-                                                            {pageNumber + 1}
-                                                        </button>
-                                                    </li>
-                                                ))
-                                            }
-                                            {page + 1 === totalPages ?
-                                                ""
-                                                : <li disabled={page + 1 === totalPages}
-                                                      className="page-item">
-                                                    <button className="page-link" tabIndex={-1}
-                                                            onClick={() => paginate(page + 1)}>
-                                                        Tiếp
+                                        :
+                                        <tbody>
+                                        {customer.map((list, index) => (
+                                            <tr key={index}>
+                                                <td className="text-center">{list.id}</td>
+                                                <td className="text-center">{list.name}</td>
+                                                <td className="text-center">{list.citizenCode}</td>
+                                                <td className="text-center">
+                                                    <button onClick={() => {
+                                                        setIdCustomer(list.id)
+                                                        handleModalClose(true);
+                                                    }} className="btn btn-success text-center">
+                                                        Chọn
                                                     </button>
-                                                </li>}
-                                        </ul>
-                                    </nav>
-                                </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                        }
+                                        {/* Other table rows */}
+                                        </tbody>
+                                    }
+                                </table>
+                                {customer.length === 0 ? '' :
+                                    <div className="d-flex col-12 justify-content-end">
+                                        <nav aria-label="...">
+                                            <ul className="pagination">
+                                                <li hidden={page === 0} className="page-item ">
+                                                    <button className="page-link" tabIndex={-1}
+                                                            onClick={() => paginate(page - 1)}>
+                                                        Trước
+                                                    </button>
+                                                </li>
+
+                                                {
+                                                    Array.from({length: totalPages}, (a, index) => index).map((pageNumber) => (
+                                                        <li className="page-item">
+                                                            <button
+                                                                className={pageNumber === page ? "page-link active" : "page-link "}
+                                                                key={pageNumber}
+                                                                onClick={() => paginate(pageNumber)}>
+                                                                {pageNumber + 1}
+                                                            </button>
+                                                        </li>
+                                                    ))
+                                                }
+                                                {page + 1 === totalPages ?
+                                                    ""
+                                                    : <li disabled={page + 1 === totalPages}
+                                                          className="page-item">
+                                                        <button className="page-link" tabIndex={-1}
+                                                                onClick={() => paginate(page + 1)}>
+                                                            Tiếp
+                                                        </button>
+                                                    </li>}
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                }
                             </Modal.Body>
                         </Modal>
                     </div>

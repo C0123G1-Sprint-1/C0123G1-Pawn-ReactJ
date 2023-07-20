@@ -20,6 +20,9 @@ export function CreateCustomer() {
     const [backCitizenUrl, setBackCitizenUrl] = useState(null);
     const [fileSelected, setFileSelected] = useState(false);
     const messageError = "Các trường ảnh không được để trống!!";
+    const [responseText, setResponseText] = useState('');
+
+
     const handleFileSelect = (event, setFile, setFileUrl) => {
         const file = event.target.files[0];
         if (file) {
@@ -91,6 +94,45 @@ export function CreateCustomer() {
             today.getMonth(),
             today.getDate()
         );
+    };
+
+    const handleSubmitScanOcr = async () => {
+        if (!handleFrontCitizenFileSelect) {
+            await Swal.fire({
+                icon: "error",
+                title: "Bạn cần upload Ảnh mặt trước căn cước.",
+                timer: 1500
+            });
+            return;
+        }
+
+        const url = 'https://api.fpt.ai/vision/idr/vnm';
+        const apiKey = 'm13aY7m758e1ejzmiSfs3BxyIYcHy1T8';
+
+        const formData = new FormData();
+        formData.append('image', handleFrontCitizenFileSelect);
+
+        const headers = {
+            'api-key': apiKey
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: formData
+            });
+
+            const data = await response.json();
+            setResponseText(JSON.stringify(data, null, 2));
+        } catch (error) {
+            console.error('Error:', error);
+            await Swal.fire({
+                icon: "error",
+                title: "Gặp sự cố với server. Hãy thử lại sau ít phút.",
+                timer: 1500
+            });
+        }
     };
 
     return (
@@ -177,6 +219,7 @@ export function CreateCustomer() {
                         await Swal.fire({
                             icon: "success",
                             title: "Thêm mới thành công. Khách hàng " + newValue.name,
+                            timer: 1500
                         });
                         resetForm();
                         navigate("/");
@@ -184,6 +227,7 @@ export function CreateCustomer() {
                         await Swal.fire({
                             icon: "error",
                             title: "Thất bại",
+                            timer: 1500
                         });
                         setSubmitting(false);
                     }
@@ -267,7 +311,7 @@ export function CreateCustomer() {
                                                     </p>
                                                 )}
                                                 {fileSelected ? null : (
-                                                    <span  className="error-flag"> {messageError}</span>
+                                                    <span  className="text-danger"> {messageError}</span>
                                                 )}
                                                 <hr/>
                                                 <div className="mb-3 mt-3">
@@ -296,7 +340,7 @@ export function CreateCustomer() {
                                                         <ErrorMessage
                                                             component="span"
                                                             name="frontCitizen"
-                                                            className="error-flag"
+                                                            className="text-danger"
                                                         />
                                                         {!frontCitizen && (
                                                             <p>
@@ -355,7 +399,7 @@ export function CreateCustomer() {
                                                         <ErrorMessage
                                                             component="span"
                                                             name="backCitizen"
-                                                            className="error-flag"
+                                                            className="text-danger"
                                                         />
                                                         {!backCitizen && (
                                                             <p>
@@ -398,16 +442,16 @@ export function CreateCustomer() {
                                                         )}
                                                     </div>
                                                 </div>
-                                                {/*<div className="mt-3">*/}
-                                                {/*    <button*/}
-                                                {/*        id="show-alert-button"*/}
-                                                {/*        type="button"*/}
-                                                {/*        className="btn btn-sm btn-success"*/}
-                                                {/*        // onClick={analyzeImage}*/}
-                                                {/*    >*/}
-                                                {/*        Phân tích hình ảnh lấy dữ liệu*/}
-                                                {/*    </button>*/}
-                                                {/*</div>*/}
+                                                <div className="mt-3">
+                                                    <button
+                                                        id="show-alert-button"
+                                                        type="button"
+                                                        className="btn btn-sm btn-success"
+                                                        onClick={handleSubmitScanOcr}
+                                                    >
+                                                        Phân tích hình ảnh lấy dữ liệu
+                                                    </button>
+                                                </div>
                                             </div>
 
                                             <div className="col-md-8">
@@ -425,7 +469,7 @@ export function CreateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="name"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
                                                 <div className="mt-2">
@@ -443,7 +487,7 @@ export function CreateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="birthday"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
                                                 <div className="mt-2 row">
@@ -472,7 +516,7 @@ export function CreateCustomer() {
                                                         <ErrorMessage
                                                             component="span"
                                                             name="gender"
-                                                            className="error-flag"
+                                                            className="text-danger"
                                                         />
                                                     </div>
                                                 </div>
@@ -490,7 +534,7 @@ export function CreateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="email"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
                                                 <div className="mt-2">
@@ -508,7 +552,7 @@ export function CreateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="phoneNumber"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
                                                 <div className="mt-2">
@@ -526,7 +570,7 @@ export function CreateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="citizenCode"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
                                                 <div className="mt-2">
@@ -544,7 +588,7 @@ export function CreateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="address"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
 

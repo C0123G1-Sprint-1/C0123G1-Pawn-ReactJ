@@ -1,19 +1,32 @@
 import React from "react";
 import {Bar} from "react-chartjs-2";
 
-export const ChartComponent = ({data}) => {
+export const ChartComponent = ({data, title}) => {
+    switch (title) {
+        case "interest":
+            title = "tiền lãi hợp đồng"
+            break;
+        case "liquidation":
+            title = "thanh lý"
+            break;
+        case "foresee":
+            title = "dự kiến"
+            break;
+        default:
+            title = ""
+    }
     const chartData = {
         labels: data.map((row) => row.month),
         datasets: [
             {
-                label: "Lợi nhuận theo tháng",
+                label: "Lợi nhuận",
                 data: data.map((row) => row.profit),
-                backgroundColor: ['rgb(177,239,173)'],
-                hoverBackgroundColor: 'rgb(57,120,49)',
+                backgroundColor: ['#0a9a4e'],
+                hoverBackgroundColor: '#27533e',
                 borderColor: ['black'],
                 borderWidth: 1,
-                maxBarThickness: 40,
-                indexAxis: "x",
+                maxBarThickness: 30,
+                indexAxis: "x"
             },
         ],
     };
@@ -35,7 +48,7 @@ export const ChartComponent = ({data}) => {
             },
             title: {
                 display: true, // Hiển thị tiêu đề của biểu đồ
-                text: 'Biểu đồ lợi nhuận theo tháng', // Tiêu đề biểu đồ
+                text: 'Biểu đồ lợi nhuận ' + title + ' theo tháng', // Tiêu đề biểu đồ
                 font: {
                     size: 18, // Kích thước font tiêu đề
                 },

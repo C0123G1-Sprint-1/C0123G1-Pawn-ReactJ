@@ -22,7 +22,7 @@ export function TransactionHistoryDetail() {
     return (
         <>
             <div className="col-lg-9 col-md-9">
-                <h1 className="text-center my-5">Chi tiết giao dịch</h1>
+                <h1 className="text-center my-5">CHI TIẾT GIAO DỊCH</h1>
                 <table className="table table-bordered">
                     <tbody>
                     <tr>
@@ -114,6 +114,7 @@ export function TransactionHistoryDetail() {
                             <img
                                 src={contract?.customers.image}
                                 width={250}
+                                height={250}
                                 alt=""
                             />
                         </td>
@@ -124,6 +125,7 @@ export function TransactionHistoryDetail() {
                             <img
                                 src={contract?.customers.frontCitizen}
                                 width={250}
+                                height={250}
                                 alt=""
                             />
                         </td>
@@ -134,6 +136,7 @@ export function TransactionHistoryDetail() {
                             <img
                                 src={contract?.customers.backCitizen}
                                 width={250}
+                                height={250}
                                 alt=""
                             />
                         </td>

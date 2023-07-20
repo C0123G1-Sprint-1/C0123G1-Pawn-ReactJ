@@ -8,18 +8,25 @@ export function Header() {
 
 const navigate = useNavigate();
 // bo thanh header
+    const token = localStorage.getItem('token');
+    const decodedToken = jwt(token);
+
     // const token = localStorage.getItem('token');
     // const decodedToken = jwt(token);
-    // const  [username,setUsername] = useState();
-    // setUsername(decodedToken.sub)
-    // console.log(username)
+    const  [username,setUsername] = useState();
+
+    useEffect(()=>{
+        // alert(decodedToken.sub)
+        setUsername(decodedToken.sub)
+    },[])
+    // console.log(decodedToken.sub)
     return(
         <>
             <>
                 {/*header*/}
                 <header id="header" className="header d-flex align-items-center">
                     <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-                        <a href="index.html" className="logo d-flex align-items-center">
+                        <a onClick={()=> navigate("/")}  className="logo d-flex align-items-center">
                             {/* Uncomment the line below if you also wish to use an image logo */}
                             <div className="pnj">
                                 <img  src="./anh/pawnshop.png"   style={{ marginLeft: "40%", maxHeight: 90 }}  alt=""  />
@@ -28,60 +35,56 @@ const navigate = useNavigate();
                          <nav id="navbar" className="navbar">
                             <ul>
                                 <li>
-                                    <a href="#hero" className="active">
+                                    <a  onClick={()=> navigate("/")} className="active">
                                         Trang Chủ
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="blog.html">Tin Tức</a>
+                                    <a style={{color : "white"}} onClick={() => navigate("/listPost")}>Tin Tức</a>
                                 </li>
                                 <li>
-                                    <a href="#create">Đăng ký cầm đồ</a>
+                                    <a style={{color :"white",fontWeight:"300"}} href="#create">Đăng ký cầm đồ</a>
                                 </li>
-                                <li className="dropdown">
-                                    <a href="#">
-                                        <span>Cầm Đồ Theo Tỉnh</span>{" "}
-                                        <i className="bi bi-chevron-down dropdown-indicator" />
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <a href="#">Cầm Đồ Quảng Nam</a>
-                                        </li>
-                                        <li className="dropdown">
-                                            <a href="#">
-                                                <span>Cầm Đồ Đà Nẵng</span>{" "}
-                                                <i className="bi bi-chevron-down dropdown-indicator" />
-                                            </a>
-                                            <ul>
-                                                <li>
-                                                    <a href="#">Quận Hải Châu</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Quận Thanh Khê</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Quận Cẩm Lệ</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Huyện Hòa Vang</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">Cầm Đồ Huế</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#contact" className="">
-                                        Liên hệ
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onClick={() => navigate("/login")}>Login</a>
-                                </li>
-                                <li>
-                                    <a onClick={() => navigate("/listPost")}>Tin tuc </a>
+                                {/*<li className="dropdown">*/}
+                                {/*    <a href="#">*/}
+                                {/*        <span>Cầm Đồ Theo Tỉnh</span>{" "}*/}
+                                {/*        <i className="bi bi-chevron-down dropdown-indicator" />*/}
+                                {/*    </a>*/}
+                                {/*    <ul>*/}
+                                {/*        <li>*/}
+                                {/*            <a href="#">Cầm Đồ Quảng Nam</a>*/}
+                                {/*        </li>*/}
+                                {/*        <li className="dropdown">*/}
+                                {/*            <a href="#">*/}
+                                {/*                <span>Cầm Đồ Đà Nẵng</span>{" "}*/}
+                                {/*                <i className="bi bi-chevron-down dropdown-indicator" />*/}
+                                {/*            </a>*/}
+                                {/*            <ul>*/}
+                                {/*                <li>*/}
+                                {/*                    <a href="#">Quận Hải Châu</a>*/}
+                                {/*                </li>*/}
+                                {/*                <li>*/}
+                                {/*                    <a href="#">Quận Thanh Khê</a>*/}
+                                {/*                </li>*/}
+                                {/*                <li>*/}
+                                {/*                    <a href="#">Quận Cẩm Lệ</a>*/}
+                                {/*                </li>*/}
+                                {/*                <li>*/}
+                                {/*                    <a href="#">Huyện Hòa Vang</a>*/}
+                                {/*                </li>*/}
+                                {/*            </ul>*/}
+                                {/*        </li>*/}
+                                {/*        <li>*/}
+                                {/*            <a href="#">Cầm Đồ Huế</a>*/}
+                                {/*        </li>*/}
+                                {/*    </ul>*/}
+                                {/*</li>*/}
+
+
+                                <li style={{display : "flex",textAlign: "center",
+                                    alignItems: "center",color:"white",fontWeight:"300"}}>
+                                    <a onClick={() => navigate("/login")}>{username}</a>
+                                    <i style={{marginLeft : "0.5rem"}} className="fa-regular fa-user"></i>
                                 </li>
 
                             </ul>

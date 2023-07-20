@@ -7,7 +7,7 @@ export default function InfoStore() {
         <>
             <div id="content" className="container">
                 <div className="row mt-3" style={{zIndex: "-1"}}>
-                    <div className="col-md-12 col-lg-3" style={{zIndex: "0"}}>
+                    <div className="col-md-12 col-lg-3 pb-1" style={{zIndex: "0"}}>
                         <div className="list-group">
                             <NavLink to={"/"} style={({isActive})=>{
                                 return{
@@ -45,7 +45,7 @@ export default function InfoStore() {
                             }}  className="border-0 list-group-item list-group-item-action">
                                 Lịch sử giao giao dịch
                             </NavLink>
-                            <NavLink to={"/"} style={({isActive})=>{
+                            <NavLink to={"/nav/info-store/top-10"} style={({isActive})=>{
                                 return{
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""

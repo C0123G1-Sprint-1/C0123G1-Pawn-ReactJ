@@ -3,6 +3,7 @@ import * as customersService from "../../service/customersService";
 import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
+import {Link} from "react-router-dom";
 
 
 export function CustomerList() {
@@ -15,6 +16,7 @@ export function CustomerList() {
         const list = async () => {
             let rs = await customersService.registerPawn();
             setRegisterPawn(rs.content)
+            console.log(rs.content.contentNote)
         }
         list()
     }, [])
@@ -94,7 +96,6 @@ export function CustomerList() {
 
     const handlePageClick = async (page) => {
         setCurrentPage(+page.selected);
-
         const result = await customersService.findByAll(name, page.selected);
         console.log(result.data);
         setListCustomer(result.content);
@@ -178,9 +179,9 @@ export function CustomerList() {
                         <div className='container'>
                             <div className="row ">
                                 <div className="col-6 mt-2">
-                                    <button className="btn btn-outline-success" style={{marginLeft: "10%"}}>Thêm khách
+                                    <Link to='/nav/create' className="btn btn-outline-success" style={{marginLeft: "10%"}}>Thêm khách
                                         hàng
-                                    </button>
+                                    </Link>
                                     {/*<NavLink*/}
                                     {/*    to='/listCustomerRegisterPawn' className="btn btn-outline-primary"*/}
                                     {/*    style={{marginLeft: '5%'}}>Danh sách khách hàng mới*/}
@@ -225,9 +226,9 @@ export function CustomerList() {
                                 <div className="col-12">
                                     <div className="d-flex justify-content-center">
                                         {listCustomer.length === 0 && name !== "" ? (
-                                            <h3 className={"text-danger text-center my-3"}>
+                                            <h4 className={"text-danger text-center my-3"}>
                                                 Không tìm thấy kết quả {name}
-                                            </h3>
+                                            </h4>
                                         ) : (
                                             <div className="table-responsive" style={{width: '80%'}}>
                                                 <table className="table table-striped">
@@ -259,9 +260,9 @@ export function CustomerList() {
                                                                         onClick={() => getDetail(value.id, value.name, value.birthday, value.gender, value.phoneNumber, value.email, value.address,
                                                                             value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate,
                                                                             value.updateDate, value.note)}/></a>
-                                                                    <a href className="me-2"><i
+                                                                    <Link to={`/nav/update/${value.id}`} href className="me-2"><i
                                                                         style={{color: 'orange'}}
-                                                                        className="bi bi-pencil-square"/></a>
+                                                                        className="bi bi-pencil-square"/></Link>
                                                                     <a type="button" data-bs-toggle="modal"
                                                                        data-bs-target="#staticBackdrop6">
                                                                         <i style={{color: 'red'}}
@@ -314,10 +315,10 @@ export function CustomerList() {
                                     <div className="d-grid">
                                         <ReactPaginate
                                             breakLabel="..."
-                                            nextLabel=">"
+                                            nextLabel="Tiếp"
                                             onPageChange={handlePageClick}
                                             pageCount={pageCount}
-                                            previousLabel="< "
+                                            previousLabel="Trước"
                                             containerClassName="pagination"
                                             pageLinkClassName="page-num"
                                             nextLinkClassName="page-num"
@@ -326,6 +327,42 @@ export function CustomerList() {
                                             disabledClassName="d-none"
                                         />
                                     </div>
+                                    {/*<div className="row my-3">*/}
+                                    {/*    <div className="d-flex col-12 justify-content-end">*/}
+                                    {/*        <nav aria-label="..." className="me-4">*/}
+                                    {/*            <ul className="pagination">*/}
+                                    {/*                <li hidden={page === 0} className="page-item">*/}
+                                    {/*                    <button className="page-link" tabIndex={-1}*/}
+                                    {/*                            onClick={() => paginate(page - 1)}>*/}
+                                    {/*                        Trước*/}
+                                    {/*                    </button>*/}
+                                    {/*                </li>*/}
+                                    {/*                {*/}
+                                    {/*                    Array.from({length: totalPages}, (a, index) => index).map((pageNum) => (*/}
+                                    {/*                        <li className="page-item" key={pageNum}>*/}
+                                    {/*                            <button*/}
+                                    {/*                                className={page === pageNum ? "active page-link" : "page-link"}*/}
+                                    {/*                                key={pageNum}*/}
+                                    {/*                                onClick={() => {*/}
+                                    {/*                                    paginate(pageNum)*/}
+                                    {/*                                }}>*/}
+                                    {/*                                {pageNum + 1}*/}
+                                    {/*                            </button>*/}
+                                    {/*                        </li>*/}
+                                    {/*                    ))*/}
+                                    {/*                }*/}
+
+                                    {/*                <li hidden={page + 1 === totalPages}*/}
+                                    {/*                    className="page-item">*/}
+                                    {/*                    <button className="page-link" tabIndex={-1}*/}
+                                    {/*                            onClick={() => paginate(page + 1)}>*/}
+                                    {/*                        Tiếp*/}
+                                    {/*                    </button>*/}
+                                    {/*                </li>*/}
+                                    {/*            </ul>*/}
+                                    {/*        </nav>*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
                         </div>
@@ -458,7 +495,7 @@ export function CustomerList() {
                                                 <th>Số điện thoại</th>
                                                 <th>Email</th>
                                                 <th>Địa chỉ</th>
-                                                <th>Nội dung</th>
+                                                {/*<th>Nội dung</th>*/}
                                                 <th>Loại khách</th>
                                                 <th>Ngày tạo</th>
                                                 <th>Ngày chỉnh sửa</th>
@@ -472,7 +509,7 @@ export function CustomerList() {
                                                     <td>{value.phone}</td>
                                                     <td>{value.email}</td>
                                                     <td>{value.address}</td>
-                                                    <td>{value.contendNote}</td>
+                                                    {/*<td>{value.contentNote}</td>*/}
                                                     <td>{value.productType.name}</td>
                                                     <td>{value.createTime}</td>
                                                     <td>{value.updateTime}</td>
