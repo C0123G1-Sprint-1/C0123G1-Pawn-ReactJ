@@ -12,7 +12,7 @@ export const deleteTransactionHistoryByID = async (id) => {
 export const findAllContractStatus = async () => {
     try {
         const res = await axios.get("http://localhost:8080/api/employee/contract/list-contract-status");
-        return res.data;
+        return res;
     } catch (e) {
         console.log(e)
     }
@@ -21,7 +21,7 @@ export const findAllContractStatus = async () => {
 export const findAllContractType = async () => {
     try {
         const res = await axios.get("http://localhost:8080/api/employee/contract/list-contract-type");
-        return res.data;
+        return res;
     } catch (e) {
         console.log(e)
     }

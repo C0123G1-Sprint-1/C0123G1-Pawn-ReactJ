@@ -75,7 +75,6 @@ function App() {
         <Route path={'/manager-customer'} element={<CustomerList />} />
       </Routes>
       <Footer />
-      <ToastContainer/>
     </>
   );
 }
