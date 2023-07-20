@@ -153,7 +153,7 @@ export default function Navbars() {
                                     display: "flex",
                                     padding: "10px"
                                 }
-                            }} className="nav-link" to={"/info"}>
+                            }} className="nav-link" to={"/nav/detail/employee/4"}>
                                 Thông tin cá nhân
                             </NavLink>
                         </li>

@@ -3,6 +3,7 @@ import * as customersService from "../../service/customersService";
 import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
+import {Link} from "react-router-dom";
 
 
 export function CustomerList() {
@@ -178,9 +179,9 @@ export function CustomerList() {
                         <div className='container'>
                             <div className="row ">
                                 <div className="col-6 mt-2">
-                                    <button className="btn btn-outline-success" style={{marginLeft: "10%"}}>Thêm khách
+                                    <Link to="/nav/create" className="btn btn-outline-success" style={{marginLeft: "10%"}}>Thêm khách
                                         hàng
-                                    </button>
+                                    </Link>
                                     {/*<NavLink*/}
                                     {/*    to='/listCustomerRegisterPawn' className="btn btn-outline-primary"*/}
                                     {/*    style={{marginLeft: '5%'}}>Danh sách khách hàng mới*/}
@@ -259,9 +260,9 @@ export function CustomerList() {
                                                                         onClick={() => getDetail(value.id, value.name, value.birthday, value.gender, value.phoneNumber, value.email, value.address,
                                                                             value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate,
                                                                             value.updateDate, value.note)}/></a>
-                                                                    <a href className="me-2"><i
+                                                                    <Link to={`/nav/update/${value.id}`} className="me-2"><i
                                                                         style={{color: 'orange'}}
-                                                                        className="bi bi-pencil-square"/></a>
+                                                                        className="bi bi-pencil-square"/></Link>
                                                                     <a type="button" data-bs-toggle="modal"
                                                                        data-bs-target="#staticBackdrop6">
                                                                         <i style={{color: 'red'}}

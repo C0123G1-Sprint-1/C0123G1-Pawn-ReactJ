@@ -32,28 +32,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
-      <change afterPath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/component/customer/OCRCitizen.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/component/employee/EmployeeInformation.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/firebase-DongPV.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/firebaseDat.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/service/CustomerSaveService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/service/EmployeeInformationService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/anh/home-image-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/anh/pawnshop.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/anh/tempsnip.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/anh/z4495656532190_6887c6aeaabc3b081c72e969ab66c288.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/anh/z4495656624664_bd45947738323e226dfe27013a92ff29.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/anh/z4495656653609_0a57b810f61e9f559a15eef36a363504.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/account/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/account/LoginForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/account/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/account/Style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/customer/CustomerList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CustomerList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/customer/OCRCitizen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/OCRCitizen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/navbar/Navbars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/navbar/Navbars.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/profit/ExportExcelButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/ExportExcelButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/List.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/List.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/RegisterPawn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/RegisterPawn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/Posts.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/Posts.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/liquidation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/liquidation.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/firebase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/firebasePosts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/firebasePosts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,24 +87,24 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/component/customer" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\customer" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\public" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\redeem" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\all_contract" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service\all_contract" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\components\navbar" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -139,7 +131,8 @@
       <workItem from="1689778015488" duration="4857000" />
       <workItem from="1689814503686" duration="22000" />
       <workItem from="1689814996259" duration="12647000" />
-      <workItem from="1689830336333" duration="2622000" />
+      <workItem from="1689830336333" duration="2747000" />
+      <workItem from="1689834571370" duration="2013000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -218,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689831136791</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Up">
+      <created>1689833552767</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1689833552783</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,10 +247,10 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="489" y="228" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.852@0.0.1440.852" timestamp="1689774850055" />
-    <state x="451" y="173" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1689832749495">
+    <state x="451" y="173" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1689836256316">
       <screen x="0" y="0" width="1440" height="852" />
     </state>
-    <state x="451" y="173" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689832749495" />
+    <state x="451" y="173" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689836256316" />
     <state x="515" y="173" key="FileChooserDialogImpl" timestamp="1689754775251">
       <screen x="0" y="0" width="1440" height="852" />
     </state>
@@ -284,10 +284,10 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="498" y="129" key="RollbackChangesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689774864295" />
-    <state x="338" y="150" key="Vcs.Push.Dialog.v2" timestamp="1689831142107">
+    <state x="338" y="150" key="Vcs.Push.Dialog.v2" timestamp="1689833563244">
       <screen x="0" y="0" width="1440" height="852" />
     </state>
-    <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689831142107" />
+    <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689833563244" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689586761444" />
     <state x="528" y="340" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1689674757207">
       <screen x="0" y="0" width="1440" height="852" />

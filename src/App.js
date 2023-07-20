@@ -32,6 +32,10 @@ import { CreateLiquidation } from "./component/liquidation/CreateLiquidation";
 import EmployeeList from "./component/employee/ListEmployee";
 import {CreateEmployee} from "./component/employee/CreateEmployee";
 import {Redeeming} from "./component/redem/Redeeming";
+import EmployeeInformation from "./component/customer/EmployeeInformation";
+import {CreateCustomer} from "./component/customer/CreateCustomer";
+import ImageUploaderFile from "./component/customer/OCRCitizen";
+import {UpdateCustomer} from "./component/customer/UpdateCustomer";
 function App() {
     return (
         <>
@@ -51,11 +55,15 @@ function App() {
                         <Route path={"/nav/info-store/transaction-history/detail/:id"} element={<TransactionHistoryDetail />}/>
                         <Route path={"/nav/info-store/all-contract"} element={<ShowContract />} />
                     </Route>
-                    <Route path={"/nav/info-store/liquidation"} element={<CreateLiquidation />} />
 
+                    <Route path={"/nav/info-store/liquidation"} element={<CreateLiquidation />} />
                     <Route path="/nav/api/employee" element={<EmployeeList/>}/>
                     <Route path="/nav/api/employee/create-employee" element={<CreateEmployee/>}/>
                     <Route path="/nav/redeem" element={<Redeeming/>}/>
+                    <Route path={"/nav/manager-customer"} element={<CustomerList />} />
+                    <Route path={"/nav/create"} element={<CreateCustomer/>}/>
+                    <Route path={"/nav/update/:id"} element={<UpdateCustomer/>}/>
+                    <Route path={"/nav/detail/employee/:id"} element={<EmployeeInformation/>}/>
                 </Route>
                 <Route path='/create' element={<RegisterPawn />} />
                 {/*<Route path="/" element={<Header/>} />*/}
@@ -71,7 +79,8 @@ function App() {
                 <Route path={'/listPost'} element={<ListPosts />} />
                 <Route path={'/detail/:id'} element={<DetailPosts />} />
                 <Route path={'/createPosts'} element={<CreatePosts />} />
-                <Route path={'/manager-customer'} element={<CustomerList />} />
+
+                <Route path={"/scanfile"} element={<ImageUploaderFile/>}/>
             </Routes>
             <Footer />
 
