@@ -45,7 +45,7 @@ export function TransactionHistoryDetail() {
                         <th>Ảnh đồ cầm</th>
                         <td>
                             <img
-                                src={contract.image}
+                                src={contract?.image}
                                 width={150}
                                 height={150}
                                 alt=""
