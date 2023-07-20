@@ -12,7 +12,6 @@ export default function TransactionHistoryList() {
     const [contracts, setContract] = useState([]);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [deleteTHList, setDeleteTHList] = useState("");
     const getContractStatusApi = async () => {
         const res = await contractService.findAllContractStatus();
         setContractStatus(res.data)
@@ -166,15 +165,15 @@ export default function TransactionHistoryList() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className=" col-lg-10 mt-4">
+                                    <div className=" col-lg-10 my-4">
                                         <div className="d-flex justify-content-between">
                                             <Link type="button"
-                                                  to={"/nav/transaction-history/create-contract"}
-                                                  className="btn btn-success">Thêm mới hợp đồng</Link>
-                                            <button type="reset" className="col-lg-3 btn btn-secondary"
+                                                  to={"/nav/info-store/transaction-history/create-contract"}
+                                                  className="btn btn-outline-success">Thêm mới hợp đồng</Link>
+                                            <button type="reset" className="col-lg-3 btn btn-outline-secondary"
                                             ><i
                                                 className="bi bi-arrow-counterclockwise"/></button>
-                                            <button type="submit" className="col-lg-3 btn btn-info">
+                                            <button type="submit" className="col-lg-3 btn btn-outline-primary">
                                                 <i className="bi bi-search"/>
                                             </button>
                                         </div>
@@ -185,9 +184,9 @@ export default function TransactionHistoryList() {
                     </div>
                 </div>
             </div>
-            <div className="row ">
+            <div className="row mt-3">
                 <div className="col-lg-12">
-                    <table className="table table table-striped text-center mt-5" border="1">
+                    <table className="table table table-striped" border="1">
                         <thead>
                         <tr>
                             <th>Mã hợp đồng</th>
@@ -205,29 +204,43 @@ export default function TransactionHistoryList() {
                                 || search.contractStatus !== "" || search.startDate !== "" || search.endDate !== "") ? (
                                     <tr>
                                         <td colSpan={7}>
-                                            <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
+                                            <h4 style={{color: "red",textAlign:"center"}}>Dữ liệu không tồn tại</h4>
                                         </td>
                                     </tr>
                                 ) :
                                 contracts.map((th, index) => (
                                     <tr key={index}>
-                                        <td>HD-{th?.contractCode}</td>
+                                        <td className="text-center">HD-{th?.contractCode}</td>
                                         <td>{th?.productName}</td>
                                         <td>{th?.customers}</td>
-                                        <td>{
+                                        <td className="text-center">{
                                             moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
                                         }</td>
-                                        <td>{th?.contractType}</td>
-                                        <td>{th?.contractStatus}</td>
-                                        <td>
+                                        <td className="text-center">{th?.contractType}</td>
+                                        <td className="text-center">{th?.contractStatus}</td>
+                                        <td className="text-center">
                                             <Link to={`/nav/info-store/transaction-history/detail/${th?.contractCode}`}><i
                                                 className="bi bi-info-circle me-2"/></Link>
                                             <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}
                                                   className="me-2"><i style={{color: "orange"}}
                                                                       className="bi bi-pencil-square"/></Link>
-                                            <a type="button" data-bs-toggle="modal"
+                                            <a type="button"
                                                data-bs-target="#exampleModal" onClick={() => {
-                                                setDeleteTHList(th?.contractCode)
+                                                Swal.fire({
+                                                    icon: "warning",
+                                                    html: `Bạn có muốn xoá lịch sử giao dịch có mã hợp đồng <span style="color: red">HD-${th?.contractCode}</span> không ?`,
+                                                    showCancelButton: true,
+                                                    cancelButtonText: "Hủy",
+                                                    confirmButtonText: "Có",
+                                                    cancelButtonColor: "rgba(118,112,112,0.51)",
+                                                    confirmButtonColor: "#d33"
+                                                })
+                                                    .then((res) => {
+                                                        if (res.isConfirmed) {
+                                                            deleteTransactionHistory(th?.contractCode)
+                                                        }
+                                                    })
+
                                             }}><i
                                                 style={{color: "red"}}
                                                 className="bi bi-trash3"/></a>
@@ -239,7 +252,7 @@ export default function TransactionHistoryList() {
                     </table>
                 </div>
             </div>
-            <div className="row my-3">
+            <div className="row mt-3 mb-5">
                 <div className="d-flex col-12 justify-content-end">
                     <nav aria-label="..." className="me-4">
                         <ul className="pagination">
@@ -273,38 +286,6 @@ export default function TransactionHistoryList() {
                             </li>
                         </ul>
                     </nav>
-                </div>
-            </div>
-            {/* Modal */}
-            <div className="modal fade" id="exampleModal"
-                 data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1}
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title"
-                                id="staticBackdropLabel6">
-                                Xóa lịch sử giao dịch</h5>
-                            <button type="button" className="btn-close"
-                                    data-bs-dismiss="modal" aria-label="Close"/>
-                        </div>
-                        <div className="modal-body">
-                            <span>Bạn muốn xóa lịch sử giao dịch có mã code </span><span
-                            style={{color: 'red'}}>HD-{deleteTHList}</span><span> ?</span>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary"
-                                    data-bs-dismiss="modal">Thoát
-                            </button>
-                            <button type="button" className="btn btn-danger"
-                                    data-bs-dismiss="modal"
-                                    onClick={() => {
-                                        deleteTransactionHistory(deleteTHList);
-                                    }}
-                            >Xóa
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </>
