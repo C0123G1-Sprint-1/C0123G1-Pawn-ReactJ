@@ -206,7 +206,7 @@ export function CreateCustomer() {
                             handleAvatarFileUpload(),
                             handleFrontCitizenFileUpload(),
                             handleBackCitizenFileUpload()
-                        ]);debugger
+                        ]);
 
                         const avatarUrl = results[0];
                         const frontCitizenUrl = results[1];
@@ -225,7 +225,8 @@ export function CreateCustomer() {
                         setSubmitting(false);
                         await Swal.fire({
                             icon: "success",
-                            title: "Thêm mới thành công. Khách hàng " + newValue.name,
+                            title:"Thêm mới thành công.",
+                            text: "Khách hàng " + newValue.name,
                             timer: 1500
                         });
                         resetForm();
