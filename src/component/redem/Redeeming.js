@@ -33,6 +33,7 @@ export const Redeeming = () => {
 
     const handleModalOpen = () => {
         setShowModal(true);
+        fetchContract()
     };
 
 
@@ -75,7 +76,9 @@ export const Redeeming = () => {
 
 
     const reset = async () => {
-        window.location.reload(false);
+        setContract([])
+        setSelectedContract(0)
+        // window.location.reload(false);
     }
 
     return (
@@ -222,7 +225,7 @@ export const Redeeming = () => {
                                                         <div className="row">
                                                             <div className="col-md-12 d-flex justify-content-end">
                                                                 <button type="submit"
-                                                                        className="btn btn-outline-primary " style={{width: "auto"}}><i
+                                                                        className="btn btn-outline-success " style={{width: "auto"}}><i
                                                                     className="bi bi-search"></i>
                                                                 </button>
 
@@ -261,7 +264,7 @@ export const Redeeming = () => {
                                                                     <td className="text-center">{contract.contractCode}</td>
                                                                     <td >{contract.customerName}</td>
                                                                     <td className="text-center">{contract.productName}</td>
-                                                                    <td className="text-center">{contract.loans}</td>
+                                                                    <td className="text-center">{contract.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                                                     <td className="text-center">{contract.startDate}</td>
                                                                     <td className="text-center">
                                                                         <button onClick={() => {
@@ -325,16 +328,9 @@ export const Redeeming = () => {
                             </div>
 
                             <Formik initialValues={{
-                                contractId: selectedContract,
-                                redeemDate: '',
-                                total: '',
-                                contractCode: '',
-                                customerName: '',
-                                name: '',
-                                loans: '',
-                                profit: '',
-                                startDate: '',
-                                endDate: '',
+
+                                redeemDate: ''
+
 
 
                             }}
@@ -342,7 +338,7 @@ export const Redeeming = () => {
                                         redeemDate: Yup.date().required("Vui lòng nhập ngày trả đồ").min(getToday(), "Vui Lòng chọn ngày hiện tại").max(getToday(), "Vui Lòng chọn ngày hiện tại")
                                     })}
 
-                                    onSubmit={(value, {setSubmitting}) => {
+                                    onSubmit={(value, {setSubmitting , resetForm}) => {
                                         setTimeout(() => {
                                             setSubmitting(false)
                                         }, 5000)
@@ -359,6 +355,7 @@ export const Redeeming = () => {
 
                                         }))
                                         reset()
+                                        resetForm()
                                         fetchContract()
 
                                     }}>
@@ -372,7 +369,7 @@ export const Redeeming = () => {
 
                                                         <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
                                                             className="p-0 m-0">
-                                                            {contracts.find((c) => c.contractId == selectedContract)?.contractCode}
+                                                            {  contracts.find((c) => c.contractId == selectedContract)?.contractCode}
                                                         </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
@@ -430,7 +427,9 @@ export const Redeeming = () => {
                                                 <div className="mt-2 inputs">
                                                     <label>Tiền thanh toán (VNĐ)</label>
                                                     <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
-                                                        className="p-0 m-0">{(contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} </h5>
+                                                        className="p-0 m-0">
+
+                                                        {(contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}  </h5>
                                                 </div>
                                                 <div className="mt-2 inputs">
                                                     <label>Ngày trả đồ</label>
