@@ -11,9 +11,8 @@ export function DetailPosts() {
     const [posts, setPosts] = useState([])
     // Hàm định dạng ngày giờ
     const formatDateTime = (dateTime) => {
-        return moment(dateTime).format("DD/MM/YYYY HH:mm:ss");
+        return moment(dateTime).format("DD/MM/YYYY HH:mm");
     };
-
     const findDetailPosts = async () => {
         const result = await servicePosts.detail(param.id)
         setPostsDetail(result)
@@ -28,7 +27,7 @@ export function DetailPosts() {
     useEffect(() => {
         findDetailPosts()
     }, [param.id])
-    if (!posts) {
+    if (!postsDetail) {
         return null
     }
     return (
@@ -38,14 +37,17 @@ export function DetailPosts() {
                 <div className="row">
                     <div className="col-lg-8 col-xl-9">
                         <div className="main-content mt-4">
-                            <h1 className="title-news">{postsDetail.title}</h1>
-                            <div className="time">
-                                {formatDateTime(posts.createDate)}
+                            <div className="time-post1">
+                                {formatDateTime(postsDetail.createDate)}
+                            </div>
+                            <h1 style={{fontSize: "28px", fontWeight: "400", textAlign: "center", fontFamily: "Courier New"}} className="title-news">{postsDetail.title}</h1>
+                            <div className="time-post1">
+                               bởi: {postsDetail.employees?.name}
                             </div>
                             <div className="full-content"><p></p>
 
                                 <div className="form-old-row" style={{display: "flex"}}>
-                                    <img className="imgDetail" style={{display: "block", marginLeft: "auto", marginRight: "auto"}}
+                                    <img className="imgDetail" style={{width: "auto",display: "block", marginLeft: "auto", marginRight: "auto"}}
                                          src={postsDetail.image} alt=""/>
                                 </div>
 
@@ -73,12 +75,13 @@ export function DetailPosts() {
                                         <div className="other-item">
                                             <div className="row mt-3">
                                                 <div className="col-4">
-                                                    <div className="image"><NavLink to={`detail/${post.id}`}> <img
-                                                        src={post.image} alt=""/> </NavLink></div>
+                                                    <div className="image-post"><a href={`/detail/${post.id}`}>
+                                                        <img style={{width: "100%",height: "100%",objectFit: "cover"}}
+                                                        src={post.image} alt=""/> </a></div>
                                                 </div>
-                                                <div className="col-8">
-                                                    <h3 className="title">{post.title}</h3>
-                                                    <span className="time1">{formatDateTime(post.createDate)}</span>
+                                                <div className="col-8 mt-2">
+                                                    <a className="text-decoration-none" href={`/detail/${post.id}`}><h3 className="title-post">{post.title}</h3></a>
+                                                    <span className="time-post1 d-flex justify-content-end">{formatDateTime(post.createDate)}</span>
                                                 </div>
                                             </div>
                                         </div>

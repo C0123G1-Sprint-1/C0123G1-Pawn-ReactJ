@@ -36,22 +36,22 @@ thead {
 .pagination .page-num:hover,
 .pagination .page-previous,
 .pagination .page-next {
-    background-color: blue;
+    background-color: #0D6EFD;
     color: white;
 }
 
 .pagination a {
     text-decoration: none;
-    color: blue;
+    color: #0D6EFD;
 }
 
 .pagination .active {
-    background-color: blue;
+    background-color: #0D6EFD;
 }
 
 .pagination .active .page-num {
     color: #fff;
-    background: blue;
+    background: #0D6EFD;
 }
 
 .height {

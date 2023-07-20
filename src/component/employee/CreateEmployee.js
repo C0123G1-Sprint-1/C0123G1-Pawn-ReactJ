@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import * as employeeService from "../../service/employee/employeeService";
 import {NavLink} from "react-router-dom";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import moment from 'moment';
@@ -9,12 +8,13 @@ import {storage} from "../../firebase";
 import * as Yup from "yup";
 import "../employee/employee.css";
 import Swal from "sweetalert2";
+import * as employeeService from "../../service/employeeService";
 
 import {
     checkCitizenCodeExists,
     checkEmailExists, checkPhoneNumberExists,
     createEmployee
-} from "../../service/employee/employeeService";
+} from "../../service/employeeService";
 
 
 export function CreateEmployee() {
@@ -174,7 +174,7 @@ export function CreateEmployee() {
             >
                 <Form>
                     <div className="container mt-5 mb-5">
-                        <div className="row height d-flex justify-content-center align-items-center">
+                        <div className="d-flex justify-content-center align-items-center">
                             <div className="col-md-6">
                                 <div className="card px-1 py-2">
                                     <div style={{textAlign: "center"}}>
