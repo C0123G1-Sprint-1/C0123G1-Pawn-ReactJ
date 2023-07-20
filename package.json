@@ -35,7 +35,8 @@
     "sweetalert2": "^11.7.12",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5",
-    "yup": "^1.0.2"
+    "yup": "^1.0.2",
+    "react-intl": "^6.4.4"
   },
   "scripts": {
     "start": "react-scripts start",

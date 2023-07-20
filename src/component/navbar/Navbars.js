@@ -57,7 +57,7 @@ export default function Navbars() {
                                     display: "flex",
                                     padding: "10px"
                                 }
-                            }} className="nav-link active" aria-current="page" to={"/liquidation"}>
+                            }} className="nav-link active" aria-current="page" to={"/nav/liquidation"}>
                                 Thanh lý
                             </NavLink>
                         </li>

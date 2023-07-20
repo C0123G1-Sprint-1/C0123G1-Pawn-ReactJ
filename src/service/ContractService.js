@@ -87,9 +87,9 @@ export const findAllAndEmployee = async () => {
         console.log(error)
     }
 }
-export const findAllCustomer = async (page) => {
+export const findAllCustomer = async (page,name) => {
     try {
-        const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer?page=${page}`)).data
+        const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer/?page=${page}&name=${name}`)).data
         return res;
     } catch (e) {
         console.log(e)

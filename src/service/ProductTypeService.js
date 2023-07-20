@@ -7,7 +7,6 @@ export const getAllProductType = async () => {
     }catch (err) {
         console.log(err)
     }
-
 }
 export const getAllCustomer = async () => {
     try {

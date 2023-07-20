@@ -37,7 +37,7 @@ export default function InfoStore() {
                             }}  className="border-0 list-group-item list-group-item-action">
                                 Danh sách đồ cầm trong kho
                             </NavLink>
-                            <NavLink to={"/"} style={({isActive})=>{
+                            <NavLink to={"/nav/info-store/transaction-history"} style={({isActive})=>{
                                 return{
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""
@@ -45,7 +45,7 @@ export default function InfoStore() {
                             }}  className="border-0 list-group-item list-group-item-action">
                                 Lịch sử giao giao dịch
                             </NavLink>
-                            <NavLink to={"/"} style={({isActive})=>{
+                            <NavLink to={"/nav/info-store/top-10"} style={({isActive})=>{
                                 return{
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""
