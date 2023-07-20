@@ -9,8 +9,14 @@ import {Oval} from "react-loader-spinner";
 import Swal from "sweetalert2";
 import {Link} from "react-router-dom";
 import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
+import jwt from 'jwt-decode';
 
 export function CreateCustomer() {
+    const token = localStorage.getItem('token');
+    const decodedToken = jwt(token);
+    console.log(decodedToken.sub)
+    console.log(decodedToken.role)
+
     let navigate = useNavigate();
     const [avatar, setAvatarFile] = useState(null);
     const [avatarUrl, setAvatarUrl] = useState(null);
@@ -33,7 +39,7 @@ export function CreateCustomer() {
     const handleFileUpload = async (file, setFile, setFileUrl) => {
         return new Promise((resolve, reject) => {
             if (!file) return reject("No file selected");
-            const newName = "pawn_shop_topvn" + Date.now() + "_" + file.name;
+            const newName = "pawn_shop_topvn" + Date.now() + "_" + (file.name.length >= 5 ? file.name.slice(0, 5) : file.name);;
             const storageRef = ref(storage, `files/${newName}`);
             const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -96,44 +102,45 @@ export function CreateCustomer() {
         );
     };
 
-    const handleSubmitScanOcr = async () => {
-        if (!handleFrontCitizenFileSelect) {
-            await Swal.fire({
-                icon: "error",
-                title: "Bạn cần upload Ảnh mặt trước căn cước.",
-                timer: 1500
-            });
-            return;
-        }
-
-        const url = 'https://api.fpt.ai/vision/idr/vnm';
-        const apiKey = 'm13aY7m758e1ejzmiSfs3BxyIYcHy1T8';
-
-        const formData = new FormData();
-        formData.append('image', handleFrontCitizenFileSelect);
-
-        const headers = {
-            'api-key': apiKey
-        };
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: headers,
-                body: formData
-            });
-
-            const data = await response.json();
-            setResponseText(JSON.stringify(data, null, 2));
-        } catch (error) {
-            console.error('Error:', error);
-            await Swal.fire({
-                icon: "error",
-                title: "Gặp sự cố với server. Hãy thử lại sau ít phút.",
-                timer: 1500
-            });
-        }
-    };
+    // const handleSubmitScanOcr = async () => {
+    //     if (!frontCitizen) {
+    //         await Swal.fire({
+    //             icon: "error",
+    //             title: "Bạn cần upload Ảnh mặt trước căn cước.",
+    //             timer: 1500
+    //         });
+    //         return;
+    //     }
+    //
+    //     const url = 'https://api.fpt.ai/vision/idr/vnm';
+    //     const apiKey = 'm13aY7m758e1ejzmiSfs3BxyIYcHy1T8';
+    //
+    //     const formData = new FormData();
+    //     formData.append('image', handleFrontCitizenFileSelect);
+    //
+    //     const headers = {
+    //         'api-key': apiKey
+    //     };
+    //
+    //     try {
+    //         const response = await fetch(url, {
+    //             method: 'POST',
+    //             headers: headers,
+    //             body: formData
+    //         });
+    //
+    //         const data = await response.json();
+    //         setResponseText(JSON.stringify(data, null, 2));
+    //         console.log(setResponseText(JSON.stringify(data, null, 2)))
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         await Swal.fire({
+    //             icon: "error",
+    //             title: "Gặp sự cố với server. Hãy thử lại sau ít phút.",
+    //             timer: 1500
+    //         });
+    //     }
+    // };
 
     return (
         <>
@@ -199,7 +206,7 @@ export function CreateCustomer() {
                             handleAvatarFileUpload(),
                             handleFrontCitizenFileUpload(),
                             handleBackCitizenFileUpload()
-                        ]);
+                        ]);debugger
 
                         const avatarUrl = results[0];
                         const frontCitizenUrl = results[1];
@@ -234,14 +241,14 @@ export function CreateCustomer() {
                 }}
             >
                 {({isSubmitting}) => (
-                    <div className="dat-nt container mt-5 mb-5">
+                    <div className="dat-nt container mt-5 mb-5 p-2 ">
                         <div className="row height d-flex justify-content-center align-items-center">
                             <div className="col-md-8 col-sm-12">
                                 <div className="card px-5 py-4">
                                     <div
                                         className="m-2"
                                     >
-                                        <h1 id="title-h1">Thêm thông tin khách hàng</h1>
+                                        <h1 style={{textAlign:"center"}}>Thêm thông tin khách hàng</h1>
                                     </div>
                                     {/*<Link to={"/update/" + 28}>Update 1</Link>*/}
                                     <Form>
@@ -306,7 +313,7 @@ export function CreateCustomer() {
                                                                 backgroundColor: "white",
                                                             }}
                                                         >
-                                                            Chọn hình ảnh
+                                                              <i className="bi bi-upload" > Chọn hình ảnh</i>
                                                         </label>
                                                     </p>
                                                 )}
@@ -354,7 +361,7 @@ export function CreateCustomer() {
                                                                         backgroundColor: "white",
                                                                     }}
                                                                 >
-                                                                    Chọn hình ảnh
+                                                                    <i className="bi bi-upload" > Chọn hình ảnh</i>
                                                                 </label>
                                                             </p>
                                                         )}
@@ -413,7 +420,7 @@ export function CreateCustomer() {
                                                                         backgroundColor: "white",
                                                                     }}
                                                                 >
-                                                                    Chọn hình ảnh
+                                                                    <i className="bi bi-upload" > Chọn hình ảnh</i>
                                                                 </label>
                                                             </p>
                                                         )}
@@ -442,22 +449,22 @@ export function CreateCustomer() {
                                                         )}
                                                     </div>
                                                 </div>
-                                                <div className="mt-3">
-                                                    <button
-                                                        id="show-alert-button"
-                                                        type="button"
-                                                        className="btn btn-sm btn-success"
-                                                        onClick={handleSubmitScanOcr}
-                                                    >
-                                                        Phân tích hình ảnh lấy dữ liệu
-                                                    </button>
-                                                </div>
+                                                {/*<div className="mt-3">*/}
+                                                {/*    <button*/}
+                                                {/*        id="show-alert-button"*/}
+                                                {/*        type="button"*/}
+                                                {/*        className="btn btn-sm btn-success"*/}
+                                                {/*        onClick={handleSubmitScanOcr}*/}
+                                                {/*    >*/}
+                                                {/*        Phân tích hình ảnh lấy dữ liệu*/}
+                                                {/*    </button>*/}
+                                                {/*</div>*/}
                                             </div>
 
                                             <div className="col-md-8">
                                                 <div className="mt-2">
                                                     <label htmlFor="f-name">
-                                                        Họ và tên <span style={{color: "red"}}>*</span>
+                                                        Họ và tên:  <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-name"
@@ -474,7 +481,7 @@ export function CreateCustomer() {
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-dateOfBirth">
-                                                        Ngày sinh
+                                                        Ngày sinh:
                                                         <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
@@ -491,28 +498,22 @@ export function CreateCustomer() {
                                                     />
                                                 </div>
                                                 <div className="mt-2 row">
-                                                    <div className="col-md-3">
+                                                    <div className="col-md-">
                                                         <label htmlFor="gender" className="form-label">
                                                             Giới tính:
                                                         </label>
-                                                        <div>
-                                                            <label>
-                                                                <Field type="radio" name="gender" value="0"/>
-                                                                Nam
+                                                            <label className='m-2'>
+                                                                <Field  type="radio" name="gender" value="0"/>
+                                                                {' '}Nam
                                                             </label>
-                                                        </div>
-                                                        <div>
-                                                            <label>
+                                                            <label className='m-2'>
                                                                 <Field type="radio" name="gender" value="1"/>
-                                                                Nữ
+                                                                {' '}Nữ
                                                             </label>
-                                                        </div>
-                                                        <div>
-                                                            <label>
+                                                            <label className='m-2'>
                                                                 <Field type="radio" name="gender" value="2"/>
-                                                                Khác
+                                                                {' '}Khác
                                                             </label>
-                                                        </div>
                                                         <ErrorMessage
                                                             component="span"
                                                             name="gender"
@@ -522,7 +523,7 @@ export function CreateCustomer() {
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-email">
-                                                        Email <span style={{color: "red"}}>*</span>
+                                                        Email:<span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-email"
@@ -539,7 +540,7 @@ export function CreateCustomer() {
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-phone">
-                                                        Số điện thoại
+                                                        Số điện thoại:
                                                         <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
@@ -557,7 +558,7 @@ export function CreateCustomer() {
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-idCard">
-                                                        Số căn cước
+                                                        Số căn cước:
                                                         <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
@@ -575,7 +576,7 @@ export function CreateCustomer() {
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-country">
-                                                        Nơi thường trú
+                                                        Nơi thường trú:
                                                         <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
