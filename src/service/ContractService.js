@@ -12,7 +12,7 @@ export const deleteTransactionHistoryByID = async (id) => {
 export const findAllContractStatus = async () => {
     try {
         const res = await axios.get("http://localhost:8080/api/employee/contract/list-contract-status");
-        return res.data;
+        return res;
     } catch (e) {
         console.log(e)
     }
@@ -21,7 +21,7 @@ export const findAllContractStatus = async () => {
 export const findAllContractType = async () => {
     try {
         const res = await axios.get("http://localhost:8080/api/employee/contract/list-contract-type");
-        return res.data;
+        return res;
     } catch (e) {
         console.log(e)
     }
@@ -37,6 +37,7 @@ export const getTransactionHistoryById = async (id) => {
 }
 
 export const searchTransactionHistory = async (page, value) => {
+    console.log(value)
     try {
         const res = await axios.post(`http://localhost:8080/api/employee/contract/transaction-history?page=${page}&limit=5`, value);
         return res;
