@@ -55,6 +55,8 @@ function App() {
           </Route>
           <Route path={"/nav/info-store/liquidation"} element={<CreateLiquidation />} />
                     {/*<Route path="/redeem" element={<Redeeming/>}/>*/}
+          <Route path="/nav/api/employee" element={<EmployeeList/>}/>
+          <Route path="/nav/api/employee/create-employee" element={<CreateEmployee/>}/>
         </Route>
         <Route path='/create' element={<RegisterPawn />} />
         <Route path='/' element={<List />} />
@@ -72,8 +74,7 @@ function App() {
         <Route path={'/detail/:id'} element={<DetailPosts />} />
         <Route path={'/createPosts'} element={<CreatePosts />} />
         <Route path={'/manager-customer'} element={<CustomerList />} />
-        <Route path="/api/employee" element={<EmployeeList/>}/>
-        <Route path="/api/employee/create-employee" element={<CreateEmployee/>}/>
+
       </Routes>
       <Footer />
 

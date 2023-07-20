@@ -2,70 +2,21 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
 
 /* Design */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-html {
-    background-color: #ecf9ff;
-}
-
-/*body {*/
-/*    color: #272727;*/
-/*    !*font-family: 'Quicksand', serif;*!*/
-/*    font-style: normal;*/
-/*    font-weight: 400;*/
-/*    letter-spacing: 0;*/
-/*    padding: 1rem;*/
+/**,*/
+/**::before,*/
+/**::after {*/
+/*    box-sizing: border-box;*/
 /*}*/
 
-.main {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-h1 {
-    font-size: 28px;
-    font-weight: 400;
-    text-align: center;
-    font-family: "Courier New", monospace;
-}
-* {
-    font-family: Times New Roman!important;
-}
-h2 {
-    font-size: 33px;
-    font-weight: 500;
-    font-family: Times New Roman!important;
-}
-/*img {*/
-/*    !*height: auto;*!*/
-/*    !*max-width: 100%;*!*/
-/*    height: 200px;*/
-/*    width: 400px;*/
-/*    vertical-align: middle;*/
+/*.main {*/
+/*    max-width: 1200px;*/
+/*    margin: 0 auto;*/
 /*}*/
 
-/*.btn {*/
-/*    !*color: #ffffff;*!*/
-/*    padding: 0.8rem;*/
-/*    font-size: 14px;*/
-/*    text-transform: uppercase;*/
-/*    border-radius: 4px;*/
-/*    font-weight: 400;*/
-/*    display: block;*/
-/*    width: 100%;*/
-/*    cursor: pointer;*/
-/*    border: 1px solid rgba(255, 255, 255, 0.2);*/
-/*    !*background: transparent;*!*/
+/** {*/
+/*    font-family: Times New Roman!important;*/
 /*}*/
-
-/*.btn:hover {*/
-/*    !*background-color: rgba(255, 255, 255, 0.12);*!*/
-/*}*/
-
-.cards {
+.cards-post {
     display: flex;
     flex-wrap: wrap;
     list-style: none;
@@ -90,7 +41,7 @@ h2 {
     }
 }
 
-.card {
+.card-post {
     background-color: white;
     border-radius: 0.25rem;
     box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
@@ -101,27 +52,25 @@ h2 {
 
 .card_content {
     padding: 0.5rem;
-    /*background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);*/
+    height: 5rem;
 }
 
 .card_title {
-    /*color: #ffffff;*/
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: capitalize;
     margin: 0;
     text-align: center;
-    /*font-family: SVN-Gilroy!important;*/
 
 }
-.time {
+.time-post {
     margin-top: 10px;
     text-align: right;
     color: #999;
     font-size: 16px;
 }
-.time1 {
+.time-post1 {
     margin-top: 4px;
     text-align: right;
     color: #999;
@@ -144,7 +93,7 @@ h2 {
     line-height: 1em;
     height: auto;
 }
-label {
+.label-post {
     display: block;
     font-weight: bold;
     color: #333;
@@ -195,26 +144,26 @@ textarea {
     background: #fff;
     padding: 0 15px;
 }
-/*.image {*/
-/*    -webkit-box-pack: center;*/
-/*    -ms-flex-pack: center;*/
-/*    -webkit-box-align: center;*/
-/*    -ms-flex-align: center;*/
-/*    display: -webkit-box;*/
-/*    display: -ms-flexbox;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    width: 70px;*/
-/*    min-width: 70px;*/
-/*    height: 70px;*/
-/*    overflow: hidden;*/
-/*}*/
+.image-post {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    min-width: 80px;
+    height: 80px;
+    overflow: hidden;
+}
 .other-item .content {
     padding-left: 10px;
     width: calc(100% - 70px);
 }
-.title {
+.title-post {
     -webkit-transition: all .4s ease-in-out;
     -o-transition: .4s ease-in-out all;
     -webkit-line-clamp: 2;

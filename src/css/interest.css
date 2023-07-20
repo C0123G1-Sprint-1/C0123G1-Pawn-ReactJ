@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    /*font-family: Arial;*/
 }
 /*#header {*/
 /*    height: 10vh;*/
@@ -36,7 +37,7 @@
     list-style: none;
 }
 
-.page-link .active {
+.page-item .page-link .active {
     background-color: #007bff;
     color: #fff;
 }
@@ -67,6 +68,6 @@
 /*    background-color: #77db77;border: #77db77*/
 /*}*/
 
-td{
-    text-align: center;
-}
+/*td{*/
+/*    text-align: center;*/
+/*}*/
