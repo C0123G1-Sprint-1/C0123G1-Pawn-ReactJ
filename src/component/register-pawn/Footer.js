@@ -1,7 +1,6 @@
-
 import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "../../css/footer.css"
+import "../../css/home.css"
 
 export function Footer() {
     return(

@@ -94,7 +94,6 @@ export function CustomerList() {
 
     const handlePageClick = async (page) => {
         setCurrentPage(+page.selected);
-
         const result = await customersService.findByAll(name, page.selected);
         console.log(result.data);
         setListCustomer(result.content);
@@ -225,9 +224,9 @@ export function CustomerList() {
                                 <div className="col-12">
                                     <div className="d-flex justify-content-center">
                                         {listCustomer.length === 0 && name !== "" ? (
-                                            <h3 className={"text-danger text-center my-3"}>
+                                            <h4 className={"text-danger text-center my-3"}>
                                                 Không tìm thấy kết quả {name}
-                                            </h3>
+                                            </h4>
                                         ) : (
                                             <div className="table-responsive" style={{width: '80%'}}>
                                                 <table className="table table-striped">
@@ -314,10 +313,10 @@ export function CustomerList() {
                                     <div className="d-grid">
                                         <ReactPaginate
                                             breakLabel="..."
-                                            nextLabel=">"
+                                            nextLabel="Tiếp"
                                             onPageChange={handlePageClick}
                                             pageCount={pageCount}
-                                            previousLabel="< "
+                                            previousLabel="Trước"
                                             containerClassName="pagination"
                                             pageLinkClassName="page-num"
                                             nextLinkClassName="page-num"
@@ -326,6 +325,42 @@ export function CustomerList() {
                                             disabledClassName="d-none"
                                         />
                                     </div>
+                                    {/*<div className="row my-3">*/}
+                                    {/*    <div className="d-flex col-12 justify-content-end">*/}
+                                    {/*        <nav aria-label="..." className="me-4">*/}
+                                    {/*            <ul className="pagination">*/}
+                                    {/*                <li hidden={page === 0} className="page-item">*/}
+                                    {/*                    <button className="page-link" tabIndex={-1}*/}
+                                    {/*                            onClick={() => paginate(page - 1)}>*/}
+                                    {/*                        Trước*/}
+                                    {/*                    </button>*/}
+                                    {/*                </li>*/}
+                                    {/*                {*/}
+                                    {/*                    Array.from({length: totalPages}, (a, index) => index).map((pageNum) => (*/}
+                                    {/*                        <li className="page-item" key={pageNum}>*/}
+                                    {/*                            <button*/}
+                                    {/*                                className={page === pageNum ? "active page-link" : "page-link"}*/}
+                                    {/*                                key={pageNum}*/}
+                                    {/*                                onClick={() => {*/}
+                                    {/*                                    paginate(pageNum)*/}
+                                    {/*                                }}>*/}
+                                    {/*                                {pageNum + 1}*/}
+                                    {/*                            </button>*/}
+                                    {/*                        </li>*/}
+                                    {/*                    ))*/}
+                                    {/*                }*/}
+
+                                    {/*                <li hidden={page + 1 === totalPages}*/}
+                                    {/*                    className="page-item">*/}
+                                    {/*                    <button className="page-link" tabIndex={-1}*/}
+                                    {/*                            onClick={() => paginate(page + 1)}>*/}
+                                    {/*                        Tiếp*/}
+                                    {/*                    </button>*/}
+                                    {/*                </li>*/}
+                                    {/*            </ul>*/}
+                                    {/*        </nav>*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
                         </div>
@@ -334,7 +369,7 @@ export function CustomerList() {
             </div>
             {/*chi tiết khách hàng*/}
             <div className="modal fade " id="staticBackdrop"
-                  tabIndex={-1}
+                 tabIndex={-1}
                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog  modal-dialog-centered modal-lg">
                     <div className="modal-content">
