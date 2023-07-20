@@ -10,13 +10,13 @@ export default function Foresee() {
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
                     <tr>
-                        <th>Mã Hd</th>
-                        <th>Tiền cho vay(VND)</th>
-                        <th>Tiền lãi(VND)</th>
-                        <th>Ngày bắt đầu</th>
-                        <th>Ngày kết thúc</th>
-                        <th>Lợi nhuận dự kiến(VND)</th>
-                        <th id="actions">Tùy chọn</th>
+                        <th>Mã Hợp Đồng</th>
+                        <th>Tiền Cho Vay(VND)</th>
+                        <th>Tiền Lãi (VND)</th>
+                        <th>Ngày Bắt Đầu</th>
+                        <th>Ngày Kết Thúc</th>
+                        <th>Lợi Nhuận Dự Kiến (VND)</th>
+                        <th id="actions">Chức năng</th>
                     </tr>
                     </thead>
                     <tbody>

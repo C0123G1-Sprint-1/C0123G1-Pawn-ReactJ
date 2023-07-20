@@ -480,7 +480,6 @@ export const CreateContracts = () => {
                     </div>
                 </div>
             </div>
-            {/* Modal */}
             <>
                 <div className="text-center mt-4 btn-group p-3 m-l-2">
                     <div className="text-center m-auto">

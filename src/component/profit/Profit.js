@@ -11,6 +11,7 @@ import ExportExcelButton from "./ExportExcelButton";
 export default function Profit() {
     const [contracts, setContract] = useState()
     const [profitType, setProfitType] = useState("interest");
+    const [isActives, setIsActive] = useState(true);
     const [totalPage, setTotalPage] = useState();
     const [totalProfit, setTotalProfit] = useState(0);
     const params = useParams();
@@ -151,8 +152,9 @@ export default function Profit() {
                         <ul className="d-flex nav-content justify-content-center p-0">
                             <li className="col-4"><NavLink onClick={() => setProfit("interest")}
                                                            style={({isActive}) => {
+                                                               // alert(isActives)
                                                                return {
-                                                                   backgroundColor: isActive ? "#27533e" : "",
+                                                                   backgroundColor: isActive || isActives === true ? "#27533e" : "",
                                                                    color: isActive ? "#fff" : "",
                                                                    width: "100%",
                                                                    height: "4.2vh",
@@ -163,7 +165,9 @@ export default function Profit() {
                                                            }} to="/nav/info-store/profit/interest/interest"
                                                            className="btn btn-sm rounded-3  ">Lợi nhuận từ tiền
                                 lãi</NavLink></li>
-                            <li className="col-4"><NavLink onClick={() => setProfit("liquidation")}
+                            <li className="col-4"><NavLink onClick={() => {setProfit("liquidation")
+                                setIsActive(false)
+                            }}
                                                            style={({isActive}) => {
                                                                return {
                                                                    backgroundColor: isActive ? "#27533e" : "",
@@ -178,7 +182,9 @@ export default function Profit() {
                                                            className="btn btn-sm rounded-3  ">Lợi nhuận từ thanh
                                 lý</NavLink>
                             </li>
-                            <li className="col-4"><NavLink onClick={() => setProfit("foresee")} style={({isActive}) => {
+                            <li className="col-4"><NavLink onClick={() => {setProfit("foresee")
+                                setIsActive(false)
+                            }} style={({isActive}) => {
                                 return {
                                     backgroundColor: isActive ? "#27533e" : "",
                                     color: isActive ? "#fff" : "",

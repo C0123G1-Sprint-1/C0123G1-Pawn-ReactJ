@@ -29,7 +29,7 @@ const navigate = useNavigate();
                         <a onClick={()=> navigate("/")}  className="logo d-flex align-items-center">
                             {/* Uncomment the line below if you also wish to use an image logo */}
                             <div className="pnj">
-                                <img  src="./anh/pawnshop.png"   style={{ marginLeft: "40%", maxHeight: 90 }}  alt=""  />
+                                <img  src="../../../public/anh/pawnshop.png" style={{ marginLeft: "40%", maxHeight: 90 }}  alt=""  />
                             </div>
                         </a>
                          <nav id="navbar" className="navbar">

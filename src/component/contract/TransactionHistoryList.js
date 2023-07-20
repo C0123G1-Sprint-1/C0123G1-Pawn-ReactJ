@@ -169,7 +169,7 @@ export default function TransactionHistoryList() {
                                     <div className=" col-lg-10 mt-4">
                                         <div className="d-flex justify-content-between">
                                             <Link type="button"
-                                                  to={"/nav/info-store/transaction-history/create-contract"}
+                                                  to={"/nav/transaction-history/create-contract"}
                                                   className="btn btn-success">Thêm mới hợp đồng</Link>
                                             <button type="reset" className="col-lg-3 btn btn-secondary"
                                             ><i
