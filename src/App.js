@@ -31,6 +31,8 @@ import CustomerList from "./component/customer/CustomerList";
 import { CreateLiquidation } from "./component/liquidation/CreateLiquidation";
 import EmployeeList from "./component/employee/ListEmployee";
 import {CreateEmployee} from "./component/employee/CreateEmployee";
+import {UpdateContract} from "./component/contract/UpdateContract";
+import {ToastContainer} from "react-toastify";
 function App() {
   return (
     <>
@@ -45,9 +47,10 @@ function App() {
               <Route path="/nav/info-store/profit/liquidation/:profitType" element={<Liquidation />} />
               <Route path="/nav/info-store/profit/foresee/:profitType" element={<Foresee />} />
             </Route>
-            <Route path={"/nav/info-store/transaction-history"} element={<TransactionHistoryList/>}>
-            </Route>
-            <Route path={"/nav/info-store/transaction-history/detail/:id"} element={<TransactionHistoryDetail />}></Route>
+            <Route path={"/nav/info-store/transaction-history"} element={<TransactionHistoryList/>}/>
+            {/*<Route path={"/nav/info-store/transaction-history/create-contract"} element={<Cr/>}/>*/}
+            <Route path={"/nav/info-store/transaction-history/detail/:id"} element={<TransactionHistoryDetail/>}/>
+            <Route path={"/nav/info-store/transaction-history/update-contract/:id"} element={<UpdateContract/>}/>
             <Route path={"/nav/info-store/all-contract"} element={<ShowContract />} />
           </Route>
           <Route path={"/nav/info-store/liquidation"} element={<CreateLiquidation />} />
@@ -73,8 +76,8 @@ function App() {
         <Route path="/api/employee/create-employee" element={<CreateEmployee/>}/>
       </Routes>
       <Footer />
-    </>
 
+    </>
   );
 }
 

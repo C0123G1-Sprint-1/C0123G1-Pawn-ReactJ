@@ -17,6 +17,17 @@ const firebaseConfig = {
     measurementId: "G-FCJVTP4581"
 };
 
+// const firebaseConfigs = {
+//     apiKey: "AIzaSyAJSBooh2q6TrT3PLwIG2B2YWjGy0dOHUk",
+//     authDomain: "file-30cfe.firebaseapp.com",
+//     projectId: "file-30cfe",
+//     storageBucket: "file-30cfe.appspot.com",
+//     messagingSenderId: "768865130975",
+//     appId: "1:768865130975:web:c3fafd7f2512c28898cc6a",
+//     measurementId: "G-3D8B04XK2R"
+// };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+// const app1 = initializeApp(firebaseConfigs);
 export const storage = getStorage(app)
+// export const storage1=getStorage(app1)
