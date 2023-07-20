@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+body{
+    font-family: 'Poppins', sans-serif;
+}
+.box-area{
+    width: 930px;
+}
+.right-box{
+    padding: 40px 30px 40px 40px;
+}
+::placeholder{
+    font-size: 16px;
+}
+.rounded-4{
+    border-radius: 20px;
+}
+.rounded-5{
+    border-radius: 30px;
+}
+@media only screen and (max-width: 768px){
+     .box-area{
+        margin: 0 10px;
+     }
+     .left-box{
+        height: 250px;
+        overflow: hidden;
+     }
+     .right-box{
+        padding: 20px;
+     }
+}
+.modal-header{
+    background-color: #00833e;
+    color: white;
+}
+.login{
+    margin-top: -25px;
+}
+*{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.btn-close{
+    color: aliceblue;
+}
+.text-font{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.error-r{
+    color: red;
+    margin-left: 3%;
+}
+.log{
+    margin-top: -5%;
+}
+#root{
+    background-color: #eeeeee;
+}
