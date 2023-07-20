@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {NavLink, useNavigate, Link} from "react-router-dom";
-import employeeInformationService from "../../service/EmployeeInformationService"
+import { useNavigate, Link} from "react-router-dom";
+import *as employeeInformationService from "../../service/EmployeeInformationService"
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from 'yup'
 import Swal from "sweetalert2";
@@ -13,14 +13,13 @@ export default function EmployeeInformation() {
     const [employeeDetail, setEmployeeDetail] = useState()
     const navigate = useNavigate()
     const params = useParams();
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [firebaseImg, setImg] = useState(null);
-    const [isChangeImg, setIsChangeImg] = useState(false);
-    const [avatarDetail, setAvatarDetail] = useState('')
-    const [avatarErr, setAvatarErr] = useState(false)
-    const [showErr, setShowErr] = useState(false)
     const [isAuth, setIsAuth] = useState(false);
+    const [fileSelected, setFileSelected] = useState(false);
+    const [firebaseImg, setImg] = useState(null);
+    const [avatar, setAvatarFile] = useState();
+    const [avatarUrl, setAvatarUrl] = useState();
     const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
+    const messageError = "Các trường ảnh không được để trống!!";
 
     const getMinDate = () => {
         const today = new Date();
@@ -38,72 +37,67 @@ export default function EmployeeInformation() {
             today.getDate()
         );
     };
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await employeeInformationService.detail()
-                setEmployeeDetail(res.data)
-                if (res.data.account.accountRoles[0].role.nameRole === 'ROLE_ADMIN') {
-                    setIsAuth(true)
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        })()
-    }, [])
+    useEffect(async () => {
+        try {
+            const res = await employeeInformationService.findById(params.id);
+            setEmployeeDetail(res);
+            console.log(res)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }, [params.id])
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
-        if (file instanceof File || file instanceof Blob) {
-            const extension = file.name
-            const isImage = /\.(jpg|jpeg|png|gif)$/i.test(extension);
-            !isImage ? setAvatarErr(true) : setAvatarErr(false)
-            setSelectedFile(file);
-            setIsChangeImg(true)
-            const reader = new FileReader();
-            reader.onload = () => {
-                const imageUrl = reader.result;
-                setAvatarDetail(imageUrl);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            console.error('Invalid file or blob');
+        if (file) {
+            setAvatarFile(file);
         }
     };
-    const handleSubmitAsync = async () => {
+
+    const handleFileUpload = async () => {
         return new Promise((resolve, reject) => {
-            const file = selectedFile;
+            const file = setAvatarFile;
             if (!file) return reject("No file selected");
-            const extension = file.name
-            const isImage = /\.(jpg|jpeg|png|gif)$/i.test(extension);
-            !isImage ? setAvatarErr(true) : setAvatarErr(false)
-            if (!isImage) return console.log("Wrong image format")
-            const storageRef = ref(storage, `files/${file.name}`);
+            const newName = "pawn_shop_topvn" + Date.now() + "_" + file.name;
+            const storageRef = ref(storage, `files/${newName}`);
             const uploadTask = uploadBytesResumable(storageRef, file);
+
             uploadTask.on(
                 "state_changed",
                 (snapshot) => {
-                    Math.round(
+                    const progress = Math.round(
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                     );
+                    console.log(`Upload progress: ${progress}%`);
                 },
                 (error) => {
                     reject(error);
                 },
                 async () => {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    setImg(downloadURL);
                     resolve(downloadURL);
                 }
             );
         });
-    }
+    };
+
     useEffect(() => {
         document.title = "Thông tin tài khoản";
     }, [])
     useEffect(() => {
-        setAvatarDetail(employeeDetail?.image)
+        setAvatarUrl(employeeDetail?.image)
     }, [employeeDetail?.image])
 
+    const handleAvatarFileSelect = (event) => {
+        handleFileSelect(event, setAvatarFile);
+    };
+
+    const handleAvatarFileUpload = async () => {
+        if (avatarUrl) {
+            return avatarUrl
+        } else
+            return await handleFileUpload(avatar, setAvatarUrl);
+    };
     return (
         <>
             <Formik
@@ -112,7 +106,7 @@ export default function EmployeeInformation() {
 
                     id: employeeDetail?.id,
                     name: employeeDetail?.name,
-                    gender: employeeDetail?.gender,
+                    gender: employeeDetail?.gender.toString(),
                     birthDay: employeeDetail?.birthDay,
                     salary: isAuth ? employeeDetail?.salary : employeeDetail?.salary.toLocaleString(),
                     phoneNumber: employeeDetail?.phoneNumber,
@@ -138,21 +132,14 @@ export default function EmployeeInformation() {
                 onSubmit={(value, {setSubmitting}) => {
                     const editEmployee = async () => {
                         try {
-                            if (isChangeImg) {
-                                const newValues = {...value, image: firebaseImg};
-                                newValues.image = await handleSubmitAsync();
-                                await employeeInformationService.update({
-                                    ...newValues,
-                                })
-                            } else {
-                                await employeeInformationService.update({
-                                    ...value,
-                                    citizenCode: {
-                                        idPosition: value.citizenCode
-                                    }
-                                })
-                                setIsChangeImg(false)
-                            }
+                            value.gender = parseInt(value.gender);
+                            await handleAvatarFileUpload()
+                            const newValues = {...value, image: firebaseImg};
+                            newValues.image = await handleAvatarFileUpload();
+                            await employeeInformationService.update({
+                                ...newValues,
+                            })
+
                             setSubmitting(false)
                             await Swal.fire({
                                 icon: 'success',
@@ -160,7 +147,8 @@ export default function EmployeeInformation() {
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                        } catch (error) {
+                        } catch
+                            (error) {
                             console.log(error);
                         }
                     }
@@ -169,23 +157,8 @@ export default function EmployeeInformation() {
             >
                 {({values, isSubmitting}) => (
                     <Form>
-                        <div className="container">
-                            <div className="row row-no-gutters col-xs-8 col-md-8">
-                                <div className="col-xs-4 col-md-4" id="a">
-                                    <h3 style={{textAlign: "center"}}>{employeeDetail?.account.nameAccount}</h3>
-                                    <hr/>
-                                    <div className="col-12">
-                                        <ul className="datnt-app-menu">
-                                            <li className="datnt-li">
-                                                <NavLink to={`/account/change-password`}
-                                                         className="datnt-app-menu__item " href="ChangePassword.html">
-                                                    <i className="bi bi-file-lock"/>
-                                                    <span className="form-control">Đổi mật khẩu</span>
-                                                </NavLink>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                        <div className="container m-auto">
+                            <div className="row row-no-gutters col-xs-8 col-md-8 m-auto">
                                 <h2 className="d-flex justify-content-center"
                                     style={{padding: "10px", backgroundColor: "#00833e", color: "#fff"}}>
                                     <b>THÔNG TIN CÁ NHÂN</b>
@@ -193,21 +166,71 @@ export default function EmployeeInformation() {
                                 <div className="col-md-3" style={{textAlign: "center", display: "block"}}>
                                     <img
                                         id="avatar-img"
-                                        src="https://bizweb.dktcdn.net/100/175/849/files/chup-anh-nu-doanh-nhan-dep-nhat-ha-noi-cho-doanh-nghiep-cong-ty-studio-nao-02.jpg?v=1619414255120"
-                                        width="100%"
+                                        src={avatarUrl ? avatarUrl : (avatar ? URL.createObjectURL(avatar) : defaultAvatar)}
+                                        style={{width: "100%"}}
                                         alt="avatar"
                                     />
-                                    <label className="mt-2" style={{textAlign: "center", display: "block"}}
-                                           htmlFor="avatar-img">
-                                        Ảnh đại diện
+                                    {avatarUrl && (
+                                        <div>
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger btn-sm mt-2"
+                                                onClick={() => {
+                                                    setAvatarUrl(null);
+                                                    setAvatarFile(null);
+                                                    setFileSelected(false);
+                                                }}
+                                            >
+                                                Xoá
+                                            </button>
+                                        </div>
+                                    )}
+
+                                    <label className="mt-2 text-file-name">
+                                        Ảnh chân dung
                                     </label>
+                                    {!avatarUrl && (
+                                        <label htmlFor="file-upload-avatar"
+                                               className="text-name-file mt-4">
+                                            Thêm ảnh chân dung <span style={{color: "red"}}>*</span>
+                                        </label>
+                                    )}
+                                    <input
+                                        type="file"
+                                        onChange={(event) => {
+                                            handleAvatarFileSelect(event);
+                                            setFileSelected(true);
+                                        }}
+                                        id="image"
+                                        name="image"
+                                        className="form-control-plaintext d-none"
+                                    />
+                                    {!avatarUrl && (
+                                        <div>
+                                            <input
+                                                type="button"
+                                                value="Chọn hình ảnh"
+                                                onClick={() => document.getElementById("image").click()}
+                                                style={{
+                                                    display: "flex",
+                                                    padding: "6px 12px",
+                                                    border: "1px ",
+                                                    borderRadius: "4px",
+                                                    backgroundColor: "white",
+                                                    cursor: "pointer",
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                    {fileSelected ? null : (
+                                        <span className="error-flag"><br/> {messageError}</span>
+                                    )}
                                 </div>
                                 <div className="col-md-9">
                                     <div className="mt-4 inputs row">
                                         <div className="col-md-3">
                                             <label htmlFor="tenDangNhap" className="form-label">
-                                                Tên đăng nhập:
-                                            </label>
+                                                Tên đăng nhập</label>
                                         </div>
                                         <div className="col-md-9">
                                             <input
@@ -218,10 +241,17 @@ export default function EmployeeInformation() {
                                             />
                                         </div>
                                     </div>
+                                    <Field
+                                        id="f-id"
+                                        className="form-control"
+                                        name="id"
+                                        type="number"
+                                        hidden
+                                    />
                                     <div className="mt-2 inputs row">
                                         <div className="col-md-3">
                                             <label htmlFor="maKhau" className="form-label">
-                                                Mật khẩu:
+                                                Mật khẩu
                                             </label>
                                         </div>
                                         <div className="col-md-9">
@@ -231,7 +261,7 @@ export default function EmployeeInformation() {
                                     <div className="mt-2 inputs row">
                                         <div className="col-md-3">
                                             <label htmlFor="nhapLaiMatKhau" className="form-label">
-                                                Nhập lại mật khẩu:
+                                                Nhập lại mật khẩu
                                             </label>
                                         </div>
                                         <div className="col-md-9">
@@ -241,11 +271,14 @@ export default function EmployeeInformation() {
                                     <div className="mt-2 inputs row">
                                         <div className="col-md-3">
                                             <label htmlFor="hoTen" className="form-label">
-                                                Họ tên:
+                                                Họ và tên
                                             </label>
                                         </div>
                                         <div className="col-md-9">
-                                            <input id="hoTen" type="text" className="form-control"/>
+                                            <Field id="hoTen" name="name" type="text" className="form-control"/>
+                                            <ErrorMessage component="span"
+                                                          name="name"
+                                                          className="error-flag"/>
                                         </div>
                                     </div>
                                     <div className="mt-2 inputs row">
@@ -257,22 +290,26 @@ export default function EmployeeInformation() {
                                                 <label className="form-check-label" htmlFor="nam">
                                                     Nam
                                                 </label>
-                                                <input type="radio" className="form-check-input" name="gender" id="nam"
-                                                       defaultChecked/>
+                                                <Field type="radio" className="form-check-input" name="gender" value="0"
+                                                />
                                             </div>
                                             <div className="form-check" style={{marginLeft: "10px"}}>
                                                 <label className="form-check-label" htmlFor="nu">
                                                     Nữ
                                                 </label>
-                                                <input type="radio" className="form-check-input" name="gender" id="nu"/>
+                                                <Field type="radio" className="form-check-input" name="gender"
+                                                       value="1"/>
                                             </div>
                                             <div className="form-check" style={{marginLeft: "10px"}}>
                                                 <label className="form-check-label" htmlFor="khac">
                                                     Khác
                                                 </label>
-                                                <input type="radio" className="form-check-input" name="gender"
-                                                       id="khac"/>
+                                                <Field type="radio" className="form-check-input" name="gender"
+                                                       value="2"/>
                                             </div>
+                                            <ErrorMessage component="span"
+                                                          name="gender"
+                                                          className="error-flag"/>
                                         </div>
                                     </div>
                                     <div className="mt-2 inputs row">
@@ -282,7 +319,10 @@ export default function EmployeeInformation() {
                                             </label>
                                         </div>
                                         <div className="col-md-9">
-                                            <input id="ngaySinh" type="date" className="form-control"/>
+                                            <Field id="ngaySinh" name="birthDay" type="date" className="form-control"/>
+                                            <ErrorMessage component="span"
+                                                          name="birthDay"
+                                                          className="error-flag"/>
                                         </div>
                                     </div>
                                     <div className="mt-2 inputs row">
@@ -292,12 +332,10 @@ export default function EmployeeInformation() {
                                             </label>
                                         </div>
                                         <div className="col-md-9">
-                                            <input id="email" type="text" className="form-control"/>
-                                            {showErr ? (
-                                                <span className="text-danger">Email đã tồn tại</span>
-                                            ) : (
-                                                <ErrorMessage component="span" className="text-danger" name="email"/>
-                                            )}
+                                            <Field id="email" name="email" type="text" className="form-control"/>
+                                            <ErrorMessage component="span"
+                                                          name="email"
+                                                          className="error-flag"/>
                                         </div>
                                     </div>
                                     <div className="mt-2 inputs row">
@@ -307,7 +345,10 @@ export default function EmployeeInformation() {
                                             </label>
                                         </div>
                                         <div className="col-md-9">
-                                            <input id="diaChi" type="text" className="form-control"/>
+                                            <Field id="diaChi" name="address" type="text" className="form-control"/>
+                                            <ErrorMessage component="span"
+                                                          name="address"
+                                                          className="error-flag"/>
                                         </div>
                                     </div>
                                     <div className="mt-2 inputs row">
@@ -317,7 +358,11 @@ export default function EmployeeInformation() {
                                             </label>
                                         </div>
                                         <div className="col-md-9">
-                                            <input id="soDienThoai" type="text" className="form-control"/>
+                                            <Field id="soDienThoai" name="phoneNumber" type="text"
+                                                   className="form-control"/>
+                                            <ErrorMessage component="span"
+                                                          name="phoneNumber"
+                                                          className="error-flag"/>
                                         </div>
                                     </div>
                                     <div className="mt-2 inputs row">
@@ -327,7 +372,11 @@ export default function EmployeeInformation() {
                                             </label>
                                         </div>
                                         <div className="col-md-9">
-                                            <input id="CMND/CCCD" type="text" className="form-control"/>
+                                            <Field id="CMND/CCCD" name="citizenCode" type="text"
+                                                   className="form-control"/>
+                                            <ErrorMessage component="span"
+                                                          name="citizenCode"
+                                                          className="error-flag"/>
                                         </div>
                                     </div>
                                     <div className="mt-2 inputs row">
@@ -351,14 +400,14 @@ export default function EmployeeInformation() {
                                                         :
                                                         <>
                                                             <div className="text-center mt-2 btn-group col-md-6">
-                                                                <button type="submit" className="btn btn-secondary">
+                                                                <button type="button" className="btn btn-secondary">
                                                                     <b>Quay lại</b>
                                                                 </button>
                                                             </div>
                                                             <div className="text-center mt-2 btn-group col-md-6">
-                                                                <button type="button" className="btn btn-success" >
-                                                                    <b>Sửa</b>
-                                                                </button>
+                                                                <Link to={`/edit/employee/detail/${employeeDetail.id}`} type="submit" id="success-form" className="btn btn-success">
+                                                                    <b>Cập nhật</b>
+                                                                </Link>
                                                             </div>
                                                         </>
                                                 }
@@ -369,7 +418,8 @@ export default function EmployeeInformation() {
                             </div>
                         </div>
                     </Form>
-                )}
+                )
+                }
             </Formik>
         </>
     )

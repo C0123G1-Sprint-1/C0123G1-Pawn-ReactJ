@@ -251,7 +251,7 @@ export function UpdateCustomer() {
                 }}
             >
                 {({isSubmitting}) => (
-                    <div className="container mt-5 mb-5">
+                    <div className="dat-nt container mt-5 mb-5">
                         <div className="row height d-flex justify-content-center align-items-center">
                             <div className="col-md-8 col-sm-12">
                                 <div className="card px-5 py-4">
@@ -290,12 +290,12 @@ export function UpdateCustomer() {
                                                     )}
                                                 </div>
 
-                                                <label className="mt-2" style={{textAlign: "center", display: "block"}}>
+                                                <label className="mt-2 text-file-name" >
                                                     Ảnh chân dung
                                                 </label>
                                                 {!avatarUrl && (
                                                     <label htmlFor="file-upload-avatar"
-                                                           className="custom-file-upload mt-4">
+                                                           className="text-name-file mt-4">
                                                         Thêm ảnh chân dung <span style={{color: "red"}}>*</span>
                                                     </label>
                                                 )}
@@ -327,7 +327,7 @@ export function UpdateCustomer() {
                                                     </div>
                                                 )}
                                                 {fileSelected ? null : (
-                                                    <span  className="error-flag"> {messageError}</span>
+                                                    <span  className="error-flag"><br/> {messageError}</span>
                                                 )}
                                                 <hr/>
                                                 <div className="mb-3 mt-3">
@@ -344,7 +344,7 @@ export function UpdateCustomer() {
                                                 </div>
                                                 <div id="front-back-upload" className="hidden">
                                                     <div className="mb-3">
-                                                        <label htmlFor="front-upload" className="custom-file-upload">
+                                                        <label htmlFor="front-upload" className="text-name-file">
                                                             Tải lên mặt trước <span style={{color: "red"}}>*</span>
                                                         </label>
                                                         <input
@@ -396,7 +396,7 @@ export function UpdateCustomer() {
                                                         </div>
                                                     </div>
                                                     <div className="mb-3">
-                                                        <label htmlFor="back-upload" className="custom-file-upload">
+                                                        <label htmlFor="back-upload" className="text-name-file">
                                                             Tải lên mặt sau <span style={{color: "red"}}>*</span>
                                                         </label>
                                                         <input
