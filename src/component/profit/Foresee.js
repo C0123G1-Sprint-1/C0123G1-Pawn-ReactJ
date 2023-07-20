@@ -41,7 +41,7 @@ export default function Foresee() {
                             <tr>
                                 <td colSpan="7">
                                     <div align="center">
-                                        <h1>Data Not Found</h1>
+                                        <h4 className="text-danger">Dữ liệu không tồn tại</h4>
                                     </div>
                                 </td>
                             </tr>

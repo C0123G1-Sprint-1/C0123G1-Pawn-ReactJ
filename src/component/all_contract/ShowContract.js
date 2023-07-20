@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Modal} from "react-bootstrap";
 
-import * as showAllContractService from '../../service/all_contract/ShowAllContractServices'
+import * as showAllContractService from '../../service/ShowAllContractServices'
 
 export const ShowContract = () => {
     const [showModal, setShowModal] = useState(false);

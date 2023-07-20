@@ -16,7 +16,12 @@ const ExportExcelButton = ({ data, fileName }) => {
         writeFile(workbook, `${fileName}.xlsx`);
     };
     return (
-        <button className="btn btn-sm btn-primary" style={{height: "5vh"}} onClick={exportToExcel}>
+        <button className="btn btn-sm btn-primary" style={{
+            height: "5vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+        }} onClick={exportToExcel}>
             Export to Excel
         </button>
     );
