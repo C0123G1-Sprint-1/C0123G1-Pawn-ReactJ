@@ -32,11 +32,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/account/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/account/Style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/contract/CreateContracts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/CreateContracts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/contract/TransactionHistoryDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/TransactionHistoryDetail.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/profit/InfoStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/InfoStore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/ContractService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/ContractService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,11 +83,23 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/component/contract" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="D:\C0123G1-Pawn-reactjs\node_modules\standard" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\C0123G1-Pawn-reactjs\src\component\contract" />
+      <recent name="D:\C0123G1-Pawn-reactjs\src" />
+    </key>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -100,7 +119,10 @@
       <workItem from="1689658256280" duration="10641000" />
       <workItem from="1689670828800" duration="4866000" />
       <workItem from="1689678562697" duration="15188000" />
-      <workItem from="1689729417178" duration="4669000" />
+      <workItem from="1689729417178" duration="11718000" />
+      <workItem from="1689774387368" duration="6269000" />
+      <workItem from="1689808783486" duration="714000" />
+      <workItem from="1689815273714" duration="3864000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -144,7 +166,21 @@
       <option name="project" value="LOCAL" />
       <updated>1689730970412</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="&quot;add component TransactionHistoryList&quot;">
+      <created>1689734356386</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1689734356386</updated>
+    </task>
+    <task id="LOCAL-00008" summary="&quot;add component TransactionHistoryList&quot;">
+      <created>1689753342986</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1689753342986</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,46 +203,54 @@
     <option name="LAST_COMMIT_MESSAGE" value="&quot;add component TransactionHistoryList&quot;" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="638" y="323" key="#ESLint" timestamp="1689775608227">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="638" y="323" key="#ESLint/0.0.1536.824@0.0.1536.824" timestamp="1689775608227" />
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1689667219998">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1689667219998" />
+    <state x="147" y="65" key="DiffContextDialog" timestamp="1689753433234">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="147" y="65" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1689753433234" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1689586329113">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1689586329113" />
-    <state width="1515" height="529" key="GridCell.Tab.0.bottom" timestamp="1689732002635">
+    <state width="1515" height="344" key="GridCell.Tab.0.bottom" timestamp="1689787273316">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="529" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1689732002635" />
-    <state width="1515" height="529" key="GridCell.Tab.0.center" timestamp="1689732002635">
+    <state width="1515" height="344" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1689787273316" />
+    <state width="1515" height="344" key="GridCell.Tab.0.center" timestamp="1689787273316">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="529" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1689732002635" />
-    <state width="1515" height="529" key="GridCell.Tab.0.left" timestamp="1689732002635">
+    <state width="1515" height="344" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1689787273316" />
+    <state width="1515" height="344" key="GridCell.Tab.0.left" timestamp="1689787273316">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="529" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1689732002635" />
-    <state width="1515" height="529" key="GridCell.Tab.0.right" timestamp="1689732002635">
+    <state width="1515" height="344" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1689787273316" />
+    <state width="1515" height="344" key="GridCell.Tab.0.right" timestamp="1689787273316">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="529" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1689732002635" />
-    <state x="0" y="0" width="1536" height="822" key="MergeDialog" timestamp="1689730955253">
+    <state width="1515" height="344" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1689787273316" />
+    <state x="0" y="0" width="1536" height="822" key="MergeDialog" timestamp="1689753579211">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" width="1536" height="822" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1689730955253" />
-    <state x="530" y="142" width="675" height="263" key="MultipleFileMergeDialog" timestamp="1689730963083">
+    <state x="0" y="0" width="1536" height="822" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1689753579211" />
+    <state x="530" y="142" width="675" height="263" key="MultipleFileMergeDialog" timestamp="1689753579218">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="530" y="142" width="675" height="263" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1689730963083" />
-    <state x="294" y="45" key="SettingsEditor" timestamp="1689699942519">
+    <state x="530" y="142" width="675" height="263" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1689753579218" />
+    <state x="294" y="45" key="SettingsEditor" timestamp="1689778698647">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="294" y="45" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1689699942519" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1689730649420">
+    <state x="294" y="45" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1689778698647" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1689753586551">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689730649420" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689753586551" />
     <state x="407" y="168" key="run.anything.popup" timestamp="1689687020201">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
