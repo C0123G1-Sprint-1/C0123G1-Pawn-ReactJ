@@ -9,12 +9,12 @@ export default function Liquidation() {
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
                     <tr>
-                        <th>Mã Hd</th>
-                        <th>Tiền mua(VND)</th>
-                        <th>Tiền bán(VND)</th>
-                        <th>Ngày thanh lý</th>
-                        <th>Lợi nhuận(VND)</th>
-                        <th id="actions">Tùy chọn</th>
+                        <th>Mã Hợp Đồng</th>
+                        <th>Tiền Mua(VND)</th>
+                        <th>Tiền Bán(VND)</th>
+                        <th>Ngày Thanh lý</th>
+                        <th>Lợi Nhuận(VND)</th>
+                        <th id="actions">Chức Năng</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -21,13 +21,13 @@ export default function InfoStore() {
                             >
                                 Thông tin cửa hàng
                             </NavLink>
-                            <NavLink to={"/"} style={({isActive})=>{
+                            <NavLink to={"/nav/info-store/profit"} style={({isActive})=>{
                                 return{
                                     backgroundColor: isActive ? "#27533e": "",
                                     color: isActive ? "#fff": ""
                                 }
-                            }}  className="border-0 list-group-item list-group-item-action">
-                                Tài chính
+                            }}  className="border-0 list-group-item list-group-item-action" id="statistic-profit">
+                                Thống kê lợi nhuận
                             </NavLink>
                             <NavLink to={"/nav/info-store/all-contract"} style={({isActive})=>{
                                 return{
@@ -52,14 +52,6 @@ export default function InfoStore() {
                                 }
                             }}  className="border-0 list-group-item list-group-item-action ">
                                 Top 10 hợp đồng mới nhất
-                            </NavLink>
-                            <NavLink to={"/nav/info-store/profit"} style={({isActive})=>{
-                                return{
-                                    backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "#fff": ""
-                                }
-                            }}  className="border-0 list-group-item list-group-item-action" id="statistic-profit">
-                                Thống kê lợi nhuận
                             </NavLink>
                         </div>
                     </div>

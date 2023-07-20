@@ -1,11 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap"
-import React from "react";
+import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
 import {Outlet} from "react-router";
 import jwt from 'jwt-decode';
 
 export default function Navbars() {
+    const [isActives, setIsActive] = useState(true);
     const token = localStorage.getItem('token');
     const decodedToken = jwt(token);
     console.log(decodedToken.sub)
@@ -25,8 +26,9 @@ export default function Navbars() {
                  }}>
                 <div className="container-fluid" style={{height: "100%", justifyContent: "center"}}>
                     <ul className=""
-                        style={{height: "100%",  display: "flex",
-                            justifyContent: "center" ,
+                        style={{
+                            height: "100%", display: "flex",
+                            justifyContent: "center",
                             flexDirection: "row",
                             listStyle: "none",
                             alignItems: "center"
@@ -42,7 +44,8 @@ export default function Navbars() {
                                     display: "flex",
                                     padding: "10px"
                                 }
-                            }} className="nav-link active" aria-current="page" to={"/pawn"}>
+                            }} className="nav-link active" aria-current="page"
+                                     to={"/nav/transaction-history/create-contract"}>
                                 Cầm đồ
                             </NavLink>
                         </li>
@@ -87,7 +90,7 @@ export default function Navbars() {
                                     display: "flex",
                                     padding: "10px"
                                 }
-                            }} className="nav-link" to={"/nav/info-store"}>
+                            }} className="nav-link" to={"/nav/info-store/profit"}>
                                 Thông tin cửa hàng
                             </NavLink>
                         </li>
@@ -175,7 +178,9 @@ export default function Navbars() {
                     </ul>
                 </div>
             </nav>
-            <Outlet/>
+            <div style={{minHeight: "90vh"}}>
+                <Outlet/>
+            </div>
         </>
     )
 }
