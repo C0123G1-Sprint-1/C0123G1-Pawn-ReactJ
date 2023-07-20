@@ -7,8 +7,7 @@ import '../../css/liquidation.css';
 import {
     getListCustomerAPI,
     getListProductAPI,
-    getListProductTypeAPI, saveLiquidationAPI, searchContractAPI,
-    searchCustomerAPI
+    getListProductTypeAPI, saveLiquidationAPI,
 } from "../../service/LiquidationService";
 import {useNavigate} from "react-router";
 import * as Swal from "sweetalert2";
@@ -20,17 +19,24 @@ export function CreateLiquidation() {
     const [contracts, setContracts] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [showModal1, setShowModal1] = useState(false);
-    const [productType, setProductType] = useState([]);
+    const [productTypes, setProductTypes] = useState([]);
     const [listProduct, setListProduct] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
-    const [page, setPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
+    const [customerPage, setCustomerPage] = useState(0);
+    const [contractPage, setContractPage] = useState(0);
+    const [customerTotalPages, setCustomerTotalPages] = useState(0);
+    const [contractTotalPages, setContractTotalPages] = useState(0);
+    const [name, setName] = useState('');
+    const [productName, setProductName] = useState('');
+    const [productType, setProductType] = useState('');
+    const [loans, setLoans] = useState('');
+
 
     const getListCustomer = async () => {
         try {
-            const response = await getListCustomerAPI(page);
+            const response = await getListCustomerAPI(customerPage, name);
             setCustomers(response.data.content);
-            setTotalPages(response.data.totalPages);
+            setCustomerTotalPages(response.data.totalPages);
         } catch (error) {
             console.error('Error while loading customers:', error);
         }
@@ -38,25 +44,31 @@ export function CreateLiquidation() {
 
     const getListProduct = async () => {
         try {
-            const response = await getListProductAPI(page);
+            const response = await getListProductAPI(contractPage, productName, productType, loans);
             setContracts(response.data.content);
-            setTotalPages(response.data.totalPages);
+            setContractTotalPages(response.data.totalPages);
         } catch (error) {
             console.error('Error while loading products:', error);
         }
     };
     const getListProductType = async () => {
         const res = await getListProductTypeAPI();
-        setProductType(res.data);
+        setProductTypes(res.data);
     }
-    const paginate = (page) => {
-        setPage(page)
-    }
+    const paginateCustomers = (page) => {
+        setCustomerPage(page);
+    };
+
+    const paginateContracts = (page) => {
+        setContractPage(page);
+    };
+
     useEffect(() => {
-        getListCustomer();
-        getListProduct()
         getListProductType();
-    }, [page]);
+        getListCustomer();
+        getListProduct();
+    }, [customerPage, name, contractPage, productType, productName, loans]);
+
 
     const getProduct = (id) => {
         const selectedContract = contracts.find((c) => c.id === id);
@@ -104,14 +116,11 @@ export function CreateLiquidation() {
             <Formik initialValues={{
                 id: '',
                 customers: '',
-                products: [''],
+                products: '',
                 totalPrice: 0,
                 createTime: null
             }}
-                // validationSchema={yup.object({
-                //     customers: yup.number().required("Vui lòng chọn khách hàng."),
-                //     products: yup.array().required("Vui lòng chọn sản phẩm.")
-                // })}
+
                     onSubmit={async (values) => {
                         await saveLiquidationAPI({
                             ...values,
@@ -191,16 +200,12 @@ export function CreateLiquidation() {
                                                value={totalPrice} disabled/>
                                     </div>
                                     <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                        <div className="text-center" style={{marginLeft: "23%"}}>
-                                            <button type="button" className="btn btn-secondary ">
-                                                <b className="text-center">Quay lại</b>
-                                            </button>
-                                        </div>
-                                        <div className="text-center" style={{marginRight: "23%"}}>
-                                            <button type="submit" className="btn btn-success">
-                                                <b className="text-center">Thêm mới</b>
-                                            </button>
-                                        </div>
+
+                                        <button type="submit" className="btn btn-success"
+                                                disabled={!idCustomer || listProduct.length === 0}>
+                                            <b className="text-center">Thêm mới</b>
+                                        </button>
+
                                     </div>
                                 </Form>
                             </div>
@@ -228,13 +233,13 @@ export function CreateLiquidation() {
                         name: "",
                     }} onSubmit={async (values) => {
                         const searchCustomer = async () => {
-                            const res = await searchCustomerAPI(0, values.name);
-                            setCustomers(res.data.content);
+                            await setName(values.name)
+                            const res = await getListCustomerAPI(customerPage, values.name);
+                            await setCustomerPage(0);
+                            await setCustomers(res.data.content);
                         }
                         searchCustomer();
-
-                    }
-                    }>
+                    }}>
                         <div className="d-flex justify-content-between">
                             <button type="submit" className="btn btn-outline-success ">
                                 <b className="textcenter">Thêm khách hàng</b>
@@ -263,27 +268,35 @@ export function CreateLiquidation() {
                             <th className="text-center">Số lượng HĐ</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {
-                            customers.map((c) => {
-                                return (
-                                    <tr key={c.id}>
-                                        <td className="text-center">{c.name}</td>
-                                        <td className="text-center">{c.citizenCode}</td>
-                                        <td className="text-center">{c.quantityContract}</td>
-                                        <td className="text-center">
-                                            <button className="btn btn-success text-center" onClick={async () => {
-                                                await setIdCustomer(c.id)
-                                                handleModalClose(true)
-                                            }}>
-                                                Chọn
-                                            </button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
+                        {customers.length === 0 ?
+                            <tr>
+                                <td colSpan="4" className="text-center">
+                                    <h4 style={{color: "red"}}>Dữ liêu không tồn tại</h4>
+                                </td>
+                            </tr>
+                            :
+                            <tbody>
+                            {
+                                customers.map((c) => {
+                                    return (
+                                        <tr key={c.id}>
+                                            <td className="text-center">{c.name}</td>
+                                            <td className="text-center">{c.citizenCode}</td>
+                                            <td className="text-center">{c.quantityContract}</td>
+                                            <td className="text-center">
+                                                <button className="btn btn-success text-center" onClick={async () => {
+                                                    await setIdCustomer(c.id)
+                                                    handleModalClose(true)
+                                                }}>
+                                                    Chọn
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            </tbody>
                         }
-                        </tbody>
                     </table>
                 </Modal.Body>
 
@@ -291,26 +304,26 @@ export function CreateLiquidation() {
                     <div className="d-flex col-12 justify-content-end" style={{marginLeft: "-5%"}}>
                         <nav aria-label="...">
                             <ul className="pagination">
-                                <li hidden={page === 0} className="page-item ">
+                                <li hidden={customerPage === 0} className="page-item">
                                     <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginate(page - 1)}>
+                                            onClick={() => paginateCustomers(customerPage - 1)}>
                                         Trước
                                     </button>
                                 </li>
-                                {
-                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
-                                        <li className="page-item">
-                                            <button className="page-link " key={page}
-                                                    onClick={() => paginate(page)}>
-                                                {page + 1}
-                                            </button>
-                                        </li>
-                                    ))
-                                }
-                                <li disabled={page + 1 === totalPages}
-                                    className="page-item">
+                                {Array.from({length: customerTotalPages}, (a, index) => index).map((page) => (
+                                    <li className="page-item">
+                                        <button
+                                            className={`page-link ${page === customerPage ? "active" : ""}`}
+                                            key={page}
+                                            onClick={() => paginateCustomers(page)}
+                                        >
+                                            {page + 1}
+                                        </button>
+                                    </li>
+                                ))}
+                                <li disabled={customerPage + 1 === customerTotalPages} className="page-item">
                                     <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginate(page + 1)}>
+                                            onClick={() => paginateCustomers(customerPage + 1)}>
                                         Tiếp
                                     </button>
                                 </li>
@@ -320,8 +333,6 @@ export function CreateLiquidation() {
                 </Modal.Footer>
             </Modal>
 
-
-            (
             <Modal
                 className="modal-lg"
                 show={showModal1}
@@ -341,11 +352,15 @@ export function CreateLiquidation() {
                     <Formik initialValues={{
                         productName: "",
                         productType: "",
-                        loans: ""
+                        loans: "",
                     }} onSubmit={async (values) => {
                         const searchProduct = async () => {
-                            const res = await searchContractAPI(0, values.productName, values.productType, values.loans);
-                            setContracts(res.data.content);
+                            await setProductName(values.productName)
+                            await setProductType(values.productType)
+                            await setLoans(values.loans)
+                            const res = await getListProductAPI(contractPage, values.productName, values.productType, values.loans);
+                            await setContractPage(0)
+                            await setContracts(res.data.content);
                         }
                         searchProduct();
                     }}>
@@ -368,7 +383,7 @@ export function CreateLiquidation() {
                                                        name="productType" className="form-control">
                                                     <option value="">--Chọn--</option>
                                                     {
-                                                        productType.map((pt) => (
+                                                        productTypes.map((pt) => (
                                                             <option key={pt.id} value={pt.id}>
                                                                 {pt.name}
                                                             </option>
@@ -416,28 +431,35 @@ export function CreateLiquidation() {
                             <th className="text-center">Giá</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {
-                            contracts.map((ct) => {
-                                return (
-                                    <tr key={ct.id}>
-                                        <td className="text-center">{ct.productName}</td>
-                                        <td className="text-center">{ct.productType}</td>
-                                        <td className="text-center">1</td>
-                                        <td className="text-center">{ct.loans}</td>
-                                        <td className="text-center">
-                                            <button type="button" onClick={() => {
-                                                getProduct(ct.id);
-                                                handleModalClose1(true);
-                                            }}
-                                                    className="btn btn-success text-center">Chọn
-                                            </button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
+                        {contracts.length === 0 ? <tr>
+                                <td colSpan="4" className="text-center">
+                                    <h4 style={{color: "red"}}>Dữ liêu không tồn tại</h4>
+                                </td>
+                            </tr>
+                            :
+                            <tbody>
+                            {
+                                contracts.map((ct) => {
+                                    return (
+                                        <tr key={ct.id}>
+                                            <td className="text-center">{ct.productName}</td>
+                                            <td className="text-center">{ct.productType}</td>
+                                            <td className="text-center">1</td>
+                                            <td className="text-center">{ct.loans}</td>
+                                            <td className="text-center">
+                                                <button type="button" onClick={() => {
+                                                    getProduct(ct.id);
+                                                    handleModalClose1(true);
+                                                }}
+                                                        className="btn btn-success text-center">Chọn
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            </tbody>
                         }
-                        </tbody>
                     </table>
                 </Modal.Body>
 
@@ -445,26 +467,26 @@ export function CreateLiquidation() {
                     <div className="d-flex col-12 justify-content-end" style={{marginLeft: '-5%'}}>
                         <nav aria-label="...">
                             <ul className="pagination">
-                                <li hidden={page === 0} className="page-item ">
+                                <li hidden={contractPage === 0} className="page-item">
                                     <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginate(page - 1)}>
+                                            onClick={() => paginateContracts(contractPage - 1)}>
                                         Trước
                                     </button>
                                 </li>
-                                {
-                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
-                                        <li className="page-item">
-                                            <button className="page-link " key={page}
-                                                    onClick={() => paginate(page)}>
-                                                {page + 1}
-                                            </button>
-                                        </li>
-                                    ))
-                                }
-                                <li disabled={page + 1 === totalPages}
-                                    className="page-item">
+                                {Array.from({length: contractTotalPages}, (a, index) => index).map((page) => (
+                                    <li className="page-item">
+                                        <button
+                                            className={`page-link ${page === contractPage ? "active" : ""}`}
+                                            key={page}
+                                            onClick={() => paginateContracts(page)}
+                                        >
+                                            {page + 1}
+                                        </button>
+                                    </li>
+                                ))}
+                                <li disabled={contractPage + 1 === contractTotalPages} className="page-item">
                                     <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginate(page + 1)}>
+                                            onClick={() => paginateContracts(contractPage + 1)}>
                                         Tiếp
                                     </button>
                                 </li>
