@@ -105,7 +105,7 @@ export function RegisterPawn() {
                 {
                     <div className="card-register" style={{backgroundColor: "white"}}>
                         <div className="card-register-left">
-                            <div className="title">ĐIỀU KIỆN ĐẢM BẢO AN TOÀN</div>
+                            <div  style={{fontFamily:"Montserrat !important "}} className="title">ĐIỀU KIỆN ĐẢM BẢO AN TOÀN</div>
                             <div className="content">
                                 Tiệm cầm đồ <span style={{color: "red"}}>Pawn Shop</span> tuân thủ
                                 nghiêm ngặt quy trình của Nhà nước về lĩnh vực cầm đồ, cầm cố tài sản
