@@ -1,7 +1,20 @@
 import React from "react";
 import {Bar} from "react-chartjs-2";
 
-export const ChartComponent = ({data}) => {
+export const ChartComponent = ({data, title}) => {
+    switch (title) {
+        case "interest":
+            title = "tiền lãi hợp đồng"
+            break;
+        case "liquidation":
+            title = "thanh lý"
+            break;
+        case "foresee":
+            title = "dự kiến"
+            break;
+        default:
+            title = ""
+    }
     const chartData = {
         labels: data.map((row) => row.month),
         datasets: [
@@ -35,7 +48,7 @@ export const ChartComponent = ({data}) => {
             },
             title: {
                 display: true, // Hiển thị tiêu đề của biểu đồ
-                text: 'Biểu đồ lợi nhuận theo tháng', // Tiêu đề biểu đồ
+                text: 'Biểu đồ lợi nhuận ' + title + ' theo tháng', // Tiêu đề biểu đồ
                 font: {
                     size: 18, // Kích thước font tiêu đề
                 },

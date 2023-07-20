@@ -10,7 +10,7 @@ import ExportExcelButton from "./ExportExcelButton";
 
 export default function Profit() {
     const [contracts, setContract] = useState()
-    const [profitType, setProfitType] = useState();
+    const [profitType, setProfitType] = useState("interest");
     const [totalPage, setTotalPage] = useState();
     const [totalProfit, setTotalProfit] = useState(0);
     const params = useParams();
@@ -98,8 +98,8 @@ export default function Profit() {
         })
     }
     const data = [
-        { name: 'John', age: 28, email: 'john@example.com' },
-        { name: 'Jane', age: 24, email: 'jane@example.com' },
+        {name: 'John', age: 28, email: 'john@example.com'},
+        {name: 'Jane', age: 24, email: 'jane@example.com'},
         // Thêm các dòng dữ liệu khác tại đây
     ];
     useEffect(() => {
@@ -176,7 +176,8 @@ export default function Profit() {
                                     color: isActive ? "#fff" : "",
                                     width: "100%"
                                 }
-                            }} to="/nav/info-store/profit/foresee/foresee" className="btn btn-sm rounded-4  ">Lợi nhuận dự
+                            }} to="/nav/info-store/profit/foresee/foresee" className="btn btn-sm rounded-4  ">Lợi nhuận
+                                dự
                                 kiến</NavLink>
                             </li>
                         </ul>
@@ -235,7 +236,7 @@ export default function Profit() {
                     <div className="container" style={{height: "45vh"}}>
                         {
                             dataProfit ?
-                                <ChartComponent data={dataProfit}/>
+                                <ChartComponent data={dataProfit} title={profitType}/>
                                 : ""
                         }
                     </div>
@@ -249,7 +250,7 @@ export default function Profit() {
                 {
                     contracts ?
                         <div className="d-flex  col-lg-12 justify-content-between align-items-center">
-                            <ExportExcelButton data={contracts} fileName="user_data" />
+                            <ExportExcelButton data={contracts} fileName="user_data"/>
                             <nav aria-label="...">
                                 <ul className="pagination">
                                     <li className="page-item">
