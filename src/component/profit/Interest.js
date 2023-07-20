@@ -1,6 +1,6 @@
 import {useOutletContext} from "react-router";
 import React from "react";
-import "../profit/interest.css"
+import "../../css/interest.css"
 
 export default function Interest() {
     const contracts = useOutletContext();
