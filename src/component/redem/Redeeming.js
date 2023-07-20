@@ -181,7 +181,7 @@ export const Redeeming = () => {
                                                         <div className="row">
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="ma">Mã HĐ</label>
+                                                                    <label htmlFor="ma">Mã hợp đồng</label>
                                                                     <Field id="ma"
                                                                            type="text" name="contractCode"
                                                                            className="form-control"/>
@@ -236,7 +236,7 @@ export const Redeeming = () => {
                                             <table className="table table-striped">
                                                 <thead>
                                                 <tr>
-                                                    <th className="text-center">Mã HĐ</th>
+                                                    <th className="text-center">Mã Hợp Đồng</th>
                                                     <th className="text-center">Khách Hàng</th>
                                                     <th className="text-center">Đồ Cầm</th>
                                                     <th className="text-center">Tiền Cho Vay (VNĐ)</th>
@@ -259,7 +259,7 @@ export const Redeeming = () => {
                                                             contracts.map((contract) => (
                                                                 <tr key={contract.contractId}>
                                                                     <td className="text-center">{contract.contractCode}</td>
-                                                                    <td className="text-center">{contract.customerName}</td>
+                                                                    <td >{contract.customerName}</td>
                                                                     <td className="text-center">{contract.productName}</td>
                                                                     <td className="text-center">{contract.loans}</td>
                                                                     <td className="text-center">{contract.startDate}</td>
@@ -300,7 +300,7 @@ export const Redeeming = () => {
                                                                 {
                                                                     Array.from({length: totalPages}, (a, index) => index).map((page) => (
                                                                         <li className="page-item">
-                                                                            <button className="page-link " key={page}
+                                                                            <button className={page === page ? "page-link active" : "page-link"} key={page}
                                                                                     onClick={() => paginate(page)}>
                                                                                 {page + 1}
                                                                             </button>
@@ -369,98 +369,68 @@ export const Redeeming = () => {
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs form-group">
                                                         <label>Mã HĐ</label>
-                                                        <Field
-                                                            disabled
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="contractCode"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.contractCode}
-                                                        />
+
+                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                            className="p-0 m-0">
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.contractCode}
+                                                        </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
                                                         <label>Tên khách hàng</label>
-                                                        <Field
-                                                            disabled
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="customerName"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.customerName}
 
-                                                        />
+                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                            className="p-0 m-0">
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.customerName}
+                                                        </h5>
                                                     </div>
                                                 </div>
                                                 <div className="mt-2 inputs form-group">
                                                     <label>Đồ cầm</label>
-                                                    <Field
-                                                        disabled
-                                                        defaultValue=""
-                                                        type="text"
-                                                        className="form-control"
-                                                        name="name"
-                                                        value={contracts.find((c) => c.contractId == selectedContract)?.productName}
 
-                                                    />
+                                                    <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        className="p-0 m-0">
+                                                        {contracts.find((c) => c.contractId == selectedContract)?.productName}
+                                                    </h5>
                                                 </div>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs ">
-                                                        <label>Tiền cho vay</label>
-                                                        <Field
-                                                            disabled
-                                                            type="number"
-                                                            className="form-control"
-                                                            name="loans"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.loans}
-
-                                                        />
+                                                        <label>Tiền cho vay (VNĐ)</label>
+                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                            className="p-0 m-0">
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                                                        </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Tiền lãi</label>
-                                                        <Field
-                                                            disabled
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="profit"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.profit}
+                                                        <label>Tiền lãi (VNĐ)</label>
 
-
-                                                        />
+                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                            className="p-0 m-0">
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                                                        </h5>
                                                     </div>
                                                 </div>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs form-group">
                                                         <label>Ngày bắt đầu</label>
-                                                        <Field
-                                                            disabled
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="startDate"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.startDate}
 
-                                                        />
+                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                            className="p-0 m-0">
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.startDate}
+                                                        </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
                                                         <label>Ngày kết thúc</label>
-                                                        <Field
-                                                            disabled
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="endDate"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.endDate}
 
-                                                        />
+                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                            className="p-0 m-0">
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.endDate}
+                                                        </h5>
                                                     </div>
                                                 </div>
                                                 <div className="mt-2 inputs">
-                                                    <label>Tiền thanh toán</label>
-                                                    <Field
-                                                        disabled
-                                                        type="number"
-                                                        className="form-control"
-                                                        name="total"
-
-                                                        value={contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit}
-
-                                                    />
+                                                    <label>Tiền thanh toán (VNĐ)</label>
+                                                    <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        className="p-0 m-0">{(contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} </h5>
                                                 </div>
                                                 <div className="mt-2 inputs">
                                                     <label>Ngày trả đồ</label>
@@ -499,7 +469,7 @@ export const Redeeming = () => {
                                                                 />) :
                                                                 (<div className="text-center m-auto">
                                                                         <button onClick={() => fetchContract()}
-                                                                                hidden={!selectedContract} type="submit"
+                                                                                disabled={!selectedContract} type="submit"
                                                                                 className="btn btn-success">
                                                                             <b className="text-center">Thanh toán</b>
                                                                         </button>

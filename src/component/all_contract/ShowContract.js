@@ -147,8 +147,8 @@ export const ShowContract = () => {
                                             <th>Tên đồ</th>
                                             <th>Loại đồ</th>
                                             <th>Trạng thái</th>
-                                            <th>Giá mua(VND)</th>
-                                            <th>Hành động</th>
+                                            <th>Giá mua(VNĐ)</th>
+                                            <th>Chức Năng</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -159,13 +159,12 @@ export const ShowContract = () => {
                                                     <td>{value.productName}</td>
                                                     <td>{value.productType}</td>
                                                     <td>{value.contractStatus}</td>
-                                                    <td>{value.loans}</td>
+                                                    <td>{value.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                                     <td>
-                                                        <button className="btn btn-sm btn-info" data-bs-toggle="modal"
-                                                                data-bs-target="#staticBackdrop"
-                                                                onClick={() => handleShowDetail(value.contractId)}>Chi
-                                                            tiết
-                                                        </button>
+
+                                                            <i style={{color: 'blue'}} onClick={() => handleShowDetail(value.contractId)}
+                                                                className=" bi bi-info-circle me-2"></i>
+
 
                                                     </td>
                                                 </tr>
@@ -211,7 +210,7 @@ export const ShowContract = () => {
                                                     className="page-item">
                                                     <button className="page-link" tabIndex={-1}
                                                             onClick={() => paginate(page + 1)}>
-                                                        Tiếp
+                                                        Sau
                                                     </button>
                                                 </li>
                                             </ul>
