@@ -25,9 +25,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="DongPV update coding">
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="DongPV update coding ReactJs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/employee/ListEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/ListEmployee.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/employee/CreateEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/CreateEmployee.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +58,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -82,7 +83,8 @@
       <updated>1689586311005</updated>
       <workItem from="1689586315620" duration="15000" />
       <workItem from="1689586337533" duration="1020000" />
-      <workItem from="1689730547800" duration="6736000" />
+      <workItem from="1689730547800" duration="10164000" />
+      <workItem from="1689817361157" duration="3163000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -112,7 +114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689734000756</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="DongPV update coding ReactJs">
+      <created>1689753693267</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1689753693267</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,9 +140,11 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="&quot;add component TransactionHistoryList&quot;" />
     <MESSAGE value="DongPV update coding" />
-    <option name="LAST_COMMIT_MESSAGE" value="DongPV update coding" />
+    <MESSAGE value="DongPV update coding ReactJs" />
+    <option name="LAST_COMMIT_MESSAGE" value="DongPV update coding ReactJs" />
   </component>
   <component name="WindowStateProjectService">
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1689586329113">
@@ -156,10 +167,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="296" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1689675666218" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1689734023081">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1689753711679">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689734023081" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689753711679" />
     <state x="550" y="125" key="git4idea.branch.GitSmartOperationDialog" timestamp="1689733782653">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
