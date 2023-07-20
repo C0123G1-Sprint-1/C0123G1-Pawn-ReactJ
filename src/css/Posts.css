@@ -2,11 +2,11 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
 
 /* Design */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
+/**,*/
+/**::before,*/
+/**::after {*/
+/*    box-sizing: border-box;*/
+/*}*/
 
 html {
     background-color: #ecf9ff;
@@ -25,12 +25,12 @@ html {
     max-width: 1200px;
     margin: 0 auto;
 }
-h1 {
-    font-size: 28px;
-    font-weight: 400;
-    text-align: center;
-    font-family: "Courier New", monospace;
-}
+/*h1 {*/
+/*    font-size: 28px;*/
+/*    font-weight: 400;*/
+/*    text-align: center;*/
+/*    font-family: "Courier New", monospace;*/
+/*}*/
 /** {*/
 /*    font-family: Times New Roman!important;*/
 /*}*/
@@ -90,14 +90,14 @@ h1 {
     }
 }
 
-.card {
-    background-color: white;
-    border-radius: 0.25rem;
-    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
+/*.card {*/
+/*    background-color: white;*/
+/*    !*border-radius: 0.25rem;*!*/
+/*    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    overflow: hidden;*/
+/*}*/
 
 .card_content {
     padding: 0.5rem;
@@ -144,11 +144,11 @@ h1 {
     line-height: 1em;
     height: auto;
 }
-label {
-    display: block;
-    font-weight: bold;
-    color: #333;
-}
+/*label {*/
+/*    display: block;*/
+/*    font-weight: bold;*/
+/*    color: #333;*/
+/*}*/
 .title-news{
     color: #00833e;
     font-size: 25px;

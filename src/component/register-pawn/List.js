@@ -2,26 +2,48 @@ import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {RegisterPawn} from "./RegisterPawn";
+import {ListPosts} from "../post/ListPosts";
 // import "../../css/home.css"
 // import io from "socket.io-client"
 // import data from "bootstrap/js/src/dom/data";
-
-// const socket =io.connect("http://localhost:8080");
+//
+// const socket =io.connect("http://localhost:8080/api/register/create");
+// import SockJsClient from 'react-stomp';
 export function List() {
     const navigate = useNavigate();
-    //
+
     // const [messageReceived,setMessageReceived] = useState("");
     // useEffect(() => {
     //     socket.on("receive_message",(data) => {
     //         setMessageReceived(data.message)
     //     })
     // },[socket])
-    // <h1>Message : </h1>{messageReceived}
+
+
 
 
     return (
         <>
 
+
+            {/*<SockJsClient url='http://localhost:8080/api/register/'*/}
+            {/*              topics={['/topic/user']}*/}
+            {/*              onConnect={() => {*/}
+            {/*                  console.log("connected");*/}
+            {/*              }}*/}
+            {/*              onDisconnect={() => {*/}
+            {/*                  console.log("Disconnected");*/}
+            {/*              }}*/}
+            {/*              onMessage={(msg) => {*/}
+            {/*                  console.log(msg);*/}
+            {/*              }}*/}
+            {/*              ref={(client) => {*/}
+            {/*                  this.clientRef = client*/}
+            {/*              }}/>*/}
+
+            {/*<h1>Message : {messageReceived}</h1>*/}
+
+            {/*<ListPosts/>*/}
             <div>
                 <div id="demo" class="carousel slide" data-bs-ride="carousel">
 
@@ -92,7 +114,7 @@ export function List() {
                 {/*    </div>*/}
                 {/*</header>*/}
                 <div className="recommend">
-                    <h2 className="title">DỊCH VỤ CẦM ĐỒ PAWN SHOP </h2>
+                    <h2 style={{padding : "1.5rem",marginTop:"-1rem"}} className="title">DỊCH VỤ CẦM ĐỒ PAWN SHOP </h2>
                     <div className="recommend-content">
                         <img src="./anh/tempsnip.png" alt=""/>
                         <div className="description" style={{textAlign: "justify"}}>
@@ -117,7 +139,7 @@ export function List() {
 
             <div className="title-css">
                 <h2 className="title" style={{fontWeight: "600" ,   color: "#c57101",
-                    textAlign: "center",       fontSize: "30px"}}>DỊCH VỤ NỔI BẬT</h2>
+                    textAlign: "center",padding:"0.5rem" , fontSize: "30px"}}>DỊCH VỤ NỔI BẬT</h2>
 
             </div>
             <p style={{textAlign: "center", justifyContent: "center"}}>
@@ -173,7 +195,7 @@ export function List() {
                                     </div>
                                 </div>
                                 <div className="wrapper-img-option">
-                                    <img style={{marginTop :"2rem"}} src="./anh/home-image-1.jpg" alt=""/>
+                                    <img style={{marginTop :"2rem",marginBottom:"2rem"}} src="./anh/home-image-1.jpg" alt=""/>
                                 </div>
                             </div>
                         </div>
@@ -285,10 +307,10 @@ export function List() {
                     <div className="section-content relative">
                         <h2
                             className="title-main"
-                            style={{textAlign: "center", marginBottom: "0.5rem"}}>
+                            style={{textAlign: "center",margin: "0",marginTop :"-2rem" ,padding:"1.5rem"}}>
                             Bạn đã đúng khi chọn chúng tôi?
                         </h2>
-                        <p style={{textAlign: "center"}}>
+                        <p style={{textAlign: "center",marginTop : "1rem"}}>
                             Khi lựa chọn cầm cố tài sản tại{" "}
                             <span style={{color: "red"}}>Pawn Shop</span> thì đảm bảo quý khách sẽ
                             nhận được rất nhiều ưu điểm của chúng tôi như nhiệt tình, thủ tục nhanh,
@@ -360,6 +382,7 @@ export function List() {
 
                 <RegisterPawn/>
 
+                {/*<ListPosts/>*/}
 
                 <div className="mb-3">
                     <iframe

@@ -37,6 +37,7 @@ function App() {
         <>
             <Header />
             <Routes>
+                <Route path='/' element={<List />} />
                 <Route path={"/nav"} element={<Navbars />}>
                     <Route path={"/nav/info-store"} element={<InfoStore />}>
                         <Route path={"/nav/info-store/profit"} element={<Profit/>}>
@@ -57,7 +58,6 @@ function App() {
                     <Route path="/nav/redeem" element={<Redeeming/>}/>
                 </Route>
                 <Route path='/create' element={<RegisterPawn />} />
-                <Route path='/' element={<List />} />
                 {/*<Route path="/" element={<Header/>} />*/}
                 {/*<Route path="/" element={<Footer/>} />*/}
                 {/*<Route path="/" element={<Navigate/>} />*/}

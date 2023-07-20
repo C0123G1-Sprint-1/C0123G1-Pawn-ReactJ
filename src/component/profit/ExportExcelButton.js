@@ -22,7 +22,7 @@ const ExportExcelButton = ({ data, fileName }) => {
             alignItems: "center",
             justifyContent: "center"
         }} onClick={exportToExcel}>
-            Export to Excel
+            Xuất File Excel
         </button>
     );
 };

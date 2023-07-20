@@ -13,25 +13,24 @@ export default function Navbars() {
         <>
             <nav className="navbar-expand-lg p-0"
                  style={{
-                height: "8vh",
-                boxShadow: "0px 5px 10px #e9e4e4",
-                position: "sticky",
-                left: "0px",
-                top: "0px",
-                zIndex: "1",
-                right: "0px",
-                backgroundColor: "rgb(255, 255, 255)",
+                     height: "8vh",
+                     boxShadow: "0px 5px 10px #e9e4e4",
+                     position: "sticky",
+                     left: "0px",
+                     top: "0px",
+                     zIndex: "1",
+                     right: "0px",
+                     backgroundColor: "rgb(255, 255, 255)",
 
-            }}>
+                 }}>
                 <div className="container-fluid" style={{height: "100%", justifyContent: "center"}}>
                     <ul className=""
                         style={{height: "100%",  display: "flex",
-                        justifyContent: "center" ,
-                        flexDirection: "row",
-                        gap: "50px",
-                        listStyle: "none",
-                        alignItems: "center"
-                    }}>
+                            justifyContent: "center" ,
+                            flexDirection: "row",
+                            listStyle: "none",
+                            alignItems: "center"
+                        }}>
                         <li className="nav-item">
                             <NavLink style={({isActive}) => {
                                 return {
