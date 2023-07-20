@@ -1,0 +1,73 @@
+*{
+    margin: 0;
+    padding: 0;
+    /*font-family: Arial;*/
+}
+/*#header {*/
+/*    height: 10vh;*/
+/*    background-color: #00833e;*/
+/*}*/
+/*#header h1{*/
+/*    margin: 0px;*/
+/*    color: #fff;*/
+/*}*/
+#nav-side-bar{
+    background-color: #00833e;
+}
+
+/*#footer {*/
+/*    height: 10vh;*/
+/*    background-color: #00833e;*/
+/*}*/
+
+/*#footer h1{*/
+/*    color: #fff;*/
+/*}*/
+
+/*#content {*/
+/*    height: 80vh;*/
+/*}*/
+
+/*.content-profit {*/
+/*    height: 80vh;*/
+/*    !*background-color: #61dafb;*!*/
+/*}*/
+
+.nav-content {
+    list-style: none;
+}
+
+.page-item .page-link .active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.nav-content li a {
+    color: #fff;
+    border-radius: 0;
+    /*border-right: 1px solid black;*/
+    background-color: #00833e;
+}
+.nav-content li:hover a {
+    color: #fff;
+    border-radius: 0;
+    border-right: 1px solid black;
+    background-color: #27533e
+}
+
+#actions, .detail-button {
+    text-align: center
+}
+
+.detail {
+    font-size: 20px;
+    color: #5bc0de
+}
+
+/*#statistic-profit{*/
+/*    background-color: #77db77;border: #77db77*/
+/*}*/
+
+td{
+    text-align: center;
+}

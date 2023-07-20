@@ -11,6 +11,7 @@ import {
 } from "../../service/LiquidationService";
 import {useNavigate} from "react-router";
 import * as Swal from "sweetalert2";
+import {Link} from "react-router-dom";
 
 export function CreateLiquidation() {
     const navigate = useNavigate();
@@ -128,7 +129,7 @@ export function CreateLiquidation() {
                             customers: customers.find((c) => c.id === idCustomer),
                             products: data.products
                         });
-                        navigate("/")
+                        navigate("/nav/info-store/all-contract")
                         const save = () => {
                             Swal.fire({
                                 position: 'center',
@@ -241,9 +242,9 @@ export function CreateLiquidation() {
                         searchCustomer();
                     }}>
                         <div className="d-flex justify-content-between">
-                            <button type="submit" className="btn btn-outline-success ">
+                            <Link to="/nav/create" type="submit" className="btn btn-outline-success ">
                                 <b className="textcenter">Thêm khách hàng</b>
-                            </button>
+                            </Link>
                             <Form className="d-flex m-1">
 
                                 <Field style={{width: "18vw", borderColor: "black"}}
@@ -361,6 +362,7 @@ export function CreateLiquidation() {
                             const res = await getListProductAPI(contractPage, values.productName, values.productType, values.loans);
                             await setContractPage(0)
                             await setContracts(res.data.content);
+
                         }
                         searchProduct();
                     }}>

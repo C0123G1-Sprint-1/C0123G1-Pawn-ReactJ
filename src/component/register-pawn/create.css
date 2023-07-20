@@ -1,0 +1,70 @@
+
+.card {
+    border: none;
+    padding: 20px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+}
+
+.btn-danger {
+    color: black;
+    background-color: #ffafda;
+    border-color: #ffafda;
+}
+
+body {
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+body {
+    background-color: #eee;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300
+}
+
+
+.card {
+    border: none;
+    padding: 20px;
+    position: relative
+}
+
+.img-logo {
+    position: absolute;
+    left: 54%;
+    transform: translateX(-50%);
+    top: -48px
+}
+
+.inputs span {
+    font-size: 14px;
+    font-weight: 500
+}
+
+.inputs input {
+    font-size: 13px;
+    height: 44px
+}
+
+.inputs input:focus {
+    border-color: #2c1e8e;
+    box-shadow: none
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.integration {
+    font-size: 15px;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #212529;
+    border-radius: 0.25rem;
+    background-color: #149570;
+}
+
+.form-err{
+    color: red
+}
