@@ -4,7 +4,7 @@ import React from "react";
 import {Route, Routes} from "react-router";
 import {UpdateCustomer} from "./component/customer/UpdateCustomer";
 import EmployeeInformation from "./component/employee/EmployeeInformation";
-import ImageUploaderFile from "./component/customer/upcan";
+import ImageUploaderFile from "./component/customer/OCRCitizen";
 
 function App() {
     return (

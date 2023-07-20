@@ -236,7 +236,7 @@ export function UpdateCustomer() {
                         setSubmitting(false);
                         await Swal.fire({
                             icon: "success",
-                            title: "Chỉnh sửa thành công. Khách hàng " + newValue.name,
+                            title: "Chỉnh sửa thông tin thành công. Khách hàng " + newValue.name,
                         });
                         resetForm();
                         navigate("/");

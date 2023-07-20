@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { useNavigate, Link} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import *as employeeInformationService from "../../service/EmployeeInformationService"
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from 'yup'
@@ -20,6 +20,23 @@ export default function EmployeeInformation() {
     const [avatarUrl, setAvatarUrl] = useState();
     const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
     const messageError = "Các trường ảnh không được để trống!!";
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [getPassword, setGetPassword] = useState([]);
+
+    const handleUpdateClick = () => {
+            const maKhau = document.getElementById('maKhau');
+            const nhapLaiMatKhau = document.getElementById('nhapLaiMatKhau');
+
+            if (maKhau.value !== nhapLaiMatKhau.value) {
+                alert('Mật khẩu không trùng khớp. Vui lòng nhập lại.');
+                return;
+            }
+    };
+
+    const handleToggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
 
     const getMinDate = () => {
         const today = new Date();
@@ -86,6 +103,7 @@ export default function EmployeeInformation() {
     }, [])
     useEffect(() => {
         setAvatarUrl(employeeDetail?.image)
+        setGetPassword(employeeDetail?.users.password)
     }, [employeeDetail?.image])
 
     const handleAvatarFileSelect = (event) => {
@@ -132,6 +150,17 @@ export default function EmployeeInformation() {
                 onSubmit={(value, {setSubmitting}) => {
                     const editEmployee = async () => {
                         try {
+                            const maKhau = document.getElementById("maKhau").value;
+                            if (maKhau !== getPassword) {
+                                await Swal.fire({
+                                    icon: "error",
+                                    title: "Mật khẩu không đúng",
+                                    text: "Vui lòng nhập lại mật khẩu",
+                                    timer: 1500
+                                });
+                                setSubmitting(false);
+                                return;
+                            }
                             value.gender = parseInt(value.gender);
                             await handleAvatarFileUpload()
                             const newValues = {...value, image: firebaseImg};
@@ -150,6 +179,11 @@ export default function EmployeeInformation() {
                         } catch
                             (error) {
                             console.log(error);
+                            await Swal.fire({
+                                icon: "error",
+                                title: "Thất bại",
+                            });
+                            setSubmitting(false);
                         }
                     }
                     editEmployee()
@@ -236,7 +270,7 @@ export default function EmployeeInformation() {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="nhan_vien"
+                                                placeholder={employeeDetail?.users.username}
                                                 disabled
                                             />
                                         </div>
@@ -249,24 +283,54 @@ export default function EmployeeInformation() {
                                         hidden
                                     />
                                     <div className="mt-2 inputs row">
-                                        <div className="col-md-3">
-                                            <label htmlFor="maKhau" className="form-label">
-                                                Mật khẩu
-                                            </label>
-                                        </div>
-                                        <div className="col-md-9">
-                                            <input id="maKhau" type="text" className="form-control"/>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2 inputs row">
-                                        <div className="col-md-3">
-                                            <label htmlFor="nhapLaiMatKhau" className="form-label">
-                                                Nhập lại mật khẩu
-                                            </label>
-                                        </div>
-                                        <div className="col-md-9">
-                                            <input id="nhapLaiMatKhau" type="text" className="form-control"/>
-                                        </div>
+                                        <>
+                                            <div className="mt-2 inputs row">
+                                                <div className="col-md-3">
+                                                    <label htmlFor="maKhau" className="form-label">
+                                                        Mật khẩu
+                                                    </label>
+                                                </div>
+                                                <div className="col-md-9">
+                                                    <div className="input-group">
+                                                        <input
+                                                            id="maKhau"
+                                                            type={showPassword ? 'text' : "password"}
+                                                            className="form-control"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-outline-secondary"
+                                                            onClick={handleToggleShowPassword}
+                                                        >
+                                                            {showPassword ? 'Ẩn' : 'Hiện'}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="mt-2 inputs row">
+                                                <div className="col-md-3">
+                                                    <label htmlFor="nhapLaiMatKhau" className="form-label">
+                                                        Nhập lại mật khẩu
+                                                    </label>
+                                                </div>
+                                                <div className="col-md-9">
+                                                    <div className="input-group">
+                                                        <input
+                                                            id="nhapLaiMatKhau"
+                                                            type={showPassword ? 'text' : "password"}
+                                                            className="form-control"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-outline-secondary"
+                                                            onClick={handleToggleShowPassword}
+                                                        >
+                                                            {showPassword ? 'Ẩn' : 'Hiện'}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
                                     </div>
                                     <div className="mt-2 inputs row">
                                         <div className="col-md-3">
@@ -405,9 +469,11 @@ export default function EmployeeInformation() {
                                                                 </button>
                                                             </div>
                                                             <div className="text-center mt-2 btn-group col-md-6">
-                                                                <Link to={`/edit/employee/detail/${employeeDetail.id}`} type="submit" id="success-form" className="btn btn-success">
+                                                                <button
+                                                                    onClick={handleUpdateClick}
+                                                                    type="submit" className="btn btn-success">
                                                                     <b>Cập nhật</b>
-                                                                </Link>
+                                                                </button>
                                                             </div>
                                                         </>
                                                 }

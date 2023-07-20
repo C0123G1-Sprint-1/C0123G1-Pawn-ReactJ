@@ -196,11 +196,6 @@ export function CreateCustomer() {
                                 <div className="card px-5 py-4">
                                     <div
                                         className="m-2"
-                                        style={{
-                                            textAlign: "center",
-                                            backgroundColor: "#00833e",
-                                            color: "white",
-                                        }}
                                     >
                                         <h1 id="title-h1">Thêm thông tin khách hàng</h1>
                                     </div>
