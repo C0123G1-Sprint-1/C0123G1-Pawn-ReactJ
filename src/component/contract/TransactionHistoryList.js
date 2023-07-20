@@ -81,7 +81,7 @@ export default function TransactionHistoryList() {
             <div className="col-lg-9 col-md-12 ">
                 <div className="row">
                     <div className="col-lg-12 col-md-12">
-                        <h1 className="text-center my-5">Lịch sử giao dịch</h1>
+                        <h1 className="text-center my-5">LỊCH SỬ GIAO DỊCH</h1>
                         <Formik initialValues={({
                             customerName: search?.customerName,
                             productName: search?.productName,
@@ -145,7 +145,7 @@ export default function TransactionHistoryList() {
                                             <option value={""}>--Chọn loại hợp đồng--</option>
                                             {
                                                 contractType.map((ct, index) => (
-                                                    <option key={index} value={ct.id}>{ct.name}</option>
+                                                    <option key={index} value={ct.id}>{ct?.name}</option>
                                                 ))
                                             }
                                         </Field>
@@ -160,13 +160,13 @@ export default function TransactionHistoryList() {
                                                     <option value={""}>--Chọn trạng thái--</option>
                                                     {
                                                         contractStatus.map((cs, index) => (
-                                                            <option key={index} value={cs.id}>{cs.name}</option>
+                                                            <option key={index} value={cs.id}>{cs?.name}</option>
                                                         ))
                                                     }
                                                 </Field>
-                                                <button type="submit" className="btn btn-outline-primary">
+                                                <a type="submit" className="btn btn-outline-primary">
                                                     <i className="bi bi-search"></i>
-                                                </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +183,7 @@ export default function TransactionHistoryList() {
                         <thead>
                         <tr>
                             <th>Mã hợp đồng</th>
-                            <th>Tên đồ cầm</th>
+                            <th>Tên đồ</th>
                             <th>Tên khách hàng</th>
                             <th>Ngày làm hợp đồng</th>
                             <th>Loại hợp đồng</th>
@@ -193,17 +193,17 @@ export default function TransactionHistoryList() {
                         </thead>
                         <tbody>
                         {
-                            contracts.length === 0 && (search.customerName!=="" || search.productName!=="" || search.contractType!==""
+                            contracts?.length === 0 && (search.customerName!=="" || search.productName!=="" || search.contractType!==""
                             || search.contractStatus!=="" || search.startDate!=="" || search.endDate!=="" )? (
                                     <tr>
                                         <td colSpan={7}>
-                                            <h3 style={{color: "red"}}>Không có dữ liệu</h3>
+                                            <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
                                         </td>
                                     </tr>
                                 ) :
                                 contracts.map((th, index) => (
                                     <tr key={index}>
-                                        <td>{th?.contractCode}</td>
+                                        <td>HD-{th?.contractCode}</td>
                                         <td>{th?.productName}</td>
                                         <td>{th?.customers}</td>
                                         <td>{
@@ -273,10 +273,11 @@ export default function TransactionHistoryList() {
                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
-                        <div className="modal-header">
+                        <div className="modal-header" style={{backgroundColor:"red"
+                        }}>
                             <h5 className="modal-title"
-                                id="staticBackdropLabel6">Xác nhận
-                                xóa lịch sử giao dịch</h5>
+                                id="staticBackdropLabel6">
+                                Xóa lịch sử giao dịch</h5>
                             <button type="button" className="btn-close"
                                     data-bs-dismiss="modal" aria-label="Close"/>
                         </div>
