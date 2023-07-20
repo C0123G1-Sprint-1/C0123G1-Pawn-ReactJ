@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Modal} from 'react-bootstrap';
 import * as redeemingService from '../../service/RedeemingService'
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Swal from "sweetalert2";
 import {getTimerProgressBar} from "sweetalert2";
 import * as Yup from "yup"
@@ -469,6 +469,7 @@ export const Redeeming = () => {
                                                         className="form-control"
                                                         name="redeemDate"
                                                     />
+                                                    <ErrorMessage name="redeemDate" component="p" style={{color:"red"}}/>
                                                 </div>
                                                 <div className="text-center mt-4 btn-group p-3 m-l-2">
                                                     {/*<div className="text-center m-auto">*/}
