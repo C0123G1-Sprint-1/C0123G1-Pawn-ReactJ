@@ -1,6 +1,9 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router";
+import "bootstrap/dist/css/bootstrap.min.css"
 import * as contractService from "../../service/ContractService";
+import {FormattedNumber} from "react-intl";
+import moment from "moment";
 
 export function TransactionHistoryDetail() {
     const [contract, setContract] = useState(null)
@@ -24,7 +27,7 @@ export function TransactionHistoryDetail() {
                     <tbody>
                     <tr>
                         <th>Mã hợp đồng</th>
-                        <td>{contract?.contractCode}</td>
+                        <td>HD-{contract?.contractCode}</td>
                     </tr>
                     <tr>
                         <th>Loại hợp đồng</th>
@@ -42,7 +45,7 @@ export function TransactionHistoryDetail() {
                         <th>Ảnh đồ cầm</th>
                         <td>
                             <img
-                                src={contract?.image}
+                                src={contract.image}
                                 width={150}
                                 height={150}
                                 alt=""
@@ -51,19 +54,36 @@ export function TransactionHistoryDetail() {
                     </tr>
                     <tr>
                         <th>Tiền vay</th>
-                        <td>{contract?.loans}</td>
+
+                        <td>
+                            <FormattedNumber
+                                value={contract?.loans}
+                                currency="VND"
+                                minimumFractionDigits={0}>
+                            </FormattedNumber> VND
+                        </td>
                     </tr>
                     <tr>
                         <th>Tiền lãi theo ngày</th>
-                        <td>{contract?.profit}</td>
+                        <td>
+                            <FormattedNumber
+                                value={contract?.profit}
+                                currency="VND"
+                                minimumFractionDigits={0}>
+                            </FormattedNumber> VND
+                        </td>
                     </tr>
                     <tr>
                         <th>Ngày bắt đầu</th>
-                        <td>{contract?.startDate}</td>
+                        <td>{
+                            moment(contract?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
+                        }</td>
                     </tr>
                     <tr>
                         <th>Ngày kết thúc</th>
-                        <td>{contract?.endDate}</td>
+                        <td>{
+                            moment(contract?.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
+                        }</td>
                     </tr>
                     <tr>
                         <th>Tên khách hàng</th>
@@ -87,8 +107,7 @@ export function TransactionHistoryDetail() {
                     </tr>
                     <tr>
                         <th
-                            className="align-items-center"
-                        >
+                            className="align-items-center">
                             Ảnh chân dung
                         </th>
                         <td>

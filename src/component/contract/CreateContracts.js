@@ -27,28 +27,8 @@ export const CreateContracts = () => {
     const [customer, setCustomer] = useState([]);
     const [code, setCode] = useState('');
     const [idCustomer, setIdCustomer] = useState();
-
-    const [loans, setLoans] = useState(0);
-    // const [startDate, setStartDate] = useState('');
-    // const [endDate, setEndDay] = useState('');
-
     const n = useNavigate();
 
-    if (!customer){
-        return null;
-    }
-    const handleLoans = async (event) => {
-        await setLoans(event.target.value)
-        console.log(loans)
-    }
-    // const handleStartDate = async (event) => {
-    //     await setStartDate(event.target.value)
-    //     console.log(startDate)
-    // }
-    // const handleEndDay = async (event) => {
-    //     await setEndDay(event.target.value)
-    //     console.log(endDate)
-    // }
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
         setImgErr("");
@@ -57,7 +37,7 @@ export const CreateContracts = () => {
         }
     };
 
-    const handleSubmitAsync = async () => {
+    const handleSubmit = async () => {
         return new Promise((resolve, reject) => {
             const file = selectedFile;
             if (!file) return reject("Chưa có file nào được chọn ");
@@ -148,12 +128,6 @@ export const CreateContracts = () => {
         }
     }
 
-    // const handlePageClick = async (page) => {
-    //     // setCurrent(+page.selected);
-    //     // const res=await contractService.searchCustomer(customers,page.selected);
-    //     // setCustomer(res.content);
-    //     // setPageCount(Math.ceil(res.size*page.selected+1))
-    // }
 
     useEffect(() => {
         getAllProductType()
@@ -162,7 +136,9 @@ export const CreateContracts = () => {
         getAllEmployee()
         createContractCodeApi()
     }, [])
-
+    if (!customer){
+        return null;
+    }
     return (
         <>
             <div className="container">
@@ -237,7 +213,7 @@ export const CreateContracts = () => {
                                                 ...values,
                                                 image: firebaseImg,
                                             };
-                                            newValue.image = await handleSubmitAsync();
+                                            newValue.image = await handleSubmit();
 
                                             await contractService.createContract({
                                                 ...newValue,
@@ -347,8 +323,8 @@ export const CreateContracts = () => {
                                             className="form-control"
                                             name="loans"
                                             style={{height: 35}}
-                                            onChange={handleLoans}
-                                            value={loans}
+                                            // onChange={handleLoans}
+                                            // value={loans}
                                         />
                                         <ErrorMessage name="loans" component="p" style={{color: "red"}}/>
 

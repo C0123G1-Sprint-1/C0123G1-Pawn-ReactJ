@@ -28,6 +28,7 @@ export const findAllContractType = async () => {
 }
 
 export const getTransactionHistoryById = async (id) => {
+    console.log(id)
     try {
         const res = await axios.get(`http://localhost:8080/api/employee/contract/detail/${id}`);
         return res.data;
@@ -45,7 +46,7 @@ export const searchTransactionHistory = async (page, value) => {
                 },
             }
         );
-        return res.data;
+        return res;
     } catch (e) {
         console.log(e);
     }
