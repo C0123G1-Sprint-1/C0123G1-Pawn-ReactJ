@@ -56,7 +56,7 @@ export function LoginForm() {
               }
               
               // Đăng nhập thành công, chuyển hướng hoặc thực hiện hành động khác
-              navigate('/forgot');
+              navigate('/customer');
             } catch (e) {
               // Xử lý lỗi đăng nhập
               toast.error(e.response.data);
