@@ -31,6 +31,7 @@
     border-radius: 3px;
     font-weight: 400;
     display: block;
+    border: solid 1px gray;
 }
 
 .pagination .page-num:hover,
@@ -48,6 +49,10 @@
 .pagination .active {
     background-color: #00833e;
 }
+.pagination .active {
+    background-color: #00833e;
+}
+
 
 .pagination .active .page-num {
     color: #fff;

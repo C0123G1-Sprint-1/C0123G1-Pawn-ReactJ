@@ -267,10 +267,10 @@ export default function TransactionHistoryList() {
                     <div className="d-grid">
                         <ReactPaginate
                             breakLabel="..."
-                            nextLabel={contracts.length===0?"":"Sau"}
+                            nextLabel={contracts.length===0&&pageCount===1?"":"Sau"}
                             onPageChange={handlePageClick}
                             pageCount={pageCount}
-                            previousLabel={contracts.length===0?"":"Trước"}
+                            previousLabel={contracts.length===0&&pageCount===1?"":"Trước"}
                             containerClassName="pagination"
                             pageLinkClassName="page-num"
                             nextLinkClassName="page-num"
