@@ -12,10 +12,7 @@ import jwt from 'jwt-decode';
 import {ThreeCircles} from "react-loader-spinner";
 
 export function CreateCustomer() {
-    const token = localStorage.getItem('token');
-    const decodedToken = jwt(token);
-    console.log(decodedToken.sub)
-    console.log(decodedToken.role)
+
 
     let navigate = useNavigate();
     const [avatar, setAvatarFile] = useState(null);
