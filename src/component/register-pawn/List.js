@@ -109,22 +109,22 @@ export function List() {
             <div id="exTab" className="container">
                 <ul className="nav nav-pills">
                     <li className="active">
-                        <a style={{fontFamily : "Times New Roman",fontSize:"20px"}} href="#1a" data-toggle="tab">
+                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px",color:"#53b677"}} href="#1a" data-toggle="tab">
                             Cầm xe
                         </a>
                     </li>
                     <li>
-                        <a style={{fontFamily : "Times New Roman",fontSize:"20px"}} href="#2a" data-toggle="tab">
+                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px",color:"#53b677"}} href="#2a" data-toggle="tab">
                             Cầm điện thoại
                         </a>
                     </li>
                     <li>
-                        <a style={{fontFamily : "Times New Roman",fontSize:"20px"}} href="#3a" data-toggle="tab">
+                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px",color:"#53b677"}} href="#3a" data-toggle="tab">
                             Cầm trang sức
                         </a>
                     </li>
                     <li>
-                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px"}} href="#4a" data-toggle="tab">
+                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px",color:"#53b677"}} href="#4a" data-toggle="tab">
                             Cầm laptop
                         </a>
                     </li>
