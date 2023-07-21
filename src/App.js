@@ -91,6 +91,7 @@ function App() {
                 <Route path={"/scanfile"} element={<ImageUploaderFile/>}/>
             </Routes>
             <Footer/>
+
         </>
     );
 }

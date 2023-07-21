@@ -112,35 +112,6 @@ export default function Profit() {
     }
     return (
         <>
-            {/*<div id="content" className="container">*/}
-            {/*    <div className="row mt-5">*/}
-            {/*<div className="col-md-12 col-lg-3">*/}
-            {/*    <div className="list-group">*/}
-            {/*        <a*/}
-            {/*            href="#"*/}
-            {/*            className="list-group-item list-group-item-action active "*/}
-            {/*            id="nav-side-bar"*/}
-            {/*            aria-current="true"*/}
-            {/*        >*/}
-            {/*            Thông tin cửa hàng*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="list-group-item list-group-item-action">*/}
-            {/*            Tài chính*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="list-group-item list-group-item-action">*/}
-            {/*            Danh sách đồ cầm trong kho*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="list-group-item list-group-item-action">*/}
-            {/*            Lịch sử giao giao dịch*/}
-            {/*        </a>*/}
-            {/*        <a className="list-group-item list-group-item-action ">*/}
-            {/*            Top 10 hợp đồng mới nhất*/}
-            {/*        </a>*/}
-            {/*        <a className="list-group-item list-group-item-action active" id="statistic-profit">*/}
-            {/*            Thống kê lợi nhuận*/}
-            {/*        </a>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
             <div className="col-md-12 col-lg-9 content-profit">
                 <div className="row ">
                     <div className=" col-lg-12 " align="center">

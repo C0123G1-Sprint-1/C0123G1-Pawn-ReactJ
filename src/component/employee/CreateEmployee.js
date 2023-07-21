@@ -25,10 +25,7 @@ export function CreateEmployee() {
     const [imgErr, setImgErr] = useState("");
     const navigate = useNavigate();
 
-    const token = localStorage.getItem('token');
-    const decodedToken = jwt(token);
-    console.log(decodedToken.sub)
-    console.log(decodedToken.role)
+
 
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
