@@ -251,7 +251,6 @@ export default function TransactionHistoryList() {
                                                             deleteTransactionHistory(+th?.id)
                                                         }
                                                     })
-
                                             }}><i
                                                 style={{color: "red"}}
                                                 className="bi bi-trash3"/></a>
