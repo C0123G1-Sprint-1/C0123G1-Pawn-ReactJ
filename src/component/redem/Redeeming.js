@@ -238,7 +238,7 @@ export const Redeeming = () => {
                                             <table className="table table-striped">
                                                 <thead>
                                                 <tr>
-                                                    <th className="text-center">Mã Hợp Đồng</th>
+                                                    <th className="text-center">Mã HĐ</th>
                                                     <th className="text-center">Khách Hàng</th>
                                                     <th className="text-center">Đồ Cầm</th>
                                                     <th className="text-center">Tiền Cho Vay (VNĐ)</th>

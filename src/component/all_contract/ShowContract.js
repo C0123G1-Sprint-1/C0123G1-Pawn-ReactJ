@@ -143,7 +143,7 @@ export const ShowContract = () => {
                                     <table className="table table-striped">
                                         <thead>
                                         <tr className="text-center">
-                                            <th>Mã hợp đồng</th>
+                                            <th>Mã HĐ</th>
                                             <th>Tên đồ</th>
                                             <th>Loại đồ</th>
                                             <th>Trạng thái</th>
