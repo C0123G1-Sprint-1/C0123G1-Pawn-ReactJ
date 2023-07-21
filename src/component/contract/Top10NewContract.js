@@ -74,10 +74,10 @@ export function Top10NewContract() {
                             <thead>
                             <tr>
                                 <th>Mã HĐ</th>
-                                <th>Tên Dồ</th>
+                                <th>Tên đồ</th>
                                 <th>Tên khách hàng</th>
                                 <th>Ngày làm HĐ</th>
-                                <th>Loại hợp đồng</th>
+                                <th>Loại HĐ</th>
                                 <th>Trạng thái</th>
                                 <th>Chức năng</th>
 
@@ -88,7 +88,7 @@ export function Top10NewContract() {
                                 currentContracts.map((contract) => (
                                     <tr key={contract.id}>
                                         <td>{contract.contractCode}</td>
-                                        <td>{contract.productName}</td>
+                                        <td>HD-{contract.productName}</td>
                                         <td>{contract.customers?.name}</td>
                                         <td>{
                                             moment(contract?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
@@ -97,7 +97,7 @@ export function Top10NewContract() {
                                         <td>{contract.contractStatus.name}</td>
                                         <td>
                                             <Link
-                                                to={`/nav/info-store/transaction-history/detail/${contract?.contractCode}`}><i
+                                                to={`/nav/info-store/transaction-history/detail/${contract?.id}`}><i
                                                 className="bi bi-info-circle me-2"/></Link>
                                             <Link
                                                 to={`/nav/info-store/transaction-history/update-contract/${contract?.id}`}
@@ -105,7 +105,7 @@ export function Top10NewContract() {
                                                                     className="bi bi-pencil-square"/></Link>
                                             <a type="button" data-bs-toggle="modal"
                                                data-bs-target="#exampleModal" onClick={() => {
-                                                setDeleteTHList(contract?.contractCode)
+                                                setDeleteTHList(contract?.id)
                                             }}><i
                                                 style={{color: "red"}}
                                                 className="bi bi-trash3"/></a>
@@ -116,27 +116,25 @@ export function Top10NewContract() {
                             </tbody>
                         </table>
                         <div className="pagination-container-tri">
-                            <button
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                            >
-                                Trước
-                            </button>
-                            {Array.from({length: totalPages}, (_, index) => (
+                            {currentPage !== 1 && (
+                                <button onClick={() => handlePageChange(currentPage - 1)}>
+                                    Trước
+                                </button>
+                            )}
+                            {Array.from({ length: totalPages }, (_, index) => (
                                 <button
                                     key={index}
                                     onClick={() => handlePageChange(index + 1)}
-                                    style={{fontWeight: currentPage === index + 1 ? 'bold' : 'normal'}}
+                                    style={{ fontWeight: currentPage === index + 1 ? 'bold' : 'normal' }}
                                 >
                                     {index + 1}
                                 </button>
                             ))}
-                            <button
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === totalPages}
-                            >
-                                Sau
-                            </button>
+                            {currentPage !== totalPages && (
+                                <button onClick={() => handlePageChange(currentPage + 1)}>
+                                    Sau
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
