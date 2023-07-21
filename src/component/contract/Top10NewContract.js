@@ -116,25 +116,27 @@ export function Top10NewContract() {
                             </tbody>
                         </table>
                         <div className="pagination-container-tri">
-                            {currentPage !== 1 && (
-                                <button onClick={() => handlePageChange(currentPage - 1)}>
-                                    Trước
-                                </button>
-                            )}
-                            {Array.from({ length: totalPages }, (_, index) => (
+                            <button
+                                onClick={() => handlePageChange(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                Trước
+                            </button>
+                            {Array.from({length: totalPages}, (_, index) => (
                                 <button
                                     key={index}
                                     onClick={() => handlePageChange(index + 1)}
-                                    style={{ fontWeight: currentPage === index + 1 ? 'bold' : 'normal' }}
+                                    style={{fontWeight: currentPage === index + 1 ? 'bold' : 'normal'}}
                                 >
                                     {index + 1}
                                 </button>
                             ))}
-                            {currentPage !== totalPages && (
-                                <button onClick={() => handlePageChange(currentPage + 1)}>
-                                    Sau
-                                </button>
-                            )}
+                            <button
+                                onClick={() => handlePageChange(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                            >
+                                Sau
+                            </button>
                         </div>
                     </div>
                 </div>

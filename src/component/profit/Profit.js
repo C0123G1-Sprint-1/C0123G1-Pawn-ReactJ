@@ -11,6 +11,7 @@ import ExportExcelButton from "./ExportExcelButton";
 export default function Profit() {
     const [contracts, setContract] = useState()
     const [profitType, setProfitType] = useState("interest");
+    const [isActives, setIsActive] = useState(true);
     const [totalPage, setTotalPage] = useState();
     const [totalProfit, setTotalProfit] = useState(0);
     const params = useParams();
@@ -97,11 +98,6 @@ export default function Profit() {
             endDate: ""
         })
     }
-    const data = [
-        {name: 'John', age: 28, email: 'john@example.com'},
-        {name: 'Jane', age: 24, email: 'jane@example.com'},
-        // Thêm các dòng dữ liệu khác tại đây
-    ];
     useEffect(() => {
         const fectData = async () => {
             await setCurrentPage(0);
@@ -151,8 +147,9 @@ export default function Profit() {
                         <ul className="d-flex nav-content justify-content-center p-0">
                             <li className="col-4"><NavLink onClick={() => setProfit("interest")}
                                                            style={({isActive}) => {
+                                                               // alert(isActives)
                                                                return {
-                                                                   backgroundColor: isActive ? "#27533e" : "",
+                                                                   backgroundColor: isActive || isActives === true ? "#27533e" : "",
                                                                    color: isActive ? "#fff" : "",
                                                                    width: "100%",
                                                                    height: "4.2vh",
@@ -163,7 +160,9 @@ export default function Profit() {
                                                            }} to="/nav/info-store/profit/interest/interest"
                                                            className="btn btn-sm rounded-3  ">Lợi nhuận từ tiền
                                 lãi</NavLink></li>
-                            <li className="col-4"><NavLink onClick={() => setProfit("liquidation")}
+                            <li className="col-4"><NavLink onClick={() => {setProfit("liquidation")
+                                setIsActive(false)
+                            }}
                                                            style={({isActive}) => {
                                                                return {
                                                                    backgroundColor: isActive ? "#27533e" : "",
@@ -178,7 +177,9 @@ export default function Profit() {
                                                            className="btn btn-sm rounded-3  ">Lợi nhuận từ thanh
                                 lý</NavLink>
                             </li>
-                            <li className="col-4"><NavLink onClick={() => setProfit("foresee")} style={({isActive}) => {
+                            <li className="col-4"><NavLink onClick={() => {setProfit("foresee")
+                                setIsActive(false)
+                            }} style={({isActive}) => {
                                 return {
                                     backgroundColor: isActive ? "#27533e" : "",
                                     color: isActive ? "#fff" : "",
@@ -233,7 +234,7 @@ export default function Profit() {
                                             height: "100%",
                                             alignItems: "center"
                                         }}>
-                                            <button type="submit" className="btn btn-sm btn-primary " style={{
+                                            <button type="submit" className="btn btn-sm btn-outline-success " style={{
                                                 height: "100%",
                                                 alignItems: "center",
                                                 display: "flex",
@@ -241,13 +242,14 @@ export default function Profit() {
                                             }}>Thống kê
                                             </button>
                                             <button type="button" onClick={() => setCancel()}
-                                                    className="btn btn-sm btn-outline-danger ms-1" style={{
+                                                    className="btn btn-sm btn-outline-secondary ms-1" style={{
                                                 height: "100%",
                                                 alignItems: "center",
                                                 display: "flex",
                                                 justifyContent: "center",
-                                                border: "1px solid red"
-                                            }}>Hủy
+                                                // border: "1px solid red"
+                                            }}>
+                                                Nhập lại
                                             </button>
                                         </div>
                                     </div>
@@ -256,7 +258,7 @@ export default function Profit() {
                         </div>
                         <label className="mt-3 p-0 ms-5" style={{color: "indianred"}}>
                             Tổng lợi nhuận :{" "}
-                            <input type="text" disabled value={
+                            <input type="text" disabled value={" " +
                                 totalProfit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + " VND "
                             }/>
                         </label>
@@ -272,7 +274,7 @@ export default function Profit() {
             </div>
             <div className=" mt-3 container col-12">
                 <div align="center">
-                    <h3 style={{fontFamily: "aria"}}>Danh sách hợp đồng</h3>
+                    <h3 style={{fontFamily: "aria"}}>DANH SÁCH HỢP ĐỒNG</h3>
                 </div>
                 <Outlet context={contracts}/>
                 {

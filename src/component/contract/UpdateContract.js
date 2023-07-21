@@ -94,11 +94,7 @@ export function UpdateContract() {
                 validationSchema={Yup.object({
                     productName: Yup.string()
                         .required("Không được để trống")
-                        .matches(/^[\p{Lu}\p{Ll}\p{N}\s]+$/u, "Tên sản phẩm không được chứa ký tự đặc biệt")
-                        .test('first-letter-capitalized', 'Chữ đầu tiên của tên sản phẩm phải viết hoa', value => {
-                            const firstLetter = value.charAt(0);
-                            return firstLetter === firstLetter.toUpperCase();
-                        })
+                        .matches(/^[\p{L}\p{N}\s]+$/u, "Tên sản phẩm không được chứa ký tự đặc biệt")
                         .test('no-special-characters', 'Tên sản phẩm không được chứa các ký tự đặc biệt như @, #, !', value => {
                             return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
                         }),
@@ -145,7 +141,7 @@ export function UpdateContract() {
                     updateContract();
                 }}>
 
-                <div className="col-md-12 col-lg-9 content-profit" style={{marginBottom: "8rem",marginTop:"3rem"}}>
+                <div className="col-md-12 col-lg-9 content-profit " style={{marginTop:"30%",marginLeft: "50%",transform: "translate(-50%, -50%)" }}>
                     <div className="row height-tri d-flex justify-content-center align-items-center">
                         <div className="col-md-8">
                             <div className="card px-5 py-4">

@@ -6,11 +6,15 @@ import {Field, Form, Formik} from "formik";
 import "../employee/employee.css";
 import moment from 'moment';
 import {Footer} from "../register-pawn/Footer";
+import jwt from 'jwt-decode';
 
 
 export default function EmployeeList() {
-    const token = localStorage.getItem("token");
-    console.log(token)
+    const token = localStorage.getItem('token');
+    const decodedToken = jwt(token);
+    console.log(decodedToken.sub)
+    console.log(decodedToken.role)
+
     const [employeeList, setEmployeeList] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     let [count, setCount] = useState(1);
@@ -118,8 +122,6 @@ export default function EmployeeList() {
                                             marginRight: 10,
                                             marginBottom: "20px",
                                             height: "50px",
-                                            background: "var(--bs-btn-hover-bg)",
-                                            color: "white",
                                             width: "50px"
                                         }}
                                         type="submit"
@@ -188,7 +190,7 @@ export default function EmployeeList() {
                                 <div className="d-grid">
                                     <ReactPaginate
                                         breakLabel="..."
-                                        nextLabel=" Tiếp"
+                                        nextLabel="Sau"
                                         onPageChange={handlePageClick}
                                         pageCount={pageCount}
                                         previousLabel="Trước "

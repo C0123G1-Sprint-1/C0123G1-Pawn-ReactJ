@@ -6,8 +6,8 @@ import * as Yup from 'yup'
 import Swal from "sweetalert2";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../firebase";
-import {RotatingLines} from "react-loader-spinner";
 import {useParams} from "react-router";
+import {ThreeCircles} from "react-loader-spinner";
 
 export default function EmployeeInformation() {
     const [employeeDetail, setEmployeeDetail] = useState()
@@ -19,19 +19,24 @@ export default function EmployeeInformation() {
     const [avatar, setAvatarFile] = useState();
     const [avatarUrl, setAvatarUrl] = useState();
     const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
-    const messageError = "Các trường ảnh không được để trống!!";
+    const messageError = "Ảnh không được để trống!!";
+    const [isEditing, setIsEditing] = useState(false);
+
+    function handleEditClick() {
+        setIsEditing(true);
+    }
 
     const [showPassword, setShowPassword] = useState(false);
     const [getPassword, setGetPassword] = useState([]);
 
     const handleUpdateClick = () => {
-            const maKhau = document.getElementById('maKhau');
-            const nhapLaiMatKhau = document.getElementById('nhapLaiMatKhau');
+        const maKhau = document.getElementById('maKhau');
+        const nhapLaiMatKhau = document.getElementById('nhapLaiMatKhau');
 
-            if (maKhau.value !== nhapLaiMatKhau.value) {
-                alert('Mật khẩu không trùng khớp. Vui lòng nhập lại.');
-                return;
-            }
+        if (maKhau.value !== nhapLaiMatKhau.value) {
+            alert('Mật khẩu không trùng khớp. Vui lòng nhập lại.');
+
+        }
     };
 
     const handleToggleShowPassword = () => {
@@ -54,16 +59,20 @@ export default function EmployeeInformation() {
             today.getDate()
         );
     };
-    useEffect(async () => {
-        try {
-            const res = await employeeInformationService.findById(params.id);
-            setEmployeeDetail(res);
-            console.log(res)
+    useEffect(() => {
+        const fectApi = async () => {
+            try {
+                const res = await employeeInformationService.findById(params.id);
+                setEmployeeDetail(res);
+                console.log(res)
 
-        } catch (error) {
-            console.log(error)
+            } catch (error) {
+                console.log(error)
+            }
         }
+        fectApi()
     }, [params.id])
+
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -189,108 +198,105 @@ export default function EmployeeInformation() {
                     editEmployee()
                 }}
             >
-                {({values, isSubmitting}) => (
+                {({isSubmitting}) => (
                     <Form>
-                        <div className="container m-auto">
-                            <div className="row row-no-gutters col-xs-8 col-md-8 m-auto">
-                                <h2 className="d-flex justify-content-center"
-                                    style={{padding: "10px", backgroundColor: "#00833e", color: "#fff"}}>
-                                    <b>THÔNG TIN CÁ NHÂN</b>
-                                </h2>
-                                <div className="col-md-3" style={{textAlign: "center", display: "block"}}>
-                                    <img
-                                        id="avatar-img"
-                                        src={avatarUrl ? avatarUrl : (avatar ? URL.createObjectURL(avatar) : defaultAvatar)}
-                                        style={{width: "100%"}}
-                                        alt="avatar"
-                                    />
-                                    {avatarUrl && (
-                                        <div>
-                                            <button
-                                                type="button"
-                                                className="btn btn-danger btn-sm mt-2"
-                                                onClick={() => {
-                                                    setAvatarUrl(null);
-                                                    setAvatarFile(null);
-                                                    setFileSelected(false);
-                                                }}
-                                            >
-                                                Xoá
-                                            </button>
-                                        </div>
-                                    )}
-
-                                    <label className="mt-2 text-file-name">
-                                        Ảnh chân dung
-                                    </label>
-                                    {!avatarUrl && (
-                                        <label htmlFor="file-upload-avatar"
-                                               className="text-name-file mt-4">
-                                            Thêm ảnh chân dung <span style={{color: "red"}}>*</span>
-                                        </label>
-                                    )}
-                                    <input
-                                        type="file"
-                                        onChange={(event) => {
-                                            handleAvatarFileSelect(event);
-                                            setFileSelected(true);
-                                        }}
-                                        id="image"
-                                        name="image"
-                                        className="form-control-plaintext d-none"
-                                    />
-                                    {!avatarUrl && (
-                                        <div>
-                                            <input
-                                                type="button"
-                                                value="Chọn hình ảnh"
-                                                onClick={() => document.getElementById("image").click()}
-                                                style={{
-                                                    display: "flex",
-                                                    padding: "6px 12px",
-                                                    border: "1px ",
-                                                    borderRadius: "4px",
-                                                    backgroundColor: "white",
-                                                    cursor: "pointer",
-                                                }}
+                        <div className="dat-nt container mt-5 mb-5">
+                            <div className="row height d-flex justify-content-center align-items-center">
+                                <div className="card row row-no-gutters col-xs-8 col-md-8 m-auto">
+                                    <div
+                                        className="m-2"
+                                    >
+                                        <h1 style={{textAlign: "center"}}>Thông tin cá nhân</h1>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-4" style={{textAlign: "center", display: "block"}}>
+                                            <img
+                                                id="avatar-img"
+                                                src={avatarUrl ? avatarUrl : (avatar ? URL.createObjectURL(avatar) : defaultAvatar)}
+                                                style={{width: "100%"}}
+                                                alt="avatar"
                                             />
+                                            {avatarUrl && (
+                                                <div>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-danger btn-sm mt-2"
+                                                        onClick={() => {
+                                                            setAvatarUrl(null);
+                                                            setAvatarFile(null);
+                                                            setFileSelected(false);
+                                                        }}
+                                                    >
+                                                        Xoá
+                                                    </button>
+                                                </div>
+                                            )}
+
+                                            <label className="mt-2 text-file-name">
+                                                Ảnh chân dung
+                                            </label>
+                                            {!avatarUrl && (
+                                                <label htmlFor="file-upload-avatar"
+                                                       className="text-name-file mt-4">
+                                                    Thêm ảnh chân dung <span style={{color: "red"}}>*</span>
+                                                </label>
+                                            )}
+                                            <input
+                                                type="file"
+                                                onChange={(event) => {
+                                                    handleAvatarFileSelect(event);
+                                                    setFileSelected(true);
+                                                }}
+                                                id="image"
+                                                name="image"
+                                                className="form-control-plaintext d-none"
+                                            />
+                                            {!avatarUrl && (
+                                                <p>
+                                                    <label
+                                                        htmlFor="image"
+                                                        style={{
+                                                            display: "flex",
+                                                            padding: "6px 12px",
+                                                            border: "1px ",
+                                                            borderRadius: "4px",
+                                                            backgroundColor: "#ccffc6",
+                                                            justifyContent: "center",
+
+                                                        }}
+                                                    >
+                                                        <i className="bi bi-upload"> Chọn hình ảnh</i>
+                                                    </label>
+                                                </p>
+                                            )}
+                                            {fileSelected ? null : (
+                                                <span className="text-danger"><br/> {messageError}</span>
+                                            )}
                                         </div>
-                                    )}
-                                    {fileSelected ? null : (
-                                        <span className="error-flag"><br/> {messageError}</span>
-                                    )}
-                                </div>
-                                <div className="col-md-9">
-                                    <div className="mt-4 inputs row">
-                                        <div className="col-md-3">
+                                        <div className="col-md-8">
                                             <label htmlFor="tenDangNhap" className="form-label">
-                                                Tên đăng nhập</label>
-                                        </div>
-                                        <div className="col-md-9">
+
+                                                <h5 className="m-0">Tên đăng nhập</h5>
+
+                                            </label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 placeholder={employeeDetail?.users.username}
                                                 disabled
                                             />
-                                        </div>
-                                    </div>
-                                    <Field
-                                        id="f-id"
-                                        className="form-control"
-                                        name="id"
-                                        type="number"
-                                        hidden
-                                    />
-                                    <div className="mt-2 inputs row">
-                                        <>
-                                            <div className="mt-2 inputs row">
-                                                <div className="col-md-3">
-                                                    <label htmlFor="maKhau" className="form-label">
-                                                        Mật khẩu
+                                            <Field
+                                                id="f-id"
+                                                className="form-control"
+                                                name="id"
+                                                type="number"
+                                                hidden
+                                            />
+                                            <div className="row">
+                                                <>
+                                                    <label htmlFor="maKhau" className="form-label mt-2">
+                                                        <h5 className="m-0">Mật khẩu</h5>
                                                     </label>
-                                                </div>
-                                                <div className="col-md-9">
                                                     <div className="input-group">
                                                         <input
                                                             id="maKhau"
@@ -302,18 +308,15 @@ export default function EmployeeInformation() {
                                                             className="btn btn-outline-secondary"
                                                             onClick={handleToggleShowPassword}
                                                         >
-                                                            {showPassword ? 'Ẩn' : 'Hiện'}
+                                                            {showPassword ? <i class="bi bi-eye-slash"></i> :
+                                                                <i class="bi bi-eye"></i>}
                                                         </button>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div className="mt-2 inputs row">
-                                                <div className="col-md-3">
+
                                                     <label htmlFor="nhapLaiMatKhau" className="form-label">
-                                                        Nhập lại mật khẩu
+
+                                                        <h5 className="m-0"> Nhập lại mật khẩu</h5>
                                                     </label>
-                                                </div>
-                                                <div className="col-md-9">
                                                     <div className="input-group">
                                                         <input
                                                             id="nhapLaiMatKhau"
@@ -325,158 +328,169 @@ export default function EmployeeInformation() {
                                                             className="btn btn-outline-secondary"
                                                             onClick={handleToggleShowPassword}
                                                         >
-                                                            {showPassword ? 'Ẩn' : 'Hiện'}
+                                                            {showPassword ? <i class="bi bi-eye-slash"></i> :
+                                                                <i class="bi bi-eye"></i>}
                                                         </button>
                                                     </div>
-                                                </div>
+                                                </>
                                             </div>
-                                        </>
-                                    </div>
-                                    <div className="mt-2 inputs row">
-                                        <div className="col-md-3">
                                             <label htmlFor="hoTen" className="form-label">
-                                                Họ và tên
+                                                <h5 className="m-0">Họ và tên:
+                                                <span style={{color: "red"}}> *</span></h5>
                                             </label>
-                                        </div>
-                                        <div className="col-md-9">
-                                            <Field id="hoTen" name="name" type="text" className="form-control"/>
-                                            <ErrorMessage component="span"
-                                                          name="name"
-                                                          className="error-flag"/>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2 inputs row">
-                                        <div className="col-md-3">
-                                            <label className="form-label">Giới tính:</label>
-                                        </div>
-                                        <div className="d-flex col-md-9">
-                                            <div className="form-check">
-                                                <label className="form-check-label" htmlFor="nam">
-                                                    Nam
-                                                </label>
-                                                <Field type="radio" className="form-check-input" name="gender" value="0"
-                                                />
+                                            <div>
+                                                {isEditing ? (
+                                                <Field id="hoTen" name="name" type="text" className="form-control"/>
+                                                    ) : (
+                                                    <div>{employeeDetail?.name}</div>
+                                                    )}
+                                                <ErrorMessage component="span"
+                                                              name="name"
+                                                              className="text-danger"/>
                                             </div>
-                                            <div className="form-check" style={{marginLeft: "10px"}}>
-                                                <label className="form-check-label" htmlFor="nu">
-                                                    Nữ
+                                            <div>
+                                                <div>
+                                                    <label className="form-label">
+                                                        <h5 className="m-0">Giới tính:
+                                                        <span style={{color: "red"}}> *</span></h5></label>
+                                                </div>
+                                                <label className='m-2'>
+                                                    <Field type="radio" name="gender" value="0"/>
+                                                    {' '}Nam
                                                 </label>
-                                                <Field type="radio" className="form-check-input" name="gender"
-                                                       value="1"/>
-                                            </div>
-                                            <div className="form-check" style={{marginLeft: "10px"}}>
-                                                <label className="form-check-label" htmlFor="khac">
-                                                    Khác
+                                                <label className='m-2'>
+                                                    <Field type="radio" name="gender" value="1"/>
+                                                    {' '}Nữ
                                                 </label>
-                                                <Field type="radio" className="form-check-input" name="gender"
-                                                       value="2"/>
+                                                <label className='m-2'>
+                                                    <Field type="radio" name="gender" value="2"/>
+                                                    {' '}Khác
+                                                </label>
                                             </div>
+
                                             <ErrorMessage component="span"
                                                           name="gender"
-                                                          className="error-flag"/>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2 inputs row">
-                                        <div className="col-md-3">
-                                            <label htmlFor="ngaySinh" className="form-label">
-                                                Ngày sinh:
-                                            </label>
-                                        </div>
-                                        <div className="col-md-9">
-                                            <Field id="ngaySinh" name="birthDay" type="date" className="form-control"/>
+                                                          className="text-danger"/>
+                                            <div><label htmlFor="ngaySinh" className="form-label">
+
+                                                <h5 className="m-0">Ngày sinh:
+
+                                                <span style={{color: "red"}}> *</span></h5>
+                                            </label></div>
+                                            <Field id="ngaySinh" name="birthDay" type="date"
+                                                   className="form-control"/>
                                             <ErrorMessage component="span"
                                                           name="birthDay"
-                                                          className="error-flag"/>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2 inputs row">
-                                        <div className="col-md-3">
-                                            <label htmlFor="email" className="form-label">
-                                                Email:
-                                            </label>
-                                        </div>
-                                        <div className="col-md-9">
-                                            <Field id="email" name="email" type="text" className="form-control"/>
+                                                          className="text-danger"/>
+                                            <div>
+                                                <label htmlFor="email" className="form-label">
+
+                                                    <h5 className="m-0">Email:
+
+                                                    <span style={{color: "red"}}> *</span></h5>
+                                                </label></div>
+                                            {isEditing ? (
+
+
+                                            <Field id="email" name="email" type="text"
+                                                   className="form-control"/>
+                                            ) : (
+                                                <div>{employeeDetail?.email}</div>
+                                            )}
                                             <ErrorMessage component="span"
                                                           name="email"
-                                                          className="error-flag"/>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2 inputs row">
-                                        <div className="col-md-3">
-                                            <label htmlFor="diaChi" className="form-label">
-                                                Địa chỉ:
-                                            </label>
-                                        </div>
-                                        <div className="col-md-9">
-                                            <Field id="diaChi" name="address" type="text" className="form-control"/>
+                                                          className="text-danger"/>
+                                            <div>
+                                                <label htmlFor="diaChi" className="form-label">
+                                                    <h5 className="m-0">Địa chỉ:<span style={{color: "red"}}> *</span></h5>
+                                                </label></div>
+                                            {isEditing ? (
+
+
+                                            <Field id="diaChi" name="address" type="text"
+                                                   className="form-control"/> ) : (
+                                            <div>{employeeDetail?.address}</div>
+                                            )}
                                             <ErrorMessage component="span"
                                                           name="address"
-                                                          className="error-flag"/>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2 inputs row">
-                                        <div className="col-md-3">
-                                            <label htmlFor="soDienThoai" className="form-label">
-                                                Số điện thoại:
-                                            </label>
-                                        </div>
-                                        <div className="col-md-9">
+                                                          className="text-danger"/>
+                                            <div>
+                                                <label htmlFor="soDienThoai" className="form-label">
+                                                    <h5 className="m-0"> Số điện thoại:<span style={{color: "red"}}> *</span></h5>
+                                                </label></div>
+                                            {isEditing ? (
                                             <Field id="soDienThoai" name="phoneNumber" type="text"
                                                    className="form-control"/>
+                                            ) : (
+                                                <div>{employeeDetail?.phoneNumber}</div>
+                                            )}
                                             <ErrorMessage component="span"
                                                           name="phoneNumber"
-                                                          className="error-flag"/>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2 inputs row">
-                                        <div className="col-md-3">
-                                            <label htmlFor="CMND/CCCD" className="form-label">
-                                                CMND/CCCD:
-                                            </label>
-                                        </div>
-                                        <div className="col-md-9">
+                                                          className="text-danger"/>
+                                            <div>
+                                                <label htmlFor="CMND/CCCD" className="form-label">
+                                                    <h5 className="m-0">  Số căn cước:<span style={{color: "red"}}> *</span></h5>
+                                                </label></div>
+                                            {isEditing ? (
                                             <Field id="CMND/CCCD" name="citizenCode" type="text"
                                                    className="form-control"/>
+                                            ) : (
+                                                <div>{employeeDetail?.citizenCode}</div>
+                                            )}
                                             <ErrorMessage component="span"
                                                           name="citizenCode"
-                                                          className="error-flag"/>
-                                        </div>
-                                    </div>
-                                    <div className="mt-2 inputs row">
-                                        <div className="mt-2 inputs col-md-3"></div>
-                                        <div className="mt-2 inputs col-md-9 row">
+                                                          className="text-danger"/>
+                                            <div className="mt-2 inputs row">
+                                                <div className="mt-2 inputs col-md-3"></div>
+                                                <div className="mt-2 inputs col-md-9 row">
 
 
-                                            <div className="row">
-                                                {
-                                                    isSubmitting
-                                                        ?
-                                                        <div className="d-flex justify-content-center mt-4 ms-4">
-                                                            <RotatingLines
-                                                                strokeColor="grey"
-                                                                strokeWidth="5"
-                                                                animationDuration="0.75"
-                                                                width="30"
-                                                                visible={true}
-                                                            />
-                                                        </div>
-                                                        :
-                                                        <>
-                                                            <div className="text-center mt-2 btn-group col-md-6">
-                                                                <button type="button" className="btn btn-secondary">
-                                                                    <b>Quay lại</b>
-                                                                </button>
-                                                            </div>
-                                                            <div className="text-center mt-2 btn-group col-md-6">
-                                                                <button
-                                                                    onClick={handleUpdateClick}
-                                                                    type="submit" className="btn btn-success">
-                                                                    <b>Cập nhật</b>
-                                                                </button>
-                                                            </div>
-                                                        </>
-                                                }
+                                                    <div className="row">
+                                                        {
+                                                            isSubmitting
+                                                                ?
+                                                                <div
+                                                                    className="d-flex justify-content-center mt-4 ms-4">
+                                                                    (<ThreeCircles
+                                                                    height="100"
+                                                                    width="100"
+                                                                    color="#4fa94d"
+                                                                    wrapperStyle={{}}
+                                                                    wrapperClass=""
+                                                                    visible={true}
+                                                                    ariaLabel="three-circles-rotating"
+                                                                    outerCircleColor=""
+                                                                    innerCircleColor=""
+                                                                    middleCircleColor=""
+                                                                />)
+                                                                </div>
+                                                                :
+                                                                <>
+                                                                    <div
+                                                                        className="text-center mt-2 btn-group col-md-6 mb-2">
+                                                                        <button type="button"
+                                                                                className="btn btn-secondary">
+                                                                            <b>Quay lại</b>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div
+                                                                        className="text-center mt-2 btn-group col-md-6 mb-2">
+                                                                        {isEditing ? (
+                                                                            <button type="submit"
+                                                                                    onClick={handleUpdateClick}
+                                                                                    className="btn btn-success">
+                                                                                <b>Cập nhật</b>
+                                                                            </button>
+                                                                        ) : (
+                                                                            <button onClick={handleEditClick} className="btn btn-primary">
+                                                                                <b>Sửa</b>
+                                                                            </button>
+                                                                        )}
+                                                                    </div>
+                                                                </>
+                                                        }
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
