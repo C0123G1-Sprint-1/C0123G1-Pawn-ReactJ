@@ -36,16 +36,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
-      <change afterPath="$PROJECT_DIR$/src/component/customer/style-customer-save.css" afterDir="false" />
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add merge team">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/employee/EmployeeInformation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/firebaseContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/firebaseContract.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/firebaseDat.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/firebaseDat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/navbar/Navbars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/navbar/Navbars.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,7 +288,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689919949311</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="&quot;add merge team">
+      <created>1689942871726</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1689942871726</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -318,7 +318,8 @@
     <MESSAGE value="Update" />
     <MESSAGE value="up" />
     <MESSAGE value="Up" />
-    <option name="LAST_COMMIT_MESSAGE" value="Up" />
+    <MESSAGE value="&quot;add merge team" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;add merge team" />
   </component>
   <component name="WindowStateProjectService">
     <state x="489" y="228" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1689774850055">
