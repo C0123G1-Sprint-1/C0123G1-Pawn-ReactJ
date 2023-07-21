@@ -6,15 +6,9 @@ import * as productTypeService from "../../service/ProductTypeService"
 import "../../css/UpdateContract.css"
 import * as Yup from "yup"
 import {Link, NavLink} from "react-router-dom";
-import jwt from 'jwt-decode';
-import {toast} from "react-toastify";
 import "../../css/liquidation.css";
 import Swal from "sweetalert2";
 
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
 
 
 export function UpdateContract() {
@@ -234,7 +228,7 @@ export function UpdateContract() {
                                         <ErrorMessage name="contractStatus" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
                                     <div className="d-flex mt-4 justify-content-between">
-                                        <div className="text-center" style={{marginLeft: "15%"}}>
+                                        <div className="text-center" style={{marginLeft: "20%"}}>
                                             <Link to="/nav/info-store/transaction-history"
                                                   className="btn btn-secondary ">
                                                 <b className="text-center">Quay lại</b>
