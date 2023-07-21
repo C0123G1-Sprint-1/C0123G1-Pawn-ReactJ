@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
 import {ThreeCircles} from "react-loader-spinner";
 
+
 export function UpdateCustomer() {
     let navigate = useNavigate();
     const params = useParams();
@@ -25,7 +26,7 @@ export function UpdateCustomer() {
     const [backCitizen, setBackCitizenFile] = useState();
     const [backCitizenUrl, setBackCitizenUrl] = useState();
     const [fileSelected, setFileSelected] = useState(false);
-    const messageError = "Các trường ảnh không được để trống!!";
+    const messageError = "Ảnh không được để trống!!";
     console.log(fileSelected,"1 lan")
     const handleFileSelect = (event, setFile) => {
         const file = event.target.files[0];
@@ -239,7 +240,7 @@ export function UpdateCustomer() {
                             title: "Chỉnh sửa thông tin thành công. Khách hàng " + newValue.name,
                         });
                         resetForm();
-                        navigate("/");
+                        navigate("/nav/manager-customer");
                     } catch (error) {
                         console.error(error);
                         await Swal.fire({
@@ -258,7 +259,7 @@ export function UpdateCustomer() {
                                     <div
                                         className="m-2"
                                     >
-                                        <h1 style={{textAlign:"center"}}>Cập nhật thông tin khách hàng</h1>
+                                        <h2 style={{textAlign:"center", }}>CẬP NHẬT THÔNG TIN KHÁCH HÀNG</h2>
                                     </div>
                                     <Form>
                                         <div className="row">
@@ -284,7 +285,7 @@ export function UpdateCustomer() {
                                                     )}
                                                 </div>
 
-                                                <label className="mt-2 text-file-name" >
+                                                <label id="label-dat" className="mt-2 text-file-name" >
                                                     Ảnh chân dung
                                                 </label>
                                                 {!avatarUrl && (
@@ -323,7 +324,7 @@ export function UpdateCustomer() {
                                                     </div>
                                                 )}
                                                 {fileSelected ? null : (
-                                                    <span  className="error-flag"><br/> {messageError}</span>
+                                                    <span  className="text-danger mt-4"><br/> {messageError}</span>
                                                 )}
                                                 <hr/>
                                                 <div className="mb-3 mt-3">
@@ -340,7 +341,7 @@ export function UpdateCustomer() {
                                                 </div>
                                                 <div id="front-back-upload" className="hidden">
                                                     <div className="mb-3">
-                                                        <label htmlFor="front-upload" className="text-name-file">
+                                                        <label id="label-dat" htmlFor="front-upload" className="text-name-file">
                                                             Tải lên mặt trước <span style={{color: "red"}}>*</span>
                                                         </label>
 
@@ -394,7 +395,7 @@ export function UpdateCustomer() {
                                                         </div>
                                                     </div>
                                                     <div className="mb-3">
-                                                        <label htmlFor="back-upload" className="text-name-file">
+                                                        <label id="label-dat" htmlFor="back-upload" className="text-name-file">
                                                             Tải lên mặt sau <span style={{color: "red"}}>*</span>
                                                         </label>
                                                         <input
@@ -457,30 +458,28 @@ export function UpdateCustomer() {
                                             />
                                             <div className="col-md-8">
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-name">
-                                                        Họ và tên:<span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-name">
+                                                        Họ và tên<span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-name"
                                                         className="form-control"
                                                         name="name"
                                                         type="text"
-                                                        required
                                                     />
                                                     <ErrorMessage component="span"
                                                                   name="name"
                                                                   className="text-danger"/>
                                                 </div>
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-dateOfBirth">
-                                                        Ngày sinh:<span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-dateOfBirth">
+                                                        Ngày sinh<span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-dateOfBirth"
                                                         className="form-control"
                                                         name="birthday"
                                                         type="date"
-                                                        required
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -490,8 +489,8 @@ export function UpdateCustomer() {
                                                 </div>
                                                 <div className="mt-2 row">
                                                     <div className="col-md-">
-                                                        <label htmlFor="gender" className="form-label">
-                                                            Giới tính:<span style={{color: "red"}}>*</span>
+                                                        <label id="label-dat" htmlFor="gender" className="form-label">
+                                                            Giới tính<span style={{color: "red"}}> *</span>
                                                         </label>
                                                     <label className='m-2'>
                                                         <Field  type="radio" name="gender" value="0"/>
@@ -513,15 +512,14 @@ export function UpdateCustomer() {
                                                     </div>
                                                 </div>
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-email">
-                                                        Email:<span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-email">
+                                                        Email<span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-email"
                                                         className="form-control"
                                                         name="email"
                                                         type="text"
-                                                        required
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -530,16 +528,15 @@ export function UpdateCustomer() {
                                                     />
                                                 </div>
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-phone">
-                                                        Số điện thoại:
-                                                        <span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-phone">
+                                                        Số điện thoại
+                                                        <span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-phone"
                                                         className="form-control"
                                                         name="phoneNumber"
                                                         type="text"
-                                                        required
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -548,16 +545,15 @@ export function UpdateCustomer() {
                                                     />
                                                 </div>
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-idCard">
-                                                        Số căn cước:
-                                                        <span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-idCard">
+                                                        Số căn cước
+                                                        <span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-idCard"
                                                         className="form-control"
                                                         name="citizenCode"
                                                         type="text"
-                                                        required
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -566,16 +562,15 @@ export function UpdateCustomer() {
                                                     />
                                                 </div>
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-country">
-                                                        Nơi thường trú:
-                                                        <span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-country">
+                                                        Nơi thường trú
+                                                        <span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-country"
                                                         className="form-control"
                                                         name="address"
                                                         type="text"
-                                                        required
                                                     />
                                                     <ErrorMessage
                                                         component="span"

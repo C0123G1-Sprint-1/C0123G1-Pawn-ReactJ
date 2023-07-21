@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
 import jwt from 'jwt-decode';
 import {ThreeCircles} from "react-loader-spinner";
+import "../customer/style-customer-save.css";
 
 export function CreateCustomer() {
     const token = localStorage.getItem('token');
@@ -232,7 +233,7 @@ export function CreateCustomer() {
                             timer: 1500
                         });
                         resetForm();
-                        navigate("/");
+                        navigate("/nav/manager-customer");
                     } catch (e) {
                         await Swal.fire({
                             icon: "error",
@@ -252,7 +253,7 @@ export function CreateCustomer() {
                                     <div
                                         className="m-2"
                                     >
-                                        <h1 style={{textAlign: "center"}}>Thêm thông tin khách hàng</h1>
+                                        <h2 style={{textAlign: "center"}}>THÊM THÔNG TIN KHÁCH HÀNG</h2>
                                     </div>
                                     <Form>
                                         <div className="row">
@@ -283,13 +284,13 @@ export function CreateCustomer() {
                                                         width="60%"
                                                         alt="Image Loading.."/>
                                                 )}
-                                                <label className="mt-2 text-file-name">
+                                                <label id="label-dat" className="mt-2 text-file-name">
                                                     Ảnh chân dung
                                                 </label>
                                                 {!avatar && (
-                                                    <label htmlFor="file-upload-avatar"
+                                                    <label id="label-dat" htmlFor="file-upload-avatar"
                                                            className="text-name-file mt-4">
-                                                        Thêm ảnh chân dung <span style={{color: "red"}}>*</span>
+                                                        Thêm ảnh chân dung <span style={{color: "red"}}> *</span>
                                                     </label>)}
                                                 <Field
                                                     type="file"
@@ -333,8 +334,8 @@ export function CreateCustomer() {
                                                 </div>
                                                 <div id="front-back-upload">
                                                     <div className="mb-3">
-                                                        <label htmlFor="front-upload" className="text-name-file">
-                                                            Tải lên mặt trước <span style={{color: "red"}}>*</span>
+                                                        <label id="label-dat" htmlFor="front-upload" className="text-name-file">
+                                                            Tải lên mặt trước <span style={{color: "red"}}> *</span>
                                                         </label>
                                                         <Field
                                                             type="file"
@@ -358,7 +359,6 @@ export function CreateCustomer() {
                                                                         borderRadius: "4px",
                                                                         backgroundColor: "#ccffc6",
                                                                         justifyContent: "center",
-
                                                                     }}
                                                                 >
                                                                     <i className="bi bi-upload"> Chọn hình ảnh</i>
@@ -389,8 +389,8 @@ export function CreateCustomer() {
                                                         )}
                                                     </div>
                                                     <div className="mb-3">
-                                                        <label htmlFor="back-upload" className="text-name-file">
-                                                            Tải lên mặt sau <span style={{color: "red"}}>*</span>
+                                                        <label id="label-dat" htmlFor="back-upload" className="text-name-file">
+                                                            Tải lên mặt sau <span style={{color: "red"}}> *</span>
                                                         </label>
                                                         <Field
                                                             type="file"
@@ -463,15 +463,14 @@ export function CreateCustomer() {
 
                                             <div className="col-md-8">
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-name">
-                                                        Họ và tên: <span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-name">
+                                                        Họ và tên <span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-name"
                                                         className="form-control"
                                                         name="name"
                                                         type="text"
-
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -480,9 +479,9 @@ export function CreateCustomer() {
                                                     />
                                                 </div>
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-dateOfBirth">
-                                                        Ngày sinh:
-                                                        <span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-dateOfBirth">
+                                                        Ngày sinh
+                                                        <span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-dateOfBirth"
@@ -498,8 +497,8 @@ export function CreateCustomer() {
                                                 </div>
                                                 <div className="mt-2 row">
                                                     <div className="col-md-">
-                                                        <label htmlFor="gender" className="form-label">
-                                                            Giới tính:<span style={{color: "red"}}>*</span>
+                                                        <label id="label-dat" htmlFor="gender" className="form-label">
+                                                            Giới tính<span style={{color: "red"}}> *</span>
                                                         </label>
                                                         <label className='m-2'>
                                                             <Field type="radio" name="gender" value="0"/>
@@ -521,8 +520,8 @@ export function CreateCustomer() {
                                                     </div>
                                                 </div>
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-email">
-                                                        Email:<span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-email">
+                                                        Email<span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-email"
@@ -538,9 +537,9 @@ export function CreateCustomer() {
                                                     />
                                                 </div>
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-phone">
-                                                        Số điện thoại:
-                                                        <span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-phone">
+                                                        Số điện thoại
+                                                        <span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-phone"
@@ -556,9 +555,9 @@ export function CreateCustomer() {
                                                     />
                                                 </div>
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-idCard">
-                                                        Số căn cước:
-                                                        <span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-idCard">
+                                                        Số căn cước
+                                                        <span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-idCard"
@@ -574,9 +573,9 @@ export function CreateCustomer() {
                                                     />
                                                 </div>
                                                 <div className="mt-2">
-                                                    <label htmlFor="f-country">
-                                                        Nơi thường trú:
-                                                        <span style={{color: "red"}}>*</span>
+                                                    <label id="label-dat" htmlFor="f-country">
+                                                        Nơi thường trú
+                                                        <span style={{color: "red"}}> *</span>
                                                     </label>
                                                     <Field
                                                         id="f-country"

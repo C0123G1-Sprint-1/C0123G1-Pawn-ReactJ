@@ -206,7 +206,7 @@ export default function EmployeeInformation() {
                                     <div
                                         className="m-2"
                                     >
-                                        <h1 style={{textAlign: "center"}}>Thông tin cá nhân</h1>
+                                        <h2 style={{textAlign: "center"}}>THÔNG TIN CÁ NHÂN</h2>
                                     </div>
                                     <div className="row">
                                         <div className="col-md-4" style={{textAlign: "center", display: "block"}}>
@@ -232,7 +232,7 @@ export default function EmployeeInformation() {
                                                 </div>
                                             )}
 
-                                            <label className="mt-2 text-file-name">
+                                            <label id="label-dat" className="mt-2 text-file-name">
                                                 Ảnh chân dung
                                             </label>
                                             {!avatarUrl && (
@@ -274,10 +274,8 @@ export default function EmployeeInformation() {
                                             )}
                                         </div>
                                         <div className="col-md-8">
-                                            <label htmlFor="tenDangNhap" className="form-label">
-
+                                            <label id="label-dat" htmlFor="tenDangNhap" className="form-label">
                                                 <h5 className="m-0">Tên đăng nhập</h5>
-
                                             </label>
                                             <input
                                                 type="text"
@@ -294,7 +292,7 @@ export default function EmployeeInformation() {
                                             />
                                             <div className="row">
                                                 <>
-                                                    <label htmlFor="maKhau" className="form-label mt-2">
+                                                    <label id="label-dat" htmlFor="maKhau" className="form-label mt-2">
                                                         <h5 className="m-0">Mật khẩu</h5>
                                                     </label>
                                                     <div className="input-group">
@@ -313,7 +311,7 @@ export default function EmployeeInformation() {
                                                         </button>
                                                     </div>
 
-                                                    <label htmlFor="nhapLaiMatKhau" className="form-label">
+                                                    <label id="label-dat" htmlFor="nhapLaiMatKhau" className="form-label">
 
                                                         <h5 className="m-0"> Nhập lại mật khẩu</h5>
                                                     </label>
@@ -334,8 +332,8 @@ export default function EmployeeInformation() {
                                                     </div>
                                                 </>
                                             </div>
-                                            <label htmlFor="hoTen" className="form-label">
-                                                <h5 className="m-0">Họ và tên:
+                                            <label id="label-dat" htmlFor="hoTen" className="form-label">
+                                                <h5 className="m-0">Họ và tên
                                                 <span style={{color: "red"}}> *</span></h5>
                                             </label>
                                             <div>
@@ -350,8 +348,8 @@ export default function EmployeeInformation() {
                                             </div>
                                             <div>
                                                 <div>
-                                                    <label className="form-label">
-                                                        <h5 className="m-0">Giới tính:
+                                                    <label id="label-dat" className="form-label">
+                                                        <h5 className="m-0">Giới tính
                                                         <span style={{color: "red"}}> *</span></h5></label>
                                                 </div>
                                                 <label className='m-2'>
@@ -371,9 +369,9 @@ export default function EmployeeInformation() {
                                             <ErrorMessage component="span"
                                                           name="gender"
                                                           className="text-danger"/>
-                                            <div><label htmlFor="ngaySinh" className="form-label">
+                                            <div><label id="label-dat" htmlFor="ngaySinh" className="form-label">
 
-                                                <h5 className="m-0">Ngày sinh:
+                                                <h5 className="m-0">Ngày sinh
 
                                                 <span style={{color: "red"}}> *</span></h5>
                                             </label></div>
@@ -383,15 +381,11 @@ export default function EmployeeInformation() {
                                                           name="birthDay"
                                                           className="text-danger"/>
                                             <div>
-                                                <label htmlFor="email" className="form-label">
-
-                                                    <h5 className="m-0">Email:
-
+                                                <label id="label-dat" htmlFor="email" className="form-label">
+                                                    <h5 className="m-0">Email
                                                     <span style={{color: "red"}}> *</span></h5>
                                                 </label></div>
                                             {isEditing ? (
-
-
                                             <Field id="email" name="email" type="text"
                                                    className="form-control"/>
                                             ) : (
@@ -401,12 +395,10 @@ export default function EmployeeInformation() {
                                                           name="email"
                                                           className="text-danger"/>
                                             <div>
-                                                <label htmlFor="diaChi" className="form-label">
-                                                    <h5 className="m-0">Địa chỉ:<span style={{color: "red"}}> *</span></h5>
+                                                <label id="label-dat" htmlFor="diaChi" className="form-label">
+                                                    <h5 className="m-0">Địa chỉ<span style={{color: "red"}}> *</span></h5>
                                                 </label></div>
                                             {isEditing ? (
-
-
                                             <Field id="diaChi" name="address" type="text"
                                                    className="form-control"/> ) : (
                                             <div>{employeeDetail?.address}</div>
@@ -415,8 +407,8 @@ export default function EmployeeInformation() {
                                                           name="address"
                                                           className="text-danger"/>
                                             <div>
-                                                <label htmlFor="soDienThoai" className="form-label">
-                                                    <h5 className="m-0"> Số điện thoại:<span style={{color: "red"}}> *</span></h5>
+                                                <label id="label-dat" htmlFor="soDienThoai" className="form-label">
+                                                    <h5 className="m-0"> Số điện thoại<span style={{color: "red"}}> *</span></h5>
                                                 </label></div>
                                             {isEditing ? (
                                             <Field id="soDienThoai" name="phoneNumber" type="text"
@@ -428,8 +420,8 @@ export default function EmployeeInformation() {
                                                           name="phoneNumber"
                                                           className="text-danger"/>
                                             <div>
-                                                <label htmlFor="CMND/CCCD" className="form-label">
-                                                    <h5 className="m-0">  Số căn cước:<span style={{color: "red"}}> *</span></h5>
+                                                <label id="label-dat" htmlFor="CMND/CCCD" className="form-label">
+                                                    <h5 className="m-0">  Số căn cước<span style={{color: "red"}}> *</span></h5>
                                                 </label></div>
                                             {isEditing ? (
                                             <Field id="CMND/CCCD" name="citizenCode" type="text"
