@@ -13,7 +13,7 @@ export function Footer() {
                         <div className="col-lg-5 col-md-12 footer-info">
                             <div className="logo d-flex align-items-center">
                                 <img
-                                    src="./anh/pawnshop.png"
+                                    src="/anh/pawnshop.png"
                                     style={{ maxHeight: "10rem" }}
                                     alt=""
                                 />
@@ -33,11 +33,9 @@ export function Footer() {
                         <div className="col-lg-2 col-6 footer-links">
                             <h4>Điều khiển &amp; Điều kiện</h4>
                             <ul>
+
                                 <li>
-                                    <a href="#">Điều khiển &amp; Điều kiện</a>
-                                </li>
-                                <li>
-                                    <a href="#">Chính sách bảo mật thông tin</a>
+                                    <a  style={{color : "white"}} href="#">Chính sách bảo mật </a>
                                 </li>
                                 <li>
                                     <a href="#">Chính sách bảo quản tài sản</a>

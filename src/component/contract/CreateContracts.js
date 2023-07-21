@@ -4,9 +4,11 @@ import {Button, Modal} from "react-bootstrap";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {storage} from "../../firebase";
+import {storage} from "../../firebaseContract";
 import Swal from "sweetalert2";
 import * as Yup from 'yup';
+import {ThreeCircles} from "react-loader-spinner";
+import {FormattedNumber} from "react-intl";
 
 export const CreateContracts = () => {
     const [page, setPage] = useState(0);
@@ -20,42 +22,44 @@ export const CreateContracts = () => {
 
     const [showModal, setShowModal] = useState(false);
     const [productType, setProductType] = useState([]);
-    const [contractType, setContractType] = useState(1);
-    const [contractStatus, setContractStatus] = useState(1);
-    const [employees, setEmployees] = useState(1);
+    const [contractType, setContractType] = useState([]);
+    const [contractStatus, setContractStatus] = useState([]);
+    const [employees, setEmployees] = useState([]);
     const [customer, setCustomer] = useState([]);
     const [code, setCode] = useState('');
     const [idCustomer, setIdCustomer] = useState();
     const [customerName, setCustomerName] = useState('');
 
-    // const [loans, setLoans] = useState('');
-    // const [startDate, setStartDate] = useState('');
-    // const [endDate, setEndDay] = useState('');
+    const [loans, setLoans] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDay] = useState('');
 
     const n = useNavigate();
 
-    // const handleLoans = async (event) => {
-    //     await setLoans(event.target.value)
-    // }
-    // const handleStartDate = async (event) => {
-    //     const {loans,value}=event.target;
-    //     await setStartDate((p)=>({
-    //         ...p,
-    //         [loans]:value
-    //     }))
-    // }
-    //
-    // const handleEndDay = async (event) => {
-    //     await setEndDay(event.target.value)
-    // }
+    const handleLoans = async (event) => {
+        await setLoans(event.target.value)
+    }
+    const handleStartDate = async (event) => {
 
-    // let percent = 0.067;
-    // const moment = require('moment');
-    // const startDates = moment(startDate);
-    // const endDates = moment(endDate);
-    // // tính khoảng cách ngày
-    // const duration = endDates.diff(startDates, 'days');
-    // const profits = +(loans * percent * duration)
+        await setStartDate(event.target.value)
+    }
+
+    const handleEndDay = async (event) => {
+        await setEndDay(event.target.value)
+    }
+
+    useEffect(()=>{
+
+        })
+    let percent = 0.67/100;
+    const moment = require('moment');
+    const startDates = moment(startDate);
+    const endDates = moment(endDate);
+    // tính khoảng cách ngày
+    const duration = endDates.diff(startDates, 'days');
+    const profits = +(loans * percent * duration)
+
+    // fire basex
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
         setImgErr("");
@@ -64,7 +68,7 @@ export const CreateContracts = () => {
         }
     };
 
-    const handleSubmitAsync = async () => {
+    const handleSubmitAsyncs = async () => {
         return new Promise((resolve, reject) => {
             const file = selectedFile;
             if (!file) return reject("Chưa có file nào được chọn ");
@@ -91,25 +95,26 @@ export const CreateContracts = () => {
         });
     };
 
-
+    //  Sổ list  chọn khách hàng
     useEffect(() => {
         const getAllCustomer = async () => {
-            const res = await contractService.findAllCustomer(page,customerName)
+            const res = await contractService.findAllCustomer(page, customerName)
             setCustomer(res.content)
             await setTotalPages(res.totalPages)
         }
         getAllCustomer()
-    }, [page,customerName])
+    }, [page, customerName])
 
-
+    // Modal
     const handleModalClose = () => {
         setShowModal(false);
+        setCustomerName("")
     };
 
     const handleModalOpen = () => {
         setShowModal(true);
     };
-
+    // các loại dịch vụ
     const getAllProductType = async () => {
         const res = await contractService.findAllProductType();
         setProductType(res)
@@ -122,35 +127,27 @@ export const CreateContracts = () => {
         const res = await contractService.findAllContractStatus();
         setContractStatus(res)
     }
+    // nhân viên
     const getAllEmployee = async () => {
         const res = await contractService.findAllAndEmployee();
-        setEmployees(res)
+        setEmployees(res.content[0])
+        console.log(res.content)
     }
+
+    // page
     const paginate = (page) => {
         setPage(page)
     }
+    // random mã
     const createContractCodeApi = async () => {
         const res = await contractService.createCodeContract();
         setCode(res);
     }
+    // duyệt lấy id từng loại
     const getIdProductTypes = (id) => {
         for (let productTypes of productType) {
             if (productTypes.id === id) {
                 return productTypes
-            }
-        }
-    }
-    const getIdContractType = (id) => {
-        for (let contractTypes of contractType) {
-            if (contractTypes.id === id) {
-                return contractTypes
-            }
-        }
-    }
-    const getIdContractStatus = (id) => {
-        for (let contractStatusId of contractStatus) {
-            if (contractStatusId.id === id) {
-                return contractStatusId
             }
         }
     }
@@ -165,15 +162,14 @@ export const CreateContracts = () => {
     }, [])
 
 
-
     return (
         <>
-            <div className="container">
+            <div className="container pt-5">
                 <div className="row height d-flex justify-content-center align-items-center">
                     <div className="col-md-6">
                         <div className="card px-5 py-4">
                             <div style={{textAlign: "center"}}>
-                                <h1>Thêm mới dịch vụ cầm đồ</h1>
+                                <h1>CẦM ĐỒ</h1>
                             </div>
                             <Formik initialValues={{
                                 customers: '',
@@ -182,23 +178,21 @@ export const CreateContracts = () => {
                                 productType: '',
                                 image: '',
                                 loans: '',
-                                startDate:'' ,
+                                startDate: '',
                                 endDate: '',
                                 profit: '',
-                                contractStatus: 1,
+                                contractStatus: 2,
                                 contractType: 1,
-                                employees: 1
+                                employees: 4
                             }}
                                     validationSchema={Yup.object({
                                         productName: Yup.string()
                                             .trim()
                                             .required('Không được để trống')
-                                            .matches(/^[A-Z][a-z]*(\s[A-Z][a-z]*)|(\s[0-9]*)+$/, 'Chữ đầu tiên phải viết hoa'),
-
+                                            .matches(/^[^!@#$%^&*()+=\[\]{};':"\\|.<>?`~/]+$/, "Tên không chứa ký tự đặc biệt như @#$.."),
                                         loans: Yup.number()
                                             .required('Không được để trống')
-                                            .min(500000, 'Tiền cho vay phải > 500.000 hoặc = 500.000')
-                                            ,
+                                            .min(500000, 'Tiền cho vay phải lớn hớn 500.000'),
                                         startDate: Yup.date()
                                             .required('Không được để trống')
                                             .test("date", "Không được chọn quá khứ chỉ chọn hiện tại và tương lai",
@@ -225,256 +219,281 @@ export const CreateContracts = () => {
                                                     const startDate = this.resolve(Yup.ref('startDate'));
                                                     return value > startDate;
                                                 }),
+                                        image:Yup.string()
+                                            .required('Không được để trống')
                                     })}
 
 
                                     onSubmit={async (values, {resetForm}) => {
-                                        let percent = 0.067;
-                                        const moment = require('moment');
-                                        const startDates = moment(values.startDate);
-                                        const endDates = moment(values.endDate);
-                                        // tính khoảng cách ngày
-                                        const duration = endDates.diff(startDates, 'days');
-                                        const profits = +(values.loans * percent * duration)
+                                        // let percent = 0.067;
+                                        // const moment = require('moment');
+                                        // const startDates = moment(values.startDate);
+                                        // const endDates = moment(values.endDate);
+                                        // // tính khoảng cách ngày
+                                        // const duration = endDates.diff(startDates, 'days');
+                                        // const profits = +(values.loans * percent * duration)
                                         const createContracts = async () => {
                                             const newValue = {
                                                 ...values,
                                                 image: firebaseImg,
                                             };
-                                            newValue.image = await handleSubmitAsync();
-
+                                            newValue.image = await handleSubmitAsyncs();
                                             await contractService.createContract({
                                                 ...newValue,
                                                 image: newValue.image,
                                                 customers: customer.find((cus) => cus.id === idCustomer),
-                                                contractType: getIdContractType(+values.contractType),
-                                                contractStatus: getIdContractStatus(+values.contractStatus),
+                                                contractType: +values.contractType,
+                                                contractStatus: +values.contractStatus,
                                                 contractCode: code + values.contractCode,
                                                 productType: getIdProductTypes(+values.productType),
                                                 profit: +(profits),
-                                                // startDate: startDate,
-                                                // endDate: endDate,
-                                                // loans: +loans
+                                                employees: +values.employees,
+                                                startDate: startDate,
+                                                endDate: endDate,
+                                                loans: +loans
                                             })
-                                            console.log(newValue.image)
+
                                         }
+
+                                        await createContracts()
+                                        // resetForm(false)
                                         Swal.fire({
                                             icon: "success",
                                             title: "Thêm mới thành công",
                                             timer: 3000
                                         })
                                         n("/nav/info-store/transaction-history")
-                                        resetForm(false)
-                                        await createContracts()
                                     }}
                             >
-                                <Form >
-                                    <div className="text-center m-2">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-success "
-                                            data-bs-target="#static"
-                                            onClick={async () => {
-                                                handleModalOpen()
-                                            }}>
-                                            <b className="text-center">Chọn khách hàng</b>
-                                        </button>
-                                    </div>
-                                    {/* nút thêm khách hàng là vd chưa có khách hàng trong danh sách
-              lúc đó mình xẽ qua trang thêm khách hàng để thêm mới ạ*/}
-                                    <div className="mt-4 inputs">
-                                        <label>Tên khách hàng</label>
-                                        <Field
-                                            disabled
-                                            name="customers"
-                                            type='text'
-                                            // as="select"
-                                            className="form-control"
-                                            data-error="Please specify your need."
-                                            style={{height: 35}}
-                                            value={customer.find((cus) => cus.id === idCustomer)?.name}
-                                        />
-
-
-                                    </div>
-                                    <div className="mt-2 inputs"><label>Mã hợp đồng</label>
-                                        <Field type="text" className="form-control" name="contractCode"
-                                               disabled
-                                               aria-label="Small"
-                                               value={'HD-' + code}
-                                               style={{height: "35px"}}
-                                        />
-                                    </div>
-                                    <div className="mt-2 inputs">
-                                        <label>Đồ cầm</label>
-                                        <Field
-                                            type="text"
-                                            className="form-control"
-                                            name="productName"
-                                            style={{height: 35}}
-                                        />
-                                        <ErrorMessage name="productName" component="p" style={{color: "red"}}/>
-
-                                    </div>
-                                    <div className="mt-2 inputs">
-                                        <label>Loại đồ</label>
-                                        <Field
-                                            name="productType"
-                                            as="select"
-                                            className="form-control"
-                                            type="number"
-                                            data-error="Please specify your need."
-                                            style={{height: 35}}
-                                        >
-                                            <option value={0} selected="">---Chọn loại---</option>
-                                            {productType.map((list, index) => (
-                                                <option key={index} value={list.id}>{list.name}</option>
-                                            ))}
-                                        </Field>
-
-
-                                    </div>
-                                    <div className="mt-2 inputs">
-                                        <label htmlFor="image">Hình ảnh</label>
-                                        <Field
-                                            type="file"
-                                            className="form-control"
-                                            name="image"
-                                            onChange={handleFileSelect}
-                                            id="image"
-                                            style={{height: 35}}
-                                            value={firebaseImg}
-                                        />
-
-
-                                    </div>
-                                    <div className="mt-2 inputs">
-                                        <label>Tiền cho vay</label>
-                                        <Field
-                                            type="number"
-                                            className="form-control"
-                                            name="loans"
-                                            style={{height: 35}}
-                                            // onChange={handleLoans}
-                                            // value={loans.loans}
-
-
-                                        />
-                                        {/*<FormattedNumber value={loans} disabled*/}
-                                        {/*                 thousandSeparator={true} currency="VND"*/}
-                                        {/*                 minimumFractionDigits={0}/>*/}
-
-                                        <ErrorMessage name="loans" component="p" style={{color: "red"}}/>
-
-                                    </div>
-                                    <div className="row mt-2  ">
-                                        <div className="col-md-6 form-group">
-                                            <label>Ngày bắt đầu</label>
-                                            <Field
-                                                type="date"
-                                                className="form-control"
-                                                name="startDate"
-                                                style={{height: 36}}
-                                                // onChange={handleStartDate}
-                                                // value={startDate.startDate}
-
-                                            />
-                                            <ErrorMessage name="startDate" component="p" style={{color: "red"}}/>
-                                        </div>
-                                        <div className="col-md-6 form-group">
-                                            <label>Ngày kết thúc</label>
-                                            <Field
-                                                type="date"
-                                                className="form-control"
-                                                name="endDate"
-                                                style={{height: 36}}
-                                                // onChange={handleEndDay}
-                                                // value={endDate}
-
-                                            />
-                                            <ErrorMessage name="endDate" component="p" style={{color: "red"}}/>
-                                        </div>
-                                    </div>
-                                    {/* khi nhập số tiền cho vay vào và nhập ngày bắt đầu và ngày kết thúc sẽ hiện ra tiền lãi*/}
-                                    <div className="mt-2 inputs">
-                                        <label>Tiền lãi</label>
-                                        <Field
-                                            disabled
-                                            type="number"
-                                            className="form-control"
-                                            name="profit"
-                                            style={{height: 36}}
-                                            // value={profits}
-
-                                        />
-                                        {/*<FormattedNumber value={profits} disabled*/}
-                                        {/*                 thousandSeparator={true} currency="VND"*/}
-                                        {/*                 minimumFractionDigits={0}*/}
-                                        {/*/>*/}
-                                    </div>
-                                    <div className="mt-2 inputs">
-                                        {/*<label>Trạng thái</label>*/}
-                                        <Field
-                                            hidden
-                                            disabled
-                                            type="number"
-                                            className="form-control"
-                                            values="1"
-                                            name="contractStatus"
-                                            style={{height: 35}}
-                                        />
-                                    </div>
-                                    <div className="mt-2 inputs">
-                                        {/*<label>Loại hợp đồng</label>*/}
-                                        <Field
-                                            hidden
-                                            disabled
-                                            type="number"
-                                            className="form-control"
-                                            values="1"
-                                            name="contractType"
-                                            style={{height: 35}}
-                                        />
-                                    </div>
-                                    <div className="mt-2 inputs">
-                                        {/*<label>Nhân viên</label>*/}
-                                        <Field
-                                            hidden
-                                            disabled
-                                            type="number"
-                                            className="form-control"
-                                            values="1"
-                                            name="employees"
-                                            style={{height: 35}}
-                                        />
-                                    </div>
-                                    <div className="col-4">
-                                        <div
-                                            className="column-gap-lg-3"
-                                            style={{width: "100%", marginBottom: "5%", marginLeft: "3%"}}
-                                        >
-                                            {selectedFile && (
-                                                <img
-                                                    className={"mt-2"}
-                                                    src={URL.createObjectURL(selectedFile)}
-                                                    style={{width: "100%", marginLeft: "90%"}}
-                                                />
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="d-flex mt-4 justify-content-between">
-                                        <div className="text-center" style={{marginLeft: "23.6%"}}>
-                                            <Link to="/" className="btn btn-secondary ">
-                                                <b className="text-center">Quay lại</b>
-                                            </Link>
-                                        </div>
-                                        <div className="text-center" style={{marginRight: "23.6%"}}>
-                                            <button type="submit" className="btn btn-success">
-                                                <b className="text-center">Thêm mới</b>
+                                {({isSubmitting, setFieldValue}) => (
+                                    <Form>
+                                        <div className="text-center m-2">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-success "
+                                                data-bs-target="#static"
+                                                onClick={async () => {
+                                                    handleModalOpen()
+                                                }}>
+                                                <b className="text-center">Chọn khách hàng</b>
                                             </button>
                                         </div>
-                                    </div>
-                                </Form>
+                                        {/* nút thêm khách hàng là vd chưa có khách hàng trong danh sách
+              lúc đó mình xẽ qua trang thêm khách hàng để thêm mới ạ*/}
+                                        <div className="row mt-2  ">
+                                            <div className="col-md-6 inputs">
+                                                <label>Tên khách hàng</label>
+                                                <Field
+                                                    disabled
+                                                    name="customers"
+                                                    type='text'
+                                                    className="form-control"
+                                                    data-error="Please specify your need."
+                                                    style={{height: 35}}
+                                                    value={customer.find((cus) => cus.id === idCustomer)?.name}
+                                                />
+                                            </div>
+                                            <div className="col-md-6 inputs"><label>Mã hợp đồng </label>
+                                                <Field type="text" className="form-control" name="contractCode"
+                                                       disabled
+                                                       aria-label="Small"
+                                                       value={'HD-' + code}
+                                                       style={{height: "35px"}}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="row mt-2">
+                                            <div className="col-md-6 inputs">
+                                                <label>Đồ cầm <span style={{color: "red"}}>*</span></label>
+                                                <Field
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="productName"
+                                                    style={{height: 35}}
+                                                />
+                                                <ErrorMessage name="productName" component="p" style={{color: "red"}}/>
+
+                                            </div>
+                                            <div className="col-md-6 inputs">
+                                                <label>Loại đồ cầm</label>
+                                                <Field
+                                                    name="productType"
+                                                    as="select"
+                                                    className="form-control"
+                                                    type="number"
+                                                    data-error="Please specify your need."
+                                                    style={{height: 35}}
+                                                >
+                                                    <option value={0} selected="">Chọn loại đồ cầm</option>
+                                                    {productType.map((list, index) => (
+                                                        <option key={index} value={list.id}>{list.name}</option>
+                                                    ))}
+                                                </Field>
+                                            </div>
+                                        </div>
+                                        <div className="row mt-2  ">
+                                            <div className="col-md-6 form-group">
+                                                <label>Ngày bắt đầu <span style={{color: "red"}}>*</span></label>
+                                                <Field
+                                                    type="date"
+                                                    className="form-control"
+                                                    name="startDate"
+                                                    style={{height: 36}}
+                                                    onChange={(event) => {
+                                                        handleStartDate(event);
+                                                        setFieldValue('startDate', event.target.value);
+                                                    }}
+                                                    value={startDate.startDate}
+                                                />
+                                                <ErrorMessage name="startDate" component="p" style={{color: "red"}}/>
+                                            </div>
+                                            <div className="col-md-6 form-group">
+                                                <label>Ngày kết thúc <span style={{color: "red"}}>*</span></label>
+                                                <Field
+                                                    type="date"
+                                                    className="form-control"
+                                                    name="endDate"
+                                                    style={{height: 36}}
+                                                    onChange={(event) => {
+                                                        handleEndDay(event);
+                                                        setFieldValue('endDate', event.target.value);
+                                                    }}
+                                                    value={endDate}
+                                                />
+                                                <ErrorMessage name="endDate" component="p" style={{color: "red"}}/>
+                                            </div>
+                                        </div>
+                                        <div className="row mt-2">
+                                            <div className=" col-md-6 mt-2 inputs">
+                                                <label>Tiền cho vay <span style={{color: "red"}}>*</span></label>
+                                                <Field
+                                                    type="number"
+                                                    className="form-control"
+                                                    name="loans"
+                                                    style={{height: 35}}
+                                                    onChange={(event) => {
+                                                        handleLoans(event);
+                                                        setFieldValue('loans', event.target.value);
+                                                    }}
+                                                    value={loans.loans}
+                                                />
+                                                <ErrorMessage name="loans" component="p" style={{color: "red"}}/>
+                                            </div>
+                                            <div className=" col-md-6 mt-2 inputs">
+                                                <label>Tiền lãi</label>
+                                                <div aria-disabled style={{border: "1px solid #DDDDDD",fontSize:"0.9rem",fontWeight:"bolder",alignItems: "center", display: "flex", backgroundColor: "#EEEEEE",height: "4.5vh" ,borderRadius: "7px"}}
+                                                     className="p-0 m-0">
+                                                <FormattedNumber
+                                                    value={profits || 0} disabled
+                                                                 thousandSeparator={true} currency="VND"
+                                                                 minimumFractionDigits={0}
+                                                >
+                                                </FormattedNumber>
+                                            </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div className="mt-2 inputs">
+                                              <label htmlFor="image">Hình ảnh <span style={{color: "red"}}>*</span></label>
+                                            <Field
+                                                type="file"
+                                                className="form-control"
+                                                name="image"
+                                                onChange={(event) => {
+                                                    handleFileSelect(event);
+                                                    setFieldValue('image', event.target.value);
+                                                }}
+                                                id="image"
+                                                style={{height: 35}}
+                                                values={firebaseImg}
+                                            />
+                                        </div>
+                                            <ErrorMessage name="image" component="p" style={{color: "red"}}/>
+                                        <div className="mt-2 inputs">
+                                            {/*<label>Trạng thái</label>*/}
+                                            <Field
+                                                hidden
+                                                disabled
+                                                type="number"
+                                                className="form-control"
+                                                value="2"
+                                                name="contractStatus"
+                                                style={{height: 35}}
+                                            />
+                                        </div>
+                                        <div className="mt-2 inputs">
+                                            {/*<label>Loại hợp đồng</label>*/}
+                                            <Field
+                                                hidden
+                                                disabled
+                                                type="number"
+                                                className="form-control"
+                                                value="1"
+                                                name="contractType"
+                                                style={{height: 35}}
+                                            />
+                                        </div>
+                                        <div className="mt-2 inputs">
+                                            {/*<label>Nhân viên</label>*/}
+                                            <Field
+                                                hidden
+                                                disabled
+                                                type="number"
+                                                className="form-control"
+                                                value="1"
+                                                name="employees"
+                                                style={{height: 35}}
+                                            />
+                                        </div>
+                                        <div className="col-4">
+                                            <div
+                                                className="column-gap-lg-3"
+                                                style={{width: "100%", marginBottom: "5%", marginLeft: "3%"}}
+                                            >
+                                                {selectedFile && (
+                                                    <img
+                                                        className={"mt-2"}
+                                                        src={URL.createObjectURL(selectedFile)}
+                                                        style={{width: "100%", marginLeft: "90%"}}
+                                                    />
+                                                )}
+                                            </div>
+                                        </div>
+                                                    <div className="d-flex mt-4 justify-content-between">
+                                                        <div className="text-center" style={{marginLeft: "23.6%"}}>
+                                                            <Link to="/nav/info-store/transaction-history" className="btn btn-secondary ">
+                                                                <b className="text-center">Quay lại</b>
+                                                            </Link>
+                                                        </div>
+                                                        <div className="text-center m-auto">
+                                                            {isSubmitting ? (
+                                                                    <ThreeCircles
+                                                                        height="100"
+                                                                        width="100"
+                                                                        color="#4fa94d"
+                                                                        wrapperStyle={{}}
+                                                                        wrapperClass=""
+                                                                        visible={true}
+                                                                        ariaLabel="three-circles-rotating"
+                                                                        outerCircleColor=""
+                                                                        innerCircleColor=""
+                                                                        middleCircleColor=""
+                                                                    />
+                                                                )
+                                                                :
+                                                                (
+                                                        <div className="text-center">
+                                                            <button type="submit" className="btn btn-success">
+                                                                <b className="text-center">Thêm mới</b>
+                                                            </button>
+                                                        </div>
+                                                                )
+                                                            }
+                                                        </div>
+                                                    </div>
+                                    </Form>
+                                )}
                             </Formik>
                         </div>
                     </div>
@@ -495,7 +514,7 @@ export const CreateContracts = () => {
                         >
                             <Modal.Header style={{backgroundColor: "#00833e", color: "white"}}>
                                 <Modal.Title style={{width: "100%", textAlign: "center"}}>
-                                    <b>Chọn Khách hàng</b>
+                                    <b>Chọn khách hàng</b>
                                 </Modal.Title>
                                 <Button
                                     variant="secondary"
@@ -507,9 +526,9 @@ export const CreateContracts = () => {
                             <Modal.Body>
                                 <div className="controlsmodal-body d-flex justify-content-between">
                                     <div style={{marginTop: "0.6%"}}>
-                                        <Link to='/nav/create' type="submit" className="btn btn-outline-success ">
+                                        <button type="submit" className="btn btn-outline-success ">
                                             <b className="textcenter">Thêm khách hàng</b>
-                                        </Link>
+                                        </button>
                                     </div>
                                     <Formik initialValues={{
                                         name: ""
@@ -518,7 +537,7 @@ export const CreateContracts = () => {
 
                                                 const search = async () => {
                                                     await setCustomerName(values.name)
-                                                    const res = await contractService.findAllCustomer(page,values.name)
+                                                    const res = await contractService.findAllCustomer(page, values.name)
                                                     setCustomer(res.content)
                                                     setPage(0)
                                                     console.log(values)
@@ -536,7 +555,7 @@ export const CreateContracts = () => {
                                                 aria-label="Search"
 
                                             />
-                                            <button className="btn btn-outline-primary" type="submit">
+                                            <button className="btn btn-outline-success" type="submit">
                                                 <i className="bi bi-search"/>
                                             </button>
                                         </Form>
@@ -547,7 +566,7 @@ export const CreateContracts = () => {
                                     <tr>
                                         <th className="text-center">Mã khách hàng</th>
                                         <th className="text-center">Tên khách Hàng</th>
-                                        <th className="text-center">CMND/Hộ chiếu</th>
+                                        <th className="text-center">CMND/CCCD</th>
                                         <th className="text-center">Chức Năng</th>
                                     </tr>
                                     </thead>
@@ -613,6 +632,7 @@ export const CreateContracts = () => {
                                                     </li>}
                                             </ul>
                                         </nav>
+
                                     </div>
                                 }
                             </Modal.Body>
@@ -620,8 +640,6 @@ export const CreateContracts = () => {
                     </div>
                 </div>
             </>
-
         </>
-
     )
 }

@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import {useNavigate} from "react-router";
 import {NavLink} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {storage} from "../../firebasePosts";
+import {storage} from "../../firebaseContract";
 import Swal from "sweetalert2";
 import jwt from 'jwt-decode';
 const token = localStorage.getItem('token');
@@ -86,7 +86,7 @@ export function CreatePosts() {
         <>
             <div className=" mt-5 mb-5 d-flex justify-content-center">
                 <div className="card-post">
-                    <Formik initialValues={{title: '', content: '', createDate: new Date(), image: '', employees: 1}}
+                    <Formik initialValues={{title: '', content: '', createDate: new Date(), image: '', employees: 0}}
                             validationSchema={Yup.object({
                                 title: Yup.string().required("Bắt buộc nhập"),
                                 content: Yup.string().required("Bắt buộc nhập"),
