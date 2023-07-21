@@ -11,9 +11,16 @@ import jwt from 'jwt-decode';
 
 export default function EmployeeList() {
     const token = localStorage.getItem('token');
-    const decodedToken = jwt(token);
-    console.log(decodedToken.sub)
-    console.log(decodedToken.role)
+    const [decodedToken, setDecodedToken] = useState("");
+
+    useEffect(() => {
+        if (token) {
+            const decoded = jwt(token);
+            setDecodedToken(decoded);
+        } else {
+            // Xử lý khi không có token trong localStorage
+        }
+    }, [token]);
 
     const [employeeList, setEmployeeList] = useState([]);
     const [pageCount, setPageCount] = useState(0);
