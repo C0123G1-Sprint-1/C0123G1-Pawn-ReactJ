@@ -267,14 +267,14 @@ export default function TransactionHistoryList() {
                     <div className="d-grid">
                         <ReactPaginate
                             breakLabel="..."
-                            nextLabel={contracts.length===0&&pageCount===1?"":"Sau"}
+                            nextLabel={contracts.length===0||pageCount===1?"":"Sau"}
                             onPageChange={handlePageClick}
                             pageCount={pageCount}
-                            previousLabel={contracts.length===0&&pageCount===1?"":"Trước"}
+                            previousLabel={contracts.length===0||pageCount===1?"":"Trước"}
                             containerClassName="pagination"
-                            pageLinkClassName="page-num"
-                            nextLinkClassName="page-num"
-                            previousLinkClassName="page-num"
+                            pageLinkClassName={contracts.length===0?"":"page-num"}
+                            nextLinkClassName={contracts.length===0?"":"page-num"}
+                            previousLinkClassName={contracts.length===0?"":"page-num"}
                             activeClassName="active"
                             disabledClassName="d-none"
                         />

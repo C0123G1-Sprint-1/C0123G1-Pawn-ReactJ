@@ -35,17 +35,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
-      <change beforePath="$PROJECT_DIR$/src/component/contract/Top10NewContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/Top10NewContract.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/contract/UpdateContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/UpdateContract.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/CustomerList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CustomerList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/employee/CreateEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/CreateEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/employee/ListEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/ListEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/liquidation/CreateLiquidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/liquidation/CreateLiquidation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/navbar/Navbars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/navbar/Navbars.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/post/CreatePosts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/post/CreatePosts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/post/DetailPosts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/post/DetailPosts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/post/ListPosts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/post/ListPosts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/employee/employee.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/employee.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,7 +254,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689940108919</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="&quot;add component TransactionHistoryList&quot;">
+      <created>1689946629883</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1689946629883</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
