@@ -63,7 +63,7 @@ export const searchTransactionHistory = async (page, value) => {
     console.log(value)
     try {
         const res = await axios.post(`http://localhost:8080/api/employee/contract/transaction-history?page=${page}&limit=5`, value);
-        return res;
+        return res.data;
     } catch (e) {
         console.log(e);
     }

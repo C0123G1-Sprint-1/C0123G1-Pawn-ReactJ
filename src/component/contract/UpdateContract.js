@@ -106,7 +106,7 @@ export function UpdateContract() {
                     console.log(values)
                     const updateContract = async () => {
                         await contractService.updateContract(values);
-                        navigate("/top10NewContract")
+                        navigate("/nav/info-store/transaction-history")
                     }
                     updateContract();
                 }}>
@@ -187,7 +187,7 @@ export function UpdateContract() {
                                         <div className="text-center m-auto">
                                             <button type="button" className="btn btn-secondary" style={{marginRight: "76px",
                                                 marginLeft: "15px"}}>
-                                                <NavLink to="/top10NewContract" className="text-decoration-none"><b className="text-center text-white">Quay lại</b></NavLink>
+                                                <NavLink to={"/nav/info-store/transaction-history"} className="text-decoration-none"><b className="text-center text-white">Quay lại</b></NavLink>
                                             </button>
                                         </div>
                                         <div className="text-center m-auto">
