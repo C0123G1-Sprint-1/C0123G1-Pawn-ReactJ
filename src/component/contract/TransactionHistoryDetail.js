@@ -20,43 +20,44 @@ export function TransactionHistoryDetail() {
     if (!contract) {
         return null;
     }
+
     return (
         <>
             <div className="col-lg-9 col-md-9">
-                <h2 className="text-center my-5">CHI TIẾT GIAO DỊCH</h2>
+                <h2 className="text-center mb-1 mb-3">CHI TIẾT GIAO DỊCH</h2>
                 <table className="table table-bordered">
                     <tbody>
                     <tr>
-                        <th>Mã hợp đồng</th>
-                        <td>HD-{contract?.contractCode}</td>
+                        <th className="ps-4">Mã hợp đồng</th>
+                        <td className="ps-4">HD-{contract?.contractCode}</td>
                     </tr>
                     <tr>
-                        <th>Loại hợp đồng</th>
-                        <td>{contract?.contractType.name}</td>
+                        <th className="ps-4">Loại hợp đồng</th>
+                        <td className="ps-4">{contract?.contractType.name}</td>
                     </tr>
                     <tr>
-                        <th>Tên đồ cầm</th>
-                        <td>{contract?.productName}</td>
+                        <th className="ps-4">Tên đồ cầm</th>
+                        <td className="ps-4">{contract?.productName}</td>
                     </tr>
                     <tr>
-                        <th>Loại đồ</th>
-                        <td>{contract?.productType.name}</td>
+                        <th className="ps-4">Loại đồ</th>
+                        <td className="ps-4">{contract?.productType.name}</td>
                     </tr>
                     <tr>
-                        <th style={{lineHeight: "240px"}}>Ảnh đồ cầm</th>
+                        <th style={{lineHeight: "240px"}} className="ps-4">Ảnh đồ cầm</th>
                         <td className="text-center">
                             <img
                                 src={contract.image === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract.image}
                                 width={250}
-                                height={240}
+                                height={180}
                                 alt=""
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Tiền vay</th>
+                        <th className="ps-4">Tiền vay</th>
 
-                        <td>
+                        <td className="ps-4">
                             <FormattedNumber
                                 value={contract?.loans}
                                 currency="VND"
@@ -65,8 +66,8 @@ export function TransactionHistoryDetail() {
                         </td>
                     </tr>
                     <tr>
-                        <th>Tiền lãi theo ngày</th>
-                        <td>
+                        <th className="ps-4">Tiền lãi theo ngày</th>
+                        <td className="ps-4">
                             <FormattedNumber
                                 value={contract?.loans * 0.0067}
                                 currency="VND"
@@ -75,42 +76,42 @@ export function TransactionHistoryDetail() {
                         </td>
                     </tr>
                     <tr>
-                        <th>Ngày bắt đầu</th>
-                        <td>{
-                            contract?.startDate===""?"":
-                            moment(contract?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
+                        <th className="ps-4">Ngày bắt đầu</th>
+                        <td className="ps-4">{
+                            contract?.startDate === "" ? "" :
+                                moment(contract?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
                         }</td>
                     </tr>
                     <tr>
-                        <th>Ngày kết thúc</th>
-                        <td>{
-                            contract?.endDate===""?"":
-                            moment(contract?.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
+                        <th className="ps-4">Ngày kết thúc</th>
+                        <td className="ps-4">{
+                            contract?.endDate === "" ? "" :
+                                moment(contract?.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
                         }</td>
                     </tr>
                     <tr>
-                        <th>Tên khách hàng</th>
-                        <td>{contract?.customers.name}</td>
+                        <th className="ps-4">Tên khách hàng</th>
+                        <td className="ps-4">{contract?.customers.name}</td>
                     </tr>
                     <tr>
-                        <th>SĐT khách hàng</th>
-                        <td>{contract?.customers.phoneNumber}
+                        <th className="ps-4">SĐT khách hàng</th>
+                        <td className="ps-4">{contract?.customers.phoneNumber}
                         </td>
                     </tr>
                     <tr>
-                        <th>Email</th>
-                        <td>{contract?.customers.email}</td>
+                        <th className="ps-4">Email</th>
+                        <td className="ps-4">{contract?.customers.email}</td>
                     </tr>
                     <tr>
-                        <th>Địa chỉ</th>
-                        <td>{contract?.customers.address}</td>
+                        <th className="ps-4">Địa chỉ</th>
+                        <td className="ps-4">{contract?.customers.address}</td>
                     </tr>
                     <tr>
-                        <th>CMND</th>
-                        <td>{contract?.customers.citizenCode}</td>
+                        <th className="ps-4">CMND</th>
+                        <td className="ps-4">{contract?.customers.citizenCode}</td>
                     </tr>
                     <tr>
-                        <th style={{lineHeight:"240px"}}>
+                        <th style={{lineHeight: "240px"}} className="ps-4">
                             Ảnh chân dung
                         </th>
                         <td className="text-center">
@@ -123,23 +124,23 @@ export function TransactionHistoryDetail() {
                         </td>
                     </tr>
                     <tr>
-                        <th style={{lineHeight:"240px"}}>Ảnh CMND mặt trước</th>
+                        <th style={{lineHeight: "240px"}} className="ps-4">Ảnh CMND mặt trước</th>
                         <td className="text-center">
                             <img
                                 src={contract?.customers.frontCitizen === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers.frontCitizen}
                                 width={250}
-                                height={200}
+                                height={180}
                                 alt=""
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th style={{lineHeight:"240px"}}>Ảnh CMND mặt sau</th>
+                        <th style={{lineHeight: "240px"}} className="ps-4">Ảnh CMND mặt sau</th>
                         <td className="text-center">
                             <img
                                 src={contract?.customers.backCitizen === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers.backCitizen}
                                 width={250}
-                                height={200}
+                                height={180}
                                 alt=""
                             />
                         </td>

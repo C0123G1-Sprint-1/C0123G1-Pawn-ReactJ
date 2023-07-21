@@ -33,6 +33,10 @@
   <component name="ChangeListManager">
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/contract/TransactionHistoryDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/TransactionHistoryDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/employee/employee.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/employee.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,11 +321,11 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="498" y="129" key="RollbackChangesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689774864295" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1689923906727">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1689936050038">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689845698633" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689923906727" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689936050038" />
     <state x="563" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1689922333064">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
