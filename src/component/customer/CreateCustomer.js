@@ -5,11 +5,11 @@ import {useNavigate} from "react-router";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../firebase";
 import React, {useState} from "react";
-import {Oval} from "react-loader-spinner";
 import Swal from "sweetalert2";
 import {Link} from "react-router-dom";
 import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
 import jwt from 'jwt-decode';
+import {ThreeCircles} from "react-loader-spinner";
 
 export function CreateCustomer() {
     const token = localStorage.getItem('token');
@@ -28,7 +28,6 @@ export function CreateCustomer() {
     const messageError = "Các trường ảnh không được để trống!!";
     const [responseText, setResponseText] = useState('');
 
-
     const handleFileSelect = (event, setFile, setFileUrl) => {
         const file = event.target.files[0];
         if (file) {
@@ -39,7 +38,8 @@ export function CreateCustomer() {
     const handleFileUpload = async (file, setFile, setFileUrl) => {
         return new Promise((resolve, reject) => {
             if (!file) return reject("No file selected");
-            const newName = "pawn_shop_topvn" + Date.now() + "_" + (file.name.length >= 5 ? file.name.slice(0, 5) : file.name);;
+            const newName = "pawn_shop_topvn" + Date.now() + "_" + (file.name.length >= 5 ? file.name.slice(0, 5) : file.name);
+            ;
             const storageRef = ref(storage, `files/${newName}`);
             const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -188,7 +188,7 @@ export function CreateCustomer() {
                             }),
                     address: Yup.string().required("Địa chỉ không được để trống"),
                     citizenCode: Yup.string().required("Căn cước không được để trống")
-                        .matches(/^(\d{12})$/,"Nhập không đúng định dạng. Vui lòng kiểm tra lại")
+                        .matches(/^(\d{12})$/, "Nhập không đúng định dạng. Vui lòng kiểm tra lại")
                         .test(
                             "check-citizen-code",
                             "Số căn cước đã tồn tại",
@@ -224,9 +224,11 @@ export function CreateCustomer() {
 
                         setSubmitting(false);
                         await Swal.fire({
+                            position: 'center',
                             icon: "success",
-                            title:"Thêm mới thành công.",
+                            title: "Thêm mới thành công.",
                             text: "Khách hàng " + newValue.name,
+                            showConfirmButton: false,
                             timer: 1500
                         });
                         resetForm();
@@ -235,6 +237,7 @@ export function CreateCustomer() {
                         await Swal.fire({
                             icon: "error",
                             title: "Thất bại",
+                            text: "Cần kiểm tra bổ sung lại thông tin",
                             timer: 1500
                         });
                         setSubmitting(false);
@@ -249,9 +252,8 @@ export function CreateCustomer() {
                                     <div
                                         className="m-2"
                                     >
-                                        <h1 style={{textAlign:"center"}}>Thêm thông tin khách hàng</h1>
+                                        <h1 style={{textAlign: "center"}}>Thêm thông tin khách hàng</h1>
                                     </div>
-                                    {/*<Link to={"/update/" + 28}>Update 1</Link>*/}
                                     <Form>
                                         <div className="row">
                                             <div className="col-md-4" style={{textAlign: "center", display: "block"}}>
@@ -261,8 +263,7 @@ export function CreateCustomer() {
                                                             id="avatar-img"
                                                             src={URL.createObjectURL(avatar)}
                                                             style={{width: "100%"}}
-                                                            alt="avatar"
-                                                        />
+                                                            alt="Image Loading.."/>
                                                         <button
                                                             type="button"
                                                             className="btn btn-danger btn-sm mt-2"
@@ -280,10 +281,9 @@ export function CreateCustomer() {
                                                         id="avatar-img"
                                                         src="https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png"
                                                         width="60%"
-                                                        alt="avatar"
-                                                    />
+                                                        alt="Image Loading.."/>
                                                 )}
-                                                <label className="mt-2 text-file-name" >
+                                                <label className="mt-2 text-file-name">
                                                     Ảnh chân dung
                                                 </label>
                                                 {!avatar && (
@@ -311,26 +311,27 @@ export function CreateCustomer() {
                                                                 padding: "6px 12px",
                                                                 border: "1px ",
                                                                 borderRadius: "4px",
-                                                                backgroundColor: "white",
+                                                                backgroundColor: "#ccffc6",
+                                                                justifyContent: "center",
+
                                                             }}
                                                         >
-                                                              <i className="bi bi-upload" > Chọn hình ảnh</i>
+                                                            <i className="bi bi-upload"> Chọn hình ảnh</i>
                                                         </label>
                                                     </p>
                                                 )}
                                                 {fileSelected ? null : (
-                                                    <span  className="text-danger"> {messageError}</span>
+                                                    <span className="text-danger"> {messageError}</span>
                                                 )}
                                                 <hr/>
                                                 <div className="mb-3 mt-3">
                                                     <button id="file-upload-label" type='button'
-                                                            className="btn btn-sm btn-danger" onClick={() => {
-                                                        document.getElementById("front-back-upload").classList.remove("hidden");
-                                                    }}>
+                                                            className="btn btn-sm btn-danger"
+                                                    >
                                                         Thêm căn cước <i className="bi bi-person-vcard"/>
                                                     </button>
                                                 </div>
-                                                <div id="front-back-upload" className="hidden">
+                                                <div id="front-back-upload">
                                                     <div className="mb-3">
                                                         <label htmlFor="front-upload" className="text-name-file">
                                                             Tải lên mặt trước <span style={{color: "red"}}>*</span>
@@ -341,28 +342,26 @@ export function CreateCustomer() {
                                                                 handleFrontCitizenFileSelect(event);
                                                                 setFileSelected(true);
                                                             }}
-                                                            id="front-citizen-file"
+                                                            id="frontCitizen"
                                                             name="frontCitizen"
                                                             className="form-control-plaintext d-none"
                                                         />
-                                                        <ErrorMessage
-                                                            component="span"
-                                                            name="frontCitizen"
-                                                            className="text-danger"
-                                                        />
+
                                                         {!frontCitizen && (
                                                             <p>
                                                                 <label
-                                                                    htmlFor="front-citizen-file"
+                                                                    htmlFor="frontCitizen"
                                                                     style={{
                                                                         display: "flex",
                                                                         padding: "6px 12px",
                                                                         border: "1px ",
                                                                         borderRadius: "4px",
-                                                                        backgroundColor: "white",
+                                                                        backgroundColor: "#ccffc6",
+                                                                        justifyContent: "center",
+
                                                                     }}
                                                                 >
-                                                                    <i className="bi bi-upload" > Chọn hình ảnh</i>
+                                                                    <i className="bi bi-upload"> Chọn hình ảnh</i>
                                                                 </label>
                                                             </p>
                                                         )}
@@ -374,8 +373,7 @@ export function CreateCustomer() {
                                                                     className="mt-2"
                                                                     src={URL.createObjectURL(frontCitizen)}
                                                                     style={{width: "100%"}}
-                                                                    alt=""
-                                                                />
+                                                                    alt="Image Loading.."/>
                                                                 <button
                                                                     type="button"
                                                                     className="btn btn-danger btn-sm mt-2"
@@ -400,7 +398,7 @@ export function CreateCustomer() {
                                                                 handleBackCitizenFileSelect(event);
                                                                 setFileSelected(true);
                                                             }}
-                                                            id="back-citizen-file"
+                                                            id="backCitizen"
                                                             name="backCitizen"
                                                             className="form-control-plaintext d-none"
                                                         />
@@ -412,16 +410,17 @@ export function CreateCustomer() {
                                                         {!backCitizen && (
                                                             <p>
                                                                 <label
-                                                                    htmlFor="back-citizen-file"
+                                                                    htmlFor="backCitizen"
                                                                     style={{
                                                                         display: "flex",
                                                                         padding: "6px 12px",
                                                                         border: "1px ",
                                                                         borderRadius: "4px",
-                                                                        backgroundColor: "white",
+                                                                        backgroundColor: "#ccffc6",
+                                                                        justifyContent: "center",
                                                                     }}
                                                                 >
-                                                                    <i className="bi bi-upload" > Chọn hình ảnh</i>
+                                                                    <i className="bi bi-upload"> Chọn hình ảnh</i>
                                                                 </label>
                                                             </p>
                                                         )}
@@ -433,7 +432,7 @@ export function CreateCustomer() {
                                                                     className="mt-2"
                                                                     src={URL.createObjectURL(backCitizen)}
                                                                     style={{width: "100%"}}
-                                                                    alt=""
+                                                                    alt="Image Loading.."
                                                                 />
                                                                 <button
                                                                     type="button"
@@ -465,7 +464,7 @@ export function CreateCustomer() {
                                             <div className="col-md-8">
                                                 <div className="mt-2">
                                                     <label htmlFor="f-name">
-                                                        Họ và tên:  <span style={{color: "red"}}>*</span>
+                                                        Họ và tên: <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-name"
@@ -501,20 +500,20 @@ export function CreateCustomer() {
                                                 <div className="mt-2 row">
                                                     <div className="col-md-">
                                                         <label htmlFor="gender" className="form-label">
-                                                            Giới tính:
+                                                            Giới tính:<span style={{color: "red"}}>*</span>
                                                         </label>
-                                                            <label className='m-2'>
-                                                                <Field  type="radio" name="gender" value="0"/>
-                                                                {' '}Nam
-                                                            </label>
-                                                            <label className='m-2'>
-                                                                <Field type="radio" name="gender" value="1"/>
-                                                                {' '}Nữ
-                                                            </label>
-                                                            <label className='m-2'>
-                                                                <Field type="radio" name="gender" value="2"/>
-                                                                {' '}Khác
-                                                            </label>
+                                                        <label className='m-2'>
+                                                            <Field type="radio" name="gender" value="0"/>
+                                                            {' '}Nam
+                                                        </label>
+                                                        <label className='m-2'>
+                                                            <Field type="radio" name="gender" value="1"/>
+                                                            {' '}Nữ
+                                                        </label>
+                                                        <label className='m-2'>
+                                                            <Field type="radio" name="gender" value="2"/>
+                                                            {' '}Khác
+                                                        </label>
                                                         <ErrorMessage
                                                             component="span"
                                                             name="gender"
@@ -595,18 +594,18 @@ export function CreateCustomer() {
                                                 </div>
 
                                                 {isSubmitting ? (
-                                                    <Oval
-                                                        height={80}
-                                                        width={80}
+                                                    (<ThreeCircles
+                                                        height="100"
+                                                        width="100"
                                                         color="#4fa94d"
                                                         wrapperStyle={{}}
-                                                        wrapperClassName=""
+                                                        wrapperClass=""
                                                         visible={true}
-                                                        ariaLabel="oval-loading"
-                                                        secondaryColor="#4fa94d"
-                                                        strokeWidth={2}
-                                                        strokeWidthSecondary={2}
-                                                    />
+                                                        ariaLabel="three-circles-rotating"
+                                                        outerCircleColor=""
+                                                        innerCircleColor=""
+                                                        middleCircleColor=""
+                                                    />)
                                                 ) : (
                                                     <div>
                                                         <div className="text-center ms-2 mt-3">
@@ -627,7 +626,7 @@ export function CreateCustomer() {
                                                                         type="submit"
                                                                         className="btn btn-success"
                                                                     >
-                                                                        <b className="text-center">Cập nhật</b>
+                                                                        <b className="text-center">Thêm mới</b>
                                                                     </button>
                                                                 </div>
                                                             </div>

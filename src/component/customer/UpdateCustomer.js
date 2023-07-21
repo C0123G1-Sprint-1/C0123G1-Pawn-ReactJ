@@ -5,10 +5,10 @@ import {useNavigate, useParams} from "react-router";
 import {ref, getDownloadURL, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../firebase";
 import React, {useEffect, useState} from "react";
-import {Oval} from "react-loader-spinner";
 import Swal from "sweetalert2";
 import {Link} from "react-router-dom";
 import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
+import {ThreeCircles} from "react-loader-spinner";
 
 export function UpdateCustomer() {
     let navigate = useNavigate();
@@ -257,13 +257,8 @@ export function UpdateCustomer() {
                                 <div className="card px-5 py-4">
                                     <div
                                         className="m-2"
-                                        style={{
-                                            textAlign: "center",
-                                            backgroundColor: "#00833e",
-                                            color: "white",
-                                        }}
                                     >
-                                        <h1 id="title-h1">Cập nhật thông tin khách hàng</h1>
+                                        <h1 style={{textAlign:"center"}}>Cập nhật thông tin khách hàng</h1>
                                     </div>
                                     <Form>
                                         <div className="row">
@@ -273,8 +268,7 @@ export function UpdateCustomer() {
                                                         id="avatar-img"
                                                         src={avatarUrl ? avatarUrl : (avatar ? URL.createObjectURL(avatar) : defaultAvatar)}
                                                         style={{width: "100%"}}
-                                                        alt="avatar"
-                                                    />
+                                                        alt="Image Loading.."                                                    />
                                                     {avatarUrl && (
                                                         <button
                                                         type="button"
@@ -299,6 +293,7 @@ export function UpdateCustomer() {
                                                         Thêm ảnh chân dung <span style={{color: "red"}}>*</span>
                                                     </label>
                                                 )}
+
                                                 <input
                                                     type="file"
                                                     onChange={(event) => {
@@ -311,19 +306,20 @@ export function UpdateCustomer() {
                                                 />
                                                 {!avatarUrl && (
                                                     <div>
-                                                        <input
-                                                            type="button"
-                                                            value="Chọn hình ảnh"
-                                                            onClick={() => document.getElementById("image").click()}
+                                                        <label
+                                                            htmlFor="image"
                                                             style={{
                                                                 display: "flex",
                                                                 padding: "6px 12px",
-                                                                border: "1px ",
+                                                                border: "1px",
                                                                 borderRadius: "4px",
-                                                                backgroundColor: "white",
+                                                                backgroundColor: "#ccffc6",
+                                                                justifyContent: "center",
                                                                 cursor: "pointer",
                                                             }}
-                                                        />
+                                                        >
+                                                            <i className="bi bi-upload"> Chọn hình ảnh</i>
+                                                        </label>
                                                     </div>
                                                 )}
                                                 {fileSelected ? null : (
@@ -347,29 +343,32 @@ export function UpdateCustomer() {
                                                         <label htmlFor="front-upload" className="text-name-file">
                                                             Tải lên mặt trước <span style={{color: "red"}}>*</span>
                                                         </label>
+
                                                         <input
                                                             type="file"
                                                             onChange={(event) => {
                                                                 handleFrontCitizenFileSelect(event);
                                                                 setFileSelected(true);
                                                             }}
-                                                            id="front-citizen-file"
+                                                            id="frontCitizen"
                                                             name="frontCitizen"
                                                             className="form-control-plaintext d-none"
                                                         />
                                                         {!frontCitizenUrl && (
                                                             <p>
                                                                 <label
-                                                                    htmlFor="front-citizen-file"
+                                                                    htmlFor="frontCitizen"
                                                                     style={{
                                                                         display: "flex",
                                                                         padding: "6px 12px",
-                                                                        border: "1px ",
+                                                                        border: "1px",
                                                                         borderRadius: "4px",
-                                                                        backgroundColor: "white",
+                                                                        backgroundColor: "#ccffc6",
+                                                                        justifyContent: "center",
+                                                                        cursor: "pointer",
                                                                     }}
                                                                 >
-                                                                    Chọn hình ảnh
+                                                                    <i className="bi bi-upload"> Chọn hình ảnh</i>
                                                                 </label>
                                                             </p>
                                                         )}
@@ -380,8 +379,7 @@ export function UpdateCustomer() {
                                                                 className="mt-2"
                                                                 src={frontCitizenUrl ? frontCitizenUrl : (frontCitizen ? URL.createObjectURL(frontCitizen) : defaultImag)}
                                                                 style={{width: "100%"}}
-                                                                alt=""
-                                                            />
+                                                                alt="Image Loading.."                                                            />
                                                             {frontCitizenUrl && (  <button
                                                                 type="button"
                                                                 className="btn btn-danger btn-sm mt-2"
@@ -405,23 +403,25 @@ export function UpdateCustomer() {
                                                                 handleBackCitizenFileSelect(event);
                                                                 setFileSelected(true);
                                                             }}
-                                                            id="back-citizen-file"
+                                                            id="backCitizen"
                                                             name="backCitizen"
                                                             className="form-control-plaintext d-none"
                                                         />
                                                         {!backCitizenUrl && (
                                                             <p>
                                                                 <label
-                                                                    htmlFor="back-citizen-file"
+                                                                    htmlFor="backCitizen"
                                                                     style={{
                                                                         display: "flex",
                                                                         padding: "6px 12px",
-                                                                        border: "1px ",
+                                                                        border: "1px",
                                                                         borderRadius: "4px",
-                                                                        backgroundColor: "white",
+                                                                        backgroundColor: "#ccffc6",
+                                                                        justifyContent: "center",
+                                                                        cursor: "pointer",
                                                                     }}
                                                                 >
-                                                                    Chọn hình ảnh
+                                                                    <i className="bi bi-upload"> Chọn hình ảnh</i>
                                                                 </label>
                                                             </p>
                                                         )}
@@ -432,8 +432,7 @@ export function UpdateCustomer() {
                                                                 className="mt-2"
                                                                 src={backCitizenUrl ? backCitizenUrl : (backCitizen ? URL.createObjectURL(backCitizen) : defaultImag)}
                                                                 style={{width: "100%"}}
-                                                                alt=""
-                                                            />
+                                                                alt="Image Loading.."/>
                                                             {backCitizenUrl && ( <button
                                                                 type="button"
                                                                 className="btn btn-danger btn-sm mt-2"
@@ -459,7 +458,7 @@ export function UpdateCustomer() {
                                             <div className="col-md-8">
                                                 <div className="mt-2">
                                                     <label htmlFor="f-name">
-                                                        Họ và tên <span style={{color: "red"}}>*</span>
+                                                        Họ và tên:<span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-name"
@@ -470,12 +469,11 @@ export function UpdateCustomer() {
                                                     />
                                                     <ErrorMessage component="span"
                                                                   name="name"
-                                                                  className="error-flag"/>
+                                                                  className="text-danger"/>
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-dateOfBirth">
-                                                        Ngày sinh
-                                                        <span style={{color: "red"}}>*</span>
+                                                        Ngày sinh:<span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-dateOfBirth"
@@ -487,45 +485,36 @@ export function UpdateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="birthday"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
                                                 <div className="mt-2 row">
-                                                    <div className="col-md-3">
+                                                    <div className="col-md-">
                                                         <label htmlFor="gender" className="form-label">
-                                                            Giới tính:
+                                                            Giới tính:<span style={{color: "red"}}>*</span>
                                                         </label>
-                                                        <div>
-                                                            <label>
-                                                                <Field type="radio" name="gender" value="0"
-                                                                />
-                                                                Nam
-                                                            </label>
-                                                        </div>
-                                                        <div>
-                                                            <label>
-                                                                <Field type="radio" name="gender" value="1"
-                                                                />
-                                                                Nữ
-                                                            </label>
-                                                        </div>
-                                                        <div>
-                                                            <label>
-                                                                <Field type="radio" name="gender" value="2"
-                                                                />
-                                                                Khác
-                                                            </label>
-                                                        </div>
+                                                    <label className='m-2'>
+                                                        <Field  type="radio" name="gender" value="0"/>
+                                                        {' '}Nam
+                                                    </label>
+                                                    <label className='m-2'>
+                                                        <Field type="radio" name="gender" value="1"/>
+                                                        {' '}Nữ
+                                                    </label>
+                                                    <label className='m-2'>
+                                                        <Field type="radio" name="gender" value="2"/>
+                                                        {' '}Khác
+                                                    </label>
                                                         <ErrorMessage
                                                             component="span"
                                                             name="gender"
-                                                            className="error-flag"
+                                                            className="text-danger"
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-email">
-                                                        Email <span style={{color: "red"}}>*</span>
+                                                        Email:<span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
                                                         id="f-email"
@@ -537,12 +526,12 @@ export function UpdateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="email"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-phone">
-                                                        Số điện thoại
+                                                        Số điện thoại:
                                                         <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
@@ -555,12 +544,12 @@ export function UpdateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="phoneNumber"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-idCard">
-                                                        Số căn cước
+                                                        Số căn cước:
                                                         <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
@@ -573,12 +562,12 @@ export function UpdateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="citizenCode"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
                                                 <div className="mt-2">
                                                     <label htmlFor="f-country">
-                                                        Nơi thường trú
+                                                        Nơi thường trú:
                                                         <span style={{color: "red"}}>*</span>
                                                     </label>
                                                     <Field
@@ -591,23 +580,23 @@ export function UpdateCustomer() {
                                                     <ErrorMessage
                                                         component="span"
                                                         name="address"
-                                                        className="error-flag"
+                                                        className="text-danger"
                                                     />
                                                 </div>
 
                                                 {isSubmitting ? (
-                                                    <Oval
-                                                        height={80}
-                                                        width={80}
+                                                    (<ThreeCircles
+                                                        height="100"
+                                                        width="100"
                                                         color="#4fa94d"
                                                         wrapperStyle={{}}
-                                                        wrapperClassName=""
+                                                        wrapperClass=""
                                                         visible={true}
-                                                        ariaLabel="oval-loading"
-                                                        secondaryColor="#4fa94d"
-                                                        strokeWidth={2}
-                                                        strokeWidthSecondary={2}
-                                                    />
+                                                        ariaLabel="three-circles-rotating"
+                                                        outerCircleColor=""
+                                                        innerCircleColor=""
+                                                        middleCircleColor=""
+                                                    />)
                                                 ) : (
                                                     <div>
                                                         <div className="text-center ms-2 mt-3">

@@ -43,8 +43,8 @@
 //     return (
 //         <div>
 //             <input type="file" accept="image/*" onChange={handleImageChange} />
-//             <button onClick={handleSubmit}>Submit</button>
-//             <pre>{responseText}</pre>
+//             <button onClick={handleSubmitScanOcr}>Submit</button>
+//             <pre>{responseText.}</pre>
 //         </div>
 //     );
 // };
