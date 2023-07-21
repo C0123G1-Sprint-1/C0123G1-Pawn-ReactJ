@@ -4,6 +4,7 @@ import "../../css/header.css"
 import "../../css/home.css"
 import {useNavigate} from "react-router";
 import jwt from 'jwt-decode';
+import {NavLink} from "react-router-dom";
 export function Header() {
 
 const navigate = useNavigate();
@@ -24,26 +25,26 @@ const navigate = useNavigate();
         <>
             <>
                 {/*header*/}
-                <header id="header" className="header d-flex align-items-center">
+                <header id="header" className="header d-flex align-items-center" style={{top:0, position:"sticky",zIndex:'100'}}>
                     <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-                        <a onClick={()=> navigate("/")}  className="logo d-flex align-items-center">
+                        <NavLink to= "/"  className="logo d-flex align-items-center">
                             {/* Uncomment the line below if you also wish to use an image logo */}
                             <div className="pnj">
                                 <img  src="/anh/pawnshop.png"   style={{ marginLeft: "40%", maxHeight: 90 }}  alt=""  />
                             </div>
-                        </a>
-                         <nav id="navbar" className="navbar">
+                        </NavLink>
+                         <nav id="navbar"  className="navbar">
                             <ul>
                                 <li>
-                                    <a  onClick={()=> navigate("/")} className="active">
+                                    <NavLink style={{color : "white",fontSize:'20px',}} to= "/" className=" font-a-header">
                                         Trang Chủ
-                                    </a>
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <a style={{color : "white"}} onClick={() => navigate("/listPost")}>Tin Tức</a>
+                                    <NavLink  style={{color : "white",fontSize:'20px',}} to="/listPost">Tin Tức</NavLink>
                                 </li>
                                 <li>
-                                    <a style={{color :"white",fontWeight:"600"}} href="#create">Đăng ký cầm đồ</a>
+                                    <NavLink to="/create"  className='font-a-header' style={{color : "white",fontSize:'20px',}} >Đăng ký cầm đồ</NavLink>
                                 </li>
                                 {/*<li className="dropdown">*/}
                                 {/*    <a href="#">*/}
