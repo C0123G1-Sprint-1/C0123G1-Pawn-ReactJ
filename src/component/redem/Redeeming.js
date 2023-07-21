@@ -6,6 +6,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Swal from "sweetalert2";
 import moment from "moment";
 import {ThreeCircles} from "react-loader-spinner";
+import {Link} from "react-router-dom";
 
 
 export const Redeeming = () => {
@@ -114,7 +115,7 @@ export const Redeeming = () => {
             {/*top: "50%",*/}
             {/*transform: "translate(-50%, -50%)",*/}
             {/*paddingRight: "20px"}}*/}
-            <div className="container mt-5 mb-5">
+            <div className="container">
                 <div className="row height d-flex justify-content-center align-items-center">
                     <div className="col-md-6">
                         <div className="card px-5 py-4">
@@ -443,7 +444,7 @@ export const Redeeming = () => {
                                                             className="btn btn-secondary "
 
                                                         >
-                                                            <b className="text-center">Quay lại</b>
+                                                            <Link to="/nav/info-store/" className="text-center text-light">Quay lại</Link>
                                                         </button>
                                                     </div>
 

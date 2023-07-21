@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import * as contractService from "../../service/ContractService";
 import {FormattedNumber} from "react-intl";
 import moment from "moment";
+import {Link} from "react-router-dom";
 
 export function TransactionHistoryDetail() {
     const [contract, setContract] = useState(null)
@@ -22,7 +23,7 @@ export function TransactionHistoryDetail() {
     return (
         <>
             <div className="col-lg-9 col-md-9">
-                <h1 className="text-center my-5">CHI TIẾT GIAO DỊCH</h1>
+                <h2 className="text-center my-5">CHI TIẾT GIAO DỊCH</h2>
                 <table className="table table-bordered">
                     <tbody>
                     <tr>
@@ -42,12 +43,12 @@ export function TransactionHistoryDetail() {
                         <td>{contract?.productType.name}</td>
                     </tr>
                     <tr>
-                        <th>Ảnh đồ cầm</th>
-                        <td>
+                        <th style={{lineHeight: "240px"}}>Ảnh đồ cầm</th>
+                        <td className="text-center">
                             <img
-                                src={contract?.image}
-                                width={150}
-                                height={150}
+                                src={contract.image === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract.image}
+                                width={250}
+                                height={240}
                                 alt=""
                             />
                         </td>
@@ -60,28 +61,30 @@ export function TransactionHistoryDetail() {
                                 value={contract?.loans}
                                 currency="VND"
                                 minimumFractionDigits={0}>
-                            </FormattedNumber> VND
+                            </FormattedNumber> VNĐ
                         </td>
                     </tr>
                     <tr>
                         <th>Tiền lãi theo ngày</th>
                         <td>
                             <FormattedNumber
-                                value={contract?.profit}
+                                value={contract?.loans * 0.0067}
                                 currency="VND"
                                 minimumFractionDigits={0}>
-                            </FormattedNumber> VND
+                            </FormattedNumber> VNĐ
                         </td>
                     </tr>
                     <tr>
                         <th>Ngày bắt đầu</th>
                         <td>{
+                            contract?.startDate===""?"":
                             moment(contract?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
                         }</td>
                     </tr>
                     <tr>
                         <th>Ngày kết thúc</th>
                         <td>{
+                            contract?.endDate===""?"":
                             moment(contract?.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
                         }</td>
                     </tr>
@@ -91,7 +94,8 @@ export function TransactionHistoryDetail() {
                     </tr>
                     <tr>
                         <th>SĐT khách hàng</th>
-                        <td>{contract?.customers.phoneNumber}</td>
+                        <td>{contract?.customers.phoneNumber}
+                        </td>
                     </tr>
                     <tr>
                         <th>Email</th>
@@ -106,43 +110,45 @@ export function TransactionHistoryDetail() {
                         <td>{contract?.customers.citizenCode}</td>
                     </tr>
                     <tr>
-                        <th
-                            className="align-items-center">
+                        <th style={{lineHeight:"240px"}}>
                             Ảnh chân dung
                         </th>
-                        <td>
+                        <td className="text-center">
                             <img
-                                src={contract?.customers.image}
+                                src={contract?.customers.image === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers.image}
                                 width={250}
-                                height={250}
+                                height={240}
                                 alt=""
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Ảnh CMND mặt trước</th>
-                        <td>
+                        <th style={{lineHeight:"240px"}}>Ảnh CMND mặt trước</th>
+                        <td className="text-center">
                             <img
-                                src={contract?.customers.frontCitizen}
+                                src={contract?.customers.frontCitizen === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers.frontCitizen}
                                 width={250}
-                                height={250}
+                                height={200}
                                 alt=""
                             />
                         </td>
                     </tr>
                     <tr>
-                        <th>Ảnh CMND mặt sau</th>
-                        <td>
+                        <th style={{lineHeight:"240px"}}>Ảnh CMND mặt sau</th>
+                        <td className="text-center">
                             <img
-                                src={contract?.customers.backCitizen}
+                                src={contract?.customers.backCitizen === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers.backCitizen}
                                 width={250}
-                                height={250}
+                                height={200}
                                 alt=""
                             />
                         </td>
                     </tr>
                     </tbody>
                 </table>
+                <div className="d-flex justify-content-center my-5 ">
+                    <Link to={"/nav/info-store/transaction-history"} className="btn btn-secondary">Quay lại</Link>
+                </div>
             </div>
         </>
     );

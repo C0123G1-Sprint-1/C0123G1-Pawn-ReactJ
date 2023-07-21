@@ -164,7 +164,7 @@ export const CreateContracts = () => {
 
     return (
         <>
-            <div className="container">
+            <div className="container pt-5">
                 <div className="row height d-flex justify-content-center align-items-center">
                     <div className="col-md-6">
                         <div className="card px-5 py-4">

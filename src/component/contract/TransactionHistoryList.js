@@ -5,13 +5,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import * as Swal from "sweetalert2";
 import moment from "moment";
 import {Field, Form, Formik} from "formik";
+import ReactPaginate from "react-paginate";
 
 export default function TransactionHistoryList() {
     const [contractStatus, setContractStatus] = useState([])
     const [contractType, setContractType] = useState([])
     const [contracts, setContract] = useState([]);
-    const [page, setPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
     const getContractStatusApi = async () => {
         const res = await contractService.findAllContractStatus();
         setContractStatus(res.data)
@@ -21,17 +22,22 @@ export default function TransactionHistoryList() {
         setContractType(res.data)
     }
 
-    const paginate = (page) => {
-        setPage(page)
-    }
-    const getTransactionHistoryApi = async () => {
+    const showList = async () => {
         try {
-            const response = await contractService.searchTransactionHistory(page, search)
-            await setContract(response?.data.content)
-            await setTotalPages(response?.data.totalPages)
+            const result = await contractService.searchTransactionHistory(currentPage, search);
+            console.log(result);
+            setContract(result.content);
+            const totalPages = result.totalPages;
+            setPageCount(totalPages);
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const handlePageClick = async (page) => {
+        setCurrentPage(+page.selected);
+        const result = await contractService.searchTransactionHistory(page.selected, search);
+        setContract(result.content);
     };
 
     let [search, setSearch] = useState({
@@ -47,14 +53,14 @@ export default function TransactionHistoryList() {
     useEffect(() => {
         getContractStatusApi();
         getContractTypeApi();
-        getTransactionHistoryApi();
-    }, [search, page]);
+        showList()
+    }, [search, currentPage]);
 
 
     const deleteTransactionHistory = async (id) => {
         let res = await contractService.deleteTransactionHistoryByID(id);
         result(res.data)
-        getTransactionHistoryApi()
+        showList()
     }
     const result = (res) => {
         if (res != null) {
@@ -79,7 +85,7 @@ export default function TransactionHistoryList() {
             <div className="col-lg-9 col-md-12 ">
                 <div className="row">
                     <div className="col-lg-12 col-md-12">
-                        <h1 className="text-center">LỊCH SỬ GIAO DỊCH</h1>
+                        <h2 className="text-center">LỊCH SỬ GIAO DỊCH</h2>
                         <Formik initialValues={({
                             customerName: search?.customerName,
                             productName: search?.productName,
@@ -90,8 +96,8 @@ export default function TransactionHistoryList() {
                         })}
                                 onSubmit={(values) => {
                                     const res = async () => {
-                                        await setPage(0)
-                                        await contractService.searchTransactionHistory(page, values)
+                                        await setCurrentPage(0)
+                                        await contractService.searchTransactionHistory(currentPage, values)
                                         await setSearch(values)
                                     }
                                     res()
@@ -168,10 +174,8 @@ export default function TransactionHistoryList() {
                                     <div className=" col-lg-10 my-4">
                                         <div className="d-flex justify-content-between">
                                             <button type="reset" className="col-lg-3 btn btn-outline-secondary"
-                                            ><i
-                                                className="bi bi-arrow-counterclockwise"/></button>
-                                            <button type="submit" className="col-lg-3 btn btn-outline-primary">
-                                                <i className="bi bi-search"/>
+                                            >Nhập lại</button>
+                                            <button type="submit" className="col-lg-3 btn btn-outline-success">Tìm kiếm
                                             </button>
                                         </div>
                                     </div>
@@ -186,10 +190,10 @@ export default function TransactionHistoryList() {
                     <table className="table table table-striped" border="1">
                         <thead>
                         <tr>
-                            <th>Mã hợp đồng</th>
+                            <th>Mã HĐ</th>
                             <th>Tên đồ</th>
                             <th>Tên khách hàng</th>
-                            <th>Ngày làm hợp đồng</th>
+                            <th>Ngày làm HĐ</th>
                             <th>Loại hợp đồng</th>
                             <th>Trạng thái</th>
                             <th>Chức năng</th>
@@ -201,7 +205,7 @@ export default function TransactionHistoryList() {
                                 || search.contractStatus !== "" || search.startDate !== "" || search.endDate !== "") ? (
                                     <tr>
                                         <td colSpan={7}>
-                                            <h4 style={{color: "red",textAlign:"center"}}>Dữ liệu không tồn tại</h4>
+                                            <h4 style={{color: "red", textAlign: "center"}}>Dữ liệu không tồn tại</h4>
                                         </td>
                                     </tr>
                                 ) :
@@ -211,12 +215,13 @@ export default function TransactionHistoryList() {
                                         <td>{th?.productName}</td>
                                         <td>{th?.customers}</td>
                                         <td className="text-center">{
+                                            th?.startDate===""?"":
                                             moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
                                         }</td>
                                         <td className="text-center">{th?.contractType}</td>
                                         <td className="text-center">{th?.contractStatus}</td>
                                         <td className="text-center">
-                                            <Link to={`/nav/info-store/transaction-history/detail/${th?.contractCode}`}><i
+                                            <Link to={`/nav/info-store/transaction-history/detail/${th?.id}`}><i
                                                 className="bi bi-info-circle me-2"/></Link>
                                             <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}
                                                   className="me-2"><i style={{color: "orange"}}
@@ -225,6 +230,7 @@ export default function TransactionHistoryList() {
                                                data-bs-target="#exampleModal" onClick={() => {
                                                 Swal.fire({
                                                     icon: "warning",
+                                                    title: "Xóa",
                                                     html: `Bạn có muốn xoá lịch sử giao dịch có mã hợp đồng <span style="color: red">HD-${th?.contractCode}</span> không ?`,
                                                     showCancelButton: true,
                                                     cancelButtonText: "Hủy",
@@ -234,7 +240,7 @@ export default function TransactionHistoryList() {
                                                 })
                                                     .then((res) => {
                                                         if (res.isConfirmed) {
-                                                            deleteTransactionHistory(th?.contractCode)
+                                                            deleteTransactionHistory(+th?.id)
                                                         }
                                                     })
 
@@ -251,38 +257,21 @@ export default function TransactionHistoryList() {
             </div>
             <div className="row mt-3 mb-5">
                 <div className="d-flex col-12 justify-content-end">
-                    <nav aria-label="..." className="me-4">
-                        <ul className="pagination">
-                            <li hidden={page === 0} className="page-item">
-                                <button className="page-link" tabIndex={-1}
-                                        onClick={() => paginate(page - 1)}>
-                                    Trước
-                                </button>
-                            </li>
-                            {
-                                Array.from({length: totalPages}, (a, index) => index).map((pageNum) => (
-                                    <li className="page-item" key={pageNum}>
-                                        <button
-                                            className={page === pageNum ? "active page-link" : "page-link"}
-                                            key={pageNum}
-                                            onClick={() => {
-                                                paginate(pageNum)
-                                            }}>
-                                            {pageNum + 1}
-                                        </button>
-                                    </li>
-                                ))
-                            }
-
-                            <li hidden={page + 1 === totalPages}
-                                className="page-item">
-                                <button className="page-link" tabIndex={-1}
-                                        onClick={() => paginate(page + 1)}>
-                                    Tiếp
-                                </button>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div className="d-grid">
+                        <ReactPaginate
+                            breakLabel="..."
+                            nextLabel={contracts.length===0?"":"Sau"}
+                            onPageChange={handlePageClick}
+                            pageCount={pageCount}
+                            previousLabel={contracts.length===0?"":"Trước"}
+                            containerClassName="pagination"
+                            pageLinkClassName="page-num"
+                            nextLinkClassName="page-num"
+                            previousLinkClassName="page-num"
+                            activeClassName="active"
+                            disabledClassName="d-none"
+                        />
+                    </div>
                 </div>
             </div>
         </>

@@ -2,8 +2,12 @@ import * as servicePosts from "../../service/ServicePosts";
 import React, {useEffect, useState} from "react";
 import "../../css/Posts.css";
 import {useParams} from "react-router";
-import {NavLink} from "react-router-dom";
 import moment from "moment";
+import jwt from 'jwt-decode';
+const token = localStorage.getItem('token');
+const decodedToken = jwt(token);
+console.log(decodedToken.sub)
+console.log(decodedToken.role)
 
 export function DetailPosts() {
     const param = useParams()
@@ -32,16 +36,23 @@ export function DetailPosts() {
     }
     return (
         <>
-            <h2 className="d-flex justify-content-center">Tin tức - Kinh nghiệm cầm đồ</h2>
+            <h2 className="d-flex justify-content-center mt-5" style={{fontFamily: "Times New Roman",background: "url(https://chovayhanoi.com/wp-content/uploads/2020/04/border-title-02.png) no-repeat center bottom",
+                paddingBottom: "20px",
+                textTransform: "uppercase",
+                color: "#c57101",
+                textAlign: "center",
+                fontSize: "30px",
+                fontWeight: "600",
+                margin: "50px 0"}}>Tin tức - Kinh nghiệm cầm đồ</h2>
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-8 col-xl-9">
+                    <div className="col-lg-8 col-xl-9 mb-5">
                         <div className="main-content mt-4">
-                            <div className="time-post1">
+                            <div className="time-post1 text-posts me-4">
                                 {formatDateTime(postsDetail.createDate)}
                             </div>
-                            <h1 style={{fontSize: "28px", fontWeight: "400", textAlign: "center", fontFamily: "Courier New"}} className="title-news">{postsDetail.title}</h1>
-                            <div className="time-post1">
+                            <h1 style={{textAlign: "center", fontFamily: "Times New Roman"}} className="title-news">{postsDetail.title}</h1>
+                            <div className="time-post1 text-posts me-4">
                                bởi: {postsDetail.employees?.name}
                             </div>
                             <div className="full-content"><p></p>
@@ -56,12 +67,13 @@ export function DetailPosts() {
                                          marginTop: "15px",
                                          fontSize: "15pt",
                                          color: "#666",
-                                         fontStyle: "italic"
+                                         fontStyle: "italic",
+                                         textAlign: "justify"
                                      }}>
                                     <p
                                         style={{
                                             lineHeight: "unset !important",
-                                            margin: "5px"
+                                            margin: "3rem 4rem"
                                         }}>{postsDetail.content}</p></div>
                             </div>
                         </div>
@@ -69,22 +81,20 @@ export function DetailPosts() {
                     </div>
                     <div className="col-lg-4 col-xl-3">
                         <div className="right-pane">
-                            <div className="main-news-other"><h2 className="title-other">Tin liên quan</h2>
+                            <div className="main-news-other"><h2 className="title-other text-posts">Tin liên quan</h2>
                                 <div className="list-news-other">{
                                     posts.map((post) => (
-                                        <div className="other-item">
                                             <div className="row mt-3">
                                                 <div className="col-4">
-                                                    <div className="image-post"><a href={`/detail/${post.id}`}>
+                                                    <div className="image-post"><a href={`/listPosts/detail/${post.id}`}>
                                                         <img style={{width: "100%",height: "100%",objectFit: "cover"}}
                                                         src={post.image} alt=""/> </a></div>
                                                 </div>
                                                 <div className="col-8 mt-2">
-                                                    <a className="text-decoration-none" href={`/detail/${post.id}`}><h3 className="title-post">{post.title}</h3></a>
-                                                    <span className="time-post1 d-flex justify-content-end">{formatDateTime(post.createDate)}</span>
+                                                    <a className="text-decoration-none" href={`/detail/${post.id}`}><h3 className="title-post text-posts ms-2">{post.title}</h3></a>
+                                                    <span className="time-post1 d-flex justify-content-end text-posts">{formatDateTime(post.createDate)}</span>
                                                 </div>
                                             </div>
-                                        </div>
                                     ))
                                 }
                                 </div>
