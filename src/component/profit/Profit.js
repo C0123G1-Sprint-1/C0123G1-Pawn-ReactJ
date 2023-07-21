@@ -98,11 +98,6 @@ export default function Profit() {
             endDate: ""
         })
     }
-    const data = [
-        {name: 'John', age: 28, email: 'john@example.com'},
-        {name: 'Jane', age: 24, email: 'jane@example.com'},
-        // Thêm các dòng dữ liệu khác tại đây
-    ];
     useEffect(() => {
         const fectData = async () => {
             await setCurrentPage(0);
@@ -253,7 +248,8 @@ export default function Profit() {
                                                 display: "flex",
                                                 justifyContent: "center",
                                                 border: "1px solid red"
-                                            }}>Hủy
+                                            }}><i
+                                                className="bi bi-arrow-counterclockwise"/>
                                             </button>
                                         </div>
                                     </div>
@@ -262,7 +258,7 @@ export default function Profit() {
                         </div>
                         <label className="mt-3 p-0 ms-5" style={{color: "indianred"}}>
                             Tổng lợi nhuận :{" "}
-                            <input type="text" disabled value={
+                            <input type="text" disabled value={" " +
                                 totalProfit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + " VND "
                             }/>
                         </label>

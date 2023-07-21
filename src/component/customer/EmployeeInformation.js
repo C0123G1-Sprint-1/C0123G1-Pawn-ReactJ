@@ -54,16 +54,20 @@ export default function EmployeeInformation() {
             today.getDate()
         );
     };
-    useEffect(async () => {
-        try {
-            const res = await employeeInformationService.findById(params.id);
-            setEmployeeDetail(res);
-            console.log(res)
+    useEffect( () => {
+        const fectApi = async ()=>{
+            try {
+                const res = await employeeInformationService.findById(params.id);
+                setEmployeeDetail(res);
+                console.log(res)
 
-        } catch (error) {
-            console.log(error)
+            } catch (error) {
+                console.log(error)
+            }
         }
+        fectApi()
     }, [params.id])
+
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
         if (file) {

@@ -29,7 +29,7 @@ const navigate = useNavigate();
                         <a onClick={()=> navigate("/")}  className="logo d-flex align-items-center">
                             {/* Uncomment the line below if you also wish to use an image logo */}
                             <div className="pnj">
-                                <img  src="../register-pawn/pawnshop.png" style={{ marginLeft: "40%", maxHeight: 90 }}  alt=""  />
+                                <img  src="/anh/pawnshop.png"   style={{ marginLeft: "40%", maxHeight: 90 }}  alt=""  />
                             </div>
                         </a>
                          <nav id="navbar" className="navbar">
@@ -43,7 +43,7 @@ const navigate = useNavigate();
                                     <a style={{color : "white"}} onClick={() => navigate("/listPost")}>Tin Tức</a>
                                 </li>
                                 <li>
-                                    <a style={{color :"white",fontWeight:"300"}} href="#create">Đăng ký cầm đồ</a>
+                                    <a style={{color :"white",fontWeight:"600"}} href="#create">Đăng ký cầm đồ</a>
                                 </li>
                                 {/*<li className="dropdown">*/}
                                 {/*    <a href="#">*/}

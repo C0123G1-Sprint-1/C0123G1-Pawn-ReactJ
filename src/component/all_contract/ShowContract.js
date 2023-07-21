@@ -62,13 +62,13 @@ export const ShowContract = () => {
 
             <meta charSet="UTF-8"/>
             <title>Title</title>
-            <link
-                href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-                rel="stylesheet"
-                integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-                crossOrigin="anonymous"
-            />
-            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+            {/*<link*/}
+            {/*    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"*/}
+            {/*    rel="stylesheet"*/}
+            {/*    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"*/}
+            {/*    crossOrigin="anonymous"*/}
+            {/*/>*/}
+            {/*<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>*/}
             <link
                 rel="stylesheet"
                 href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
@@ -143,12 +143,12 @@ export const ShowContract = () => {
                                     <table className="table table-striped">
                                         <thead>
                                         <tr className="text-center">
-                                            <th>Mã hợp đồng</th>
+                                            <th>Mã HĐ</th>
                                             <th>Tên đồ</th>
                                             <th>Loại đồ</th>
                                             <th>Trạng thái</th>
-                                            <th>Giá mua(VND)</th>
-                                            <th>Hành động</th>
+                                            <th>Giá mua(VNĐ)</th>
+                                            <th>Chức Năng</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -159,13 +159,12 @@ export const ShowContract = () => {
                                                     <td>{value.productName}</td>
                                                     <td>{value.productType}</td>
                                                     <td>{value.contractStatus}</td>
-                                                    <td>{value.loans}</td>
+                                                    <td>{value.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                                     <td>
-                                                        <button className="btn btn-sm btn-info" data-bs-toggle="modal"
-                                                                data-bs-target="#staticBackdrop"
-                                                                onClick={() => handleShowDetail(value.contractId)}>Chi
-                                                            tiết
-                                                        </button>
+
+                                                            <i style={{color: 'blue'}} onClick={() => handleShowDetail(value.contractId)}
+                                                                className=" bi bi-info-circle me-2"></i>
+
 
                                                     </td>
                                                 </tr>
@@ -211,7 +210,7 @@ export const ShowContract = () => {
                                                     className="page-item">
                                                     <button className="page-link" tabIndex={-1}
                                                             onClick={() => paginate(page + 1)}>
-                                                        Tiếp
+                                                        Sau
                                                     </button>
                                                 </li>
                                             </ul>

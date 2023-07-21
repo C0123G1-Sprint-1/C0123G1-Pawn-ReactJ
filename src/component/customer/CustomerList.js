@@ -4,6 +4,7 @@ import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
 import jwt from 'jwt-decode';
+import {Link} from "react-router-dom";
 
 const token = localStorage.getItem('token');
 const decodedToken = jwt(token);
@@ -184,9 +185,9 @@ export function CustomerList() {
                         <div className='container'>
                             <div className="row ">
                                 <div className="col-6 mt-2">
-                                    <button className="btn btn-success" style={{marginLeft: "10%"}}>Thêm khách
+                                    <Link to="/nav/manager-customer/create"  className="btn btn-success" style={{marginLeft: "10%"}}>Thêm khách
                                         hàng
-                                    </button>
+                                    </Link>
                                     {/*<NavLink*/}
                                     {/*    to='/listCustomerRegisterPawn' className="btn btn-outline-primary"*/}
                                     {/*    style={{marginLeft: '5%'}}>Danh sách khách hàng mới*/}
