@@ -40,7 +40,7 @@ const navigate = useNavigate();
                                     </a>
                                 </li>
                                 <li>
-                                    <a style={{color : "white"}} onClick={() => navigate("/listPost")}>Tin Tức</a>
+                                    <a style={{color : "white"}} onClick={() => navigate("/listPosts")}>Tin Tức</a>
                                 </li>
                                 <li>
                                     <a style={{color :"white",fontWeight:"300"}} href="#create">Đăng ký cầm đồ</a>

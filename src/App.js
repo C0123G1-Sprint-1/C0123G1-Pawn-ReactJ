@@ -78,8 +78,8 @@ function App() {
                     <Route path="/login/confirmCode" element={<ConfirmCode/>}/>
                     <Route path="/login/newPassword" element={<NewPassword/>}/>
                 </Route>
-                <Route path={'/listPost'} element={<ListPosts/>}/>
-                <Route path={'/detail/:id'} element={<DetailPosts/>}/>
+                <Route path={'/listPosts'} element={<ListPosts/>}/>
+                <Route path={'/listPosts/detail/:id'} element={<DetailPosts/>}/>
                 <Route path={'/createPosts'} element={<CreatePosts/>}/>
 
                 <Route path={"/scanfile"} element={<ImageUploaderFile/>}/>

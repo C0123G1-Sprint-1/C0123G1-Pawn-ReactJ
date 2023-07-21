@@ -1,46 +1,62 @@
 /* Font */
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
 
-/* Design */
-/**,*/
-/**::before,*/
-/**::after {*/
-/*    box-sizing: border-box;*/
-/*}*/
-
-/*.main {*/
-/*    max-width: 1200px;*/
-/*    margin: 0 auto;*/
-/*}*/
-
-/** {*/
-/*    font-family: Times New Roman!important;*/
-/*}*/
 .cards-post {
     display: flex;
     flex-wrap: wrap;
-    list-style: none;
+    list-style: initial;
     margin: 0;
-    padding: 0;
+    /*padding: 0;*/
 }
 
 .cards_item {
     display: flex;
     padding: 1rem;
 }
+.text-posts {
+    font-family: "Times New Roman"!important;
+}
 
-@media (min-width: 40rem) {
+/* Điều chỉnh cho màn hình nhỏ hơn 40rem */
+@media (max-width: 40rem) {
     .cards_item {
-        width: 50%;
+        width: 100%; /* Chuyển từ hiển thị 2 cột sang hiển thị 1 cột */
+    }
+    .image-post {
+        width: 60px; /* Giảm kích thước hình ảnh */
+        height: 60px;
+    }
+    .title-post {
+        font-size: 14px; /* Giảm kích thước chữ tiêu đề */
     }
 }
 
-@media (min-width: 56rem) {
+/* Điều chỉnh cho màn hình nhỏ hơn 56rem */
+@media (max-width: 56rem) {
     .cards_item {
-        width: 33.3333%;
+        width: 33.3333%; /* Chuyển từ hiển thị 3 cột sang hiển thị 2 cột */
     }
 }
 
+/* Điều chỉnh cho màn hình nhỏ hơn 768px (kích thước màn hình điện thoại) */
+@media (max-width: 768px) {
+    .cards_item {
+        /* Thêm các điều chỉnh thích hợp với kích thước màn hình điện thoại */
+        width: 100%; /* Chuyển về hiển thị 1 cột trên điện thoại */
+    }
+    .image-post {
+        width: 40px; /* Giảm kích thước hình ảnh cho màn hình điện thoại */
+        height: 40px;
+    }
+    .title-post {
+        font-size: 12px; /* Giảm kích thước chữ tiêu đề cho màn hình điện thoại */
+    }
+}
+
+/* Điều chỉnh cho màn hình nhỏ hơn 992px (kích thước màn hình máy tính bảng) */
+@media (max-width: 992px) {
+    /* Thêm các điều chỉnh thích hợp với kích thước màn hình máy tính bảng */
+}
 .card-post {
     background-color: white;
     border-radius: 0.25rem;
@@ -51,30 +67,27 @@
 }
 
 .card_content {
-    padding: 0.5rem;
+    /*padding: 0.5rem;*/
     height: 5rem;
 }
 
 .card_title {
     font-size: 1rem;
     font-weight: 700;
-    letter-spacing: 1px;
+    font-family: "Times New Roman";
+    /*letter-spacing: 1px;*/
     text-transform: capitalize;
-    margin: 0;
+    margin-top: 5px;
+    /*margin: 0;*/
     text-align: center;
-
+    width: 290px;
 }
-.time-post {
-    margin-top: 10px;
-    text-align: right;
-    color: #999;
-    font-size: 16px;
-}
-.time-post1 {
-    margin-top: 4px;
-    text-align: right;
-    color: #999;
-    font-size: 13px;
+.card_title.long-text {
+    /* Các thuộc tính giới hạn đoạn văn bản */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
 }
 .card_text {
     color: #ffffff;
@@ -83,6 +96,21 @@
     margin-bottom: 1.25rem;
     font-weight: 400;
 }
+.time-post {
+    margin-top: 10px;
+    margin-right: 4px;
+    text-align: right;
+    color: #999;
+    font-size: 16px;
+}
+.time-post1 {
+    margin-top: 4px;
+    margin-right: 4px;
+    text-align: right;
+    color: #999;
+    font-size: 15px;
+}
+
 .hideContent {
     overflow: hidden;
     line-height: 1em;
@@ -100,8 +128,9 @@
 }
 .title-news{
     color: #00833e;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 700;
+    margin: 2rem 4rem;
 }
 textarea {
     width: 100%;
@@ -154,7 +183,7 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80px;
+    width: 100px;
     min-width: 80px;
     height: 80px;
     overflow: hidden;
@@ -184,29 +213,42 @@ textarea {
     max-width: 100%;
     height: auto;
 }
-/* Pageable.css */
 
-.pagination-container {
+.pagination-container-huy {
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
-
-.pagination-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    margin: 0 5px;
+.pagination-container-huy button {
+    padding: 10px 20px;
+    margin: 0;
     border: 1px solid #ccc;
-    border-radius: 50%;
+    background-color: #fff;
+    color: #333;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
 }
 
-.pagination-button.active {
+.pagination-container-huy button:hover {
+    background-color: #f5f5f5;
+}
+
+
+.pagination-container-huy button[disabled] {
+    cursor: not-allowed;
+}
+
+/* CSS cho nút chuyển trang hiện tại */
+.pagination-container-huy button[style*="bold"] {
+    font-weight: bold;
     background-color: #007bff;
     color: #fff;
-    border: none;
+    border-color: #007bff;
+}
+
+.pagination-container-huy button[style*="bold"]:hover {
+    background-color: #0056b3;
 }

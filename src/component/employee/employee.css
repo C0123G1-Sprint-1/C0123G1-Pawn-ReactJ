@@ -4,7 +4,7 @@
 
 body {
     background-color: #eee;
-    font-family: "Poppins", sans-serif;
+    font-family: "Times New Roman", sans-serif;
     font-weight: 300
 }
 
@@ -70,7 +70,7 @@ thead {
 }
 
 label {
-    font-family: Arial, sans-serif;
+    font-family: "Times New Roman", sans-serif;
     font-size: 14px;
     font-weight: bold;
     color: #222222;

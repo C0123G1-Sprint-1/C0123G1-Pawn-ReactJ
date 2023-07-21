@@ -1,21 +1,30 @@
 import * as servicePosts from "../../service/ServicePosts";
 import React, {useEffect, useState} from "react";
 import "../../css/Posts.css";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import moment from "moment";
 import Swal from "sweetalert2";
+import jwt from 'jwt-decode';
+const token = localStorage.getItem('token');
+const decodedToken = jwt(token);
+console.log(decodedToken.sub)
+console.log(decodedToken.role)
 
 export function ListPosts() {
     const [posts, setPosts] = useState([])
     const [idDelete, setIdDelete] = useState()
     const [nameDelete, setNameDelete] = useState()
+    let [search, setSearch] = useState({
+        title:''
+    });
+
 // Hàm định dạng ngày giờ
     const formatDateTime = (dateTime) => {
-        return moment(dateTime).format("DD/MM/YYYY HH:mm:ss");
+        return moment(dateTime).format("DD/MM/YYYY HH:mm");
     };
     const [currentPage, setCurrentPage] = useState(1);
-    const postsPerPage = 3;
+    const postsPerPage = 4;
 
     const findAllListPost = async () => {
         const result = await servicePosts.findAllPosts()
@@ -30,6 +39,24 @@ export function ListPosts() {
         await servicePosts.remove(id)
         findAllListPost();
         deleteSuccess();
+    }
+    const result = (res) => {
+        if (res != null) {
+            if (res) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Xóa thành công !",
+                    timer: 3000
+                })
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Xóa thất bại !",
+                    timer: 3000
+                })
+
+            }
+        }
     }
     useEffect(() => {
         findAllListPost();
@@ -56,16 +83,47 @@ export function ListPosts() {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-    const showPreviousButton = currentPage > 1;
-    const showNextButton = currentPage < totalPages;
     if (posts.length === 0) {
         return null;
     }
     return (
         <>
-            <div className="row mb-5">
-                <div className="col-8">
-                    <h2 className="ms-3" style={{fontSize: "33px", fontWeight: "500"}}>
+            <div className="mb-5 mt-5">
+                <div className="d-flex justify-content-end">
+                    <Formik
+                        initialValues={{
+                            title: ''
+                        }}
+
+                        onSubmit={(values) => {
+                            const findName = async () => {
+                                const result = await servicePosts.findByName(values.title)
+                                setPosts(result.content)
+                                await setSearch(values)
+                            }
+                            findName()
+                        }}>{
+                        <Form className="d-flex">
+                            <Field className="form-control me-1" style={{width: "13rem"}} type="text" name="title"/>
+                            <button className="btn btn-info me-4" type="submit" style={{width: '8rem'}}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                     className="bi bi-search" viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                            </button>
+                        </Form>}
+                    </Formik>
+                </div>
+                <div className="">
+                    <h2 className="ms-3 text-posts" style={{background: "url(https://chovayhanoi.com/wp-content/uploads/2020/04/border-title-02.png) no-repeat center bottom",
+                        paddingBottom: "20px",
+                        textTransform: "uppercase",
+                        color: "#c57101",
+                        textAlign: "center",
+                        fontSize: "30px",
+                        fontWeight: "600",
+                        margin: "20px 0"}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                              className="bi bi-postcard-fill" viewBox="0 0 16 16">
                             <path d="M11 8h2V6h-2v2Z"/>
@@ -75,39 +133,25 @@ export function ListPosts() {
                         Tin tức - Kinh nghiệm cầm đồ
                     </h2>
                 </div>
-                <div className="col-4">
-                    <Formik
-                        initialValues={{
-                            title: ''
-                        }}
-                        onSubmit={(values) => {
-                            const findName = async () => {
-                                const result = await servicePosts.findByName(values.title)
-                                setPosts(result.content)
-                            }
-                            findName()
-                        }}>{
-                        <Form className="d-flex">
-                            <Field className="form-control me-1" style={{width: "13rem"}} type="text" name="title"/>
-                            <button className="codepro-custom-btn codepro-btn-7 me-4" target="blank" title="Code Pro"
-                                    type="submit"
-                                    style={{width: '8rem'}}><b>Tìm kiếm</b>
-                            </button>
-                        </Form>}
-                    </Formik>
-                </div>
             </div>
 
-            <button className="codepro-custom-btn codepro-btn-13 ms-3" target="blank" title="Code Pro">
+            <button className="btn btn-success ms-5">
                 <NavLink className="text-decoration-none text-white" to={'/createPosts'}><b>Đăng Tin</b></NavLink>
             </button>
-            <ul className="cards-post">
+            <ul className="cards-post text-posts">
                 {
+                    currentPosts?.length === 0 && currentPosts.title !== "" ? (
+                            <tr>
+                                <td colSpan={7}>
+                                    <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
+                                </td>
+                            </tr>
+                    ):
                     currentPosts.map((post) => (
                         <li className="cards_item">
                             <div className="card-post">
-                                <div className="card_image">
-                                    <NavLink className="text-decoration-none" to={`detail/${post.id}`}>
+                                <div>
+                                    <NavLink className="text-decoration-none" to={`/listPosts/detail/${post.id}`}>
                                     <img
                                     style={{height: "200px", width: "300px", verticalAlign: "middle"}}
                                     src={post.image} alt=""/>
@@ -123,9 +167,23 @@ export function ListPosts() {
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-end">
-                                    <button className=" btn btn-outline-danger m-2" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal"
-                                            onClick={() => propsDelete(post.id, post.title)}>
+                                    <button className=" btn btn-outline-danger m-2"
+                                            onClick={() => {
+                                                Swal.fire({
+                                                    icon: "warning",
+                                                    title:"Xác nhận xóa",
+                                                    html: `Bạn có muốn xoá <span style="color: red">${post.title}</span> không ?`,
+                                                    showCancelButton: true,
+                                                    cancelButtonText: "Hủy",
+                                                    confirmButtonText: "Có",
+                                                    cancelButtonColor: "rgba(118,112,112,0.51)",
+                                                    confirmButtonColor: "#d33"
+                                                }).then((res) => {
+                                                        if (res.isConfirmed) {
+                                                            handleDelete(post?.id)
+                                                        }
+                                                    })}}
+                                    >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              fill="currentColor" className="bi bi-trash3" viewBox="0 0 16 16">
                                             <path
@@ -139,58 +197,28 @@ export function ListPosts() {
                     ))
                 }
             </ul>
-            <div className="pagination-container">
-                {showPreviousButton && (
+            <div className="pagination-container-huy">
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                >
+                    Trước
+                </button>
+                {Array.from({length: totalPages}, (_, index) => (
                     <button
-                        className="pagination-button"
-                        onClick={() => handlePageChange(currentPage - 1)}
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        style={{fontWeight: currentPage === index + 1 ? 'bold' : 'normal'}}
                     >
-                        &lt;
+                        {index + 1}
                     </button>
-                )}
-                {Array.from({length: totalPages}, (_, index) => index + 1).map(
-                    (pageNumber) => (
-                        <button
-                            key={pageNumber}
-                            className={`pagination-button ${
-                                pageNumber === currentPage ? "active" : ""
-                            }`}
-                            onClick={() => handlePageChange(pageNumber)}
-                        >
-                            {pageNumber}
-                        </button>
-                    )
-                )}
-                {showNextButton && (
-                    <button
-                        className="pagination-button"
-                        onClick={() => handlePageChange(currentPage + 1)}
-                    >
-                        &gt;
-                    </button>
-                )}
-            </div>
-
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">Xóa tin tức</h1>
-                        </div>
-                        <div className="modal-body">
-                            Bạn muốn xóa <span style={{color: 'red'}}>{nameDelete}</span> ?
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-outline-secondary"
-                                    data-bs-dismiss="modal">Đóng
-                            </button>
-                            <button type="submit" className="btn btn-outline-danger" data-bs-dismiss="modal"
-                                    onClick={() => handleDelete(idDelete)}>Xóa
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                ))}
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                >
+                    Sau
+                </button>
             </div>
         </>
     )
