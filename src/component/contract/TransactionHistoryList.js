@@ -177,10 +177,8 @@ export default function TransactionHistoryList() {
                                                   to={"/nav/info-store/transaction-history/create-contract"}
                                                   className="btn btn-outline-success">Thêm mới hợp đồng</Link>
                                             <button type="reset" className="col-lg-3 btn btn-outline-secondary"
-                                            ><i
-                                                className="bi bi-arrow-counterclockwise"/></button>
-                                            <button type="submit" className="col-lg-3 btn btn-outline-primary">
-                                                <i className="bi bi-search"/>
+                                            >Nhập lại</button>
+                                            <button type="submit" className="col-lg-3 btn btn-outline-primary">Tìm kiếm
                                             </button>
                                         </div>
                                     </div>
