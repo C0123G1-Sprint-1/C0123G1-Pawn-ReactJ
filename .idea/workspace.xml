@@ -31,7 +31,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="" />
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/contract/Top10NewContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/Top10NewContract.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/contract/UpdateContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/UpdateContract.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/UpdateContract.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/UpdateContract.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

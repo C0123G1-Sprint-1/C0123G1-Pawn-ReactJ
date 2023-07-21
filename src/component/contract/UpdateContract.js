@@ -9,8 +9,6 @@ import {Link, NavLink} from "react-router-dom";
 import "../../css/liquidation.css";
 import Swal from "sweetalert2";
 
-
-
 export function UpdateContract() {
     const param = useParams();
     const navigate = useNavigate();

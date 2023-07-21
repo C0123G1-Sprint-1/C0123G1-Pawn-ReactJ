@@ -5,7 +5,7 @@ import "../../css/UpdateContract.css"
 
 import Swal from "sweetalert2";
 import moment from "moment";
-import "../employee/employee.css"
+
 
 
 
