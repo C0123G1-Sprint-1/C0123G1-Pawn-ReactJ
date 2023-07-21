@@ -14,6 +14,7 @@ import {
 import {useNavigate} from "react-router";
 import * as Swal from "sweetalert2";
 import {Link, NavLink} from "react-router-dom";
+import * as contractService from "../../service/ContractService";
 
 
 const token = localStorage.getItem('token');
@@ -39,6 +40,9 @@ export function CreateLiquidation() {
     const [productName, setProductName] = useState('');
     const [productType, setProductType] = useState('');
     const [loans, setLoans] = useState('');
+
+
+
 
     const formatCurrency = (amount) => {
         return amount.toLocaleString({style: 'currency', currency: 'VND'});
@@ -202,6 +206,37 @@ export function CreateLiquidation() {
                                                 </div>
                                                 <div className="mt-4 inputs">
                                                     <label>Đồ thanh lý</label>
+
+                                                    <div className="justify-content-between mt-4">
+                                                        <div className="input-group">
+                                                            <div className="product-list">
+                                                                {listProduct.map((p) => (
+                                                                    <div style={{position: 'relative'}}>
+                                                                        <div style={{
+                                                                            position: 'absolute',
+                                                                            top: -5,
+                                                                            right: -5,
+                                                                            width: '15px',
+                                                                            height: '15px',
+                                                                            border: '1px solid gray',
+                                                                            borderRadius: '50%',
+                                                                            display: 'flex',
+                                                                            alignItems: 'center',
+                                                                            justifyContent: 'center',
+                                                                            fontSize: '10px',
+                                                                            cursor: 'pointer'
+                                                                        }} onClick={() => handleDeleteProduct(p.id)}>
+                                                                            <span>x</span>
+                                                                        </div>
+                                                                        <div
+                                                                            key={p.id}
+                                                                            className="product-item"
+                                                                        >{p.productName}</div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div className="text-center m-auto">
                                                         <button type="button" className="btn btn-outline-success"
                                                                 onClick={handleModalOpen1}>
@@ -210,21 +245,6 @@ export function CreateLiquidation() {
                                                     </div>
                                                     <ErrorMessage name="products" component="span"
                                                                   style={{color: "red"}}/>
-                                                    <div className="justify-content-between mt-4">
-                                                        <div className="input-group">
-                                                            <div className="product-list">
-                                                                {listProduct.map((p) => (
-                                                                    <button
-                                                                        key={p.id}
-                                                                        name="products"
-                                                                        type="text"
-                                                                        className="product-item"
-                                                                        onClick={() => handleDeleteProduct(p.id)}
-                                                                    >{p.productName}</button>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
 
                                                 <div className="mt-2 inputs"><label>Tổng tiền</label>
@@ -290,8 +310,8 @@ export function CreateLiquidation() {
                     <Modal.Title className="text-center" style={{width: "100%", textAlign: "center"}}>Chọn khách
                         hàng</Modal.Title>
                     <button type="button" className="btn-close" onClick={handleModalClose} aria-label="Close"></button>
-
                 </Modal.Header>
+
                 <Modal.Body>
                     <Formik initialValues={{
                         name: "",
@@ -425,7 +445,6 @@ export function CreateLiquidation() {
                             const res = await getListProductAPI(contractPage, values.productName, values.productType, values.loans);
                             await setContractPage(0)
                             await setContracts(res.data.content);
-
                         }
                         searchProduct();
                     }}>
