@@ -79,7 +79,7 @@ export function List() {
                         <img src="./anh/tempsnip.png" alt=""/>
                         <div  className="description" style={{textAlign: "justify",fontWeight:"400",fontSize : "18px"}}>
                             <p>
-                                <strong>Pawnshop.com</strong> với gần 10 năm kinh nghiệm cung cấp dịch vụ
+                                <strong>Pawnshop.com</strong> với gần 10 năm kinh nghiệm cung cấp dịch vụ {""}
                                 <a href="https://vi.wikipedia.org/wiki/Cầm_đồ" target="_blank" rel="noopener">
                                     <strong>cầm đồ</strong>
                                 </a>

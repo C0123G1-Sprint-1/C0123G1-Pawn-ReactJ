@@ -101,13 +101,6 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\redem" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\all_contract" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\register-pawn" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
@@ -115,6 +108,30 @@
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\all_contract" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service\all_contract" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\redem" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\all_contract" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -143,6 +160,7 @@
       <workItem from="1689830336333" duration="2747000" />
       <workItem from="1689834571370" duration="2360000" />
       <workItem from="1689850891478" duration="3644000" />
+      <workItem from="1689916991349" duration="310000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -249,7 +267,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689841751467</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="up">
+      <created>1689914465415</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1689914465416</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,7 +296,8 @@
     <MESSAGE value="&quot;add component TransactionHistoryList&quot;" />
     <MESSAGE value="Update" />
     <MESSAGE value="Up" />
-    <option name="LAST_COMMIT_MESSAGE" value="Up" />
+    <MESSAGE value="up" />
+    <option name="LAST_COMMIT_MESSAGE" value="up" />
   </component>
   <component name="WindowStateProjectService">
     <state x="489" y="228" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1689774850055">
