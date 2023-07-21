@@ -90,6 +90,7 @@ export const findAllAndEmployee = async () => {
 export const findAllCustomer = async (page,name) => {
     try {
         const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer/?page=${page}&name=${name}`)).data
+        console.log(res)
         return res;
     } catch (e) {
         console.log(e)
