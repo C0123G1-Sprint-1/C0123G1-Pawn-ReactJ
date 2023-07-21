@@ -3,6 +3,8 @@
     background-color: #00833e;
     padding: 50px 0;
     color: white;
+    font-family: "Times New Roman";
+    font-size: 18px;
 }
 
 .footer .footer-info .logo {
@@ -48,7 +50,7 @@
 }
 
 .footer h4 {
-    font-size: 16px;
+    font-size: 19.4px;
     font-weight: bold;
     position: relative;
     padding-bottom: 12px;
@@ -82,7 +84,7 @@
 }
 
 .footer .footer-links ul a {
-    color: rgba(255, 255, 255, 0.7);
+    color: white;
     transition: 0.3s;
     display: inline-block;
     line-height: 1;

@@ -5,29 +5,19 @@
     body {
         font-size: 14px;
         background-color: #eee;
-        font-family: "Poppins", sans-serif;
+        font-family: "Times New Roman", sans-serif;
         font-weight: 300
     }
 }
 
-
-body {
-    font-family: 'Poppins', sans-serif;
-}
-
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
-body {
-    background-color: #eee;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300
-}
+
 
 .height-tri {
     height: 100vh
 }
 
 .card-tri {
-    border: none;
     padding: 20px;
     position: relative
 }
@@ -44,6 +34,7 @@ body {
     justify-content: end;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 .pagination-container-tri button {
     padding: 10px 20px;

@@ -602,7 +602,7 @@ export function UpdateCustomer() {
                                                         <div className="text-center ms-2 mt-3">
                                                             <div className="d-flex justify-content-center">
                                                                 <div className="text-center ms-lg-3 ms-md-2 ms-sm-2">
-                                                                    <Link to={"/"} type="button"
+                                                                    <Link to={"/nav/manager-customer"} type="button"
                                                                           className="btn btn-secondary">
                                                                         <b className="text-center">Quay lại</b>
                                                                     </Link>

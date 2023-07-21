@@ -20,6 +20,11 @@ export default function EmployeeInformation() {
     const [avatarUrl, setAvatarUrl] = useState();
     const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
     const messageError = "Ảnh không được để trống!!";
+    const [isEditing, setIsEditing] = useState(false);
+
+    function handleEditClick() {
+        setIsEditing(true);
+    }
 
     const [showPassword, setShowPassword] = useState(false);
     const [getPassword, setGetPassword] = useState([]);
@@ -270,7 +275,10 @@ export default function EmployeeInformation() {
                                         </div>
                                         <div className="col-md-8">
                                             <label htmlFor="tenDangNhap" className="form-label">
-                                                Tên đăng nhập</label>
+
+                                                <h5 className="m-0">Tên đăng nhập</h5>
+
+                                            </label>
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -286,8 +294,8 @@ export default function EmployeeInformation() {
                                             />
                                             <div className="row">
                                                 <>
-                                                    <label htmlFor="maKhau" className="form-label mt-3">
-                                                        Mật khẩu
+                                                    <label htmlFor="maKhau" className="form-label mt-2">
+                                                        <h5 className="m-0">Mật khẩu</h5>
                                                     </label>
                                                     <div className="input-group">
                                                         <input
@@ -306,7 +314,8 @@ export default function EmployeeInformation() {
                                                     </div>
 
                                                     <label htmlFor="nhapLaiMatKhau" className="form-label">
-                                                        Nhập lại mật khẩu
+
+                                                        <h5 className="m-0"> Nhập lại mật khẩu</h5>
                                                     </label>
                                                     <div className="input-group">
                                                         <input
@@ -326,17 +335,24 @@ export default function EmployeeInformation() {
                                                 </>
                                             </div>
                                             <label htmlFor="hoTen" className="form-label">
-                                                Họ và tên
+                                                <h5 className="m-0">Họ và tên:
+                                                <span style={{color: "red"}}> *</span></h5>
                                             </label>
                                             <div>
+                                                {isEditing ? (
                                                 <Field id="hoTen" name="name" type="text" className="form-control"/>
+                                                    ) : (
+                                                    <div>{employeeDetail?.name}</div>
+                                                    )}
                                                 <ErrorMessage component="span"
                                                               name="name"
                                                               className="text-danger"/>
                                             </div>
                                             <div>
                                                 <div>
-                                                    <label className="form-label">Giới tính:</label>
+                                                    <label className="form-label">
+                                                        <h5 className="m-0">Giới tính:
+                                                        <span style={{color: "red"}}> *</span></h5></label>
                                                 </div>
                                                 <label className='m-2'>
                                                     <Field type="radio" name="gender" value="0"/>
@@ -356,7 +372,10 @@ export default function EmployeeInformation() {
                                                           name="gender"
                                                           className="text-danger"/>
                                             <div><label htmlFor="ngaySinh" className="form-label">
-                                                Ngày sinh:
+
+                                                <h5 className="m-0">Ngày sinh:
+
+                                                <span style={{color: "red"}}> *</span></h5>
                                             </label></div>
                                             <Field id="ngaySinh" name="birthDay" type="date"
                                                    className="form-control"/>
@@ -365,37 +384,59 @@ export default function EmployeeInformation() {
                                                           className="text-danger"/>
                                             <div>
                                                 <label htmlFor="email" className="form-label">
-                                                    Email:
+
+                                                    <h5 className="m-0">Email:
+
+                                                    <span style={{color: "red"}}> *</span></h5>
                                                 </label></div>
+                                            {isEditing ? (
+
+
                                             <Field id="email" name="email" type="text"
                                                    className="form-control"/>
+                                            ) : (
+                                                <div>{employeeDetail?.email}</div>
+                                            )}
                                             <ErrorMessage component="span"
                                                           name="email"
                                                           className="text-danger"/>
                                             <div>
                                                 <label htmlFor="diaChi" className="form-label">
-                                                    Địa chỉ:
+                                                    <h5 className="m-0">Địa chỉ:<span style={{color: "red"}}> *</span></h5>
                                                 </label></div>
+                                            {isEditing ? (
+
+
                                             <Field id="diaChi" name="address" type="text"
-                                                   className="form-control"/>
+                                                   className="form-control"/> ) : (
+                                            <div>{employeeDetail?.address}</div>
+                                            )}
                                             <ErrorMessage component="span"
                                                           name="address"
                                                           className="text-danger"/>
                                             <div>
                                                 <label htmlFor="soDienThoai" className="form-label">
-                                                    Số điện thoại:
+                                                    <h5 className="m-0"> Số điện thoại:<span style={{color: "red"}}> *</span></h5>
                                                 </label></div>
+                                            {isEditing ? (
                                             <Field id="soDienThoai" name="phoneNumber" type="text"
                                                    className="form-control"/>
+                                            ) : (
+                                                <div>{employeeDetail?.phoneNumber}</div>
+                                            )}
                                             <ErrorMessage component="span"
                                                           name="phoneNumber"
                                                           className="text-danger"/>
                                             <div>
                                                 <label htmlFor="CMND/CCCD" className="form-label">
-                                                    CMND/CCCD:
+                                                    <h5 className="m-0">  Số căn cước:<span style={{color: "red"}}> *</span></h5>
                                                 </label></div>
+                                            {isEditing ? (
                                             <Field id="CMND/CCCD" name="citizenCode" type="text"
                                                    className="form-control"/>
+                                            ) : (
+                                                <div>{employeeDetail?.citizenCode}</div>
+                                            )}
                                             <ErrorMessage component="span"
                                                           name="citizenCode"
                                                           className="text-danger"/>
@@ -426,19 +467,25 @@ export default function EmployeeInformation() {
                                                                 :
                                                                 <>
                                                                     <div
-                                                                        className="text-center mt-2 btn-group col-md-6">
+                                                                        className="text-center mt-2 btn-group col-md-6 mb-2">
                                                                         <button type="button"
                                                                                 className="btn btn-secondary">
                                                                             <b>Quay lại</b>
                                                                         </button>
                                                                     </div>
                                                                     <div
-                                                                        className="text-center mt-2 btn-group col-md-6">
-                                                                        <button
-                                                                            onClick={handleUpdateClick}
-                                                                            type="submit" className="btn btn-success">
-                                                                            <b>Cập nhật</b>
-                                                                        </button>
+                                                                        className="text-center mt-2 btn-group col-md-6 mb-2">
+                                                                        {isEditing ? (
+                                                                            <button type="submit"
+                                                                                    onClick={handleUpdateClick}
+                                                                                    className="btn btn-success">
+                                                                                <b>Cập nhật</b>
+                                                                            </button>
+                                                                        ) : (
+                                                                            <button onClick={handleEditClick} className="btn btn-primary">
+                                                                                <b>Sửa</b>
+                                                                            </button>
+                                                                        )}
                                                                     </div>
                                                                 </>
                                                         }

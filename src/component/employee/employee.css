@@ -2,16 +2,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
 
 
-body {
-    background-color: #eee;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300
-}
+/*body {*/
+/*    background-color: #eee;*/
+/*    font-family: "Poppins", sans-serif;*/
+/*    font-weight: 300*/
+/*}*/
 
-thead {
-    font-size: 12px;
-    text-align: center;
-}
+/*thead {*/
+/*    font-size: 12px;*/
+/*    text-align: center;*/
+/*}*/
 
 .pagination {
     list-style: none;
@@ -36,7 +36,7 @@ thead {
 .pagination .page-num:hover,
 .pagination .page-previous,
 .pagination .page-next {
-    background-color: #0D6EFD;
+    background-color: gray;
     color: white;
 }
 
@@ -54,26 +54,26 @@ thead {
     background: #0D6EFD;
 }
 
-.height {
-    height: 100vh
-}
+/*.height {*/
+/*    height: 100vh*/
+/*}*/
 
-.card {
-    border: none;
-    padding: 20px;
-    position: relative
-}
+/*.dong .card{*/
+/*    border: none;*/
+/*    padding: 20px;*/
+/*    position: relative*/
+/*}*/
 
 .btn-group {
     display: flex;
     justify-content: space-between;
 }
 
-label {
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    color: #222222;
-    margin-bottom: 5px;
-    display: inline-block;
-}
+/*label.dong{*/
+/*    font-family: Arial, sans-serif;*/
+/*    font-size: 14px;*/
+/*    font-weight: bold;*/
+/*    color: #222222;*/
+/*    margin-bottom: 5px;*/
+/*    display: inline-block;*/
+/*}*/

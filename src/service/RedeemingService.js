@@ -14,9 +14,9 @@ export const getContractList = async (page, contractCode, customerName, productN
 }
 
 
-export const redeem = async (id, date) => {
+export const redeem = async (id) => {
     try {
-     await axios.patch("http://localhost:8080/api/employee/redeem/pay/" + id +"?redeemDate=" + date)
+     await axios.patch("http://localhost:8080/api/employee/redeem/pay/" + id )
     }catch (e) {
         console.log(e)
     }

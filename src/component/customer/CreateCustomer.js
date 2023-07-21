@@ -158,10 +158,10 @@ export function CreateCustomer() {
                     backCitizen: "",
                 }}
                 validationSchema={Yup.object({
-                    name: Yup.string().required("Tên không được để trống").matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
+                    name: Yup.string().required("Tên không được để trống").matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀẾỂưạảấầẩẫậắằẳẵặẹẻẽềếểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
                         .min(5, 'Ký tự phải nhiều hơn 5')
                         .max(100, 'Ký tự phải ít hơn 100'),
-                    birthday: Yup.date().required("Ngày tháng năm sinh không được để trống").max(getMinDate(), 'Người dùng phải từ 18 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
+                    birthday: Yup.date().required("Ngày, tháng, năm sinh không được để trống").max(getMinDate(), 'Người dùng phải từ 18 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
                     gender: Yup.number().required("Giới tính không được để trống"),
                     phoneNumber: Yup.string().required("Số diện thoại không được để trống")
                         .matches(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/, 'Nhập đúng định dạng SDT VD: 098XXXXXXX (X là chữ số)')
@@ -471,7 +471,7 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="name"
                                                         type="text"
-                                                        required
+
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -489,7 +489,6 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="birthday"
                                                         type="date"
-                                                        required
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -515,7 +514,7 @@ export function CreateCustomer() {
                                                             {' '}Khác
                                                         </label>
                                                         <ErrorMessage
-                                                            component="span"
+                                                            component="div"
                                                             name="gender"
                                                             className="text-danger"
                                                         />
@@ -530,7 +529,7 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="email"
                                                         type="text"
-                                                        required
+
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -548,7 +547,7 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="phoneNumber"
                                                         type="text"
-                                                        required
+
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -566,7 +565,7 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="citizenCode"
                                                         type="text"
-                                                        required
+
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -584,7 +583,7 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="address"
                                                         type="text"
-                                                        required
+
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -613,7 +612,7 @@ export function CreateCustomer() {
                                                                 <div
                                                                     className="text-center ms-lg-3 ms-md-2 ms-sm-2">
                                                                     <Link
-                                                                        to={"/"}
+                                                                        to={"/nav/manager-customer"}
                                                                         type="button"
                                                                         className="btn btn-secondary"
                                                                     >

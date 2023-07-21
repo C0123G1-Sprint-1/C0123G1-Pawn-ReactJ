@@ -64,12 +64,32 @@ export function RegisterPawn() {
                 productTypeId: 0
             }}
                     validationSchema={yup.object({
-                        name: yup.string().required("bạn không không thể để trống"),
-                        phone: yup.string().required("bạn không không thể để trống"),
-                        email: yup.string().required("bạn không không thể để trống"),
-                        address: yup.string().required("bạn không không thể để trống"),
-                        contentNote: yup.string().required("bạn không không thể để trống"),
-                        productTypeId: yup.number().required("bạn không không thể để trống").min(1,'vui long chọn')
+                        name: yup.string().required("Vui lòng nhập họ tên"),
+                        phone: yup.string().required("Vui lòng nhập số điện thoại ")
+                            .test(
+                                "check-phone-number",
+                                "Số điện thoại của bạn đã tồn tại",
+                                async function (value) {
+                                    if (!value) {
+                                        return true;
+                                    }
+                                    const isPhoneNumberExists = await service.checkPhone(value);
+                                    return !isPhoneNumberExists;
+                                }),
+                        email: yup.string().required("Vui lòng nhập email ")
+                            .test(
+                                "check-email",
+                                "Email của bạn đã tồn tại",
+                                async function (value) {
+                                    if (!value) {
+                                        return true;
+                                    }
+                                    const emailExists = await service.checkEmail(value);
+                                    return !emailExists;
+                                }),
+                        address: yup.string().required("Vui lòng nhập địa chỉ của bạn"),
+                        contentNote: yup.string().required("Vui lòng nhập nội dung - Ghi chú "),
+                        productTypeId: yup.number().min(1,'Vui lòng chọn dịch vụ cầm đồ')
 
                     })}
                     onSubmit={(values, {resetForm}) => {
@@ -101,12 +121,15 @@ export function RegisterPawn() {
                         }
                         create()
                         resetForm();
+                        setName("")
+                        setPhone("")
+                        setEmail("")
                     }}>
                 {
                     <div className="card-register" style={{backgroundColor: "white"}}>
                         <div className="card-register-left">
-                            <div style={{padding : "1.5rem",marginTop:"0rem"}} className="title">ĐIỀU KIỆN ĐẢM BẢO AN TOÀN</div>
-                            <div className="content">
+                            <div  className="title-thang">ĐIỀU KIỆN ĐẢM BẢO AN TOÀN</div>
+                            <div style={{fontWeight : "400",fontFamily :"Times New Roman"}}  className="content">
                                 Tiệm cầm đồ <span style={{color: "red"}}>Pawn Shop</span> tuân thủ
                                 nghiêm ngặt quy trình của Nhà nước về lĩnh vực cầm đồ, cầm cố tài sản
                                 với lãi suất trong giới hạn cho phép của cơ quan có thẩm quyền. Đặc
@@ -118,21 +141,24 @@ export function RegisterPawn() {
                                 <img
                                     src="https://chovayhanoi.com/wp-content/uploads/2020/02/024060710868.png"
                                     alt="" style={{backgroundColor: "white",marginTop : "3rem"}}/>
-                                <h5 style={{textAlign :"center"}} className="uppercase">Kinh Doanh Cầm Đồ</h5>
+                                <h5 style={{textAlign :"center",fontWeight:"500",fontSize : "25px"}} className="uppercase">Kinh Doanh Cầm Đồ</h5>
                             </div>
                         </div>
-                        <div id="create" className="card-register-right">
+                        <div id="create" className="card-register-right ">
                             <div className="container-fluid">
                                 <div className="height d-flex justify-content-center align-items-center">
                                     <div className="register-form">
                                         <div style={{textAlign: "center"}}>
-                                            <h3>Đăng Ký Cầm Đồ</h3>
+                                            <h3 style={{textTransform: "uppercase",
+                                                color: "#c57101",    textAlign: "center",  fontSize:" 30px",
+                                                marginTop:"0.5rem",fontWeight: "600"}}>Đăng Ký Cầm Đồ</h3>
                                         </div>
                                         <Form>
-                                            <div className="mt-4 inputs">
-                                                <Field as='select' aria-label="Default select example"
-                                                    className="form-select" name='productTypeId'>
-                                                    <option value={0}>Chọn</option>
+                                            <div  style={{height:"44px"}} className=" inputs">
+                                                <label className="label-thang">Dịch vụ cầm đồ <span style={{color : "red"}}>*</span></label>
+                                                <Field id="select-pawn" as='select' aria-label="Default select example"
+                                                   className="form-select" name='productTypeId'>
+                                                    <option value={0}>Mời chọn</option>
                                                     {
                                                         productType && productType.map((s) => (
                                                             <option key={s.id}
@@ -144,38 +170,38 @@ export function RegisterPawn() {
                                                 <ErrorMessage className='form-err' component='span'
                                                               name='productTypeId'/>
                                             </div>
-                                            <div className="mt-2 inputs">
-                                                <label>Họ tên</label>
+                                            <div className="mt-5 inputs">
+                                                <label style={{marginTop:"-2rem"}} className="label-thang" >Họ tên <span style={{color : "red"}}>*</span></label>
                                                 <Field type="text" className="form-control" name='name'/>
                                                 <ErrorMessage className='form-err' component='span' name='name'/>
-                                                <p style={{color: "red"}}>{name}</p>
+                                                <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{name}</p>
                                             </div>
                                             <div className="mt-2 inputs">
-                                                <label>Số điện thoại</label>
+                                                <label  className="label-thang" >Số điện thoại <span style={{color : "red"}}>*</span></label>
                                                 <Field type="text" className="form-control" name='phone'/>
                                                 <ErrorMessage className='form-err' component='span' name='phone'/>
-                                                <p style={{color: "red"}}>{phone}</p>
+                                                <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{phone}</p>
                                             </div>
                                             <div className="mt-2 inputs">
-                                                <label>Email</label>
+                                                <label  className="label-thang" >Email <span style={{color : "red"}}>*</span></label>
                                                 <Field type="text" className="form-control" name='email'/>
                                                 <ErrorMessage className='form-err' component='span' name='email'/>
-                                                <p style={{color: "red"}}>{email}</p>
+                                                <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{email}</p>
 
                                             </div>
                                             <div className="mt-2 inputs">
-                                                <label>Địa chỉ</label>
+                                                <label  className="label-thang" >Địa chỉ <span style={{color : "red"}}>*</span></label>
                                                 <Field type="text" className="form-control" name='address'/>
                                                 <ErrorMessage className='form-err' component='span' name='address'/>
-                                                <p style={{color: "red"}}>{address}</p>
+                                                <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{address}</p>
 
                                             </div>
                                             <div className="mt-2 inputs">
-                                                <label>Nội Dung - Ghi Chú</label>
-                                                <Field as="textarea" type="text" className="form-control"
+                                                <label  className="label-thang" >Nội dung - Ghi chú <span style={{color : "red"}}>*</span></label>
+                                                <Field id="select-pawn" as="textarea" type="text" className="form-control"
                                                        name='contentNote'/>
                                                 <ErrorMessage className='form-err' component='span' name='contentNote'/>
-                                                <p style={{color: "red"}}>{contentNote}</p>
+                                                <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{contentNote}</p>
 
                                             </div>
                                             <div className="text-center mt-4 btn-group">
