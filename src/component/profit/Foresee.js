@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useOutletContext} from "react-router";
+import moment from "moment";
 
 export default function Foresee() {
     const contracts = useOutletContext();
@@ -10,7 +11,7 @@ export default function Foresee() {
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
                     <tr>
-                        <th>Mã Hợp Đồng</th>
+                        <th>Mã HD</th>
                         <th>Tiền Cho Vay(VND)</th>
                         <th>Tiền Lãi (VND)</th>
                         <th>Ngày Bắt Đầu</th>
@@ -24,12 +25,12 @@ export default function Foresee() {
                         contracts ?
                             contracts.map((contract, index) =>
                                 <tr key={index}>
-                                    <td>{contract.contractCode}</td>
-                                    <td>{contract.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td>{contract.interest?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td>{contract.startDate}</td>
-                                    <td>{contract.endDate}</td>
-                                    <td>{contract.profitForesee?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td style={{textAlign: "center"}}>{contract.contractCode}</td>
+                                    <td style={{textAlign: "center"}}>{contract.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td style={{textAlign: "center"}}>{contract.interest?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td style={{textAlign: "center"}}>{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                    <td style={{textAlign: "center"}}>{moment(contract.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                    <td style={{textAlign: "center"}}>{contract.profitForesee?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                     <td className="detail-button">
                                         <a href="#">
                                             <i className="bi bi-info-circle detail" title="Chi tiết"/>
