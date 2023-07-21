@@ -1,14 +1,22 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap"
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {Outlet} from "react-router";
 import jwt from 'jwt-decode';
 
 export default function Navbars() {
     const token = localStorage.getItem('token');
-    const decodedToken = jwt(token);
-    console.log(decodedToken.sub)
+    const [decodedToken, setDecodedToken] = useState("");
+
+    useEffect(() => {
+        if (token) {
+            const decoded = jwt(token);
+            setDecodedToken(decoded);
+        } else {
+            // Xử lý khi không có token trong localStorage
+        }
+    }, [token]);
     return (
         <>
             <nav className="navbar-expand-lg p-0"
@@ -25,8 +33,9 @@ export default function Navbars() {
                  }}>
                 <div className="container-fluid" style={{height: "100%", justifyContent: "center"}}>
                     <ul className=""
-                        style={{height: "100%",  display: "flex",
-                            justifyContent: "center" ,
+                        style={{
+                            height: "100%", display: "flex",
+                            justifyContent: "center",
                             flexDirection: "row",
                             listStyle: "none",
                             alignItems: "center"
@@ -42,7 +51,23 @@ export default function Navbars() {
                                     display: "flex",
                                     padding: "10px"
                                 }
-                            }} className="nav-link active" aria-current="page" to={"/pawn"}>
+                            }} className="nav-link" to={"/nav/info-store"}>
+                                Thông tin cửa hàng
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink style={({isActive}) => {
+                                return {
+                                    backgroundColor: isActive ? "#27533e" : "",
+                                    color: isActive ? "#fff" : "",
+                                    borderRadius: "10px",
+                                    height: "5vh",
+                                    alignItems: "center",
+                                    display: "flex",
+                                    padding: "10px"
+                                }
+                            }} className="nav-link active" aria-current="page"
+                                     to={"/nav/transaction-history/create-contract"}>
                                 Cầm đồ
                             </NavLink>
                         </li>
@@ -74,21 +99,6 @@ export default function Navbars() {
                                 }
                             }} className="nav-link" to={"/nav/redeem"}>
                                 Trả đồ
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink style={({isActive}) => {
-                                return {
-                                    backgroundColor: isActive ? "#27533e" : "",
-                                    color: isActive ? "#fff" : "",
-                                    borderRadius: "10px",
-                                    height: "5vh",
-                                    alignItems: "center",
-                                    display: "flex",
-                                    padding: "10px"
-                                }
-                            }} className="nav-link" to={"/nav/info-store"}>
-                                Thông tin cửa hàng
                             </NavLink>
                         </li>
                         {
@@ -136,8 +146,8 @@ export default function Navbars() {
                                             display: "flex",
                                             padding: "10px"
                                         }
-                                    }} className="nav-link" to={"/nav/api/employee"}>
-                                        Quản lý nhân viên
+                                    }} className="nav-link" to={"/nav/manager-customer"}>
+                                        Quản lý khách hàng
                                     </NavLink>
                                 </li>
                         }
@@ -153,29 +163,16 @@ export default function Navbars() {
                                     display: "flex",
                                     padding: "10px"
                                 }
-                            }} className="nav-link" to={"/nav/detail/employee/4"}>
+                            }} className="nav-link" to={"/nav/detail/employee/1"}>
                                 Thông tin cá nhân
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink style={({isActive}) => {
-                                return {
-                                    backgroundColor: isActive ? "#27533e" : "",
-                                    color: isActive ? "#fff" : "",
-                                    borderRadius: "10px",
-                                    height: "5vh",
-                                    alignItems: "center",
-                                    display: "flex",
-                                    padding: "10px"
-                                }
-                            }} className="nav-link" to={"/message"}>
-                                Nhắn tin
                             </NavLink>
                         </li>
                     </ul>
                 </div>
             </nav>
-            <Outlet/>
+            <div style={{minHeight: "90vh"}}>
+                <Outlet/>
+            </div>
         </>
     )
 }

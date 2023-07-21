@@ -10,10 +10,10 @@ export function Footer() {
             <footer id="footer" className="footer">
                 <div className="container">
                     <div className="row gy-4">
-                        <div className="col-lg-5 col-md-12 footer-info">
+                        <div className="col-lg-3 col-md-12 footer-info">
                             <div className="logo d-flex align-items-center">
                                 <img
-                                    src="./anh/pawnshop.png"
+                                    src="/anh/pawnshop.png"
                                     style={{ maxHeight: "10rem" }}
                                     alt=""
                                 />
@@ -30,34 +30,32 @@ export function Footer() {
                                 </a>
                             </div>
                         </div>
-                        <div className="col-lg-2 col-6 footer-links">
+                        <div className="col-lg-3 col-6 footer-links" >
                             <h4>Điều khiển &amp; Điều kiện</h4>
                             <ul>
+
                                 <li>
-                                    <a href="#">Điều khiển &amp; Điều kiện</a>
+                                    <a className='font-a' style={{color : "#DDDDDD"}} href="#">Chính sách bảo mật </a>
                                 </li>
                                 <li>
-                                    <a href="#">Chính sách bảo mật thông tin</a>
-                                </li>
-                                <li>
-                                    <a href="#">Chính sách bảo quản tài sản</a>
+                                    <a  style={{color : "#DDDDDD"}}  className='font-a' href="#">Chính sách bảo quản tài sản</a>
                                 </li>
                             </ul>
                         </div>
-                        <div className="col-lg-2 col-6 footer-links">
+                        <div className="col-lg-3 col-6 footer-links">
                             <h4>Hỗ trợ khách hàng</h4>
                             <ul>
                                 <li>
-                                    <a href="#">Câu hỏi thường gặp</a>
+                                    <a style={{color : "#DDDDDD"}}  className='font-a' href="#">Câu hỏi thường gặp</a>
                                 </li>
                                 <li>
-                                    <a href="#">Sự cố hay gặp</a>
+                                    <a style={{color : "#DDDDDD"}}  className='font-a' href="#">Sự cố hay gặp</a>
                                 </li>
                             </ul>
                         </div>
                         <div className="col-lg-3 col-md-12 footer-contact text-center text-md-start">
                             <h4>Liên hệ</h4>
-                            <p>
+                            <p className='font-a' >
                                 280 Trần Hưng Đạo, <br />
                                 An Hải Tây , Sơn Trà ,<br />
                                 Đà Nẵng <br />

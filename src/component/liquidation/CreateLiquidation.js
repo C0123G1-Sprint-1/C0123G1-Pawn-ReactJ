@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {ThreeCircles} from "react-loader-spinner";
-import * as yup from "yup"
 import jwt from 'jwt-decode';
 import {Modal} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -17,10 +16,7 @@ import {Link, NavLink} from "react-router-dom";
 import * as contractService from "../../service/ContractService";
 
 
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
+
 
 export function CreateLiquidation() {
     const navigate = useNavigate();
@@ -190,7 +186,7 @@ export function CreateLiquidation() {
                             customers: customers.find((c) => c.id === idCustomer),
                             products: data.products
                         });
-                        navigate("/nav/info-store/transaction-history")
+                        navigate("/nav/info-store/all-contract")
                         const save = () => {
                             Swal.fire({
                                 position: 'center',
@@ -205,7 +201,7 @@ export function CreateLiquidation() {
                 {
                     ({isSubmitting}) => (
                         <>
-                            <div className="container mb-5">
+                            <div className="container mt-5">
                                 <div className="row height d-flex justify-content-center align-items-center">
                                     <div className="col-md-6">
                                         <div className="card px-5 py-4">
@@ -289,7 +285,7 @@ export function CreateLiquidation() {
                                                         <NavLink
                                                             type="button"
                                                             className="btn btn-secondary"
-                                                            to={"/"}>
+                                                            to={"/nav/info-store/transaction-history"}>
                                                             Quay lại
                                                         </NavLink>
                                                     </div>

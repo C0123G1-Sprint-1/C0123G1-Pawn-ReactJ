@@ -15,6 +15,7 @@ import {
     checkEmailExists, checkPhoneNumberExists,
     createEmployee
 } from "../../service/employeeService";
+import jwt from "jwt-decode";
 
 
 export function CreateEmployee() {
@@ -23,6 +24,8 @@ export function CreateEmployee() {
     const [progress, setProgress] = useState(0);
     const [imgErr, setImgErr] = useState("");
     const navigate = useNavigate();
+
+
 
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
@@ -176,152 +179,155 @@ export function CreateEmployee() {
                     <div className="container mt-5 mb-5">
                         <div className="d-flex justify-content-center align-items-center">
                             <div className="col-md-6">
-                                <div className="card px-1 py-2">
-                                    <div style={{textAlign: "center"}}>
-                                        <h1>Thêm Mới Nhân Viên</h1>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-4">
-                                            <div
-                                                className="column-gap-lg-3"
-                                                style={{width: "92%", marginBottom: "5%", marginLeft: "3%"}}
-                                            >
-                                                {selectedFile && (
-                                                    <img
-                                                        src={URL.createObjectURL(selectedFile)}
-                                                        className="rounded-circle mt-2 "
-                                                        style={{ width: "180px",height: "180px", display : "flex", margin: `0 auto`, border: "1px solid" }}
-                                                        height="100px"
+                                <div className="dong">
+                                    <div className="card px-1 py-2">
+                                        <div style={{textAlign: "center"}}>
+                                            <h1>Thêm Mới Nhân Viên</h1>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-4">
+                                                <div
+                                                    className="column-gap-lg-3"
+                                                    style={{width: "92%", marginBottom: "5%", marginLeft: "3%"}}
+                                                >
+                                                    {selectedFile && (
+                                                        <img
+                                                            src={URL.createObjectURL(selectedFile)}
+                                                            className="rounded-circle mt-2 "
+                                                            style={{ width: "180px",height: "180px", display : "flex", margin: `0 auto`, border: "1px solid" }}
+                                                            height="100px"
+                                                        />
+                                                    )}
+                                                </div>
+                                                <div className="form-outline">
+                                                    <Field
+                                                        type="file"
+                                                        onChange={(e) => handleFileSelect(e)}
+                                                        id="image"
+                                                        name={"image"}
+                                                        className="form-control-plaintext d-none "
                                                     />
-                                                )}
-                                            </div>
-                                            <div className="form-outline">
-                                                <Field
-                                                    type="file"
-                                                    onChange={(e) => handleFileSelect(e)}
-                                                    id="image"
-                                                    name={"image"}
-                                                    className="form-control-plaintext d-none "
-                                                />
-                                                <p>
-                                                    <label
-                                                        htmlFor="image"
-                                                        style={{
-                                                            display: "flex",
-                                                            padding: "6px 12px",
-                                                            border: "1px solid",
-                                                            borderRadius: "4px",
-                                                            marginLeft: "3%"
-                                                        }}
-                                                    >
-                                                        Chọn hình ảnh
-                                                    </label>
-                                                </p>
-                                                {!selectedFile && (
-                                                    <span className={"mt-2 text-danger"}>
+                                                    <p>
+                                                        <label
+                                                            htmlFor="image"
+                                                            className="dong"
+                                                            style={{
+                                                                display: "flex",
+                                                                padding: "6px 12px",
+                                                                border: "1px solid",
+                                                                borderRadius: "4px",
+                                                                marginLeft: "3%"
+                                                            }}
+                                                        >
+                                                            Chọn hình ảnh
+                                                        </label>
+                                                    </p>
+                                                    {!selectedFile && (
+                                                        <span className={"mt-2 text-danger"}>
                               Chưa có hình ảnh được chọn
                             </span>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div className="col-8">
-                                            <div className="mt-2 inputs">
-                                                <label>
-                                                    Họ và tên <span style={{color: "red"}}>*</span>
-                                                </label>
-                                                <Field type="text" className="form-control" name="name"/>
-                                                <ErrorMessage name="name" component="p" style={{color: "red"}}/>
-                                            </div>
-                                            <div className="mt-2 inputs">
-                                                <label>
-                                                    Ngày sinh <span style={{color: "red"}}>*</span>
-                                                </label>
-                                                <Field
-                                                    type="date"
-                                                    className="form-control"
-                                                    name="birthDay"
-                                                />
-                                                <ErrorMessage name="birthDay" component="p" style={{color: "red"}}/>
-                                            </div>
-                                            <div className="mt-2 inputs row">
-                                                <div className="col-md-3">
-                                                    <label className="form-label">Giới tính</label>
+                                                    )}
                                                 </div>
-                                                <div className="d-flex col-md-9">
-                                                    <div style={{marginLeft:"50px"}}>
-                                                        <Field type="radio" name="gender" value="1"/>
-                                                        Nam
+                                            </div>
+                                            <div className="col-8">
+                                                <div className="mt-2 inputs">
+                                                    <label className="dong">
+                                                        Họ và tên <span style={{color: "red"}}>*</span>
+                                                    </label>
+                                                    <Field type="text" className="form-control" name="name"/>
+                                                    <ErrorMessage name="name" component="p" style={{color: "red"}}/>
+                                                </div>
+                                                <div className="mt-2 inputs">
+                                                    <label className="dong">
+                                                        Ngày sinh <span style={{color: "red"}}>*</span>
+                                                    </label>
+                                                    <Field
+                                                        type="date"
+                                                        className="form-control"
+                                                        name="birthDay"
+                                                    />
+                                                    <ErrorMessage name="birthDay" component="p" style={{color: "red"}}/>
+                                                </div>
+                                                <div className="mt-2 inputs row">
+                                                    <div className="col-md-3">
+                                                        <label className="form-label dong">Giới tính</label>
                                                     </div>
-                                                    <div style={{marginLeft:"50px"}}>
-                                                        <Field type="radio" name="gender" value="0"/>
-                                                        Nữ
+                                                    <div className="d-flex col-md-9">
+                                                        <div style={{marginLeft:"50px"}}>
+                                                            <Field type="radio" name="gender" value="1"/>
+                                                            Nam
+                                                        </div>
+                                                        <div style={{marginLeft:"50px"}}>
+                                                            <Field type="radio" name="gender" value="0"/>
+                                                            Nữ
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div className="mt-2 inputs">
-                                                <label>
-                                                    Email <span style={{color: "red"}}>*</span>
-                                                </label>
-                                                <Field type="email" className="form-control" name="email"/>
-                                                <ErrorMessage name="email" component="p" style={{color: "red"}}/>
-                                            </div>
-
-                                            <div className="mt-2 inputs">
-                                                <label>
-                                                    Địa chỉ <span style={{color: "red"}}>*</span>
-                                                </label>
-                                                <Field as="textarea"
-                                                       type="text"
-                                                       className="form-control"
-                                                       name="address"
-                                                       id="address"
-                                                />
-                                                <ErrorMessage name="address" component="p" style={{color: "red"}}/>
-                                            </div>
-
-                                            <div className="mt-2 inputs">
-                                                <label>
-                                                    Số điện thoại <span style={{color: "red"}}>*</span>
-                                                </label>
-                                                <Field
-                                                    type="text"
-                                                    className="form-control"
-                                                    name="phoneNumber"
-                                                />
-                                                <ErrorMessage name="phoneNumber" component="p" style={{color: "red"}}/>
-                                            </div>
-
-                                            <div className="mt-2 inputs">
-                                                <label>
-                                                    CMND/Hộ chiếu <span style={{color: "red"}}>*</span>
-                                                </label>
-                                                <Field type="text" className="form-control" name="citizenCode"/>
-                                                <ErrorMessage name="citizenCode" component="p" style={{color: "red"}}/>
-                                            </div>
-
-                                            <div className="mt-2 inputs">
-                                                <label>
-                                                    Lương(VND)<span style={{color: "red"}}>*</span>
-                                                </label>
-                                                <Field type="number" className="form-control" name="salary"/>
-                                                <ErrorMessage name="salary" component="p" style={{color: "red"}}/>
-                                            </div>
-
-                                            <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                                <div className="text-center" style={{marginLeft: "10%"}}>
-                                                    <NavLink
-                                                        type="button"
-                                                        className="btn btn-secondary"
-                                                        to={"/"}>
-                                                        Quay lại
-                                                    </NavLink>
+                                                <div className="mt-2 inputs">
+                                                    <label className="dong">
+                                                        Email <span style={{color: "red"}}>*</span>
+                                                    </label>
+                                                    <Field type="email" className="form-control" name="email"/>
+                                                    <ErrorMessage name="email" component="p" style={{color: "red"}}/>
                                                 </div>
 
-                                                <div className="text-center" style={{marginRight: "10%"}}>
-                                                    <button type="submit" className="btn btn-success">
-                                                        <b className="text-center">Thêm mới</b>
-                                                    </button>
+                                                <div className="mt-2 inputs">
+                                                    <label className="dong">
+                                                        Địa chỉ <span style={{color: "red"}}>*</span>
+                                                    </label>
+                                                    <Field as="textarea"
+                                                           type="text"
+                                                           className="form-control"
+                                                           name="address"
+                                                           id="address"
+                                                    />
+                                                    <ErrorMessage name="address" component="p" style={{color: "red"}}/>
+                                                </div>
+
+                                                <div className="mt-2 inputs">
+                                                    <label className="dong">
+                                                        Số điện thoại <span style={{color: "red"}}>*</span>
+                                                    </label>
+                                                    <Field
+                                                        type="text"
+                                                        className="form-control"
+                                                        name="phoneNumber"
+                                                    />
+                                                    <ErrorMessage name="phoneNumber" component="p" style={{color: "red"}}/>
+                                                </div>
+
+                                                <div className="mt-2 inputs">
+                                                    <label className="dong">
+                                                        CMND/Hộ chiếu <span style={{color: "red"}}>*</span>
+                                                    </label>
+                                                    <Field type="text" className="form-control" name="citizenCode"/>
+                                                    <ErrorMessage name="citizenCode" component="p" style={{color: "red"}}/>
+                                                </div>
+
+                                                <div className="mt-2 inputs">
+                                                    <label className="dong">
+                                                        Lương(VND)<span style={{color: "red"}}>*</span>
+                                                    </label>
+                                                    <Field type="number" className="form-control" name="salary"/>
+                                                    <ErrorMessage name="salary" component="p" style={{color: "red"}}/>
+                                                </div>
+
+                                                <div className="text-center mt-4 btn-group p-3 m-l-2">
+                                                    <div className="text-center" style={{marginLeft: "10%"}}>
+                                                        <NavLink
+                                                            type="button"
+                                                            className="btn btn-secondary"
+                                                            to={"/nav/api/employee"}>
+                                                            Quay lại
+                                                        </NavLink>
+                                                    </div>
+
+                                                    <div className="text-center" style={{marginRight: "10%"}}>
+                                                        <button type="submit" className="btn btn-success">
+                                                            <b className="text-center">Thêm mới</b>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
