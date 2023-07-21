@@ -13,6 +13,7 @@ import {
 import {useNavigate} from "react-router";
 import * as Swal from "sweetalert2";
 import {Link, NavLink} from "react-router-dom";
+import * as contractService from "../../service/ContractService";
 
 export function CreateLiquidation() {
     const navigate = useNavigate();

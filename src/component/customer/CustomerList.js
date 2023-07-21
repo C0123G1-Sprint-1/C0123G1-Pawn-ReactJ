@@ -200,18 +200,19 @@ export function CustomerList() {
                                             search(value)
                                         }
                                         }>
-                                        <Form className="d-flex m-1">
+                                        <Form className="d-flex m-2">
                                             <Field
-                                                style={{paddingTop: "5px", width: '70%'}}
-                                                className="form-control d-flex"
+                                                style={{width: "18vw", height: "38px",marginLeft:"20%"}}
+                                                className="form-control me-3"
                                                 type="text"
+                                                name="name"
                                                 placeholder="Tìm kiếm theo tên khách hàng"
                                                 aria-label="Search"
-                                                name='name'
+
                                             />
-                                            <label htmlFor=""> </label>
-                                            <button type='submit' className="btn btn-outline-success m-2"><i
-                                                className="bi bi-search"/></button>
+                                            <button className="btn btn-outline-success" type="submit">
+                                                <i className="bi bi-search"/>
+                                            </button>
                                         </Form>
                                     </Formik>
                                 </div>
