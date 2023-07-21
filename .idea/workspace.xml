@@ -34,7 +34,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;" />
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,28 +81,20 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
-  <component name="ReactDesignerToolWindowState">
-    <option name="myId2Visible">
-      <map>
-        <entry key="com.haulmont.rcb.reactComponents" value="false" />
-        <entry key="com.haulmont.rcb.reactInspector" value="false" />
-      </map>
-    </option>
-  </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\customer" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\employee" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\liquidation" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\redeem" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\all_contract" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service\all_contract" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\customer" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\employee" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\liquidation" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -332,11 +326,11 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="498" y="129" key="RollbackChangesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689774864295" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1689940130407">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1689942627371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689845698633" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689940130407" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689942627371" />
     <state x="563" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1689940163282">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
