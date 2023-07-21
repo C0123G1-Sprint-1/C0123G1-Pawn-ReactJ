@@ -74,7 +74,7 @@ export function Footer() {
                         <strong>
                             <span>C0123G1</span>
                         </strong>
-                        . All Rights Reserved
+                        . All rights reserved
                     </div>
                 </div>
             </footer>

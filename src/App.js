@@ -42,6 +42,7 @@ import {Header} from "./component/register-pawn/Header";
 import {RegisterPawn} from "./component/register-pawn/RegisterPawn";
 import {Footer} from "./component/register-pawn/Footer";
 import {UpdateContract} from "./component/contract/UpdateContract";
+import {Condition} from "./component/register-pawn/Condition";
 
 function App() {
     return (
@@ -49,6 +50,7 @@ function App() {
             <Header/>
             <Routes>
                 <Route path='/' element={<List/>}/>
+                <Route path='/condition' element={<Condition/>}/>
                 <Route path={"/nav"} element={<Navbars/>}>
                     <Route path={"/nav/info-store"} element={<InfoStore/>}>
                         <Route path={"/nav/info-store"} element={<Profit/>}>
