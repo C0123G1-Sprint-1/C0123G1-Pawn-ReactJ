@@ -38,6 +38,7 @@ import ImageUploaderFile from "./component/customer/OCRCitizen";
 import {UpdateCustomer} from "./component/customer/UpdateCustomer";
 import {Top10NewContract} from "./component/contract/Top10NewContract";
 import {CreateContracts} from "./component/contract/CreateContracts";
+import {UpdateContract} from "./component/contract/UpdateContract";
 
 function App() {
     return (
@@ -55,9 +56,12 @@ function App() {
                         </Route>
                         <Route path={"/nav/info-store/transaction-history"} element={<TransactionHistoryList/>}/>
                         <Route path={"/nav/info-store/top-10"} element={<Top10NewContract/>}/>
-                        <Route path={"/nav/info-store/transaction-history/create-contract"} element={<CreateContracts/>}/>
+                        <Route path={"/nav/info-store/transaction-history/create-contract"}
+                               element={<CreateContracts/>}/>
                         <Route path={"/nav/info-store/transaction-history/detail/:id"}
                                element={<TransactionHistoryDetail/>}/>
+                        <Route path="/nav/info-store/transaction-history/update-contract/:id" element={<UpdateContract/>}/>
+
                         <Route path={"/nav/info-store/all-contract"} element={<ShowContract/>}/>
                     </Route>
 

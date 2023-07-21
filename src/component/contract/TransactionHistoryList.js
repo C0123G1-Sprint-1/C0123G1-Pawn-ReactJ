@@ -222,7 +222,7 @@ export default function TransactionHistoryList() {
                                         <td>
                                             <Link to={`/nav/info-store/transaction-history/detail/${th?.contractCode}`}><i
                                                 className="bi bi-info-circle me-2"/></Link>
-                                            <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}
+                                            <Link to={`/nav/info-store/transaction-history/update-contract/${th.id}`}
                                                   className="me-2"><i style={{color: "orange"}}
                                                                       className="bi bi-pencil-square"/></Link>
                                             <a type="button" data-bs-toggle="modal"
