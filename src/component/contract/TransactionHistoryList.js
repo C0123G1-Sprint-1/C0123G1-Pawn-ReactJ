@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import * as contractService from '../../service/ContractService';
 import {Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../../component/employee/employee.css"
 import * as Swal from "sweetalert2";
 import moment from "moment";
 import {Field, Form, Formik} from "formik";
@@ -21,6 +22,7 @@ export default function TransactionHistoryList() {
         const res = await contractService.findAllContractType();
         setContractType(res.data)
     }
+
 
     const showList = async () => {
         try {
@@ -48,6 +50,14 @@ export default function TransactionHistoryList() {
         contractType: '',
         contractStatus: ''
     });
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-danger',
+            cancelButton: 'btn btn-secondary me-3'
+        },
+        buttonsStyling: false
+    })
 
 
     useEffect(() => {
@@ -172,10 +182,10 @@ export default function TransactionHistoryList() {
                                         </div>
                                     </div>
                                     <div className=" col-lg-10 my-4">
-                                        <div className="d-flex justify-content-between">
-                                            <button type="reset" className="col-lg-3 btn btn-outline-secondary"
+                                        <div className="d-flex justify-content-end">
+                                            <button type="reset" className="btn btn-outline-secondary me-3"
                                             >Nhập lại</button>
-                                            <button type="submit" className="col-lg-3 btn btn-outline-success">Tìm kiếm
+                                            <button type="submit" className="btn btn-outline-primary">Tìm kiếm
                                             </button>
                                         </div>
                                     </div>
@@ -189,12 +199,12 @@ export default function TransactionHistoryList() {
                 <div className="col-lg-12">
                     <table className="table table table-striped" border="1">
                         <thead>
-                        <tr>
+                        <tr className="text-center">
                             <th>Mã HĐ</th>
                             <th>Tên đồ</th>
                             <th>Tên khách hàng</th>
                             <th>Ngày làm HĐ</th>
-                            <th>Loại hợp đồng</th>
+                            <th>Loại HĐ</th>
                             <th>Trạng thái</th>
                             <th>Chức năng</th>
                         </tr>
@@ -222,28 +232,25 @@ export default function TransactionHistoryList() {
                                         <td className="text-center">{th?.contractStatus}</td>
                                         <td className="text-center">
                                             <Link to={`/nav/info-store/transaction-history/detail/${th?.id}`}><i
-                                                className="bi bi-info-circle me-2"/></Link>
-                                            <Link to={`/nav/info-store/transaction-history/update-contract/${th.id}`}
-                                                  className="me-2"><i style={{color: "orange"}}
+                                                className="bi bi-info-circle me-3"/></Link>
+                                            <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}
+                                                  className="me-3"><i style={{color: "orange"}}
                                                                       className="bi bi-pencil-square"/></Link>
                                             <a type="button"
                                                data-bs-target="#exampleModal" onClick={() => {
-                                                Swal.fire({
+                                                swalWithBootstrapButtons.fire({
                                                     icon: "warning",
-                                                    title: "Xóa",
+                                                    title: "Xác nhận xóa",
                                                     html: `Bạn có muốn xoá lịch sử giao dịch có mã hợp đồng <span style="color: red">HD-${th?.contractCode}</span> không ?`,
                                                     showCancelButton: true,
-                                                    cancelButtonText: "Hủy",
-                                                    confirmButtonText: "Có",
-                                                    cancelButtonColor: "rgba(118,112,112,0.51)",
-                                                    confirmButtonColor: "#d33"
-                                                })
-                                                    .then((res) => {
+                                                    confirmButtonText: 'Có',
+                                                    cancelButtonText: 'Không',
+                                                    reverseButtons: true
+                                                }).then((res) => {
                                                         if (res.isConfirmed) {
                                                             deleteTransactionHistory(+th?.id)
                                                         }
                                                     })
-
                                             }}><i
                                                 style={{color: "red"}}
                                                 className="bi bi-trash3"/></a>
@@ -260,10 +267,10 @@ export default function TransactionHistoryList() {
                     <div className="d-grid">
                         <ReactPaginate
                             breakLabel="..."
-                            nextLabel={contracts.length===0?"":"Sau"}
+                            nextLabel={contracts.length===0&&pageCount===1?"":"Sau"}
                             onPageChange={handlePageClick}
                             pageCount={pageCount}
-                            previousLabel={contracts.length===0?"":"Trước"}
+                            previousLabel={contracts.length===0&&pageCount===1?"":"Trước"}
                             containerClassName="pagination"
                             pageLinkClassName="page-num"
                             nextLinkClassName="page-num"
