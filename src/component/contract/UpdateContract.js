@@ -156,7 +156,7 @@ export function UpdateContract() {
                                     <h1>CHỈNH SỬA HỢP ĐỒNG</h1>
                                 </div>
                                 <Form>
-                                    <div className="mt-4 inputs"><label htmlFor="contractCode" style={{fon}}>Mã hợp đồng <span
+                                    <div className="mt-4 inputs"><label htmlFor="contractCode" style={{fontWeight:"500"}}>Mã hợp đồng <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field type="text" className="form-control" id="contractCode"
                                                name="contractCode"
@@ -164,14 +164,14 @@ export function UpdateContract() {
                                         <ErrorMessage name="contractCode" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
 
-                                    <div className="mt-2 inputs"><label htmlFor="productName">Tên đồ <span
+                                    <div className="mt-2 inputs"><label htmlFor="productName" style={{fontWeight:"500"}}>Tên đồ <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field type="text" className="form-control" name="productName"
                                         />
                                         <ErrorMessage name="productName" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
 
-                                    <div className="mt-2 inputs"><label htmlFor="customers">Tên khách hàng <span
+                                    <div className="mt-2 inputs"><label htmlFor="customers" style={{fontWeight:"500"}}>Tên khách hàng <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field as="select" name="customers" id="customers" className="form-control">
                                             {
@@ -183,7 +183,7 @@ export function UpdateContract() {
                                         </Field>
                                         <ErrorMessage name="customers" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
-                                    <div className="mt-2 inputs"><label>Loại đồ <span
+                                    <div className="mt-2 inputs"><label style={{fontWeight:"500"}}>Loại đồ <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field as="select" name="productType" className="form-control">
                                             {
@@ -196,18 +196,18 @@ export function UpdateContract() {
                                         <ErrorMessage name="productType" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
 
-                                    <div className="mt-2 inputs"><label htmlFor="startDate">Ngày bắt đầu <span
+                                    <div className="mt-2 inputs"><label htmlFor="startDate" style={{fontWeight:"500"}}>Ngày bắt đầu <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field type="date" className="form-control" name="startDate" id="startDate"/>
                                         <ErrorMessage name="startDate" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
-                                    <div className="mt-2 inputs"><label htmlFor="endDate">Ngày kết thúc <span
+                                    <div className="mt-2 inputs"><label htmlFor="endDate" style={{fontWeight:"500"}}>Ngày kết thúc <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field type="date" className="form-control" name="endDate" id="endDate"
                                         />
                                         <ErrorMessage name="endDate" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
-                                    <div className="mt-2 inputs"><label htmlFor="contractType">Loại hợp đồng <span
+                                    <div className="mt-2 inputs"><label htmlFor="contractType" style={{fontWeight:"500"}}>Loại hợp đồng <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field as="select" className="form-control" name="contractType"
                                                id="contractType">
@@ -220,7 +220,7 @@ export function UpdateContract() {
                                         </Field>
                                         <ErrorMessage name="contractType" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
-                                    <div className="mt-2 inputs"><label htmlFor="contractStatus">Trạng thái <span
+                                    <div className="mt-2 inputs"><label htmlFor="contractStatus" style={{fontWeight:"500"}}>Trạng thái <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field as="select" className="form-control" name="contractStatus"
                                                id="contractStatus">
@@ -231,7 +231,7 @@ export function UpdateContract() {
                                                 ))
                                             }
                                         </Field>
-                                        <ErrorMessage name="contractStatus" component="span" style={{color:"red",fontSize:"13px",width: "90px"}}/>
+                                        <ErrorMessage name="contractStatus" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
                                     <div className="d-flex mt-4 justify-content-between">
                                         <div className="text-center" style={{marginLeft: "15%"}}>
@@ -242,7 +242,7 @@ export function UpdateContract() {
                                         </div>
                                         <div className="text-center m-auto">
                                             <div className="text-center">
-                                                <button  type="submit"
+                                                <button  type="submit" style={{width: "90px"}}
                                                         className="btn btn-success" >
                                                     <b className="text-center">Sửa</b>
                                                 </button>

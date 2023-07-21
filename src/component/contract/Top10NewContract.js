@@ -5,6 +5,7 @@ import "../../css/UpdateContract.css"
 import jwt from 'jwt-decode';
 import Swal from "sweetalert2";
 import moment from "moment";
+import "../employee/employee.css"
 
 const token = localStorage.getItem('token');
 const decodedToken = jwt(token);
@@ -40,7 +41,7 @@ export function Top10NewContract() {
     const deleteTransactionHistory = async (id) => {
         let res = await contractService.deleteTransactionHistoryByID(id);
         result(res.data)
-        fetchTop10NewContract();
+       fetchTop10NewContract();
 
     }
     const result = (res) => {
@@ -103,9 +104,24 @@ export function Top10NewContract() {
                                                 to={`/nav/info-store/transaction-history/update-contract/${contract?.id}`}
                                                 className="me-2"><i style={{color: "orange"}}
                                                                     className="bi bi-pencil-square"/></Link>
-                                            <a type="button" data-bs-toggle="modal"
+                                            <a type="button"
                                                data-bs-target="#exampleModal" onClick={() => {
-                                                setDeleteTHList(contract?.id)
+                                                Swal.fire({
+                                                    icon: "warning",
+                                                    title: "Xóa",
+                                                    html: `Bạn có muốn xoá lịch sử giao dịch có mã hợp đồng <span style="color: red">HD-${contract?.contractCode}</span> không ?`,
+                                                    showCancelButton: true,
+                                                    cancelButtonText: "Hủy",
+                                                    confirmButtonText: "Có",
+                                                    cancelButtonColor: "rgba(118,112,112,0.51)",
+                                                    confirmButtonColor: "#d33"
+                                                })
+                                                    .then((res) => {
+                                                        if (res.isConfirmed) {
+                                                            deleteTransactionHistory(+contract?.id)
+                                                        }
+                                                    })
+
                                             }}><i
                                                 style={{color: "red"}}
                                                 className="bi bi-trash3"/></a>
@@ -135,37 +151,6 @@ export function Top10NewContract() {
                                     Sau
                                 </button>
                             )}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="modal fade" id="exampleModal"
-                 data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1}
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title"
-                                id="staticBackdropLabel6">
-                                Xóa lịch sử giao dịch</h5>
-                            <button type="button" className="btn-close"
-                                    data-bs-dismiss="modal" aria-label="Close"/>
-                        </div>
-                        <div className="modal-body">
-                            <span>Bạn muốn xóa lịch sử giao dịch có mã code </span><span
-                            style={{color: 'red'}}>HD-{deleteTHList}</span><span> ?</span>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary"
-                                    data-bs-dismiss="modal">Thoát
-                            </button>
-                            <button type="button" className="btn btn-danger"
-                                    data-bs-dismiss="modal"
-                                    onClick={() => {
-                                        deleteTransactionHistory(deleteTHList);
-                                    }}
-                            >Xóa
-                            </button>
                         </div>
                     </div>
                 </div>
