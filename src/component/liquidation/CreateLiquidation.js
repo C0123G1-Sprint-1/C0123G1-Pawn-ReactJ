@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import * as yup from "yup";
+import {ThreeCircles} from "react-loader-spinner";
+import * as yup from "yup"
+import jwt from 'jwt-decode';
 import {Modal} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"
 import '../../css/liquidation.css';
@@ -11,7 +13,13 @@ import {
 } from "../../service/LiquidationService";
 import {useNavigate} from "react-router";
 import * as Swal from "sweetalert2";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
+
+
+const token = localStorage.getItem('token');
+const decodedToken = jwt(token);
+console.log(decodedToken.sub)
+console.log(decodedToken.role)
 
 export function CreateLiquidation() {
     const navigate = useNavigate();
@@ -32,6 +40,14 @@ export function CreateLiquidation() {
     const [productType, setProductType] = useState('');
     const [loans, setLoans] = useState('');
 
+    const formatCurrency = (amount) => {
+        return amount.toLocaleString({style: 'currency', currency: 'VND'});
+    };
+
+    const handleDeleteProduct = (productId) => {
+        const updatedList = listProduct.filter((p) => p.id !== productId);
+        setListProduct(updatedList);
+    };
 
     const getListCustomer = async () => {
         try {
@@ -94,6 +110,7 @@ export function CreateLiquidation() {
     };
 
     const handleModalClose = () => {
+        setCustomerPage(0);
         setShowModal(false);
     };
     const handleModalOpen = () => {
@@ -101,6 +118,7 @@ export function CreateLiquidation() {
     };
 
     const handleModalClose1 = () => {
+        setContractPage(0);
         setShowModal1(false);
     };
     const handleModalOpen1 = () => {
@@ -121,15 +139,21 @@ export function CreateLiquidation() {
                 totalPrice: 0,
                 createTime: null
             }}
-
-                    onSubmit={async (values) => {
+                    // validationSchema={yup.object({
+                    //     customers: yup.string().required("Vui lòng chọn khách hàng."),
+                    //     products: yup.string().required("Vui lòng chọn sản phẩm.")
+                    // })}
+                    onSubmit={async (values, {setSubmitting}) => {
+                        setTimeout(() => {
+                            setSubmitting(false);
+                        }, 5000)
                         await saveLiquidationAPI({
                             ...values,
                             totalPrice: totalPrice,
                             customers: customers.find((c) => c.id === idCustomer),
                             products: data.products
                         });
-                        navigate("/nav/info-store/all-contract")
+                        navigate("/nav/info-store/transaction-history")
                         const save = () => {
                             Swal.fire({
                                 position: 'center',
@@ -141,79 +165,118 @@ export function CreateLiquidation() {
                         }
                         save();
                     }}>
-                <div className="container mb-5">
-                    <div className="row height d-flex justify-content-center align-items-center">
-                        <div className="col-md-6">
-                            <div className="card px-5 py-4">
-                                <div style={{textAlign: "center"}}>
-                                    <h1>Thanh lý hàng</h1>
-                                </div>
-                                <Form>
-                                    <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                        <div className="text-center m-auto">
-                                            <button onClick={handleModalOpen} type="button"
-                                                    className="btn btn-outline-success ">
-                                                <b className="text-center">Chọn khách hàng</b>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <ErrorMessage name="customers" component="span" style={{color: "red"}}/>
-                                    <Field type="text" className="form-control" id="name" name="customers" hidden
-                                           value={customers.find((c) => c.id === idCustomer)?.id}/>
-
-                                    <div className="mt-4 inputs"><label>Tên khách hàng</label>
-                                        <Field type="text" className="form-control" id="name" name="name" disabled
-                                               value={customers.find((c) => c.id === idCustomer)?.name}/>
-                                    </div>
-                                    <div className="mt-4 inputs"><label>CMND</label>
-                                        <Field type="text" className="form-control" id="cmnd" name="citizenCode"
-                                               disabled
-                                               value={customers.find((c) => c.id === idCustomer)?.citizenCode}/>
-                                    </div>
-                                    <div className="mt-4 inputs">
-                                        <label>Đồ thanh lý</label>
-                                        <div className="text-center m-auto">
-                                            <button type="button" className="btn btn-outline-success"
-                                                    onClick={handleModalOpen1}>
-                                                <b className="text-center">Chọn đồ thanh lý</b>
-                                            </button>
-                                        </div>
-                                        <ErrorMessage name="products" component="span" style={{color: "red"}}/>
-                                        <div className="justify-content-between mt-4">
-                                            <div className="input-group">
-                                                <div className="product-list">
-                                                    {listProduct.map((p) => (
-                                                        <Field
-                                                            key={p.id}
-                                                            name="products"
-                                                            type="text"
-                                                            className="product-item"
-                                                            value={p.productName}
-                                                        />
-                                                    ))}
-                                                </div>
+                {
+                    ({isSubmitting}) => (
+                        <>
+                            <div className="container mb-5">
+                                <div className="row height d-flex justify-content-center align-items-center">
+                                    <div className="col-md-6">
+                                        <div className="card px-5 py-4">
+                                            <div style={{textAlign: "center"}}>
+                                                <h2>THANH LÝ HÀNG</h2>
                                             </div>
+                                            <Form>
+                                                <div className="text-center mt-4 btn-group p-3 m-l-2">
+                                                    <div className="text-center m-auto">
+                                                        <button onClick={handleModalOpen} type="button"
+                                                                className="btn btn-outline-success ">
+                                                            <b className="text-center">Chọn khách hàng</b>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <ErrorMessage name="customers" component="span" style={{color: "red"}}/>
+                                                <Field type="text" className="form-control" id="name" name="customers"
+                                                       hidden
+                                                       value={customers.find((c) => c.id === idCustomer)?.id}/>
+
+                                                <div className="mt-4 inputs"><label>Tên khách hàng</label>
+                                                    <Field type="text" className="form-control" id="name" name="name"
+                                                           disabled
+                                                           value={customers.find((c) => c.id === idCustomer)?.name}/>
+                                                </div>
+                                                <div className="mt-4 inputs"><label>CMND</label>
+                                                    <Field type="text" className="form-control" id="cmnd"
+                                                           name="citizenCode"
+                                                           disabled
+                                                           value={customers.find((c) => c.id === idCustomer)?.citizenCode}/>
+                                                </div>
+                                                <div className="mt-4 inputs">
+                                                    <label>Đồ thanh lý</label>
+                                                    <div className="text-center m-auto">
+                                                        <button type="button" className="btn btn-outline-success"
+                                                                onClick={handleModalOpen1}>
+                                                            <b className="text-center">Chọn đồ thanh lý</b>
+                                                        </button>
+                                                    </div>
+                                                    <ErrorMessage name="products" component="span"
+                                                                  style={{color: "red"}}/>
+                                                    <div className="justify-content-between mt-4">
+                                                        <div className="input-group">
+                                                            <div className="product-list">
+                                                                {listProduct.map((p) => (
+                                                                    <button
+                                                                        key={p.id}
+                                                                        name="products"
+                                                                        type="text"
+                                                                        className="product-item"
+                                                                        onClick={() => handleDeleteProduct(p.id)}
+                                                                    >{p.productName}</button>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="mt-2 inputs"><label>Tổng tiền</label>
+                                                    <Field type="text" className="form-control" id="" name="totalPrice"
+                                                           value={formatCurrency(totalPrice) + " VNĐ"} disabled/>
+                                                </div>
+                                                <div className="text-center mt-4 btn-group p-3 m-l-2">
+                                                    <div className="text-center m-auto">
+                                                        <NavLink
+                                                            type="button"
+                                                            className="btn btn-secondary"
+                                                            to={"/"}>
+                                                            Quay lại
+                                                        </NavLink>
+                                                    </div>
+                                                    <div
+                                                        className="text-center m-auto">                                                    {
+
+                                                        isSubmitting ? (
+                                                                <ThreeCircles
+                                                                    height="100"
+                                                                    width="100"
+                                                                    color="#4fa94d"
+                                                                    wrapperStyle={{}}
+                                                                    wrapperClass=""
+                                                                    visible={true}
+                                                                    ariaLabel="three-circles-rotating"
+                                                                    outerCircleColor=""
+                                                                    innerCircleColor=""
+                                                                    middleCircleColor=""
+                                                                />
+                                                            )
+                                                            :
+                                                            (
+                                                                <button type="submit" className="btn btn-success"
+                                                                    disabled={!idCustomer || listProduct.length === 0}>
+                                                                    <b className="text-center">Thêm mới</b>
+                                                                </button>
+                                                            )
+                                                    }
+                                                    </div>
+                                                </div>
+                                            </Form>
                                         </div>
                                     </div>
-
-                                    <div className="mt-2 inputs"><label>Tổng tiền</label>
-                                        <Field type="text" className="form-control" id="" name="totalPrice"
-                                               value={totalPrice} disabled/>
-                                    </div>
-                                    <div className="text-center mt-4 btn-group p-3 m-l-2">
-
-                                        <button type="submit" className="btn btn-success"
-                                                disabled={!idCustomer || listProduct.length === 0}>
-                                            <b className="text-center">Thêm mới</b>
-                                        </button>
-
-                                    </div>
-                                </Form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </>
+                    )
+                }
             </Formik>
+
 
             <Modal
                 className="modal-lg"
@@ -253,7 +316,7 @@ export function CreateLiquidation() {
                                        placeholder="Tìm kiếm"
                                        aria-label="Search" name="name"/>
 
-                                <button className="btn btn-outline-primary" type="submit">
+                                <button className="btn btn-outline-success" type="submit">
                                     <i className="bi bi-search"></i>
                                 </button>
                             </Form>
@@ -266,7 +329,7 @@ export function CreateLiquidation() {
                         <tr>
                             <th className="text-center">Tên khách hàng</th>
                             <th className="text-center">CMND</th>
-                            <th className="text-center">Số lượng HĐ</th>
+                            <th className="text-center">Số lượng hợp đồng</th>
                         </tr>
                         </thead>
                         {customers.length === 0 ?
@@ -281,7 +344,7 @@ export function CreateLiquidation() {
                                 customers.map((c) => {
                                     return (
                                         <tr key={c.id}>
-                                            <td className="text-center">{c.name}</td>
+                                            <td className="text-md-start">{c.name}</td>
                                             <td className="text-center">{c.citizenCode}</td>
                                             <td className="text-center">{c.quantityContract}</td>
                                             <td className="text-center">
@@ -411,9 +474,9 @@ export function CreateLiquidation() {
                                                 </Field>
                                             </div>
                                         </div>
-                                        <div className="col-lg-2" style={{marginTop: "1.5vw"}}>
+                                        <div className="col-lg-2" style={{marginTop: "1.9vw"}}>
                                             <div className="form-group">
-                                                <button type="submit" className="btn btn-outline-primary ">
+                                                <button type="submit" className="btn btn-outline-success ">
                                                     <i className="bi bi-search"></i></button>
                                             </div>
                                         </div>
@@ -430,7 +493,7 @@ export function CreateLiquidation() {
                             <th className="text-center">Tên đồ</th>
                             <th className="text-center">Loại đồ</th>
                             <th className="text-center">Số lượng</th>
-                            <th className="text-center">Giá</th>
+                            <th className="text-center">Giá (VNĐ)</th>
                         </tr>
                         </thead>
                         {contracts.length === 0 ? <tr>
@@ -444,10 +507,10 @@ export function CreateLiquidation() {
                                 contracts.map((ct) => {
                                     return (
                                         <tr key={ct.id}>
-                                            <td className="text-center">{ct.productName}</td>
+                                            <td className="text-md-start">{ct.productName}</td>
                                             <td className="text-center">{ct.productType}</td>
                                             <td className="text-center">1</td>
-                                            <td className="text-center">{ct.loans}</td>
+                                            <td className="text-center">{(+ct.loans).toLocaleString()}</td>
                                             <td className="text-center">
                                                 <button type="button" onClick={() => {
                                                     getProduct(ct.id);
