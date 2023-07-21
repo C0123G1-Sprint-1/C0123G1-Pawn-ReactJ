@@ -1,16 +1,22 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap"
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {Outlet} from "react-router";
 import jwt from 'jwt-decode';
 
 export default function Navbars() {
-    const [isActives, setIsActive] = useState(true);
     const token = localStorage.getItem('token');
-    const decodedToken = jwt(token);
-    console.log(decodedToken.sub)
-    console.log(token)
+    const [decodedToken, setDecodedToken] = useState("");
+
+    useEffect(() => {
+        if (token) {
+            const decoded = jwt(token);
+            setDecodedToken(decoded);
+        } else {
+            // Xử lý khi không có token trong localStorage
+        }
+    }, [token]);
     return (
         <>
             <nav className="navbar-expand-lg p-0"
@@ -157,7 +163,7 @@ export default function Navbars() {
                                     display: "flex",
                                     padding: "10px"
                                 }
-                            }} className="nav-link" to={`/nav/detail/employee/`+token.id}>
+                            }} className="nav-link" to={"/nav/detail/employee/1"}>
                                 Thông tin cá nhân
                             </NavLink>
                         </li>

@@ -9,10 +9,10 @@ import Swal from "sweetalert2";
 import * as Yup from 'yup';
 import {ThreeCircles} from "react-loader-spinner";
 import {FormattedNumber} from "react-intl";
+import ReactPaginate from "react-paginate";
 
 export const CreateContracts = () => {
-    const [page, setPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0); // Tổng số trang
+
 
     const [selectedFile, setSelectedFile] = useState(null);
     const [firebaseImg, setImg] = useState(null);
@@ -34,6 +34,10 @@ export const CreateContracts = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDay] = useState('');
 
+    const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0); // Tổng số trang
+    const [count, setCount] = useState(1);
+
     const n = useNavigate();
 
     const handleLoans = async (event) => {
@@ -48,10 +52,10 @@ export const CreateContracts = () => {
         await setEndDay(event.target.value)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        })
-    let percent = 0.67/100;
+    })
+    let percent = 0.67 / 100;
     const moment = require('moment');
     const startDates = moment(startDate);
     const endDates = moment(endDate);
@@ -95,16 +99,23 @@ export const CreateContracts = () => {
         });
     };
 
+
     //  Sổ list  chọn khách hàng
     useEffect(() => {
         const getAllCustomer = async () => {
-            const res = await contractService.findAllCustomer(page, customerName)
+            const res = await contractService.findAllCustomer(currentPage, customerName)
             setCustomer(res.content)
-            await setTotalPages(res.totalPages)
+            await setPageCount(res.totalPages)
         }
         getAllCustomer()
-    }, [page, customerName])
+    }, [pageCount, customerName])
 
+    const handlePage = async (pages) => {
+        setCurrentPage(+pages.selected);
+        const res = await contractService.findAllCustomer(currentPage, customerName)
+        setCustomer(res.content)
+        setCount(Math.ceil(res.size * pages.selected +1))
+    }
     // Modal
     const handleModalClose = () => {
         setShowModal(false);
@@ -135,9 +146,7 @@ export const CreateContracts = () => {
     }
 
     // page
-    const paginate = (page) => {
-        setPage(page)
-    }
+
     // random mã
     const createContractCodeApi = async () => {
         const res = await contractService.createCodeContract();
@@ -162,6 +171,32 @@ export const CreateContracts = () => {
     }, [])
 
 
+    const loadContracts = async () => {
+
+        // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
+        let timerInterval
+        Swal.fire({
+            title: 'Chúng tôi đang sử lí mong đợi trong vài giây',
+            html: 'Vui lòng đợi trong  <b></b> giây.',
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer')
+            }
+        })
+    };
     return (
         <>
             <div className="container pt-5">
@@ -183,7 +218,7 @@ export const CreateContracts = () => {
                                 profit: '',
                                 contractStatus: 2,
                                 contractType: 1,
-                                employees: 4
+                                employees: 1
                             }}
                                     validationSchema={Yup.object({
                                         productName: Yup.string()
@@ -219,7 +254,7 @@ export const CreateContracts = () => {
                                                     const startDate = this.resolve(Yup.ref('startDate'));
                                                     return value > startDate;
                                                 }),
-                                        image:Yup.string()
+                                        image: Yup.string()
                                             .required('Không được để trống')
                                     })}
 
@@ -381,21 +416,31 @@ export const CreateContracts = () => {
                                             </div>
                                             <div className=" col-md-6 mt-2 inputs">
                                                 <label>Tiền lãi</label>
-                                                <div aria-disabled style={{border: "1px solid #DDDDDD",fontSize:"0.9rem",fontWeight:"bolder",alignItems: "center", display: "flex", backgroundColor: "#EEEEEE",height: "4.5vh" ,borderRadius: "7px"}}
+                                                <div aria-disabled style={{
+                                                    border: "1px solid #DDDDDD",
+                                                    fontSize: "0.9rem",
+                                                    fontWeight: "bolder",
+                                                    alignItems: "center",
+                                                    display: "flex",
+                                                    backgroundColor: "#EEEEEE",
+                                                    height: "4.5vh",
+                                                    borderRadius: "7px"
+                                                }}
                                                      className="p-0 m-0">
-                                                <FormattedNumber
-                                                    value={profits || 0} disabled
-                                                                 thousandSeparator={true} currency="VND"
-                                                                 minimumFractionDigits={0}
-                                                >
-                                                </FormattedNumber>
-                                            </div>
+                                                    <FormattedNumber
+                                                        value={profits || 0} disabled
+                                                        thousandSeparator={true} currency="VND"
+                                                        minimumFractionDigits={0}
+                                                    >
+                                                    </FormattedNumber>
+                                                </div>
                                             </div>
                                         </div>
 
 
                                         <div className="mt-2 inputs">
-                                              <label htmlFor="image">Hình ảnh <span style={{color: "red"}}>*</span></label>
+                                            <label htmlFor="image">Hình ảnh <span
+                                                style={{color: "red"}}>*</span></label>
                                             <Field
                                                 type="file"
                                                 className="form-control"
@@ -409,7 +454,7 @@ export const CreateContracts = () => {
                                                 values={firebaseImg}
                                             />
                                         </div>
-                                            <ErrorMessage name="image" component="p" style={{color: "red"}}/>
+                                        <ErrorMessage name="image" component="p" style={{color: "red"}}/>
                                         <div className="mt-2 inputs">
                                             {/*<label>Trạng thái</label>*/}
                                             <Field
@@ -460,38 +505,23 @@ export const CreateContracts = () => {
                                                 )}
                                             </div>
                                         </div>
-                                                    <div className="d-flex mt-4 justify-content-between">
-                                                        <div className="text-center" style={{marginLeft: "23.6%"}}>
-                                                            <Link to="/nav/info-store/transaction-history" className="btn btn-secondary ">
-                                                                <b className="text-center">Quay lại</b>
-                                                            </Link>
-                                                        </div>
-                                                        <div className="text-center m-auto">
-                                                            {isSubmitting ? (
-                                                                    <ThreeCircles
-                                                                        height="100"
-                                                                        width="100"
-                                                                        color="#4fa94d"
-                                                                        wrapperStyle={{}}
-                                                                        wrapperClass=""
-                                                                        visible={true}
-                                                                        ariaLabel="three-circles-rotating"
-                                                                        outerCircleColor=""
-                                                                        innerCircleColor=""
-                                                                        middleCircleColor=""
-                                                                    />
-                                                                )
-                                                                :
-                                                                (
-                                                        <div className="text-center">
-                                                            <button type="submit" className="btn btn-success">
-                                                                <b className="text-center">Thêm mới</b>
-                                                            </button>
-                                                        </div>
-                                                                )
-                                                            }
-                                                        </div>
-                                                    </div>
+
+                                        <div className="d-flex mt-4 justify-content-between">
+                                            <div className="text-center" style={{marginLeft: "23.6%"}}>
+                                                <Link to="/nav/info-store/transaction-history"
+                                                      className="btn btn-secondary ">
+                                                    <b className="text-center">Quay lại</b>
+                                                </Link>
+                                            </div>
+                                            <div className="text-center m-auto">
+                                                <div className="text-center">
+                                                    <button disabled={!idCustomer} type="submit"
+                                                            className="btn btn-success" onClick={loadContracts}>
+                                                        <b className="text-center">Thêm mới</b>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </Form>
                                 )}
                             </Formik>
@@ -537,9 +567,9 @@ export const CreateContracts = () => {
 
                                                 const search = async () => {
                                                     await setCustomerName(values.name)
-                                                    const res = await contractService.findAllCustomer(page, values.name)
+                                                    const res = await contractService.findAllCustomer(pageCount, values.name)
                                                     setCustomer(res.content)
-                                                    setPage(0)
+                                                    setPageCount(0)
                                                     console.log(values)
                                                 }
                                                 search()
@@ -599,41 +629,21 @@ export const CreateContracts = () => {
                                     }
                                 </table>
                                 {customer.length === 0 ? '' :
-                                    <div className="d-flex col-12 justify-content-end">
-                                        <nav aria-label="...">
-                                            <ul className="pagination">
-                                                <li hidden={page === 0} className="page-item ">
-                                                    <button className="page-link" tabIndex={-1}
-                                                            onClick={() => paginate(page - 1)}>
-                                                        Trước
-                                                    </button>
-                                                </li>
-
-                                                {
-                                                    Array.from({length: totalPages}, (a, index) => index).map((pageNumber) => (
-                                                        <li className="page-item">
-                                                            <button
-                                                                className={pageNumber === page ? "page-link active" : "page-link "}
-                                                                key={pageNumber}
-                                                                onClick={() => paginate(pageNumber)}>
-                                                                {pageNumber + 1}
-                                                            </button>
-                                                        </li>
-                                                    ))
-                                                }
-                                                {page + 1 === totalPages ?
-                                                    ""
-                                                    : <li disabled={page + 1 === totalPages}
-                                                          className="page-item">
-                                                        <button className="page-link" tabIndex={-1}
-                                                                onClick={() => paginate(page + 1)}>
-                                                            Tiếp
-                                                        </button>
-                                                    </li>}
-                                            </ul>
-                                        </nav>
-
-                                    </div>
+                                <div className="d-grid">
+                                    <ReactPaginate
+                                        breakLabel="..."
+                                        nextLabel="Sau"
+                                        onPageChange={handlePage}
+                                        pageCount={pageCount}
+                                        previousLabel="Trước"
+                                        containerClassName="pagination"
+                                        pageLinkClassName="page-num"
+                                        nextLinkClassName="page-num"
+                                        previousLinkClassName="page-num"
+                                        activeClassName="active"
+                                        disabledClassName="d-none"
+                                    />
+                                </div>
                                 }
                             </Modal.Body>
                         </Modal>

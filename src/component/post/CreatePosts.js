@@ -9,10 +9,7 @@ import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../firebaseContract";
 import Swal from "sweetalert2";
 import jwt from 'jwt-decode';
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
+
 
 export function CreatePosts() {
     const navigate = useNavigate()
