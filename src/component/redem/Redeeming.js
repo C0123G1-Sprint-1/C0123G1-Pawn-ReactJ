@@ -4,8 +4,7 @@ import {Button, Modal} from 'react-bootstrap';
 import * as redeemingService from '../../service/RedeemingService'
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Swal from "sweetalert2";
-import {getTimerProgressBar} from "sweetalert2";
-import * as Yup from "yup"
+import moment from "moment";
 import {ThreeCircles} from "react-loader-spinner";
 
 
@@ -117,7 +116,7 @@ export const Redeeming = () => {
                         <div className="card px-5 py-4">
                             <div style={{textAlign: "center"}}>
                                 <h1>
-                                    <b>Trả Đồ</b>
+                                    TRẢ ĐỒ
                                 </h1>
                             </div>
 
@@ -265,7 +264,7 @@ export const Redeeming = () => {
                                                                     <td >{contract.customerName}</td>
                                                                     <td className="text-center">{contract.productName}</td>
                                                                     <td className="text-center">{contract.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                                                    <td className="text-center">{contract.startDate}</td>
+                                                                    <td className="text-center">{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
                                                                     <td className="text-center">
                                                                         <button onClick={() => {
                                                                             handleModalClose(true);
@@ -329,33 +328,33 @@ export const Redeeming = () => {
 
                             <Formik initialValues={{
 
-                                redeemDate: ''
+
 
 
 
                             }}
-                                    validationSchema={Yup.object({
-                                        redeemDate: Yup.date().required("Vui lòng nhập ngày trả đồ").min(getToday(), "Vui Lòng chọn ngày hiện tại").max(getToday(), "Vui Lòng chọn ngày hiện tại")
-                                    })}
 
-                                    onSubmit={(value, {setSubmitting , resetForm}) => {
-                                        setTimeout(() => {
-                                            setSubmitting(false)
-                                        }, 5000)
+
+                                    onSubmit={(value, {setSubmitting }) => {
                                         const res = async () => {
                                             try {
-                                                const rs = await redeemingService.redeem(selectedContract, value.redeemDate);
+                                                await redeemingService.redeem(selectedContract);
                                             } catch (e) {
                                                 console.log(e)
                                             }
                                         }
-                                        res().then(Swal.fire({
-                                            icon: "success",
-                                            title: "Đã chuộc thành công",
+                                        setTimeout(async () => {
+                                            await setSubmitting(false)
+                                            await res().then(Swal.fire({
+                                                icon: "success",
+                                                title: "Đã chuộc thành công",
 
-                                        }))
+                                            }))
+                                        }, 4000)
+
+
                                         reset()
-                                        resetForm()
+
                                         fetchContract()
 
                                     }}>
@@ -412,15 +411,16 @@ export const Redeeming = () => {
 
                                                         <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
                                                             className="p-0 m-0">
-                                                            {contracts.find((c) => c.contractId == selectedContract)?.startDate}
+                                                            {selectedContract ? moment( contracts.find((c) => c.contractId == selectedContract)?.startDate,'YYYY/MM/DD' ).format('DD/MM/YYYY') : '' }
                                                         </h5>
+
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
                                                         <label>Ngày kết thúc</label>
 
                                                         <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
                                                             className="p-0 m-0">
-                                                            {contracts.find((c) => c.contractId == selectedContract)?.endDate}
+                                                            {selectedContract ? moment( contracts.find((c) => c.contractId == selectedContract)?.endDate,'YYYY/MM/DD' ).format('DD/MM/YYYY') : ''}
                                                         </h5>
                                                     </div>
                                                 </div>
@@ -429,28 +429,19 @@ export const Redeeming = () => {
                                                     <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
                                                         className="p-0 m-0">
 
-                                                        {(contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}  </h5>
+                                                        {isNaN(contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')) ? '' : (contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} </h5>
                                                 </div>
-                                                <div className="mt-2 inputs">
-                                                    <label>Ngày trả đồ</label>
-                                                    <Field
-                                                        type="date"
-                                                        className="form-control"
-                                                        name="redeemDate"
-                                                    />
-                                                    <ErrorMessage name="redeemDate" component="p" style={{color:"red"}}/>
-                                                </div>
+
                                                 <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                                    {/*<div className="text-center m-auto">*/}
-                                                    {/*    <button*/}
-                                                    {/*        type="button"*/}
-                                                    {/*        className="btn btn-secondary "*/}
-                                                    {/*        data-bs-toggle="modal"*/}
-                                                    {/*        data-bs-target="#staticBackdrop"*/}
-                                                    {/*    >*/}
-                                                    {/*        <b className="text-center">Quay lại</b>*/}
-                                                    {/*    </button>*/}
-                                                    {/*</div>*/}
+                                                    <div className="text-center m-auto">
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-secondary "
+
+                                                        >
+                                                            <b className="text-center">Quay lại</b>
+                                                        </button>
+                                                    </div>
 
                                                     <div className="text-center m-auto">
                                                         {
@@ -467,7 +458,7 @@ export const Redeeming = () => {
                                                                     middleCircleColor=""
                                                                 />) :
                                                                 (<div className="text-center m-auto">
-                                                                        <button onClick={() => fetchContract()}
+                                                                        <button
                                                                                 disabled={!selectedContract} type="submit"
                                                                                 className="btn btn-success">
                                                                             <b className="text-center">Thanh toán</b>
