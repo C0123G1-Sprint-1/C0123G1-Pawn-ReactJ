@@ -139,8 +139,8 @@ export default function Navbars() {
                                             display: "flex",
                                             padding: "10px"
                                         }
-                                    }} className="nav-link" to={"/nav/api/employee"}>
-                                        Quản lý nhân viên
+                                    }} className="nav-link" to={"/nav/manager-customer"}>
+                                        Quản lý khách hàng
                                     </NavLink>
                                 </li>
                         }
@@ -156,7 +156,7 @@ export default function Navbars() {
                                     display: "flex",
                                     padding: "10px"
                                 }
-                            }} className="nav-link" to={"/nav/detail/employee/4"}>
+                            }} className="nav-link" to={"/nav/detail/employee/1"}>
                                 Thông tin cá nhân
                             </NavLink>
                         </li>

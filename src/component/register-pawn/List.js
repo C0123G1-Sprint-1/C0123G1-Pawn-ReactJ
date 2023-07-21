@@ -2,6 +2,7 @@ import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {RegisterPawn} from "./RegisterPawn";
+import {ListPosts} from "../post/ListPosts";
 // import "../../css/home.css"
 // import io from "socket.io-client"
 // import data from "bootstrap/js/src/dom/data";
@@ -54,7 +55,7 @@ export function List() {
 
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="anh/z4495656532190_6887c6aeaabc3b081c72e969ab66c288.jpg" alt="Los Angeles" class="d-block" style={{width:"100%"}}/>
+                            <img src="anh/anhmoi.jpg" alt="Los Angeles" class="d-block" style={{width:"100%"}}/>
                         </div>
                         <div class="carousel-item">
                             <img src="anh/z4495656624664_bd45947738323e226dfe27013a92ff29.jpg" alt="Chicago" class="d-block" style={{width:"100%"}}/>
@@ -81,7 +82,7 @@ export function List() {
                             <p>
                                 <strong>Pawnshop.com</strong> với gần 10 năm kinh nghiệm cung cấp dịch vụ {""}
                                 <a href="https://vi.wikipedia.org/wiki/Cầm_đồ" target="_blank" rel="noopener">
-                                    <strong>cầm đồ</strong>
+                                    <strong className="text-success">cầm đồ</strong>
                                 </a>
                                 . Cam kết đảm bảo bạn sẽ hài lòng vì tài sản của bạn được{" "}
                                 <b>niêm phong có chữ ký xác nhận và bảo hiểm 100% giá trị tài sản</b>{" "}
@@ -109,22 +110,22 @@ export function List() {
             <div id="exTab" className="container">
                 <ul className="nav nav-pills">
                     <li className="active">
-                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px",color:"#53b677"}} href="#1a" data-toggle="tab">
+                        <a style={{fontFamily : "Times New Roman",fontSize:"20px",color:"green"}} href="#1a" data-toggle="tab">
                             Cầm xe
                         </a>
                     </li>
                     <li>
-                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px",color:"#53b677"}} href="#2a" data-toggle="tab">
+                        <a style={{fontFamily : "Times New Roman",fontSize:"20px",color:"green"}} href="#2a" data-toggle="tab">
                             Cầm điện thoại
                         </a>
                     </li>
                     <li>
-                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px",color:"#53b677"}} href="#3a" data-toggle="tab">
+                        <a style={{fontFamily : "Times New Roman",fontSize:"20px",color:"green"}} href="#3a" data-toggle="tab">
                             Cầm trang sức
                         </a>
                     </li>
                     <li>
-                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px",color:"#53b677"}} href="#4a" data-toggle="tab">
+                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px",color:"green"}} href="#4a" data-toggle="tab">
                             Cầm laptop
                         </a>
                     </li>
@@ -270,7 +271,7 @@ export function List() {
                             style={{textAlign: "center",margin: "0",marginTop :"-2rem" ,padding:"1.5rem"}}>
                             Bạn đã đúng khi chọn chúng tôi?
                         </h2>
-                        <p  style={{textAlign: "center",marginTop : "1rem",fontWeight:"400",fontFamily:"Times New Roman",fontSize:"18.75px"}}>
+                        <p  style={{textAlign: "center",marginTop : "1rem",fontWeight:"400",fontFamily:"Times New Roman",fontSize:"18.75px", maxWidth: "100%",padding: "0 10px"}}>
                             Khi lựa chọn cầm cố tài sản tại{" "}
                             <span style={{color: "red"}}>Pawn Shop</span> thì đảm bảo quý khách sẽ
                             nhận được rất nhiều ưu điểm của chúng tôi như nhiệt tình, thủ tục nhanh,

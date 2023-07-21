@@ -41,6 +41,7 @@ import {List} from "./component/register-pawn/List";
 import {Header} from "./component/register-pawn/Header";
 import {RegisterPawn} from "./component/register-pawn/RegisterPawn";
 import {Footer} from "./component/register-pawn/Footer";
+import {UpdateContract} from "./component/contract/UpdateContract";
 
 function App() {
     return (
@@ -49,29 +50,31 @@ function App() {
             <Routes>
                 <Route path='/' element={<List/>}/>
                 <Route path={"/nav"} element={<Navbars/>}>
-                        <Route path={"/nav/info-store"} element={<InfoStore/>}>
-                            <Route path={"/nav/info-store"} element={<Profit/>}>
-                                <Route path="/nav/info-store/" element={<Interest/>}/>
-                                <Route path="/nav/info-store/profit" element={<Interest/>}/>
-                                <Route path="/nav/info-store/profit/interest/:profitType" element={<Interest/>}/>
-                                <Route path="/nav/info-store/profit/liquidation/:profitType" element={<Liquidation/>}/>
-                                <Route path="/nav/info-store/profit/foresee/:profitType" element={<Foresee/>}/>
-                            </Route>
-                            <Route path={"/nav/info-store/transaction-history"} element={<TransactionHistoryList/>}/>
-                            <Route path={"/nav/info-store/top-10"} element={<Top10NewContract/>}/>
-                            <Route path={"/nav/info-store/transaction-history/detail/:id"}
-                                   element={<TransactionHistoryDetail/>}/>
-                            <Route path={"/nav/info-store/all-contract"} element={<ShowContract/>}/>
+                    <Route path={"/nav/info-store"} element={<InfoStore/>}>
+                        <Route path={"/nav/info-store"} element={<Profit/>}>
+                            <Route path="/nav/info-store/" element={<Interest/>}/>
+                            <Route path="/nav/info-store/profit" element={<Interest/>}/>
+                            <Route path="/nav/info-store/profit/interest/:profitType" element={<Interest/>}/>
+                            <Route path="/nav/info-store/profit/liquidation/:profitType" element={<Liquidation/>}/>
+                            <Route path="/nav/info-store/profit/foresee/:profitType" element={<Foresee/>}/>
                         </Route>
-                        <Route path={"/nav/transaction-history/create-contract"} element={<CreateContracts/>}/>
-                        <Route path={"/nav/liquidation"} element={<CreateLiquidation/>}/>
-                        <Route path="/nav/api/employee" element={<EmployeeList/>}/>
-                        <Route path="/nav/api/employee/create-employee" element={<CreateEmployee/>}/>
-                        <Route path="/nav/redeem" element={<Redeeming/>}/>
-                        <Route path={"/nav/manager-customer"} element={<CustomerList/>}/>
-                        <Route path={"/nav/manager-customer/create"} element={<CreateCustomer/>}/>
-                        <Route path={"/nav/update/:id"} element={<UpdateCustomer/>}/>
-                        <Route path={"/nav/detail/employee/:id"} element={<EmployeeInformation/>}/>
+                        <Route path={"/nav/info-store/transaction-history"} element={<TransactionHistoryList/>}/>
+                        <Route path={"/nav/info-store/top-10"} element={<Top10NewContract/>}/>
+                        <Route path={"/nav/info-store/transaction-history/detail/:id"}
+                               element={<TransactionHistoryDetail/>}/>
+                        <Route path={"/nav/info-store/all-contract"} element={<ShowContract/>}/>
+                    </Route>
+                    <Route path={"/nav/transaction-history/create-contract"} element={<CreateContracts/>}/>
+                    <Route path={"/nav/liquidation"} element={<CreateLiquidation/>}/>
+                    <Route path="/nav/api/employee" element={<EmployeeList/>}/>
+                    <Route path="/nav/api/employee/create-employee" element={<CreateEmployee/>}/>
+                    <Route path="/nav/redeem" element={<Redeeming/>}/>
+                    <Route path={"/nav/manager-customer"} element={<CustomerList/>}/>
+                    <Route path={"/nav/manager-customer/create"} element={<CreateCustomer/>}/>
+                    <Route path={"/nav/manager-customer/update/:id"} element={<UpdateCustomer/>}/>
+                    <Route path={"/nav/detail/employee/:id"} element={<EmployeeInformation/>}/>
+                    <Route path={"/nav/info-store/transaction-history/update-contract/:id"}
+                           element={<UpdateContract/>}/>
                 </Route>
 
 
@@ -82,9 +85,9 @@ function App() {
                     <Route path="/login/confirmCode" element={<ConfirmCode/>}/>
                     <Route path="/login/newPassword" element={<NewPassword/>}/>
                 </Route>
-                <Route path={'/listPost'} element={<ListPosts/>}/>
-                <Route path={'/detail/:id'} element={<DetailPosts/>}/>
-                <Route path={'/createPosts'} element={<CreatePosts/>}/>
+                <Route path={'/listPosts'} element={<ListPosts/>}/>
+                <Route path={'/listPosts/detail/:id'} element={<DetailPosts/>}/>
+                <Route path={'/listPosts/createPosts'} element={<CreatePosts/>}/>
                 <Route path={"/scanfile"} element={<ImageUploaderFile/>}/>
             </Routes>
             <Footer/>
