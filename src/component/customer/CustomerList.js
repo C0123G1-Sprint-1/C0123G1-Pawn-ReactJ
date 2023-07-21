@@ -47,7 +47,6 @@ export function CustomerList() {
 
     const handlePageClick1 = async (page) => {
         setCurrentPage1(+page.selected);
-
         const result = await customersService.registerPawn( page.selected);
         console.log(result.data);
         setRegisterPawn(result.content);
