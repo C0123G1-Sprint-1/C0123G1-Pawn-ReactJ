@@ -216,7 +216,7 @@ export const CreateContracts = () => {
                                 profit: '',
                                 contractStatus: 2,
                                 contractType: 1,
-                                employees: 4
+                                employees: 1
                             }}
                                     validationSchema={Yup.object({
                                         productName: Yup.string()
