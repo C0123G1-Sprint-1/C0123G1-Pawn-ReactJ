@@ -7,10 +7,7 @@ import jwt from 'jwt-decode';
 import moment from "moment";
 import {Link} from "react-router-dom";
 
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
+
 export function CustomerList() {
     const [listCustomer, setListCustomer] = useState([]);
     const [nameDelete, setNameDelete] = useState(null);
