@@ -11,12 +11,6 @@ import {toast} from "react-toastify";
 import "../../css/liquidation.css";
 import Swal from "sweetalert2";
 
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
-
-
 export function UpdateContract() {
     const param = useParams();
     const navigate = useNavigate();

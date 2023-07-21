@@ -4,11 +4,6 @@ import "../../css/Posts.css";
 import {useParams} from "react-router";
 import moment from "moment";
 import jwt from 'jwt-decode';
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
-
 export function DetailPosts() {
     const param = useParams()
     const [postsDetail, setPostsDetail] = useState([])

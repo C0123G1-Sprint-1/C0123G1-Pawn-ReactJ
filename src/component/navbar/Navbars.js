@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap"
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {Outlet} from "react-router";
 import jwt from 'jwt-decode';
@@ -8,8 +8,15 @@ import jwt from 'jwt-decode';
 export default function Navbars() {
     const [isActives, setIsActive] = useState(true);
     const token = localStorage.getItem('token');
-    const decodedToken = jwt(token);
-    console.log(decodedToken.sub)
+    const [decodedToken, setDecodedToken] = useState("");
+    useEffect(() => {
+        if (token) {
+            const decoded = jwt(token);
+            setDecodedToken(decoded);
+        } else {
+           alert("abc")
+        }
+    }, [token]);
     return (
         <>
             <nav className="navbar-expand-lg p-0"

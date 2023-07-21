@@ -12,11 +12,11 @@ export default function Foresee() {
                     <thead>
                     <tr>
                         <th>Mã HD</th>
-                        <th>Tiền Cho Vay(VND)</th>
-                        <th>Tiền Lãi (VND)</th>
-                        <th>Ngày Bắt Đầu</th>
-                        <th>Ngày Kết Thúc</th>
-                        <th>Lợi Nhuận Dự Kiến (VND)</th>
+                        <th>Tiền cho vay (VND)</th>
+                        <th>Tiền lãi (VND)</th>
+                        <th>Ngày bắt dầu</th>
+                        <th>Ngày kết thúc</th>
+                        <th>Lợi nhuận dự kiến (VND)</th>
                         <th id="actions">Chức năng</th>
                     </tr>
                     </thead>
@@ -25,12 +25,12 @@ export default function Foresee() {
                         contracts ?
                             contracts.map((contract, index) =>
                                 <tr key={index}>
-                                    <td style={{textAlign: "center"}}>{contract.contractCode}</td>
-                                    <td style={{textAlign: "center"}}>{contract.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td style={{textAlign: "center"}}>{contract.interest?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td style={{textAlign: "center"}}>{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
-                                    <td style={{textAlign: "center"}}>{moment(contract.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
-                                    <td style={{textAlign: "center"}}>{contract.profitForesee?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td >{"HD-"+contract.contractCode}</td>
+                                    <td >{contract.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td >{contract.interest?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td >{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                    <td >{moment(contract.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                    <td >{contract.profitForesee?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                     <td className="detail-button">
                                         <a href="#">
                                             <i className="bi bi-info-circle detail" title="Chi tiết"/>

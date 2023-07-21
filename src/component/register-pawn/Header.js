@@ -24,6 +24,7 @@ const navigate = useNavigate();
             setIsLogin(true);
         } else {
             // Xử lý khi không có token trong localStorage
+            alert("abc")
         }
     }, [token]);
 
