@@ -6,13 +6,19 @@ import {Field, Form, Formik} from "formik";
 import moment from "moment";
 import Swal from "sweetalert2";
 import jwt from 'jwt-decode';
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
+
 export function ListPosts() {
     const token = localStorage.getItem('token');
-    const decodedToken = jwt(token);
+    const [decodedToken, setDecodedToken] = useState("");
+
+    useEffect(() => {
+        if (token) {
+            const decoded = jwt(token);
+            setDecodedToken(decoded);
+        } else {
+            // Xử lý khi không có token trong localStorage
+        }
+    }, [token]);
     const [posts, setPosts] = useState([])
     const [idDelete, setIdDelete] = useState()
     const [nameDelete, setNameDelete] = useState()

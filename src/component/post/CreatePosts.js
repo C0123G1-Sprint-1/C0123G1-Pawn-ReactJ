@@ -16,6 +16,7 @@ const decodedToken = jwt(token);
 console.log(decodedToken.sub)
 console.log(decodedToken.role)
 
+
 export function CreatePosts() {
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([])
