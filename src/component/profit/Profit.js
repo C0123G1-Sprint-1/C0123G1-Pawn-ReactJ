@@ -234,7 +234,7 @@ export default function Profit() {
                                             height: "100%",
                                             alignItems: "center"
                                         }}>
-                                            <button type="submit" className="btn btn-sm btn-primary " style={{
+                                            <button type="submit" className="btn btn-sm btn-outline-success " style={{
                                                 height: "100%",
                                                 alignItems: "center",
                                                 display: "flex",
@@ -242,14 +242,14 @@ export default function Profit() {
                                             }}>Thống kê
                                             </button>
                                             <button type="button" onClick={() => setCancel()}
-                                                    className="btn btn-sm btn-outline-danger ms-1" style={{
+                                                    className="btn btn-sm btn-outline-secondary ms-1" style={{
                                                 height: "100%",
                                                 alignItems: "center",
                                                 display: "flex",
                                                 justifyContent: "center",
-                                                border: "1px solid red"
-                                            }}><i
-                                                className="bi bi-arrow-counterclockwise"/>
+                                                // border: "1px solid red"
+                                            }}>
+                                                Nhập lại
                                             </button>
                                         </div>
                                     </div>

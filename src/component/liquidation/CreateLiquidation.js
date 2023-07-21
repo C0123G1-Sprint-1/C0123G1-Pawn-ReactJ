@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {ThreeCircles} from "react-loader-spinner";
-import * as yup from "yup"
 import jwt from 'jwt-decode';
 import {Modal} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -14,6 +13,7 @@ import {
 import {useNavigate} from "react-router";
 import * as Swal from "sweetalert2";
 import {Link, NavLink} from "react-router-dom";
+import * as contractService from "../../service/ContractService";
 
 
 const token = localStorage.getItem('token');
@@ -39,6 +39,9 @@ export function CreateLiquidation() {
     const [productName, setProductName] = useState('');
     const [productType, setProductType] = useState('');
     const [loans, setLoans] = useState('');
+
+
+
 
     const formatCurrency = (amount) => {
         return amount.toLocaleString({style: 'currency', currency: 'VND'});
@@ -153,7 +156,7 @@ export function CreateLiquidation() {
                             customers: customers.find((c) => c.id === idCustomer),
                             products: data.products
                         });
-                        navigate("/nav/info-store/transaction-history")
+                        navigate("/nav/info-store/all-contract")
                         const save = () => {
                             Swal.fire({
                                 position: 'center',
@@ -168,7 +171,7 @@ export function CreateLiquidation() {
                 {
                     ({isSubmitting}) => (
                         <>
-                            <div className="container mb-5">
+                            <div className="container mt-5">
                                 <div className="row height d-flex justify-content-center align-items-center">
                                     <div className="col-md-6">
                                         <div className="card px-5 py-4">
@@ -202,6 +205,37 @@ export function CreateLiquidation() {
                                                 </div>
                                                 <div className="mt-4 inputs">
                                                     <label>Đồ thanh lý</label>
+
+                                                    <div className="justify-content-between mt-4">
+                                                        <div className="input-group">
+                                                            <div className="product-list">
+                                                                {listProduct.map((p) => (
+                                                                    <div style={{position: 'relative'}}>
+                                                                        <div style={{
+                                                                            position: 'absolute',
+                                                                            top: -5,
+                                                                            right: -5,
+                                                                            width: '15px',
+                                                                            height: '15px',
+                                                                            border: '1px solid gray',
+                                                                            borderRadius: '50%',
+                                                                            display: 'flex',
+                                                                            alignItems: 'center',
+                                                                            justifyContent: 'center',
+                                                                            fontSize: '10px',
+                                                                            cursor: 'pointer'
+                                                                        }} onClick={() => handleDeleteProduct(p.id)}>
+                                                                            <span>x</span>
+                                                                        </div>
+                                                                        <div
+                                                                            key={p.id}
+                                                                            className="product-item"
+                                                                        >{p.productName}</div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div className="text-center m-auto">
                                                         <button type="button" className="btn btn-outline-success"
                                                                 onClick={handleModalOpen1}>
@@ -210,21 +244,6 @@ export function CreateLiquidation() {
                                                     </div>
                                                     <ErrorMessage name="products" component="span"
                                                                   style={{color: "red"}}/>
-                                                    <div className="justify-content-between mt-4">
-                                                        <div className="input-group">
-                                                            <div className="product-list">
-                                                                {listProduct.map((p) => (
-                                                                    <button
-                                                                        key={p.id}
-                                                                        name="products"
-                                                                        type="text"
-                                                                        className="product-item"
-                                                                        onClick={() => handleDeleteProduct(p.id)}
-                                                                    >{p.productName}</button>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
 
                                                 <div className="mt-2 inputs"><label>Tổng tiền</label>
@@ -236,7 +255,7 @@ export function CreateLiquidation() {
                                                         <NavLink
                                                             type="button"
                                                             className="btn btn-secondary"
-                                                            to={"/"}>
+                                                            to={"/nav/info-store/transaction-history"}>
                                                             Quay lại
                                                         </NavLink>
                                                     </div>
@@ -290,8 +309,8 @@ export function CreateLiquidation() {
                     <Modal.Title className="text-center" style={{width: "100%", textAlign: "center"}}>Chọn khách
                         hàng</Modal.Title>
                     <button type="button" className="btn-close" onClick={handleModalClose} aria-label="Close"></button>
-
                 </Modal.Header>
+
                 <Modal.Body>
                     <Formik initialValues={{
                         name: "",
@@ -425,7 +444,6 @@ export function CreateLiquidation() {
                             const res = await getListProductAPI(contractPage, values.productName, values.productType, values.loans);
                             await setContractPage(0)
                             await setContracts(res.data.content);
-
                         }
                         searchProduct();
                     }}>
@@ -561,6 +579,8 @@ export function CreateLiquidation() {
 
                 </Modal.Footer>
             </Modal>
+
+
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
                     crossorigin="anonymous"/>

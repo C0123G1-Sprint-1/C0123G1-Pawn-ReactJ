@@ -4,36 +4,49 @@ import "../../css/header.css"
 import "../../css/home.css"
 import {useNavigate} from "react-router";
 import jwt from 'jwt-decode';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {NavLink} from "react-router-dom";
+
 export function Header() {
 
 const navigate = useNavigate();
-// bo thanh header
+    const [isLogin, setIsLogin] = useState(false);
     const token = localStorage.getItem('token');
-    const decodedToken = jwt(token);
+    const [decodedToken, setDecodedToken] = useState("");
+    const [username, setUsername] = useState();
 
-    // const token = localStorage.getItem('token');
-    // const decodedToken = jwt(token);
-    const  [username,setUsername] = useState();
+    useEffect(() => {
+        if (token) {
+            const decoded = jwt(token);
+            setDecodedToken(decoded);
+            setUsername(decoded.sub);
+            setIsLogin(true);
+        } else {
+            // Xử lý khi không có token trong localStorage
+        }
+    }, [token]);
 
-    useEffect(()=>{
-        // alert(decodedToken.sub)
-        setUsername(decodedToken.sub)
-    },[])
+    const handlerLogout = () => {
+        localStorage.removeItem("token");
+        setIsLogin(false);
+        toast.success("Đăng xuất thành công !!");
+    };
     // console.log(decodedToken.sub)
     return(
         <>
             <>
                 {/*header*/}
-                <header id="header" className="header d-flex align-items-center" style={{top:0, position:"sticky",zIndex:'100'}}>
-                    <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+                <header id="header" className="header d-flex align-items-center">
+                    <div className="container-fluid container-xl d-flex align-items-center justify-content-between" >
                         <NavLink to= "/"  className="logo d-flex align-items-center">
                             {/* Uncomment the line below if you also wish to use an image logo */}
                             <div className="pnj">
-                                <img  src="/anh/pawnshop.png"   style={{ marginLeft: "40%", maxHeight: 90 }}  alt=""  />
+                                <img  src="/anh/pawnshop.png"   style={{ marginLeft: "40%", maxHeight: 90 }}  alt="" />
                             </div>
                         </NavLink>
-                         <nav id="navbar"  className="navbar">
+                        <nav id="navbar"  className="navbar">
                             <ul>
                                 <li>
                                     <NavLink style={{color : "white",fontSize:'20px',}} to= "/" className=" font-a-header">
@@ -41,7 +54,7 @@ const navigate = useNavigate();
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink  style={{color : "white",fontSize:'20px',}} to="/listPost">Tin Tức</NavLink>
+                                    <NavLink  style={{color : "white",fontSize:'20px',}} to="/listPosts">Tin Tức</NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/create"  className='font-a-header' style={{color : "white",fontSize:'20px',}} >Đăng ký cầm đồ</NavLink>
@@ -84,8 +97,34 @@ const navigate = useNavigate();
 
                                 <li style={{display : "flex",textAlign: "center",
                                     alignItems: "center",color:"white",fontWeight:"300"}}>
-                                    <a onClick={() => navigate("/login")}>{username}</a>
-                                    <i style={{marginLeft : "0.5rem"}} className="fa-regular fa-user"></i>
+                                    {isLogin?
+                                        (
+                                            <>
+
+                                                {/*<div class="btn-group">*/}
+                                                {/*    <button type="button" class="btn btn-success">{username}</button>*/}
+                                                {/*    <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">*/}
+                                                {/*        <span class="visually-hidden">Toggle Dropdown</span>*/}
+                                                {/*    </button>*/}
+                                                {/*    <ul class="dropdown-menu">*/}
+                                                {/*        <li><a >TTCN</a></li>*/}
+                                                {/*        <li><a >Đăng xuất</a></li>*/}
+
+                                                {/*    </ul>*/}
+                                                {/*</div>*/}
+                                                <a onClick={() => handlerLogout()}>{username}</a>
+                                                <i style={{marginLeft : "0.5rem"}} className="fa-solid fa-right-from-bracket" onClick={() => handlerLogout()}></i>
+                                                {/*<i style={{marginLeft : "0.5rem"}} className="fa-light fa-right-from-bracket" onClick={() => handlerLogout()}></i>*/}
+                                            </>
+                                        )
+                                        :
+                                        (
+                                            <>
+                                                <a onClick={() => navigate("/login")}>Đăng nhập</a>
+                                                <i style={{marginLeft : "0.5rem"}} className="fa-regular fa-user"></i>
+                                            </>
+                                        )
+                                    }
                                 </li>
 
                             </ul>
@@ -100,10 +139,7 @@ const navigate = useNavigate();
                     </div>
                 </header>
             </>
-
-
-
-
+            <ToastContainer />
         </>
 
     )

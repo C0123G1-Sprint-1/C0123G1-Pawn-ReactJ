@@ -1,9 +1,12 @@
 import {NavLink} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Outlet} from "react-router";
 
 export default function InfoStore() {
     const [isActives, setIsActive] = useState(true);
+    useEffect(()=>{
+        setIsActive(false)
+    },[isActives])
     return (
         <>
             <div id="content" className="container">
@@ -18,6 +21,10 @@ export default function InfoStore() {
                                 Thông tin cửa hàng
                             </button>
                             <NavLink to={"/nav/info-store/profit"} style={({isActive})=>{
+                                if(isActive){
+                                    // alert(isActive)
+                                    setIsActive(()=>false)
+                                }
                                 return{
                                     backgroundColor: isActive || isActives === true  ? "#27533e": "",
                                     color: isActive || isActives === true ? "#fff": ""
