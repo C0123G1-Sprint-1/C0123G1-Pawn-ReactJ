@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -32,38 +35,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
-      <change afterPath="$PROJECT_DIR$/public/anh/anhmoi.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/account/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/account/LoginForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/contract/CreateContracts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/CreateContracts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/contract/Top10NewContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/Top10NewContract.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/contract/TransactionHistoryDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/TransactionHistoryDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/contract/UpdateContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/UpdateContract.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/CustomerList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CustomerList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/OCRCitizen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/OCRCitizen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/liquidation/CreateLiquidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/liquidation/CreateLiquidation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/navbar/Navbars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/navbar/Navbars.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/post/CreatePosts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/post/CreatePosts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/post/DetailPosts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/post/DetailPosts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/post/ListPosts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/post/ListPosts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/profit/InfoStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/InfoStore.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/profit/Profit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Profit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/redem/Redeeming.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/redem/Redeeming.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/List.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/List.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/RegisterPawn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/RegisterPawn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/Posts.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/Posts.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/UpdateContract.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/UpdateContract.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/footer.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/header.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/home.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/firebasePosts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/firebasePosts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/ContractService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/ContractService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,15 +73,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/anh" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "node.js.selected.package.tslint": "(autodetect)",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.1.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\public\anh" />
@@ -327,7 +297,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="&quot;add component TransactionHistoryList&quot;" />
