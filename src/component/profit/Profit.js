@@ -274,7 +274,7 @@ export default function Profit() {
             </div>
             <div className=" mt-3 container col-12">
                 <div align="center">
-                    <h3 style={{fontFamily: "aria"}}>Danh sách hợp đồng</h3>
+                    <h3 style={{fontFamily: "aria"}}>DANH SÁCH HỢP ĐỒNG</h3>
                 </div>
                 <Outlet context={contracts}/>
                 {

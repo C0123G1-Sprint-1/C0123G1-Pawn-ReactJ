@@ -167,9 +167,6 @@ export default function TransactionHistoryList() {
                                     </div>
                                     <div className=" col-lg-10 my-4">
                                         <div className="d-flex justify-content-between">
-                                            <Link type="button"
-                                                  to={"/nav/info-store/transaction-history/create-contract"}
-                                                  className="btn btn-outline-success">Thêm mới hợp đồng</Link>
                                             <button type="reset" className="col-lg-3 btn btn-outline-secondary"
                                             ><i
                                                 className="bi bi-arrow-counterclockwise"/></button>
