@@ -1,7 +1,7 @@
 import {useOutletContext} from "react-router";
 import React from "react";
 import "../../css/interest.css"
-
+import moment from "moment";
 export default function Interest() {
     const contracts = useOutletContext();
     return (
@@ -10,7 +10,7 @@ export default function Interest() {
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
                     <tr>
-                        <th>Mã Hợp Đồng</th>
+                        <th>Mã HD</th>
                         <th>Tiền Cho Vay(VND)</th>
                         <th>Tiền Lãi (VND)</th>
                         <th>Ngày Bắt Đầu</th>
@@ -23,11 +23,11 @@ export default function Interest() {
                         contracts ?
                             contracts.map((contract, index) =>
                                 <tr key={index}>
-                                    <td>{contract.contractCode}</td>
-                                    <td>{contract.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td>{contract.interest?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td>{contract.startDate}</td>
-                                    <td>{contract.profit?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td style={{textAlign: "center"}}>{contract.contractCode}</td>
+                                    <td style={{textAlign: "center"}}>{contract.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td style={{textAlign: "center"}}>{contract.interest?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td style={{textAlign: "center"}}>{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                    <td style={{textAlign: "center"}}>{contract.profit?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                     <td className="detail-button">
                                         <a href="#">
                                             <i

@@ -34,21 +34,27 @@
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/contract/CreateContracts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/CreateContracts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/all_contract/ShowContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/all_contract/ShowContract.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/customer/CustomerList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CustomerList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/employee/CreateEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/CreateEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/employee/ListEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/ListEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/employee/employee.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/employee.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/liquidation/CreateLiquidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/liquidation/CreateLiquidation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/navbar/Navbars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/navbar/Navbars.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/profit/Foresee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Foresee.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/profit/InfoStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/InfoStore.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/profit/Interest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Interest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/profit/Liquidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Liquidation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/profit/Profit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Profit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/redem/Redeeming.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/redem/Redeeming.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/Footer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/register-pawn/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/interest.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/interest.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/List.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/List.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/RegisterPawn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/RegisterPawn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/create.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/create.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/pawnshop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/footer.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/RedeemingService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/RedeemingService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/RegisterPawnService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/RegisterPawnService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +71,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="statistics-KhanhKQ" />
+        <entry key="$PROJECT_DIR$" value="DEV-1" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -90,24 +96,24 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/component/customer" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/service" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\redem" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\all_contract" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\register-pawn" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\redeem" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\all_contract" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service\all_contract" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\customer" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\employee" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\liquidation" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -272,10 +278,10 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="489" y="228" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.852@0.0.1440.852" timestamp="1689774850055" />
-    <state x="451" y="173" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1689853606266">
+    <state x="451" y="173" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1689913655010">
       <screen x="0" y="0" width="1440" height="852" />
     </state>
-    <state x="451" y="173" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689853606266" />
+    <state x="451" y="173" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689913655010" />
     <state x="515" y="173" key="FileChooserDialogImpl" timestamp="1689754775251">
       <screen x="0" y="0" width="1440" height="852" />
     </state>
@@ -326,5 +332,9 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="507" y="139" key="git4idea.branch.GitSmartOperationDialog/0.0.1440.852@0.0.1440.852" timestamp="1689837299383" />
+    <state x="386" y="177" width="672" height="678" key="search.everywhere.popup" timestamp="1689914191123">
+      <screen x="0" y="0" width="1440" height="852" />
+    </state>
+    <state x="386" y="177" width="672" height="678" key="search.everywhere.popup/0.0.1440.852@0.0.1440.852" timestamp="1689914191123" />
   </component>
 </project>

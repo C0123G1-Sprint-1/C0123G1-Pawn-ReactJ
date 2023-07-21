@@ -2,14 +2,13 @@
 import {Routes, Route} from "react-router-dom"
 import React from "react";
 // import {RegisterPawn} from "./component/register-pawn/RegisterPawn";
-import {List} from "./component/register-pawn/List";
+
 // import {Header} from "./component/register-pawn/Header";
 // import {Footer} from "./component/register-pawn/Footer";
 // import {Navigate} from "./component/register-pawn/Navigate";
-import {Header} from "./component/register-pawn/Header";
-import {Footer} from "./component/register-pawn/Footer";
+
 import "./css/home.css"
-import {RegisterPawn} from "./component/register-pawn/RegisterPawn";
+
 import {LoginHome} from "./component/account/LoginHome";
 import Navbars from "./component/navbar/Navbars";
 import InfoStore from "./component/profit/InfoStore";
@@ -38,6 +37,10 @@ import ImageUploaderFile from "./component/customer/OCRCitizen";
 import {UpdateCustomer} from "./component/customer/UpdateCustomer";
 import {Top10NewContract} from "./component/contract/Top10NewContract";
 import {CreateContracts} from "./component/contract/CreateContracts";
+import {List} from "./component/register-pawn/List";
+import {Header} from "./component/register-pawn/Header";
+import {RegisterPawn} from "./component/register-pawn/RegisterPawn";
+import {Footer} from "./component/register-pawn/Footer";
 
 function App() {
     return (
@@ -47,7 +50,8 @@ function App() {
                 <Route path='/' element={<List/>}/>
                 <Route path={"/nav"} element={<Navbars/>}>
                         <Route path={"/nav/info-store"} element={<InfoStore/>}>
-                            <Route path={"/nav/info-store/profit"} element={<Profit/>}>
+                            <Route path={"/nav/info-store"} element={<Profit/>}>
+                                <Route path="/nav/info-store/" element={<Interest/>}/>
                                 <Route path="/nav/info-store/profit" element={<Interest/>}/>
                                 <Route path="/nav/info-store/profit/interest/:profitType" element={<Interest/>}/>
                                 <Route path="/nav/info-store/profit/liquidation/:profitType" element={<Liquidation/>}/>
@@ -65,14 +69,13 @@ function App() {
                         <Route path="/nav/api/employee/create-employee" element={<CreateEmployee/>}/>
                         <Route path="/nav/redeem" element={<Redeeming/>}/>
                         <Route path={"/nav/manager-customer"} element={<CustomerList/>}/>
-                        <Route path={"/nav/create"} element={<CreateCustomer/>}/>
+                        <Route path={"/nav/manager-customer/create"} element={<CreateCustomer/>}/>
                         <Route path={"/nav/update/:id"} element={<UpdateCustomer/>}/>
                         <Route path={"/nav/detail/employee/:id"} element={<EmployeeInformation/>}/>
                 </Route>
 
 
                 <Route path='/create' element={<RegisterPawn/>}/>
-                <Route path="/create" element={<RegisterPawn/>}/>
                 <Route path={"/login"} element={<LoginHome/>}>
                     <Route path="/login" element={<LoginForm/>}/>
                     <Route path="/login/forgot" element={<ForgotPassword/>}/>
