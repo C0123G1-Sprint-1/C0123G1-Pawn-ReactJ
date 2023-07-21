@@ -34,6 +34,10 @@ export const CreateContracts = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDay] = useState('');
 
+    const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0); // Tổng số trang
+    const [count, setCount] = useState(1);
+
     const n = useNavigate();
 
     const handleLoans = async (event) => {
@@ -94,9 +98,7 @@ export const CreateContracts = () => {
             );
         });
     };
-    const [pageCount, setPageCount] = useState(0);
-    const [currentPage, setCurrentPage] = useState(0); // Tổng số trang
-    const [count, setCount] = useState(1);
+
 
     //  Sổ list  chọn khách hàng
     useEffect(() => {

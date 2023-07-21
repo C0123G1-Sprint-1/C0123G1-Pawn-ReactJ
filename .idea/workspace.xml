@@ -58,11 +58,16 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+  }
+}]]></component>
   <component name="GithubPullRequestsUISettings">
-    <option name="hiddenUrls">
-      <set>
-        <option value="https://github.com/C0123G1-Sprint-1/C0123G1-Pawn-reactjs.git" />
-      </set>
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="b4782db7-e7ca-49c8-9bcd-5cdb2a9f4cb4" />
+        <option name="url" value="https://github.com/C0123G1-Sprint-1/C0123G1-Pawn-reactjs.git" />
+      </UrlAndAccount>
     </option>
   </component>
   <component name="ProjectId" id="2Sh693BP9nEjLgotYAFb7JAd4mI" />
