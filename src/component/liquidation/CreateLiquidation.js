@@ -40,9 +40,12 @@ export function CreateLiquidation() {
     const [productName, setProductName] = useState('');
     const [productType, setProductType] = useState('');
     const [loans, setLoans] = useState('');
+    const [code, setCode] = useState('');
 
-
-
+    const createContractCodeApi = async () => {
+        const res = await contractService.createCodeContract();
+        setCode(res);
+    }
 
     const formatCurrency = (amount) => {
         return amount.toLocaleString({style: 'currency', currency: 'VND'});
@@ -56,8 +59,8 @@ export function CreateLiquidation() {
     const getListCustomer = async () => {
         try {
             const response = await getListCustomerAPI(customerPage, name);
-            setCustomers(response.data.content);
-            setCustomerTotalPages(response.data.totalPages);
+            setCustomers(response.data?.content);
+            setCustomerTotalPages(response?.data.totalPages);
         } catch (error) {
             console.error('Error while loading customers:', error);
         }
@@ -66,8 +69,8 @@ export function CreateLiquidation() {
     const getListProduct = async () => {
         try {
             const response = await getListProductAPI(contractPage, productName, productType, loans);
-            setContracts(response.data.content);
-            setContractTotalPages(response.data.totalPages);
+            setContracts(response?.data.content);
+            setContractTotalPages(response?.data.totalPages);
         } catch (error) {
             console.error('Error while loading products:', error);
         }
@@ -85,15 +88,16 @@ export function CreateLiquidation() {
     };
 
     useEffect(() => {
+        createContractCodeApi();
         getListProductType();
         getListCustomer();
         getListProduct();
     }, [customerPage, name, contractPage, productType, productName, loans]);
 
 
-    const getProduct = (id) => {
+    const onSelectContract = (id) => {
         const selectedContract = contracts.find((c) => c.id === id);
-        if (selectedContract) {
+        if (selectedContract && !listProduct.filter(lp => lp.id === selectedContract.id)[0]) {
             setListProduct([...listProduct, selectedContract]);
         }
     };
@@ -110,7 +114,7 @@ export function CreateLiquidation() {
     }, [listProduct]);
 
     const data = {
-        products: listProduct.map((p) => p.productName).join(",")
+        products: listProduct.map((p) => p.id).join(",")
     };
 
     const handleModalClose = () => {
@@ -128,6 +132,34 @@ export function CreateLiquidation() {
     const handleModalOpen1 = () => {
         setShowModal1(true);
     };
+
+    const loadContracts = async () => {
+
+        // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
+        let timerInterval
+        Swal.fire({
+            title: 'Chúng tôi đang sử lí mong đợi trong vài giây',
+            html: 'Vui lòng đợi trong  <b></b> giây.',
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer')
+            }
+        })
+    };
+
     if (!customers) {
         return null
     }
@@ -137,23 +169,24 @@ export function CreateLiquidation() {
     return (
         <>
             <Formik initialValues={{
-                id: '',
+                contractCode: code,
+                contractType: 2,
+                contractStatus: 5,
                 customers: '',
+                image: contracts.image,
                 products: '',
                 totalPrice: 0,
                 createTime: null
             }}
-                    // validationSchema={yup.object({
-                    //     customers: yup.string().required("Vui lòng chọn khách hàng."),
-                    //     products: yup.string().required("Vui lòng chọn sản phẩm.")
-                    // })}
-                    onSubmit={async (values, {setSubmitting}) => {
-                        setTimeout(() => {
-                            setSubmitting(false);
-                        }, 5000)
+                // validationSchema={yup.object({
+                //     customers: yup.string().required("Vui lòng chọn khách hàng."),
+                //     products: yup.string().required("Vui lòng chọn sản phẩm.")
+                // })}
+                    onSubmit={async (values) => {
                         await saveLiquidationAPI({
                             ...values,
                             totalPrice: totalPrice,
+                            contractCode: code + values.contractCode,
                             customers: customers.find((c) => c.id === idCustomer),
                             products: data.products
                         });
@@ -261,30 +294,14 @@ export function CreateLiquidation() {
                                                         </NavLink>
                                                     </div>
                                                     <div
-                                                        className="text-center m-auto">                                                    {
+                                                        className="text-center m-auto">
 
-                                                        isSubmitting ? (
-                                                                <ThreeCircles
-                                                                    height="100"
-                                                                    width="100"
-                                                                    color="#4fa94d"
-                                                                    wrapperStyle={{}}
-                                                                    wrapperClass=""
-                                                                    visible={true}
-                                                                    ariaLabel="three-circles-rotating"
-                                                                    outerCircleColor=""
-                                                                    innerCircleColor=""
-                                                                    middleCircleColor=""
-                                                                />
-                                                            )
-                                                            :
-                                                            (
-                                                                <button type="submit" className="btn btn-success"
-                                                                    disabled={!idCustomer || listProduct.length === 0}>
-                                                                    <b className="text-center">Thêm mới</b>
-                                                                </button>
-                                                            )
-                                                    }
+
+                                                        <button type="submit" className="btn btn-success"
+                                                                onClick={loadContracts}
+                                                                disabled={!idCustomer || listProduct.length === 0}>
+                                                            <b className="text-center">Thêm mới</b>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </Form>
@@ -532,7 +549,7 @@ export function CreateLiquidation() {
                                             <td className="text-center">{(+ct.loans).toLocaleString()}</td>
                                             <td className="text-center">
                                                 <button type="button" onClick={() => {
-                                                    getProduct(ct.id);
+                                                    onSelectContract(ct.id);
                                                     handleModalClose1(true);
                                                 }}
                                                         className="btn btn-success text-center">Chọn
@@ -571,7 +588,7 @@ export function CreateLiquidation() {
                                 <li disabled={contractPage + 1 === contractTotalPages} className="page-item">
                                     <button className="page-link" tabIndex={-1}
                                             onClick={() => paginateContracts(contractPage + 1)}>
-                                        Tiếp
+                                        Sau
                                     </button>
                                 </li>
                             </ul>
