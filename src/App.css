@@ -74,7 +74,9 @@
   color: #0D6EFD;
   background: #0D6EFD;
 }
-
+span{
+  color: red;
+}
 @media screen and (max-width: 768px) {
 
   body {

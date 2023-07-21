@@ -4,6 +4,7 @@ import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
 import jwt from 'jwt-decode';
+import moment from "moment";
 
 const token = localStorage.getItem('token');
 const decodedToken = jwt(token);
@@ -71,7 +72,7 @@ export function CustomerList() {
             setPageCount(totalPages);
         } catch (error) {
             console.log(error);
-            setCurrentPage(currentPage - 1);
+            // setCurrentPage(currentPage - 1);
         }
     };
 
@@ -115,13 +116,9 @@ export function CustomerList() {
         list()
     }, [])
 
-    function getDeleteCustomer(name, id) {
-        setIdDelete(id)
-        setNameDelete(name)
-    }
 
-    async function deleteCustomers() {
-        await customersService.deleteCustomer(idDelete)
+    async function deleteCustomers(id) {
+        await customersService.deleteCustomer(id)
         Swal.fire({
             icon: "success",
             title: "Xóa thành công !",
@@ -147,10 +144,10 @@ export function CustomerList() {
     const [createDate, setCreateDate] = useState("")
     const [updateDate, setUpdateDate] = useState("")
     const [note, setNote] = useState("")
-    const [contractsSet, setContractsSet] = useState("")
+    const [quantityContract, setQuantityContract] = useState("")
 
     function getDetail(id, name, birthday, gender, phoneNumber, email, address, citizenCode, image,
-                       frontCitizen, backCitizen, createDate, updateDate, note,contractsSet) {
+                       frontCitizen, backCitizen, createDate, updateDate, note,quantityContract) {
         setId(id);
         setNames(name);
         setBirthday(birthday);
@@ -165,7 +162,7 @@ export function CustomerList() {
         setCreateDate(createDate);
         setUpdateDate(updateDate)
         setNote(note);
-        setContractsSet(contractsSet)
+        setQuantityContract(quantityContract)
     }
 
     return (
@@ -256,23 +253,39 @@ export function CustomerList() {
                                                                 <td>{value.name}</td>
                                                                 <td>{value.phoneNumber}</td>
                                                                 <td>{value.citizenCode}</td>
-                                                                <td>{value.contractsSet}</td>
+                                                                <td>{value.quantityContract}</td>
                                                                 <td>
                                                                     <a href className="me-2" data-bs-toggle="modal"
                                                                        data-bs-target="#staticBackdrop"><i
                                                                         style={{color: '#4698f9'}}
                                                                         className="bi bi-info-circle"
                                                                         onClick={() => getDetail(value.id, value.name, value.birthday, value.gender, value.phoneNumber, value.email, value.address,
-                                                                            value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate,value.contrastsSet,
+                                                                            value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate,value.quantityContract,
                                                                             value.updateDate, value.note)}/></a>
                                                                     <a href className="me-2"><i
                                                                         style={{color: 'orange'}}
                                                                         className="bi bi-pencil-square"/></a>
-                                                                    <a type="button" data-bs-toggle="modal"
-                                                                       data-bs-target="#staticBackdrop6">
+                                                                    <a type="button"
+                                                                       >
                                                                         <i style={{color: 'red'}}
                                                                            className="bi bi-trash3"
-                                                                           onClick={() => getDeleteCustomer(value.name, value.id)}/>
+                                                                           onClick={() => {
+                                                                               Swal.fire({
+                                                                                   icon: "warning",
+                                                                                   title:"Xác nhận xóa",
+                                                                                   html: `Bạn có muốn xoá khách hàng <span style="color: red">${value.name}</span> không ?`,
+                                                                                   showCancelButton: true,
+                                                                                   cancelButtonText: "Hủy",
+                                                                                   confirmButtonText: "Có",
+                                                                                   cancelButtonColor: "rgba(118,112,112,0.51)",
+                                                                                   confirmButtonColor: "#d33"
+                                                                               })
+                                                                                   .then((res) => {
+                                                                                       if (res.isConfirmed) {
+                                                                                           deleteCustomers(value.id)
+                                                                                       }
+                                                                                   })}}
+                                                                               />
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -280,36 +293,36 @@ export function CustomerList() {
                                                     }
 
                                                     {/* Modal */}
-                                                    <div className="modal fade" id="staticBackdrop6"
+                                                    {/*<div className="modal fade" id="staticBackdrop6"*/}
 
-                                                         tabIndex={-1}
-                                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                        <div className="modal-dialog">
-                                                            <div className="modal-content">
-                                                                <div className="modal-header">
-                                                                    <h5 className="modal-title"
-                                                                        id="staticBackdropLabel6">Xác nhận
-                                                                        xóa khách hàng</h5>
-                                                                    <button type="button" className="btn-close"
-                                                                            data-bs-dismiss="modal" aria-label="Close"/>
-                                                                </div>
-                                                                <div className="modal-body">
-                                                                    Bạn thật sự muốn xóa <b
-                                                                    style={{color: 'red'}}>{nameDelete}</b>
-                                                                    ?
-                                                                </div>
-                                                                <div className="modal-footer">
-                                                                    <button type="button" className="btn btn-secondary"
-                                                                            data-bs-dismiss="modal">Thoát
-                                                                    </button>
-                                                                    <button type="button" className="btn btn-danger"
-                                                                            data-bs-dismiss="modal"
-                                                                            onClick={() => deleteCustomers()}>Xóa
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    {/*     tabIndex={-1}*/}
+                                                    {/*     aria-labelledby="staticBackdropLabel" aria-hidden="true">*/}
+                                                    {/*    <div className="modal-dialog">*/}
+                                                    {/*        <div className="modal-content">*/}
+                                                    {/*            <div className="modal-header">*/}
+                                                    {/*                <h5 className="modal-title"*/}
+                                                    {/*                    id="staticBackdropLabel6">Xác nhận*/}
+                                                    {/*                    xóa khách hàng</h5>*/}
+                                                    {/*                <button type="button" className="btn-close"*/}
+                                                    {/*                        data-bs-dismiss="modal" aria-label="Close"/>*/}
+                                                    {/*            </div>*/}
+                                                    {/*            <div className="modal-body">*/}
+                                                    {/*                Bạn thật sự muốn xóa <b*/}
+                                                    {/*                style={{color: 'red'}}>{nameDelete}</b>*/}
+                                                    {/*                ?*/}
+                                                    {/*            </div>*/}
+                                                    {/*            <div className="modal-footer">*/}
+                                                    {/*                <button type="button" className="btn btn-secondary"*/}
+                                                    {/*                        data-bs-dismiss="modal">Thoát*/}
+                                                    {/*                </button>*/}
+                                                    {/*                <button type="button" className="btn btn-danger"*/}
+                                                    {/*                        data-bs-dismiss="modal"*/}
+                                                    {/*                        onClick={() => deleteCustomers()}>Xóa*/}
+                                                    {/*                </button>*/}
+                                                    {/*            </div>*/}
+                                                    {/*        </div>*/}
+                                                    {/*    </div>*/}
+                                                    {/*</div>*/}
 
 
                                                     </tbody>
@@ -377,7 +390,7 @@ export function CustomerList() {
                                                 <td className="col-sm-4 fw-bold"> Ngày
                                                     sinh
                                                 </td>
-                                                <td className="col-sm-6">{birthday}</td>
+                                                <td className="col-sm-6">{moment(birthday).format('DD/MM/YYYY')}</td>
                                             </tr>
                                             <tr>
                                                 <td className="col-sm-4 fw-bold"> Số
@@ -412,20 +425,21 @@ export function CustomerList() {
                                                 <td className="col-sm-4 fw-bold">Số
                                                     lượng hợp đồng
                                                 </td>
-                                                <td className="col-sm-6">{contractsSet}</td>
+                                                <td className="col-sm-6">{updateDate}</td>
                                             </tr>
                                             <tr>
                                                 <td className="col-sm-4 fw-bold">Ngày tạo
                                                 </td>
-                                                <td className="col-sm-6">{createDate}</td>
+                                                <td>{moment(createDate).format('DD/MM/YYYY')}</td>
+
                                             </tr>
                                             <tr>
                                                 <td className="col-sm-4 fw-bold">Ngày chỉnh sửa</td>
-                                                <td className="col-sm-6">{note}</td>
+                                                <td>{moment(note).format('DD/MM/YYYY')}</td>
                                             </tr>
                                             <tr>
                                                 <td className="col-sm-4 fw-bold">Ghi chú</td>
-                                                <td className="col-sm-6">{updateDate}</td>
+                                                <td className="col-sm-6">{quantityContract}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -476,10 +490,10 @@ export function CustomerList() {
                                                     <td>{value.phone}</td>
                                                     <td>{value.email}</td>
                                                     <td>{value.address}</td>
-                                                    <td>{value.contendNote}</td>
+                                                    <td>{value.contentNote}</td>
                                                     <td>{value.productType.name}</td>
-                                                    <td>{value.createTime}</td>
-                                                    <td>{value.updateTime}</td>
+                                                    <td>{moment(value.createTime).format('DD/MM/YYYY')}</td>
+                                                    <td>{moment(value.updateTime).format('DD/MM/YYYY')}</td>
                                                 </tr>
                                             ))}
                                             </tbody>

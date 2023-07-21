@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -31,9 +34,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="Merge branch 'Dev' of https://github.com/C0123G1-Sprint-1/C0123G1-Pawn-reactjs into customers/list-delete-QuocNHA&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;package.json&#10;#&#9;public/index.html&#10;#&#9;src/App.css&#10;#&#9;src/App.js&#10;#&#9;src/firebase.js&#10;#&#9;src/index.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/customer/CustomerList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CustomerList.js" afterDir="false" />
     </list>
@@ -76,17 +78,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -106,6 +109,9 @@
       <workItem from="1689670828800" duration="4866000" />
       <workItem from="1689678562697" duration="15188000" />
       <workItem from="1689729417178" duration="4669000" />
+      <workItem from="1689903277635" duration="4424000" />
+      <workItem from="1689914534118" duration="4046000" />
+      <workItem from="1689935657978" duration="672000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -149,7 +155,21 @@
       <option name="project" value="LOCAL" />
       <updated>1689730970412</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Merge branch 'Dev' of https://github.com/C0123G1-Sprint-1/C0123G1-Pawn-reactjs into customers/list-delete-QuocNHA&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;package.json&#10;#&#9;public/index.html&#10;#&#9;src/App.css&#10;#&#9;src/App.js&#10;#&#9;src/firebase.js&#10;#&#9;src/index.js">
+      <created>1689852213726</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1689852213726</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Merge branch 'Dev' of https://github.com/C0123G1-Sprint-1/C0123G1-Pawn-reactjs into customers/list-delete-QuocNHA&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;package.json&#10;#&#9;public/index.html&#10;#&#9;src/App.css&#10;#&#9;src/App.js&#10;#&#9;src/firebase.js&#10;#&#9;src/index.js">
+      <created>1689852219141</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1689852219141</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,6 +188,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="&quot;add component TransactionHistoryList&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;add component TransactionHistoryList&quot;" />
+    <MESSAGE value="Merge branch 'Dev' of https://github.com/C0123G1-Sprint-1/C0123G1-Pawn-reactjs into customers/list-delete-QuocNHA&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;package.json&#10;#&#9;public/index.html&#10;#&#9;src/App.css&#10;#&#9;src/App.js&#10;#&#9;src/firebase.js&#10;#&#9;src/index.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'Dev' of https://github.com/C0123G1-Sprint-1/C0123G1-Pawn-reactjs into customers/list-delete-QuocNHA&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;package.json&#10;#&#9;public/index.html&#10;#&#9;src/App.css&#10;#&#9;src/App.js&#10;#&#9;src/firebase.js&#10;#&#9;src/index.js" />
   </component>
 </project>
