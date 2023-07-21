@@ -16,7 +16,7 @@ export function LoginHome() {
     >
       <div className="featured-image mb-3">
         <img
-          src={logo}
+          src="/anh/pawnshop.png"
           className="img-fluid"
           style={{ width: 250 }}
         />
