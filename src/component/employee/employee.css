@@ -42,16 +42,16 @@
 
 .pagination a {
     text-decoration: none;
-    color: #0D6EFD;
+    color: #00833e;
 }
 
 .pagination .active {
-    background-color: #0D6EFD;
+    background-color: #00833e;
 }
 
 .pagination .active .page-num {
     color: #fff;
-    background: #0D6EFD;
+    background: #00833e;
 }
 
 /*.height {*/
