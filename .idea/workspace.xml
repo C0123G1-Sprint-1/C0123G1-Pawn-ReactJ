@@ -31,19 +31,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
-      <change afterPath="$PROJECT_DIR$/src/component/register-pawn/Condition.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/component/register-pawn/condition.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/account/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/account/LoginForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/Footer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/List.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/List.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/firebase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/firebaseContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/firebaseContract.js" afterDir="false" />
-    </list>
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -151,7 +139,7 @@
       <workItem from="1689834571370" duration="2360000" />
       <workItem from="1689850891478" duration="3644000" />
       <workItem from="1689916991349" duration="310000" />
-      <workItem from="1689938433602" duration="5150000" />
+      <workItem from="1689938433602" duration="6026000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -293,7 +281,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689919949311</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="up">
+      <created>1689944165623</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1689944165623</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -314,9 +309,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="&quot;add component TransactionHistoryList&quot;" />
     <MESSAGE value="Update" />
-    <MESSAGE value="up" />
     <MESSAGE value="Up" />
-    <option name="LAST_COMMIT_MESSAGE" value="Up" />
+    <MESSAGE value="up" />
+    <option name="LAST_COMMIT_MESSAGE" value="up" />
   </component>
   <component name="WindowStateProjectService">
     <state x="489" y="228" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1689774850055">
@@ -364,11 +359,11 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="498" y="129" key="RollbackChangesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689917583569" />
-    <state x="338" y="150" key="Vcs.Push.Dialog.v2" timestamp="1689919957325">
-      <screen x="0" y="0" width="1440" height="852" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1689944208729">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689919957325" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689586761444" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689944208729" />
     <state x="374" y="23" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1689941673832">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
