@@ -196,12 +196,14 @@ export function CreateLiquidation() {
                         save();
                     }}>
 
-                <div className="container ">
+                <div className="container " style={{marginTop:"3vw"}}>
                     <div className="row height d-flex justify-content-center align-items-center">
                         <div className="col-md-6">
-                            <div className="card px-5 py-4">
+                            <div className="card px-5 py-4" style={{marginBottom:"3vw"}}>
                                 <div style={{textAlign: "center"}}>
-                                    <h2>THANH LÝ HÀNG</h2>
+                                    <h1>
+                                        THANH LÝ
+                                    </h1>
                                 </div>
                                 <Form>
                                     <div className="text-center mt-4 btn-group p-3 m-l-2">
