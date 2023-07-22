@@ -36,6 +36,7 @@ export const search = async (name, page, auth) => {
     }
 };
 
+
 export const checkEmailExists = async (email) => {
     try {
         return (await axios.get(`http://localhost:8080/api/employee/check-email/${email}`))

@@ -58,6 +58,18 @@ export const checkCitizenCodeExists = async (citizenCode) => {
         throw new Error("Đã xảy ra lỗi khi kiểm tra CCCD");
     }
 };
+export const findById = async (id, auth) => {
+    const headers = { Authorization: "Bearer " + auth };
+    try {
+        const result = await axios.get(`http://localhost:8080/api/employee/${id}`, {
+            headers,
+        });
+        console.log(result)
+        return result.data
+    } catch (e) {
+        console.log(e);
+    }
+};
 export const checkPhoneNumberExists = async (phone) => {
     try {
         return (await axios.get(`http://localhost:8080/api/employee/check-phone/${phone}`))

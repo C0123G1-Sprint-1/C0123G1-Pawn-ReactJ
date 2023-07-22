@@ -1,20 +1,25 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../css/header.css"
 import "../../css/home.css"
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 import jwt from 'jwt-decode';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {NavLink} from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
+import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 export function Header() {
 
-const navigate = useNavigate();
+    const navigate = useNavigate();
     const [isLogin, setIsLogin] = useState(false);
     const token = localStorage.getItem('token');
     const [decodedToken, setDecodedToken] = useState("");
     const [username, setUsername] = useState();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
     useEffect(() => {
         if (token) {
             const decoded = jwt(token);
@@ -23,42 +28,42 @@ const navigate = useNavigate();
             setIsLogin(true);
         } else {
             // Xử lý khi không có token trong localStorage
-            alert("abc")
         }
     }, [token]);
+
 
     const handlerLogout = () => {
         localStorage.removeItem("token");
         setIsLogin(false);
         toast.success("Đăng xuất thành công !!");
-        navigate("/login")
     };
     // console.log(decodedToken.sub)
-    return(
+    return (
         <>
             <>
                 {/*header*/}
 
                 <header id="header" className="header d-flex align-items-center">
-                    <div className="container-fluid container-xl d-flex align-items-center justify-content-between" >
-                        <NavLink to= "/"  className="logo d-flex align-items-center">
+                    <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
+                        <NavLink to="/" className="logo d-flex align-items-center">
                             {/* Uncomment the line below if you also wish to use an image logo */}
                             <div className="pnj">
-                                <img  src="/anh/pawnshop.png"   style={{ marginLeft: "40%", maxHeight: 90 }}  alt="" />
+                                <img src="/anh/pawnshop.png" style={{ marginLeft: "40%", maxHeight: 90 }} alt="" />
                             </div>
                         </NavLink>
-                        <nav id="navbar"  className="navbar">
+                        <nav id="navbar" className="navbar">
                             <ul>
                                 <li>
-                                    <NavLink style={{color : "white",fontSize:'20px',}} to= "/" className=" font-a-header">
+                                    <NavLink style={{ color: "white", fontSize: '20px', }} to="/" className=" font-a-header">
                                         Trang Chủ
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink  style={{color : "white",fontSize:'20px',}} to="/listPosts">Tin Tức</NavLink>
+                                    <NavLink style={{ color: "white", fontSize: '20px', }} to="/listPosts">Tin Tức</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/create"  className='font-a-header' style={{color : "white",fontSize:'20px',}} >Đăng ký cầm đồ</NavLink>
+                                    <NavLink to="/create" className='font-a-header'
+                                             style={{ color: "white", fontSize: '20px', }}>Đăng ký cầm đồ</NavLink>
                                 </li>
                                 {/*<li className="dropdown">*/}
                                 {/*    <a href="#">*/}
@@ -96,33 +101,44 @@ const navigate = useNavigate();
                                 {/*</li>*/}
 
 
-                                <li style={{display : "flex",textAlign: "center",
-                                    alignItems: "center",color:"white",fontWeight:"300"}}>
-                                    {isLogin?
+                                <li style={{
+                                    display: "flex", textAlign: "center",
+                                    alignItems: "center", color: "white", fontWeight: "300"
+                                }}>
+                                    {isLogin ?
                                         (
                                             <>
-
-                                                {/*<div class="btn-group">*/}
-                                                {/*    <button type="button" class="btn btn-success">{username}</button>*/}
-                                                {/*    <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">*/}
-                                                {/*        <span class="visually-hidden">Toggle Dropdown</span>*/}
-                                                {/*    </button>*/}
-                                                {/*    <ul class="dropdown-menu">*/}
-                                                {/*        <li><a >TTCN</a></li>*/}
-                                                {/*        <li><a >Đăng xuất</a></li>*/}
-
-                                                {/*    </ul>*/}
-                                                {/*</div>*/}
-                                                <a onClick={() => handlerLogout()}>{username}</a>
-                                                <i style={{marginLeft : "0.5rem"}} className="fa-solid fa-right-from-bracket" onClick={() => handlerLogout()}></i>
-                                                {/*<i style={{marginLeft : "0.5rem"}} className="fa-light fa-right-from-bracket" onClick={() => handlerLogout()}></i>*/}
+                                                <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+                                                    <DropdownToggle
+                                                        style={{
+                                                            backgroundColor: "#00833e",
+                                                            color: "white",
+                                                            borderColor: "white",
+                                                            borderRadius: "80%",
+                                                            fontWeight: "700",
+                                                            fontSize: "20px",
+                                                            fontFamily: "var(--font-secondary)"
+                                                        }}
+                                                        className="nav-link"
+                                                    >
+                                                        {username}
+                                                    </DropdownToggle>
+                                                    <DropdownMenu>
+                                                        <a className="dropdown-item" style={{ color: "black" }}>Thông tin cá nhân</a>
+                                                        <a className="dropdown-item" onClick={() => handlerLogout()} style={{ color: "black" }}>Đăng xuất</a>
+                                                    </DropdownMenu>
+                                                </Dropdown>
+                                                <i style={{ marginLeft: "0.5rem" }}
+                                                   className="fa-solid fa-right-from-bracket"
+                                                   onClick={() => handlerLogout()}></i>
                                             </>
                                         )
                                         :
                                         (
                                             <>
-                                                <a onClick={() => navigate("/login")}>Đăng nhập</a>
-                                                <i style={{marginLeft : "0.5rem"}} className="fa-regular fa-user"></i>
+                                                <a onClick={() => navigate("/login")} style={{ fontSize: "18px" }}>Đăng
+                                                    nhập</a>
+                                                <i style={{ marginLeft: "0.5rem" }} className="fa-regular fa-user"></i>
                                             </>
                                         )
                                     }
@@ -131,10 +147,10 @@ const navigate = useNavigate();
                             </ul>
                         </nav>
 
-                            <i  onClick={() => mobileNavToggle()} className="fa-solid fa-bars mobile-nav-toggle mobile-nav-show bi bi-list" />
-                            <i  onClick={() => mobileNavToggle()} className="fa-solid fa-xmark mobile-nav-toggle mobile-nav-hide d-none bi bi-x" />
-
-
+                        <i onClick={() => mobileNavToggle()}
+                           className="fa-solid fa-bars mobile-nav-toggle mobile-nav-show bi bi-list" />
+                        <i onClick={() => mobileNavToggle()}
+                           className="fa-solid fa-xmark mobile-nav-toggle mobile-nav-hide d-none bi bi-x" />
 
 
                     </div>
@@ -146,8 +162,6 @@ const navigate = useNavigate();
     )
 
 }
-
-
 
 
 function mobileNavToggle() {

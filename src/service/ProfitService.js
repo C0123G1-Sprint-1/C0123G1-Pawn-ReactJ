@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const token = localStorage.getItem('token')
 export const getAllContract = async (startDate, endDate, page, profitType) => {
     try {
@@ -6,10 +7,12 @@ export const getAllContract = async (startDate, endDate, page, profitType) => {
             ,
             {
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }}
-                     );
+                    Authorization: `Bearer ${token}`,
+                }
+            }
+        );
     } catch (e) {
+        console.log(e)
         return null;
     }
 }
