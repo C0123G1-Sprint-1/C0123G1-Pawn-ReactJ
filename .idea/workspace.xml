@@ -27,12 +27,7 @@
   <component name="ChangeListManager">
     <list default="true" id="02654e93-fe04-4c50-8d88-06e852dd1ecd" name="Default Changelist" comment="DongPV update coding ReactJs dev1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/employee/CreateEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/CreateEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/employee/ListEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/ListEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/employee/employee.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/employee.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/employeeService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/employeeService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +115,7 @@
       <workItem from="1689808783486" duration="714000" />
       <workItem from="1689815273714" duration="12183000" />
       <workItem from="1689848660368" duration="3309000" />
-      <workItem from="1690002716853" duration="9631000" />
+      <workItem from="1690002716853" duration="10288000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>

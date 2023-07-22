@@ -238,7 +238,7 @@ export function CreateEmployee() {
                                                     )}
                                                 </div>
                                             </div>
-                                            <div className="col-8">
+                                            <div className="col-8" >
                                                 <div className="row">
                                                     <div className="col-6">
                                                         <div className="mt-2 inputs">
