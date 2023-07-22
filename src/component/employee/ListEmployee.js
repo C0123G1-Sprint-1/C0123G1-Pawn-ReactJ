@@ -6,10 +6,21 @@ import {Field, Form, Formik} from "formik";
 import "../employee/employee.css";
 import moment from 'moment';
 import {Footer} from "../register-pawn/Footer";
-
+import jwt from 'jwt-decode';
 
 
 export default function EmployeeList() {
+    const token = localStorage.getItem('token');
+    const [decodedToken, setDecodedToken] = useState("");
+
+    useEffect(() => {
+        if (token) {
+            const decoded = jwt(token);
+            setDecodedToken(decoded);
+        } else {
+            // Xử lý khi không có token trong localStorage
+        }
+    }, [token]);
 
     const [employeeList, setEmployeeList] = useState([]);
     const [pageCount, setPageCount] = useState(0);
@@ -21,36 +32,36 @@ export default function EmployeeList() {
         document.title = "Danh sách nhân viên"; // Thay đổi title
     }, []);
 
-    // const showList = async () => {
-    //     try {
-    //         const result = await employeeService.search(name, currentPage, token);
-    //         console.log(result);
-    //         setEmployeeList(result.content);
-    //         const totalPages = result.totalPages;
-    //         setPageCount(totalPages);
-    //     } catch (error) {
-    //         console.log(error);
-    //         setCurrentPage(currentPage - 1);
-    //     }
-    // };
-    //
-    // const search = async (value) => {
-    //     try {
-    //         const res = await employeeService.search(value.name, value.page, token);
-    //         setCurrentPage(res);
-    //         setName(value.name);
-    //         const totalPages = res.totalPages;
-    //         setPageCount(totalPages);
-    //         setEmployeeList(res.content);
-    //         console.log(res.content);
-    //     } catch (e) {
-    //         setEmployeeList([])
-    //     }
-    // };
+    const showList = async () => {
+        try {
+            const result = await employeeService.search(name, currentPage, token);
+            console.log(result);
+            setEmployeeList(result.content);
+            const totalPages = result.totalPages;
+            setPageCount(totalPages);
+        } catch (error) {
+            console.log(error);
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
-    // useEffect(() => {
-    //     showList();
-    // }, []);
+    const search = async (value) => {
+        try {
+            const res = await employeeService.search(value.name, value.page, token);
+            setCurrentPage(res);
+            setName(value.name);
+            const totalPages = res.totalPages;
+            setPageCount(totalPages);
+            setEmployeeList(res.content);
+            console.log(res.content);
+        } catch (e) {
+            setEmployeeList([])
+        }
+    };
+
+    useEffect(() => {
+        showList();
+    }, []);
 
     const handlePageClick = async (page) => {
         setCurrentPage(+page.selected);
@@ -99,7 +110,7 @@ export default function EmployeeList() {
                                     page: currentPage,
                                 }}
                                 onSubmit={(value) => {
-                                    // search(value)
+                                    search(value)
 
                                 }}
                             >

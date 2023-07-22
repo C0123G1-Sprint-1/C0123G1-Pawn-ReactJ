@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 import jwt from 'jwt-decode';
 import moment from "moment";
 import {Link} from "react-router-dom";
+
+
 export function CustomerList() {
     const [listCustomer, setListCustomer] = useState([]);
     const [nameDelete, setNameDelete] = useState(null);
@@ -45,7 +47,6 @@ export function CustomerList() {
 
     const handlePageClick1 = async (page) => {
         setCurrentPage1(+page.selected);
-
         const result = await customersService.registerPawn( page.selected);
         console.log(result.data);
         setRegisterPawn(result.content);

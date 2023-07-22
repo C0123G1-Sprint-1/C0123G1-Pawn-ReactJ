@@ -13,6 +13,7 @@ import {ThreeCircles} from "react-loader-spinner";
 
 export function CreateCustomer() {
 
+
     let navigate = useNavigate();
     const [avatar, setAvatarFile] = useState(null);
     const [avatarUrl, setAvatarUrl] = useState(null);

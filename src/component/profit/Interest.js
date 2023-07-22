@@ -11,9 +11,9 @@ export default function Interest() {
                     <thead>
                     <tr>
                         <th>Mã HD</th>
-                        <th>Tiền cho vay(VND)</th>
+                        <th>Tiền cho vay (VND)</th>
                         <th>Tiền lãi (VND)</th>
-                        <th>Ngày bắt Đầu</th>
+                        <th>Ngày bắt đầu</th>
                         <th>Lợi nhuận (VND)</th>
                         <th id="actions">Chức năng</th>
                     </tr>

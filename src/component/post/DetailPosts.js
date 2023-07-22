@@ -4,6 +4,8 @@ import "../../css/Posts.css";
 import {useParams} from "react-router";
 import moment from "moment";
 import jwt from 'jwt-decode';
+
+
 export function DetailPosts() {
     const param = useParams()
     const [postsDetail, setPostsDetail] = useState([])
@@ -47,10 +49,8 @@ export function DetailPosts() {
                                 {formatDateTime(postsDetail.createDate)}
                             </div>
                             <h1 style={{textAlign: "center", fontFamily: "Times New Roman"}} className="title-news">{postsDetail.title}</h1>
-                            <div className="time-post1 text-posts me-4">
-                               bởi: {postsDetail.employees?.name}
-                            </div>
-                            <div className="full-content"><p></p>
+
+                            <div className="full-content mt-5"><p></p>
 
                                 <div className="form-old-row" style={{display: "flex"}}>
                                     <img className="imgDetail" style={{width: "auto",display: "block", marginLeft: "auto", marginRight: "auto"}}
@@ -62,7 +62,8 @@ export function DetailPosts() {
                                          marginTop: "15px",
                                          fontSize: "15pt",
                                          color: "#666",
-                                         fontStyle: "italic",
+                                         fontFamily:"Times New Roman",
+                                         // fontStyle: "italic",
                                          textAlign: "justify"
                                      }}>
                                     <p
@@ -72,7 +73,6 @@ export function DetailPosts() {
                                         }}>{postsDetail.content}</p></div>
                             </div>
                         </div>
-
                     </div>
                     <div className="col-lg-4 col-xl-3">
                         <div className="right-pane">

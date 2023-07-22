@@ -15,7 +15,6 @@ const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const [decodedToken, setDecodedToken] = useState("");
     const [username, setUsername] = useState();
-
     useEffect(() => {
         if (token) {
             const decoded = jwt(token);
@@ -32,6 +31,7 @@ const navigate = useNavigate();
         localStorage.removeItem("token");
         setIsLogin(false);
         toast.success("Đăng xuất thành công !!");
+        navigate("/login")
     };
     // console.log(decodedToken.sub)
     return(

@@ -197,7 +197,7 @@ export default function Profit() {
                                             height: "100%",
                                             alignItems: "center"
                                         }}>
-                                            <button type="submit" className="btn btn-sm btn-outline-success " style={{
+                                            <button type="submit" className="btn btn-sm btn-outline-success col-lg-6 col-md-6 col-6" style={{
                                                 height: "100%",
                                                 alignItems: "center",
                                                 display: "flex",
@@ -205,7 +205,7 @@ export default function Profit() {
                                             }}>Thống kê
                                             </button>
                                             <button type="button" onClick={() => setCancel()}
-                                                    className="btn btn-sm btn-outline-secondary ms-1" style={{
+                                                    className="btn btn-sm btn-outline-secondary col-lg-6 col-md-6 col-6 ms-1" style={{
                                                 height: "100%",
                                                 alignItems: "center",
                                                 display: "flex",

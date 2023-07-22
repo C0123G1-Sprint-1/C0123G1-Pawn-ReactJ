@@ -15,7 +15,7 @@ import {
     checkEmailExists, checkPhoneNumberExists,
     createEmployee
 } from "../../service/employeeService";
-import jwt from "jwt-decode";
+
 
 
 export function CreateEmployee() {
@@ -24,6 +24,8 @@ export function CreateEmployee() {
     const [progress, setProgress] = useState(0);
     const [imgErr, setImgErr] = useState("");
     const navigate = useNavigate();
+
+
 
     const handleFileSelect = (event) => {
         const file = event.target.files[0];

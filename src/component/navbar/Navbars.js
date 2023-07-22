@@ -6,15 +6,15 @@ import {Outlet} from "react-router";
 import jwt from 'jwt-decode';
 
 export default function Navbars() {
-    const [isActives, setIsActive] = useState(true);
     const token = localStorage.getItem('token');
     const [decodedToken, setDecodedToken] = useState("");
+
     useEffect(() => {
         if (token) {
             const decoded = jwt(token);
             setDecodedToken(decoded);
         } else {
-           alert("abc")
+            // Xử lý khi không có token trong localStorage
         }
     }, [token]);
     return (

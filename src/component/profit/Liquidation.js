@@ -11,8 +11,8 @@ export default function Liquidation() {
                     <thead>
                     <tr>
                         <th>Mã HD</th>
-                        <th>Tiền mua(VND)</th>
-                        <th>Tiền bán(VND)</th>
+                        <th>Tiền mua (VND)</th>
+                        <th>Tiền bán (VND)</th>
                         <th>Ngày thanh lý</th>
                         <th>Lợi nhuận (VND)</th>
                         <th id="actions">Chức năng</th>

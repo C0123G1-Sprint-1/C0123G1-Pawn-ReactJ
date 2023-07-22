@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import {ThreeCircles} from "react-loader-spinner";
 import {FormattedNumber} from "react-intl";
 import ReactPaginate from "react-paginate";
+import * as yup from "yup";
 
 export const CreateContracts = () => {
 
@@ -36,7 +37,7 @@ export const CreateContracts = () => {
 
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(0); // Tổng số trang
-    const [count, setCount] = useState(1);
+
 
     const n = useNavigate();
 
@@ -98,23 +99,23 @@ export const CreateContracts = () => {
             );
         });
     };
-
-
-    //  Sổ list  chọn khách hàng
-    useEffect(() => {
-        const getAllCustomer = async () => {
+    const getAllCustomer = async () => {
+        try {
             const res = await contractService.findAllCustomer(currentPage, customerName)
             setCustomer(res.content)
-            await setPageCount(res.totalPages)
+            setPageCount(res.totalPages)
+        } catch (e) {
         }
+    }
+    //  Sổ list  chọn khách hàng
+    useEffect(() => {
         getAllCustomer()
-    }, [pageCount, customerName])
+    }, [currentPage, customerName])
 
     const handlePage = async (pages) => {
         setCurrentPage(+pages.selected);
         const res = await contractService.findAllCustomer(currentPage, customerName)
         setCustomer(res.content)
-        setCount(Math.ceil(res.size * pages.selected +1))
     }
     // Modal
     const handleModalClose = () => {
@@ -170,33 +171,29 @@ export const CreateContracts = () => {
         createContractCodeApi()
     }, [])
 
-
-    const loadContracts = async () => {
-
-        // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
-        let timerInterval
+    const showLoadingScreen = () => {
         Swal.fire({
-            title: 'Chúng tôi đang sử lí mong đợi trong vài giây',
-            html: 'Vui lòng đợi trong  <b></b> giây.',
+            html: '<div className="loading-screen" style={{position: "fixed",\n' +
+                '  top: "0;",\n' +
+                '  left: "0",\n' +
+                '  width: "100%",\n' +
+                '  height: "100%",\n' +
+                '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
             timer: 4000,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
+            title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: async () => {
+                await Swal.showLoading();
             },
             willClose: () => {
-                clearInterval(timerInterval)
+                // Thêm xử lý khi SweetAlert2 đóng (nếu cần thiết).
             }
-        }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-                console.log('I was closed by the timer')
-            }
-        })
+        });
     };
+
     return (
         <>
             <div className="container pt-5">
@@ -228,6 +225,8 @@ export const CreateContracts = () => {
                                         loans: Yup.number()
                                             .required('Không được để trống')
                                             .min(500000, 'Tiền cho vay phải lớn hớn 500.000'),
+                                        productType: yup.number()
+                                            .min(1, 'Không được để trống'),
                                         startDate: Yup.date()
                                             .required('Không được để trống')
                                             .test("date", "Không được chọn quá khứ chỉ chọn hiện tại và tương lai",
@@ -260,13 +259,6 @@ export const CreateContracts = () => {
 
 
                                     onSubmit={async (values, {resetForm}) => {
-                                        // let percent = 0.067;
-                                        // const moment = require('moment');
-                                        // const startDates = moment(values.startDate);
-                                        // const endDates = moment(values.endDate);
-                                        // // tính khoảng cách ngày
-                                        // const duration = endDates.diff(startDates, 'days');
-                                        // const profits = +(values.loans * percent * duration)
                                         const createContracts = async () => {
                                             const newValue = {
                                                 ...values,
@@ -350,7 +342,7 @@ export const CreateContracts = () => {
 
                                             </div>
                                             <div className="col-md-6 inputs">
-                                                <label>Loại đồ cầm</label>
+                                                <label>Loại đồ cầm <span style={{color: "red"}}>*</span></label>
                                                 <Field
                                                     name="productType"
                                                     as="select"
@@ -364,6 +356,7 @@ export const CreateContracts = () => {
                                                         <option key={index} value={list.id}>{list.name}</option>
                                                     ))}
                                                 </Field>
+                                                <ErrorMessage name="productType" component="p" style={{color: "red"}}/>
                                             </div>
                                         </div>
                                         <div className="row mt-2  ">
@@ -505,7 +498,6 @@ export const CreateContracts = () => {
                                                 )}
                                             </div>
                                         </div>
-
                                         <div className="d-flex mt-4 justify-content-between">
                                             <div className="text-center" style={{marginLeft: "23.6%"}}>
                                                 <Link to="/nav/info-store/transaction-history"
@@ -516,12 +508,13 @@ export const CreateContracts = () => {
                                             <div className="text-center m-auto">
                                                 <div className="text-center">
                                                     <button disabled={!idCustomer} type="submit"
-                                                            className="btn btn-success" onClick={loadContracts}>
+                                                            className="btn btn-success" onClick={showLoadingScreen}>
                                                         <b className="text-center">Thêm mới</b>
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
+                                       
                                     </Form>
                                 )}
                             </Formik>
@@ -594,9 +587,9 @@ export const CreateContracts = () => {
                                 <table className="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th className="text-center">Mã khách hàng</th>
-                                        <th className="text-center">Tên khách Hàng</th>
-                                        <th className="text-center">CMND/CCCD</th>
+                                        <th className="">STT</th>
+                                        <th className="">Tên khách hàng</th>
+                                        <th className="">CMND/CCCD</th>
                                         <th className="text-center">Chức Năng</th>
                                     </tr>
                                     </thead>
@@ -610,9 +603,9 @@ export const CreateContracts = () => {
                                         <tbody>
                                         {customer.map((list, index) => (
                                             <tr key={index}>
-                                                <td className="text-center">{list.id}</td>
-                                                <td className="text-center">{list.name}</td>
-                                                <td className="text-center">{list.citizenCode}</td>
+                                                <td className="">{list.id}</td>
+                                                <td className="">{list.name}</td>
+                                                <td className="">{list.citizenCode}</td>
                                                 <td className="text-center">
                                                     <button onClick={() => {
                                                         setIdCustomer(list.id)
@@ -629,21 +622,21 @@ export const CreateContracts = () => {
                                     }
                                 </table>
                                 {customer.length === 0 ? '' :
-                                <div className="d-grid">
-                                    <ReactPaginate
-                                        breakLabel="..."
-                                        nextLabel="Sau"
-                                        onPageChange={handlePage}
-                                        pageCount={pageCount}
-                                        previousLabel="Trước"
-                                        containerClassName="pagination"
-                                        pageLinkClassName="page-num"
-                                        nextLinkClassName="page-num"
-                                        previousLinkClassName="page-num"
-                                        activeClassName="active"
-                                        disabledClassName="d-none"
-                                    />
-                                </div>
+                                    <div className="d-grid">
+                                        <ReactPaginate
+                                            breakLabel="..."
+                                            nextLabel="Sau"
+                                            onPageChange={handlePage}
+                                            pageCount={pageCount}
+                                            previousLabel="Trước"
+                                            containerClassName="pagination"
+                                            pageLinkClassName="page-num"
+                                            nextLinkClassName="page-num"
+                                            previousLinkClassName="page-num"
+                                            activeClassName="active"
+                                            disabledClassName="d-none"
+                                        />
+                                    </div>
                                 }
                             </Modal.Body>
                         </Modal>
