@@ -182,7 +182,7 @@ export const ShowContract = () => {
                                             }
 
                                             </tbody>
-                                        } }
+                                        }
 
 
 

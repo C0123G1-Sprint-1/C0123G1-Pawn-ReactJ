@@ -176,13 +176,6 @@ export default function Profit() {
                                     await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, params.profitType || profitType)
                                     await getDataProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
                                     await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
-                                    // await getContract(values.startDate, values.endDate, 0,params.profitType || profitType  )
-                                    // await getDataProfit(values.startDate, values.endDate,params.profitType || profitType  )
-                                    // await getProfit(values.startDate, values.endDate,params.profitType || profitType  )
-                                    // await setDateTimeProfit({
-                                    //     startDate: values.startDate,
-                                    //     endDate: values.endDate
-                                    // })
                                 }}>
                                 <Form className="ps-5 col-lg-12 col-md-12 col-12" style={{boxSizing: "border-box"}}>
                                     <div className="d-flex row col-lg-12 col-md-12 col-12 justify-content-between p-0 m-0" style={{
@@ -205,7 +198,7 @@ export default function Profit() {
                                             height: "100%",
                                             alignItems: "center"
                                         }}>
-                                            <button type="submit" className="btn btn-sm btn-outline-success " style={{
+                                            <button type="submit" className="btn btn-sm btn-outline-success col-lg-6 col-md-6 col-6" style={{
                                                 height: "100%",
                                                 alignItems: "center",
                                                 display: "flex",
@@ -213,7 +206,7 @@ export default function Profit() {
                                             }}>Thống kê
                                             </button>
                                             <button type="button" onClick={() => setCancel()}
-                                                    className="btn btn-sm btn-outline-secondary ms-1" style={{
+                                                    className="btn btn-sm btn-outline-secondary col-lg-6 col-md-6 col-6 ms-1" style={{
                                                 height: "100%",
                                                 alignItems: "center",
                                                 display: "flex",
