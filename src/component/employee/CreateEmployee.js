@@ -37,6 +37,7 @@ export function CreateEmployee() {
             setSelectedFile(file);
         }
     };
+
     const save = () => {
         Swal.fire({
             position: 'center',
@@ -45,7 +46,8 @@ export function CreateEmployee() {
             showConfirmButton: false,
             timer: 1500
         })
-    }
+    };
+
     const handleSubmitAsync = async () => {
         return new Promise((resolve, reject) => {
             const file = selectedFile;
@@ -90,7 +92,7 @@ export function CreateEmployee() {
                 validationSchema={Yup.object({
                     name: Yup.string()
                         .trim()
-                        .required("Vui lòng nhập họ tên")
+                        .required("Vui lòng nhập họ tên đầy đủ")
                         .min(2, "Tên quá ngắn , phải từ 2 ký tự")
                         .max(50, "Tên không đúng , vui lòng nhập lại")
                         .matches(/^[^!@#$%^&*()+=\[\]{};':"\\|.<>?`~/]+$/, "Tên không chứa ký tự đặc biệt như @#$.."),
@@ -266,11 +268,11 @@ export function CreateEmployee() {
                                                                 <label className="form-label dong">Giới tính</label>
                                                             </div>
                                                             <div className="d-flex col-md-9">
-                                                                <div style={{marginLeft: "50px"}}>
+                                                                <div style={{marginLeft: "20px"}}>
                                                                     <Field type="radio" name="gender" value="1"/>
                                                                     Nam
                                                                 </div>
-                                                                <div style={{marginLeft: "50px"}}>
+                                                                <div style={{marginLeft: "20px"}}>
                                                                     <Field type="radio" name="gender" value="0"/>
                                                                     Nữ
                                                                 </div>
@@ -296,14 +298,16 @@ export function CreateEmployee() {
                                                                           style={{color: "red"}}/>
                                                         </div>
 
-                                                        <div className="text-center mt-3 p-4">
-                                                            <div className="text-center" style={{marginLeft: "10%"}}>
-                                                                <NavLink
-                                                                    type="button"
-                                                                    className="btn btn-secondary"
-                                                                    to={"/nav/api/employee"}>
-                                                                    Quay lại
-                                                                </NavLink>
+                                                        <div style={{display : "block"}}>
+                                                            <div className="text-center mt-4 p-4">
+                                                                <div className="text-center" style={{marginLeft: "10%"}}>
+                                                                    <NavLink
+                                                                        type="button"
+                                                                        className="btn btn-secondary"
+                                                                        to={"/nav/api/employee"}>
+                                                                        Quay lại
+                                                                    </NavLink>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -345,11 +349,13 @@ export function CreateEmployee() {
                                                                           style={{color: "red"}}/>
                                                         </div>
 
-                                                        <div className="text-center mt-4  p-3"
-                                                             style={{marginRight: "20%"}}>
-                                                            <button type="submit" className="btn btn-success">
-                                                                <b className="text-center">Thêm mới</b>
-                                                            </button>
+                                                        <div style={{display : "block"}}>
+                                                            <div className="text-center mt-3  p-3"
+                                                                 style={{marginRight: "20%"}}>
+                                                                <button type="submit" className="btn btn-success">
+                                                                    <b className="text-center">Thêm mới</b>
+                                                                </button>
+                                                            </div>
                                                         </div>
 
                                                     </div>
