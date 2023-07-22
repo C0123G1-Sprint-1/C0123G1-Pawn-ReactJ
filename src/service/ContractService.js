@@ -87,7 +87,7 @@ export const findAllAndEmployee = async () => {
         console.log(error)
     }
 }
-export const findAllCustomer = async (page,name) => {
+export const findAllCustomer = async (page, name) => {
     try {
         const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer/?page=${page}&name=${name}`)).data
         console.log(res)
@@ -120,26 +120,6 @@ export const getByIdCustomers = async (id) => {
     }
 }
 
-export const createCodeContract = async () => {
-    try {
-        let code = (Math.floor(Math.random() * 10000) + 1);
-        if (code >= 10000) {
-            code = code.toString();
-        } else if (code >= 1000) {
-            code = "0" + code.toString();
-        } else if (code >= 100) {
-            code = "00" + code.toString();
-        } else if (code >= 10) {
-            code = "000" + code.toString();
-        } else {
-            code = "0000" + code.toString();
-        }
-        return code;
-    } catch
-        (e) {
-        console.log(e)
-    }
-}
 
 //Trí
 export const showTop10NewContract = async () => {
@@ -158,11 +138,20 @@ export const findContractById = async (id) => {
         console.log(err)
     }
 }
-export const updateContract=async (contract)=>{
+export const updateContract = async (contract) => {
     try {
-        await axios.patch(`http://localhost:8080/api/employee/contract/update`,contract)
-    }catch (err) {
+        await axios.patch(`http://localhost:8080/api/employee/contract/update`, contract)
+    } catch (err) {
         console.log(err)
+    }
+}
+export const randomCodeContract = async () => {
+    try {
+        const ok = (await axios.get('http://localhost:8080/api/employee/contract/randomContract')).data
+        return ok
+    } catch
+        (e) {
+        console.log(e)
     }
 }
 
