@@ -22,6 +22,7 @@ export default function EmployeeInformation() {
     const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
     const messageError = "Ảnh không được để trống!!";
     const [isEditing, setIsEditing] = useState(false);
+    const [newPass, setNewPass] = useState(0);
 
     function handleEditClick() {
         setIsEditing(true);
@@ -130,6 +131,8 @@ export default function EmployeeInformation() {
                         timer: 1500
                     });
                     setSubmitting(false);
+                    setNewPass(newPass + 1);
+                    console.log(newPass)
                     return;
                 }
 
