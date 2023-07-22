@@ -27,7 +27,7 @@ export function UpdateCustomer() {
     const [backCitizenUrl, setBackCitizenUrl] = useState();
     const [fileSelected, setFileSelected] = useState(false);
     const messageError = "Ảnh không được để trống!!";
-    console.log(fileSelected,"1 lan")
+    console.log(fileSelected, "1 lan")
     const handleFileSelect = (event, setFile) => {
         const file = event.target.files[0];
         if (file) {
@@ -88,21 +88,21 @@ export function UpdateCustomer() {
         if (avatarUrl) {
             return avatarUrl
         } else
-        return await handleFileUpload(avatar, setAvatarUrl);
+            return await handleFileUpload(avatar, setAvatarUrl);
     };
 
     const handleFrontCitizenFileUpload = async () => {
         if (frontCitizenUrl) {
             return frontCitizenUrl
         } else
-        return await handleFileUpload(frontCitizen, setFrontCitizenUrl);
+            return await handleFileUpload(frontCitizen, setFrontCitizenUrl);
     };
 
     const handleBackCitizenFileUpload = async () => {
         if (backCitizenUrl) {
             return backCitizenUrl
         } else
-        return await handleFileUpload(backCitizen, setBackCitizenUrl);
+            return await handleFileUpload(backCitizen, setBackCitizenUrl);
     };
 
 
@@ -259,7 +259,7 @@ export function UpdateCustomer() {
                                     <div
                                         className="m-2"
                                     >
-                                        <h2 style={{textAlign:"center", }}>CẬP NHẬT THÔNG TIN KHÁCH HÀNG</h2>
+                                        <h2 style={{textAlign: "center",}}>CẬP NHẬT THÔNG TIN KHÁCH HÀNG</h2>
                                     </div>
                                     <Form>
                                         <div className="row">
@@ -269,23 +269,23 @@ export function UpdateCustomer() {
                                                         id="avatar-img"
                                                         src={avatarUrl ? avatarUrl : (avatar ? URL.createObjectURL(avatar) : defaultAvatar)}
                                                         style={{width: "100%"}}
-                                                        alt="Image Loading.."                                                    />
+                                                        alt="Image Loading.."/>
                                                     {avatarUrl && (
                                                         <button
-                                                        type="button"
-                                                        className="btn btn-danger btn-sm mt-2"
-                                                        onClick={() => {
-                                                            setAvatarUrl(null);
-                                                            setAvatarFile(null);
-                                                            setFileSelected(false);
-                                                        }}
-                                                    >
-                                                        Xoá
-                                                    </button>
+                                                            type="button"
+                                                            className="btn btn-danger btn-sm mt-2"
+                                                            onClick={() => {
+                                                                setAvatarUrl(null);
+                                                                setAvatarFile(null);
+                                                                setFileSelected(false);
+                                                            }}
+                                                        >
+                                                            Xoá
+                                                        </button>
                                                     )}
                                                 </div>
 
-                                                <label id="label-dat" className="mt-2 text-file-name" >
+                                                <label id="label-dat" className="mt-2 text-file-name">
                                                     Ảnh chân dung
                                                 </label>
                                                 {!avatarUrl && (
@@ -323,131 +323,10 @@ export function UpdateCustomer() {
                                                         </label>
                                                     </div>
                                                 )}
-                                                {fileSelected ? null : (
-                                                    <span  className="text-danger mt-4"><br/> {messageError}</span>
+                                                {fileSelected || avatarUrl ? null : (
+                                                    <span className="text-danger mt-4"><br/> {messageError}</span>
                                                 )}
-                                                <hr/>
-                                                <div className="mb-3 mt-3">
-                                                    <button
-                                                        id="file-upload-label"
-                                                        type="button"
-                                                        className="btn btn-sm btn-danger"
-                                                        onClick={() => {
-                                                            document.getElementById("front-back-upload").classList.remove("hidden");
-                                                        }}
-                                                    >
-                                                        Thêm căn cước <i className="bi bi-person-vcard"/>
-                                                    </button>
-                                                </div>
-                                                <div id="front-back-upload" className="hidden">
-                                                    <div className="mb-3">
-                                                        <label id="label-dat" htmlFor="front-upload" className="text-name-file">
-                                                            Tải lên mặt trước <span style={{color: "red"}}>*</span>
-                                                        </label>
 
-                                                        <input
-                                                            type="file"
-                                                            onChange={(event) => {
-                                                                handleFrontCitizenFileSelect(event);
-                                                                setFileSelected(true);
-                                                            }}
-                                                            id="frontCitizen"
-                                                            name="frontCitizen"
-                                                            className="form-control-plaintext d-none"
-                                                        />
-                                                        {!frontCitizenUrl && (
-                                                            <p>
-                                                                <label
-                                                                    htmlFor="frontCitizen"
-                                                                    style={{
-                                                                        display: "flex",
-                                                                        padding: "6px 12px",
-                                                                        border: "1px",
-                                                                        borderRadius: "4px",
-                                                                        backgroundColor: "#ccffc6",
-                                                                        justifyContent: "center",
-                                                                        cursor: "pointer",
-                                                                    }}
-                                                                >
-                                                                    <i className="bi bi-upload"> Chọn hình ảnh</i>
-                                                                </label>
-                                                            </p>
-                                                        )}
-
-                                                        <div>
-                                                            <img
-                                                                onChange={handleFrontCitizenFileUpload}
-                                                                className="mt-2"
-                                                                src={frontCitizenUrl ? frontCitizenUrl : (frontCitizen ? URL.createObjectURL(frontCitizen) : defaultImag)}
-                                                                style={{width: "100%"}}
-                                                                alt="Image Loading.."                                                            />
-                                                            {frontCitizenUrl && (  <button
-                                                                type="button"
-                                                                className="btn btn-danger btn-sm mt-2"
-                                                                onClick={() => {
-                                                                    setFrontCitizenFile(null);
-                                                                    setFrontCitizenUrl(null);
-                                                                    setFileSelected(false);
-                                                                }}
-                                                            >
-                                                                Xoá
-                                                            </button>)}
-                                                        </div>
-                                                    </div>
-                                                    <div className="mb-3">
-                                                        <label id="label-dat" htmlFor="back-upload" className="text-name-file">
-                                                            Tải lên mặt sau <span style={{color: "red"}}>*</span>
-                                                        </label>
-                                                        <input
-                                                            type="file"
-                                                            onChange={(event) => {
-                                                                handleBackCitizenFileSelect(event);
-                                                                setFileSelected(true);
-                                                            }}
-                                                            id="backCitizen"
-                                                            name="backCitizen"
-                                                            className="form-control-plaintext d-none"
-                                                        />
-                                                        {!backCitizenUrl && (
-                                                            <p>
-                                                                <label
-                                                                    htmlFor="backCitizen"
-                                                                    style={{
-                                                                        display: "flex",
-                                                                        padding: "6px 12px",
-                                                                        border: "1px",
-                                                                        borderRadius: "4px",
-                                                                        backgroundColor: "#ccffc6",
-                                                                        justifyContent: "center",
-                                                                        cursor: "pointer",
-                                                                    }}
-                                                                >
-                                                                    <i className="bi bi-upload"> Chọn hình ảnh</i>
-                                                                </label>
-                                                            </p>
-                                                        )}
-
-                                                        <div>
-                                                            <img
-                                                                onChange={handleBackCitizenFileUpload}
-                                                                className="mt-2"
-                                                                src={backCitizenUrl ? backCitizenUrl : (backCitizen ? URL.createObjectURL(backCitizen) : defaultImag)}
-                                                                style={{width: "100%"}}
-                                                                alt="Image Loading.."/>
-                                                            {backCitizenUrl && ( <button
-                                                                type="button"
-                                                                className="btn btn-danger btn-sm mt-2"
-                                                                onClick={() => {
-                                                                    setBackCitizenFile(null);
-                                                                    setBackCitizenUrl(null);
-                                                                    setFileSelected(false);
-                                                                }}
-                                                            >
-                                                                Xoá
-                                                            </button>)}
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <Field
                                                 id="f-id"
@@ -492,18 +371,18 @@ export function UpdateCustomer() {
                                                         <label id="label-dat" htmlFor="gender" className="form-label">
                                                             Giới tính<span style={{color: "red"}}> *</span>
                                                         </label>
-                                                    <label className='m-2'>
-                                                        <Field  type="radio" name="gender" value="0"/>
-                                                        {' '}Nam
-                                                    </label>
-                                                    <label className='m-2'>
-                                                        <Field type="radio" name="gender" value="1"/>
-                                                        {' '}Nữ
-                                                    </label>
-                                                    <label className='m-2'>
-                                                        <Field type="radio" name="gender" value="2"/>
-                                                        {' '}Khác
-                                                    </label>
+                                                        <label className='m-2'>
+                                                            <Field type="radio" name="gender" value="0"/>
+                                                            {' '}Nam
+                                                        </label>
+                                                        <label className='m-2'>
+                                                            <Field type="radio" name="gender" value="1"/>
+                                                            {' '}Nữ
+                                                        </label>
+                                                        <label className='m-2'>
+                                                            <Field type="radio" name="gender" value="2"/>
+                                                            {' '}Khác
+                                                        </label>
                                                         <ErrorMessage
                                                             component="span"
                                                             name="gender"
@@ -578,7 +457,6 @@ export function UpdateCustomer() {
                                                         className="text-danger"
                                                     />
                                                 </div>
-
                                                 {isSubmitting ? (
                                                     (<ThreeCircles
                                                         height="100"
@@ -611,6 +489,126 @@ export function UpdateCustomer() {
                                                         </div>
                                                     </div>
                                                 )}
+                                            </div>
+                                            <div className="row mt-3">
+                                                <div className="m-auto d-flex justify-content-center">
+                                                    <button id="file-upload-label" type='button'
+                                                            className="btn btn-sm btn-danger"
+                                                    >
+                                                        Thêm căn cước <i className="bi bi-person-vcard"/>
+                                                    </button>
+                                                </div>
+                                                <div className="row mt-3">
+                                                    <div className="mb-3 col-md-6">
+                                                        <label id="label-dat" htmlFor="front-upload"
+                                                               className="text-name-file">
+                                                            Tải lên mặt trước <span style={{color: "red"}}>*</span>
+                                                        </label>
+
+                                                        <input
+                                                            type="file"
+                                                            onChange={(event) => {
+                                                                handleFrontCitizenFileSelect(event);
+                                                                setFileSelected(true);
+                                                            }}
+                                                            id="frontCitizen"
+                                                            name="frontCitizen"
+                                                            className="form-control-plaintext d-none"
+                                                        />
+                                                        {!frontCitizenUrl && (
+                                                            <p>
+                                                                <label
+                                                                    htmlFor="frontCitizen"
+                                                                    style={{
+                                                                        display: "flex",
+                                                                        padding: "6px 12px",
+                                                                        border: "1px",
+                                                                        borderRadius: "4px",
+                                                                        backgroundColor: "#ccffc6",
+                                                                        justifyContent: "center",
+                                                                        cursor: "pointer",
+                                                                    }}
+                                                                >
+                                                                    <i className="bi bi-upload"> Chọn hình ảnh</i>
+                                                                </label>
+                                                            </p>
+                                                        )}
+
+                                                        <div>
+                                                            <img
+                                                                onChange={handleFrontCitizenFileUpload}
+                                                                className="mt-2"
+                                                                src={frontCitizenUrl ? frontCitizenUrl : (frontCitizen ? URL.createObjectURL(frontCitizen) : defaultImag)}
+                                                                style={{width: "100%"}}
+                                                                alt="Image Loading.."/>
+                                                            {frontCitizenUrl && (<button
+                                                                type="button"
+                                                                className="btn btn-danger btn-sm mt-2"
+                                                                onClick={() => {
+                                                                    setFrontCitizenFile(null);
+                                                                    setFrontCitizenUrl(null);
+                                                                    setFileSelected(false);
+                                                                }}
+                                                            >
+                                                                Xoá
+                                                            </button>)}
+                                                        </div>
+                                                    </div>
+                                                    <div className="mb-3 col-md-6">
+                                                        <label id="label-dat" htmlFor="back-upload"
+                                                               className="text-name-file">
+                                                            Tải lên mặt sau <span style={{color: "red"}}>*</span>
+                                                        </label>
+                                                        <input
+                                                            type="file"
+                                                            onChange={(event) => {
+                                                                handleBackCitizenFileSelect(event);
+                                                                setFileSelected(true);
+                                                            }}
+                                                            id="backCitizen"
+                                                            name="backCitizen"
+                                                            className="form-control-plaintext d-none"
+                                                        />
+                                                        {!backCitizenUrl && (
+                                                            <p>
+                                                                <label
+                                                                    htmlFor="backCitizen"
+                                                                    style={{
+                                                                        display: "flex",
+                                                                        padding: "6px 12px",
+                                                                        border: "1px",
+                                                                        borderRadius: "4px",
+                                                                        backgroundColor: "#ccffc6",
+                                                                        justifyContent: "center",
+                                                                        cursor: "pointer",
+                                                                    }}
+                                                                >
+                                                                    <i className="bi bi-upload"> Chọn hình ảnh</i>
+                                                                </label>
+                                                            </p>
+                                                        )}
+
+                                                        <div>
+                                                            <img
+                                                                onChange={handleBackCitizenFileUpload}
+                                                                className="mt-2"
+                                                                src={backCitizenUrl ? backCitizenUrl : (backCitizen ? URL.createObjectURL(backCitizen) : defaultImag)}
+                                                                style={{width: "100%"}}
+                                                                alt="Image Loading.."/>
+                                                            {backCitizenUrl && (<button
+                                                                type="button"
+                                                                className="btn btn-danger btn-sm mt-2"
+                                                                onClick={() => {
+                                                                    setBackCitizenFile(null);
+                                                                    setBackCitizenUrl(null);
+                                                                    setFileSelected(false);
+                                                                }}
+                                                            >
+                                                                Xoá
+                                                            </button>)}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </Form>
