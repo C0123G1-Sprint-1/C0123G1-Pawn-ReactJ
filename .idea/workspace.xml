@@ -25,21 +25,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="DongPV update coding ReactJs">
+    <list default="true" id="02654e93-fe04-4c50-8d88-06e852dd1ecd" name="Default Changelist" comment="DongPV update coding ReactJs dev1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/account/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/account/Style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/employee/CreateEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/CreateEmployee.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/employee/ListEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/ListEmployee.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/employee/employee.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/employee/employee.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/navbar/Navbars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/navbar/Navbars.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/C0123G1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/Posts.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/Posts.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/Top10NewContract.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/UpdateContract.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/UpdateContract.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/footer.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/interest.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/interest.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/firebase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/employeeService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/employeeService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +102,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="" />
+      <changelist id="02654e93-fe04-4c50-8d88-06e852dd1ecd" name="Default Changelist" comment="DongPV update coding ReactJs dev1" />
       <created>1689586311005</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -127,6 +120,7 @@
       <workItem from="1689808783486" duration="714000" />
       <workItem from="1689815273714" duration="12183000" />
       <workItem from="1689848660368" duration="3309000" />
+      <workItem from="1690002716853" duration="9631000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -251,10 +245,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="395" y="91" key="#Inspections/0.0.1536.824@0.0.1536.824" timestamp="1689826493870" />
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1689851520048">
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1690008291512">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1689851520048" />
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1690008291512" />
     <state x="147" y="65" key="DiffContextDialog" timestamp="1689753433234">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -36,19 +36,6 @@ export const search = async (name, page, auth) => {
     }
 };
 
-export const findById = async (id, auth) => {
-    const headers = { Authorization: "Bearer " + auth };
-    try {
-        const result = await axios.get(`http://localhost:8080/api/employee/${id}`, {
-            headers,
-        });
-        console.log(result)
-        return result.data
-    } catch (e) {
-        console.log(e);
-    }
-};
-
 export const checkEmailExists = async (email) => {
     try {
         return (await axios.get(`http://localhost:8080/api/employee/check-email/${email}`))
@@ -84,6 +71,5 @@ export const checkPhoneNumberExists = async (phone) => {
 export const employeeService = {
     findAllAndSearch,
     search,
-    createEmployee,
-    findById
+    createEmployee
 }

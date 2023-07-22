@@ -197,7 +197,13 @@ export function CreateEmployee() {
                                                         <img
                                                             src={URL.createObjectURL(selectedFile)}
                                                             className="rounded-circle mt-2 "
-                                                            style={{ width: "180px",height: "180px", display : "flex", margin: `0 auto`, border: "1px solid" }}
+                                                            style={{
+                                                                width: "180px",
+                                                                height: "180px",
+                                                                display: "flex",
+                                                                margin: `0 auto`,
+                                                                border: "1px solid"
+                                                            }}
                                                             height="100px"
                                                         />
                                                     )}
@@ -233,103 +239,119 @@ export function CreateEmployee() {
                                                 </div>
                                             </div>
                                             <div className="col-8">
-                                                <div className="mt-2 inputs">
-                                                    <label className="dong">
-                                                        Họ và tên <span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field type="text" className="form-control" name="name"/>
-                                                    <ErrorMessage name="name" component="p" style={{color: "red"}}/>
-                                                </div>
-                                                <div className="mt-2 inputs">
-                                                    <label className="dong">
-                                                        Ngày sinh <span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field
-                                                        type="date"
-                                                        className="form-control"
-                                                        name="birthDay"
-                                                    />
-                                                    <ErrorMessage name="birthDay" component="p" style={{color: "red"}}/>
-                                                </div>
-                                                <div className="mt-2 inputs row">
-                                                    <div className="col-md-3">
-                                                        <label className="form-label dong">Giới tính</label>
-                                                    </div>
-                                                    <div className="d-flex col-md-9">
-                                                        <div style={{marginLeft:"50px"}}>
-                                                            <Field type="radio" name="gender" value="1"/>
-                                                            Nam
+                                                <div className="row">
+                                                    <div className="col-6">
+                                                        <div className="mt-2 inputs">
+                                                            <label className="dong">
+                                                                Họ và tên <span style={{color: "red"}}>*</span>
+                                                            </label>
+                                                            <Field type="text" className="form-control" name="name"/>
+                                                            <ErrorMessage name="name" component="p"
+                                                                          style={{color: "red"}}/>
                                                         </div>
-                                                        <div style={{marginLeft:"50px"}}>
-                                                            <Field type="radio" name="gender" value="0"/>
-                                                            Nữ
+                                                        <div className="mt-2 inputs">
+                                                            <label className="dong">
+                                                                Ngày sinh <span style={{color: "red"}}>*</span>
+                                                            </label>
+                                                            <Field
+                                                                type="date"
+                                                                className="form-control"
+                                                                name="birthDay"
+                                                            />
+                                                            <ErrorMessage name="birthDay" component="p"
+                                                                          style={{color: "red"}}/>
+                                                        </div>
+                                                        <div className="mt-2 inputs row">
+                                                            <div className="col-md-3">
+                                                                <label className="form-label dong">Giới tính</label>
+                                                            </div>
+                                                            <div className="d-flex col-md-9">
+                                                                <div style={{marginLeft: "50px"}}>
+                                                                    <Field type="radio" name="gender" value="1"/>
+                                                                    Nam
+                                                                </div>
+                                                                <div style={{marginLeft: "50px"}}>
+                                                                    <Field type="radio" name="gender" value="0"/>
+                                                                    Nữ
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="mt-2 inputs">
+                                                            <label className="dong">
+                                                                Email <span style={{color: "red"}}>*</span>
+                                                            </label>
+                                                            <Field type="email" className="form-control" name="email"/>
+                                                            <ErrorMessage name="email" component="p"
+                                                                          style={{color: "red"}}/>
+                                                        </div>
+
+                                                        <div className="mt-2 inputs">
+                                                            <label className="dong">
+                                                                Lương(VND)<span style={{color: "red"}}>*</span>
+                                                            </label>
+                                                            <Field type="number" className="form-control"
+                                                                   name="salary"/>
+                                                            <ErrorMessage name="salary" component="p"
+                                                                          style={{color: "red"}}/>
+                                                        </div>
+
+                                                        <div className="text-center mt-3 p-4">
+                                                            <div className="text-center" style={{marginLeft: "10%"}}>
+                                                                <NavLink
+                                                                    type="button"
+                                                                    className="btn btn-secondary"
+                                                                    to={"/nav/api/employee"}>
+                                                                    Quay lại
+                                                                </NavLink>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <div className="mt-2 inputs">
-                                                    <label className="dong">
-                                                        Email <span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field type="email" className="form-control" name="email"/>
-                                                    <ErrorMessage name="email" component="p" style={{color: "red"}}/>
-                                                </div>
+                                                    <div className="col-6" >
+                                                        <div className="mt-2 inputs">
+                                                            <label className="dong">
+                                                                Địa chỉ <span style={{color: "red"}}>*</span>
+                                                            </label>
+                                                            <Field as="textarea"
+                                                                   type="text"
+                                                                   className="form-control"
+                                                                   name="address"
+                                                                   id="address"
+                                                            />
+                                                            <ErrorMessage name="address" component="p"
+                                                                          style={{color: "red"}}/>
+                                                        </div>
+                                                        <div className="mt-2 inputs">
+                                                            <label className="dong">
+                                                                Số điện thoại <span style={{color: "red"}}>*</span>
+                                                            </label>
+                                                            <Field
+                                                                type="text"
+                                                                className="form-control"
+                                                                name="phoneNumber"
+                                                            />
+                                                            <ErrorMessage name="phoneNumber" component="p"
+                                                                          style={{color: "red"}}/>
+                                                        </div>
 
-                                                <div className="mt-2 inputs">
-                                                    <label className="dong">
-                                                        Địa chỉ <span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field as="textarea"
-                                                           type="text"
-                                                           className="form-control"
-                                                           name="address"
-                                                           id="address"
-                                                    />
-                                                    <ErrorMessage name="address" component="p" style={{color: "red"}}/>
-                                                </div>
+                                                        <div className="mt-2 inputs">
+                                                            <label className="dong">
+                                                                CMND/Hộ chiếu <span style={{color: "red"}}>*</span>
+                                                            </label>
+                                                            <Field type="text" className="form-control"
+                                                                   name="citizenCode"/>
+                                                            <ErrorMessage name="citizenCode" component="p"
+                                                                          style={{color: "red"}}/>
+                                                        </div>
 
-                                                <div className="mt-2 inputs">
-                                                    <label className="dong">
-                                                        Số điện thoại <span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field
-                                                        type="text"
-                                                        className="form-control"
-                                                        name="phoneNumber"
-                                                    />
-                                                    <ErrorMessage name="phoneNumber" component="p" style={{color: "red"}}/>
-                                                </div>
+                                                        <div className="text-center mt-4  p-3"
+                                                             style={{marginRight: "20%"}}>
+                                                            <button type="submit" className="btn btn-success">
+                                                                <b className="text-center">Thêm mới</b>
+                                                            </button>
+                                                        </div>
 
-                                                <div className="mt-2 inputs">
-                                                    <label className="dong">
-                                                        CMND/Hộ chiếu <span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field type="text" className="form-control" name="citizenCode"/>
-                                                    <ErrorMessage name="citizenCode" component="p" style={{color: "red"}}/>
-                                                </div>
-
-                                                <div className="mt-2 inputs">
-                                                    <label className="dong">
-                                                        Lương(VND)<span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field type="number" className="form-control" name="salary"/>
-                                                    <ErrorMessage name="salary" component="p" style={{color: "red"}}/>
-                                                </div>
-
-                                                <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                                    <div className="text-center" style={{marginLeft: "10%"}}>
-                                                        <NavLink
-                                                            type="button"
-                                                            className="btn btn-secondary"
-                                                            to={"/nav/api/employee"}>
-                                                            Quay lại
-                                                        </NavLink>
-                                                    </div>
-
-                                                    <div className="text-center" style={{marginRight: "10%"}}>
-                                                        <button type="submit" className="btn btn-success">
-                                                            <b className="text-center">Thêm mới</b>
-                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
