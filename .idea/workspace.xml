@@ -31,11 +31,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/contract/Top10NewContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/Top10NewContract.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/contract/UpdateContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/UpdateContract.js" afterDir="false" />
-    </list>
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,7 +125,7 @@
       <workItem from="1689834571370" duration="2360000" />
       <workItem from="1689894454331" duration="3042000" />
       <workItem from="1689902502071" duration="12154000" />
-      <workItem from="1690076330587" duration="923000" />
+      <workItem from="1690076330587" duration="1601000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -257,7 +253,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689947261229</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="&quot;add component TransactionHistoryList&quot;">
+      <created>1690078014206</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1690078014206</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,10 +293,10 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="451" y="173" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689841276826" />
-    <state x="419" y="0" key="CommitChangelistDialog2" timestamp="1690077993081">
+    <state x="419" y="0" key="CommitChangelistDialog2" timestamp="1690078012902">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="419" y="0" key="CommitChangelistDialog2/0.0.1536.816@0.0.1536.816" timestamp="1690077993081" />
+    <state x="419" y="0" key="CommitChangelistDialog2/0.0.1536.816@0.0.1536.816" timestamp="1690078012902" />
     <state x="515" y="173" key="FileChooserDialogImpl" timestamp="1689754775251">
       <screen x="0" y="0" width="1440" height="852" />
     </state>
@@ -337,11 +340,11 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="498" y="129" key="RollbackChangesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689774864295" />
-    <state x="361" y="144" key="Vcs.Push.Dialog.v2" timestamp="1689947208415">
+    <state x="361" y="144" key="Vcs.Push.Dialog.v2" timestamp="1690078023443">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689837206678" />
-    <state x="361" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.816@0.0.1536.816" timestamp="1689947208415" />
+    <state x="361" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.816@0.0.1536.816" timestamp="1690078023443" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689586761444" />
     <state x="563" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1689947300198">
       <screen x="0" y="0" width="1536" height="816" />
