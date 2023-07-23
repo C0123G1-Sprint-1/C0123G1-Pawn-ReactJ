@@ -2,11 +2,10 @@ import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Modal} from 'react-bootstrap';
 import * as redeemingService from '../../service/RedeemingService'
-import {ErrorMessage, Field, Form, Formik, isNaN} from "formik";
+import {Field, Form, Formik, isNaN} from "formik";
 import * as Swal from "sweetalert2";
 import moment from "moment";
 import {Link} from "react-router-dom";
-
 
 
 export const Redeeming = () => {
@@ -470,25 +469,28 @@ export const Redeeming = () => {
 
                                                 <div className="text-center mt-4 btn-group p-3 m-l-2">
                                                     <div className="text-center m-auto">
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-secondary "
 
-                                                        >
-                                                            <Link to="/nav/info-store/" className="text-center text-light">Quay lại</Link>
-                                                        </button>
+                                                        <div className="text-center m-auto">
+                                                            <button
+                                                                    type="button"
+                                                                    className="btn btn-secondary "
+                                                                    style={{width:'130px'}}>
+                                                                <Link to="/nav/info-store/" className="text-center text-light"><b>Quay lại</b></Link>
+                                                            </button>
+                                                        </div>
                                                     </div>
 
                                                     <div className="text-center m-auto">
 
 
-                                                                <div className="text-center m-auto">
-                                                                        <button onClick={()=>loadContracts(selectedContract)}
-                                                                                disabled={!selectedContract} type="submit"
-                                                                                className="btn btn-success">
-                                                                            <b className="text-center">Thanh toán</b>
-                                                                        </button>
-                                                                    </div>
+                                                        <div className="text-center m-auto">
+                                                            <button onClick={loadContracts}
+                                                                    disabled={!selectedContract} type="submit"
+                                                                    className="btn btn-success"
+                                                                    style={{width: '130px'}}>
+                                                                <b className="text-center">Thanh toán</b>
+                                                            </button>
+                                                        </div>
 
 
 
