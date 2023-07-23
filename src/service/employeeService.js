@@ -1,8 +1,14 @@
 import axios from "axios";
 
 export const findAllAndSearch = async (search) => {
+    const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/employee?search=${search}`);
+        const result = await axios.get(`http://localhost:8080/api/employee?search=${search}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
         console.log(result.data);
         return result.data;
     } catch (error) {
@@ -11,8 +17,14 @@ export const findAllAndSearch = async (search) => {
 }
 
 export const createEmployee = async (employeeDTO) => {
+    const token = localStorage.getItem('token')
     try {
-        const result = await axios.post(`http://localhost:8080/api/employee/create-employee`, {...employeeDTO});
+        const result = await axios.post(`http://localhost:8080/api/employee/create-employee`, {...employeeDTO},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
         console.log(result.data);
         return result.data;
     } catch (error) {
@@ -21,6 +33,7 @@ export const createEmployee = async (employeeDTO) => {
 }
 
 export const search = async (name, page, auth) => {
+    const token = localStorage.getItem('token')
     const headers = {
         Authorization: "Bearer " + auth,
     };
@@ -28,7 +41,12 @@ export const search = async (name, page, auth) => {
         const res = await axios.get(
             `http://localhost:8080/api/employee?search=${name}&page=${
                 page ? page : "0"
-            }`, {headers}
+            }`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }
         );
         return res.data;
     } catch (err) {
@@ -37,8 +55,14 @@ export const search = async (name, page, auth) => {
 };
 
 export const checkEmailExists = async (email) => {
+    const token = localStorage.getItem('token')
     try {
-        return (await axios.get(`http://localhost:8080/api/employee/check-email/${email}`))
+        return (await axios.get(`http://localhost:8080/api/employee/check-email/${email}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }))
             .data;
     } catch (error) {
         console.error(error);
@@ -48,9 +72,15 @@ export const checkEmailExists = async (email) => {
 };
 
 export const checkCitizenCodeExists = async (citizenCode) => {
+    const token = localStorage.getItem('token')
     try {
         return (
-            await axios.get(`http://localhost:8080/api/employee/check-citizen-code/${citizenCode}`)
+            await axios.get(`http://localhost:8080/api/employee/check-citizen-code/${citizenCode}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
         ).data;
     } catch (error) {
         console.error(error);
@@ -60,9 +90,12 @@ export const checkCitizenCodeExists = async (citizenCode) => {
 };
 export const findById = async (id, auth) => {
     const headers = { Authorization: "Bearer " + auth };
+    const token = localStorage.getItem('token')
     try {
         const result = await axios.get(`http://localhost:8080/api/employee/${id}`, {
-            headers,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
         });
         console.log(result)
         return result.data
@@ -71,8 +104,14 @@ export const findById = async (id, auth) => {
     }
 };
 export const checkPhoneNumberExists = async (phone) => {
+    const token = localStorage.getItem('token')
     try {
-        return (await axios.get(`http://localhost:8080/api/employee/check-phone/${phone}`))
+        return (await axios.get(`http://localhost:8080/api/employee/check-phone/${phone}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }))
             .data;
     } catch (error) {
         console.error(error);

@@ -36,6 +36,7 @@ export function Header() {
         localStorage.removeItem("token");
         setIsLogin(false);
         toast.success("Đăng xuất thành công !!");
+        navigate("/login")
     };
     // console.log(decodedToken.sub)
     return (
