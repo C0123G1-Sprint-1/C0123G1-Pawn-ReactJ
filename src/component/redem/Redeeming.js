@@ -5,10 +5,11 @@ import * as redeemingService from '../../service/RedeemingService'
 import {Field, Form, Formik, isNaN} from "formik";
 import * as Swal from "sweetalert2";
 import moment from "moment";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 export const Redeeming = () => {
+    const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [contractCode, setContractCode] = useState('');
     const [customerName, setCustomerName] = useState('');
@@ -259,7 +260,8 @@ export const Redeeming = () => {
                                                         <div className="row">
                                                             <div className="col-md-12 d-flex justify-content-end">
                                                                 <button type="submit"
-                                                                        className="btn btn-outline-success " style={{width: "auto"}}><i
+                                                                        className="btn btn-outline-success "
+                                                                        style={{width: "auto"}}><i
                                                                     className="bi bi-search"></i>
                                                                 </button>
 
@@ -296,7 +298,7 @@ export const Redeeming = () => {
                                                             contracts.map((contract) => (
                                                                 <tr key={contract.contractId}>
                                                                     <td className="text-center">{contract.contractCode}</td>
-                                                                    <td >{contract.customerName}</td>
+                                                                    <td>{contract.customerName}</td>
                                                                     <td className="text-center">{contract.productName}</td>
                                                                     <td className="text-center">{contract.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                                                     <td className="text-center">{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
@@ -337,8 +339,10 @@ export const Redeeming = () => {
                                                                 {
                                                                     Array.from({length: totalPages}, (a, index) => index).map((pageNum) => (
                                                                         <li className="page-item">
-                                                                            <button className={page === pageNum ? " page-link active" : "page-link"} key={pageNum}
-                                                                                    onClick={() => paginate(pageNum)}>
+                                                                            <button
+                                                                                className={page === pageNum ? " page-link active" : "page-link"}
+                                                                                key={pageNum}
+                                                                                onClick={() => paginate(pageNum)}>
                                                                                 {pageNum + 1}
                                                                             </button>
                                                                         </li>
@@ -361,16 +365,10 @@ export const Redeeming = () => {
                                 </div>
                             </div>
 
-                            <Formik initialValues={{
+                            <Formik initialValues={{}}
 
 
-
-
-
-                            }}
-
-
-                                    onSubmit={(value, {setSubmitting }) => {
+                                    onSubmit={(value, {setSubmitting}) => {
                                         const res = async () => {
                                             try {
                                                 await redeemingService.redeem(selectedContract);
@@ -385,13 +383,10 @@ export const Redeeming = () => {
                                                 title: "Đã chuộc thành công",
 
                                             }))
+                                            await navigate("/nav/info-store/all-contract")
                                         }, 4000)
-
-
                                         reset()
-
                                         fetchContract()
-
                                     }}>
                                 {
                                     ({isSubmitting}) => (
@@ -401,15 +396,29 @@ export const Redeeming = () => {
                                                     <div className="col-lg-6 inputs form-group">
                                                         <label>Mã HĐ</label>
 
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e2e2e2",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
-                                                            {  contracts.find((c) => c.contractId == selectedContract)?.contractCode}
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.contractCode}
                                                         </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
                                                         <label>Tên khách hàng</label>
 
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e2e2e2",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
                                                             {contracts.find((c) => c.contractId == selectedContract)?.customerName}
                                                         </h5>
@@ -418,7 +427,14 @@ export const Redeeming = () => {
                                                 <div className="mt-2 inputs form-group">
                                                     <label>Đồ cầm</label>
 
-                                                    <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                    <h5 style={{
+                                                        border: "0px solid gray",
+                                                        alignItems: "center",
+                                                        display: "flex",
+                                                        backgroundColor: "#e2e2e2",
+                                                        height: "4.9vh",
+                                                        borderRadius: "7px"
+                                                    }}
                                                         className="p-0 m-0">
                                                         {contracts.find((c) => c.contractId == selectedContract)?.productName}
                                                     </h5>
@@ -426,7 +442,14 @@ export const Redeeming = () => {
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs ">
                                                         <label>Tiền cho vay (VNĐ)</label>
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e2e2e2",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
                                                             {contracts.find((c) => c.contractId == selectedContract)?.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                                         </h5>
@@ -434,7 +457,14 @@ export const Redeeming = () => {
                                                     <div className="col-lg-6 inputs form-group">
                                                         <label>Tiền lãi (VNĐ)</label>
 
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e2e2e2",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
                                                             {contracts.find((c) => c.contractId == selectedContract)?.profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                                         </h5>
@@ -444,24 +474,45 @@ export const Redeeming = () => {
                                                     <div className="col-lg-6 inputs form-group">
                                                         <label>Ngày bắt đầu</label>
 
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e2e2e2",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
-                                                            {selectedContract ? moment( contracts.find((c) => c.contractId == selectedContract)?.startDate,'YYYY/MM/DD' ).format('DD/MM/YYYY') : '' }
+                                                            {selectedContract ? moment(contracts.find((c) => c.contractId == selectedContract)?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY') : ''}
                                                         </h5>
 
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
                                                         <label>Ngày kết thúc</label>
 
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e2e2e2",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
-                                                            {selectedContract ? moment( contracts.find((c) => c.contractId == selectedContract)?.endDate,'YYYY/MM/DD' ).format('DD/MM/YYYY') : ''}
+                                                            {selectedContract ? moment(contracts.find((c) => c.contractId == selectedContract)?.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY') : ''}
                                                         </h5>
                                                     </div>
                                                 </div>
                                                 <div className="mt-2 inputs">
                                                     <label>Tiền thanh toán (VNĐ)</label>
-                                                    <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                    <h5 style={{
+                                                        border: "0px solid gray",
+                                                        alignItems: "center",
+                                                        display: "flex",
+                                                        backgroundColor: "#e2e2e2",
+                                                        height: "4.9vh",
+                                                        borderRadius: "7px"
+                                                    }}
                                                         className="p-0 m-0">
 
                                                         {isNaN(contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')) ? '' : (contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} </h5>
@@ -472,10 +523,11 @@ export const Redeeming = () => {
 
                                                         <div className="text-center m-auto">
                                                             <button
-                                                                    type="button"
-                                                                    className="btn btn-secondary "
-                                                                    style={{width:'130px'}}>
-                                                                <Link to="/nav/info-store/" className="text-center text-light"><b>Quay lại</b></Link>
+                                                                type="button"
+                                                                className="btn btn-secondary "
+                                                                style={{width: '130px'}}>
+                                                                <Link to="/nav/info-store/"
+                                                                      className="text-center text-light"><b>Quay lại</b></Link>
                                                             </button>
                                                         </div>
                                                     </div>
@@ -491,7 +543,6 @@ export const Redeeming = () => {
                                                                 <b className="text-center">Thanh toán</b>
                                                             </button>
                                                         </div>
-
 
 
                                                     </div>
