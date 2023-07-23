@@ -55,7 +55,7 @@
 }
 
 .pagination-container-tri button:hover {
-    background-color: #00833e;
+    background-color: #fff;
 }
 
 .pagination-container-tri button[disabled] {

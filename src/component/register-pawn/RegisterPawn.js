@@ -113,7 +113,7 @@ export function RegisterPawn() {
                             else {
                                 await sweat.fire({
                                     icon: "success",
-                                    title: `Register ${values.name} successfully !!!`,
+                                    title: `Đăng ký ${values.name} thành công !!!`,
                                     timer: "2000"
                                 })
                                 navigate("/")

@@ -14,6 +14,7 @@ export function Header() {
     const navigate = useNavigate();
     const [isLogin, setIsLogin] = useState(false);
     const token = localStorage.getItem('token');
+
     const [decodedToken, setDecodedToken] = useState("");
     const [username, setUsername] = useState();
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -58,12 +59,12 @@ export function Header() {
                                 <li>
                                     <NavLink style={{color: "white", fontSize: '20px',}} to="/"
                                              className=" font-a-header">
-                                        Trang Chủ
+                                        Trang chủ
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink style={{color: "white", fontSize: '20px',}} to="/listPosts">Tin
-                                        Tức</NavLink>
+                                        tức</NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/create" className='font-a-header'

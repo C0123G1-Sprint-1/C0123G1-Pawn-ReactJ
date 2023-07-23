@@ -175,10 +175,10 @@ export function CustomerListMOI() {
                 <div className="container mx-auto my-5 col-8" style={{width: '85%'}}>
 
                     <div style={{marginBottom: '20px'}}>
-                        <h2 className="d-flex justify-content-center"
+                        <h1 className="d-flex justify-content-center"
                         >
                             DANH SÁCH KHÁCH HÀNG
-                        </h2>
+                        </h1>
                     </div>
 
                     <div className='container'>
@@ -189,7 +189,7 @@ export function CustomerListMOI() {
                                     hàng
                                 </Link>
 
-                                <Link to="/nav/register" className="btn btn-success"
+                                <Link to="/nav/manager-customer/register" className="btn btn-success"
 
                                       style={{marginLeft: '5%'}}>
                                     Khách hàng trên mạng
@@ -206,9 +206,9 @@ export function CustomerListMOI() {
                                         search(value)
                                     }
                                     }>
-                                    <Form className="d-flex m-2">
+                                    <Form className="d-flex m-2 justify-content-between">
                                         <Field
-                                            style={{width: "18vw", height: "38px",marginLeft:"20%"}}
+                                            style={{width: "18vw", height: "38px",marginLeft:"30%"}}
                                             className="form-control me-3"
                                             type="text"
                                             name="name"
@@ -216,7 +216,7 @@ export function CustomerListMOI() {
                                             aria-label="Search"
 
                                         />
-                                        <button className="btn btn-outline-success" type="submit">
+                                        <button className="btn btn-outline-success me-5" type="submit">
                                             <i className="bi bi-search"/>
                                         </button>
                                     </Form>
@@ -231,7 +231,7 @@ export function CustomerListMOI() {
                                             <div className="table-responsive" style={{width: '90%'}}>
                                                 <table className=" table table table-striped" border="1">
                                                     <thead>
-                                                    <tr>
+                                                    <tr style={{textAlign: "start"}}>
                                                         <th>STT</th>
                                                         <th>Tên khách hàng</th>
                                                         <th>Số điện thoại</th>
@@ -261,13 +261,13 @@ export function CustomerListMOI() {
                                                                 <td>{value.citizenCode}</td>
                                                                 <td>{value.quantityContract}</td>
                                                                 <td>
-                                                                    <a href className="me-2" data-bs-toggle="modal"
+                                                                    <Link href className="me-2" data-bs-toggle="modal"
                                                                        data-bs-target="#staticBackdrop"><i
                                                                         style={{color: '#4698f9'}}
                                                                         className="bi bi-info-circle"
                                                                         onClick={() => getDetail(value.id, value.name, value.birthday, value.gender, value.phoneNumber, value.email, value.address,
                                                                             value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate, value.quantityContract,
-                                                                            value.updateDate, value.note)}/></a>
+                                                                            value.updateDate, value.note)}/></Link>
                                                                     <Link
                                                                         to={`/nav/manager-customer/update/${value.id}`}
                                                                         href className="me-2"><i
@@ -370,7 +370,7 @@ export function CustomerListMOI() {
                         <div className="modal-header" align="center">
                             <h2 className="modal-title text-center"
                                 id="staticBackdropLabel"> Chi tiết khách
-                                hàng <span style={{color: 'green'}}>{names}</span></h2>
+                                hàng </h2>
                             <button type="button" className="btn-close"
                                     data-bs-dismiss="modal" aria-label="Close"/>
                         </div>
@@ -395,6 +395,11 @@ export function CustomerListMOI() {
                                                     khách hàng
                                                 </td>
                                                 <td className="col-sm-6"> {id}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="col-sm-4 fw-bold">Tên khách hàng
+                                                </td>
+                                                <td className="col-sm-6"> {names}</td>
                                             </tr>
                                             <tr>
                                                 <td className="col-sm-4 fw-bold"> Ngày
