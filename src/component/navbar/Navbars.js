@@ -163,7 +163,7 @@ export default function Navbars() {
                                     display: "flex",
                                     padding: "10px"
                                 }
-                            }} className="nav-link" to={"/nav/detail/employee/1"}>
+                            }} className="nav-link" to={`/nav/detail/employee/`+token.id}>
                                 Thông tin cá nhân
                             </NavLink>
                         </li>

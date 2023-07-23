@@ -15,11 +15,13 @@ import * as customersService from "../../service/customersService";
 export function CreateCustomer() {
 
     let navigate = useNavigate();
-    const [avatar, setAvatarFile] = useState(null);
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
+
+    const [avatar, setAvatarFile] = useState(null);
     const [avatarUrl, setAvatarUrl] = useState(null);
     const [frontCitizen, setFrontCitizenFile] = useState(null);
     const [frontCitizenUrl, setFrontCitizenUrl] = useState(null);
@@ -28,9 +30,7 @@ export function CreateCustomer() {
     const [fileSelected, setFileSelected] = useState(false);
     const messageError = "Ảnh không được để trống!!";
     const [responseText, setResponseText] = useState('');
-
     const [phoneNumber, setPhoneNumber] = useState('');
-
 
     const [registerPawn, setRegisterPawn] = useState();
     const [cus, setCusPawn] = useState([]);
@@ -45,7 +45,6 @@ export function CreateCustomer() {
             }
         };
         fetchData();
-        console.log(cus)
     }, [registerPawn, name, phone, address, email]);
 
     useEffect((e) => {
@@ -78,12 +77,12 @@ export function CreateCustomer() {
 
     const handleGetInfoClick = async (e) => {
         const foundRegisterPawn = await findRegisterPawnByPhoneNumber(phoneNumber);
-        console.log("Tìm kh có ", foundRegisterPawn)
-        await setRegisterPawn(foundRegisterPawn);
-        await setName(foundRegisterPawn?.name)
-        await setAddress(foundRegisterPawn?.address)
-        await setEmail(foundRegisterPawn?.email)
-       await setPhone(foundRegisterPawn?.phone)
+        console.log("Tìm có ", foundRegisterPawn)
+        setRegisterPawn(foundRegisterPawn);
+        setName(foundRegisterPawn?.name)
+        setAddress(foundRegisterPawn?.address)
+        setEmail(foundRegisterPawn?.email)
+        setPhone(foundRegisterPawn?.phone)
 
     };
 
@@ -205,12 +204,12 @@ export function CreateCustomer() {
         <>
             <Formik
                 initialValues={{
-                    name: "",
+                    name: name,
                     birthday: "",
                     gender: "",
-                    phoneNumber: "",
-                    email: "",
-                    address: "",
+                    phoneNumber: phone,
+                    email: email,
+                    address: address,
                     citizenCode: "",
                     image: "",
                     frontCitizen: "",

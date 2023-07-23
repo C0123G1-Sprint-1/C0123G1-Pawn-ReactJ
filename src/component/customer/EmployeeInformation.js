@@ -133,7 +133,22 @@ export default function EmployeeInformation() {
                 });
                 setSubmitting(false);
                 setNewPass(newPass + 1);
-                console.log(newPass)
+                if (newPass >= 5) {
+                    Swal.fire({
+                        title: 'Xác nhận đổi mật khẩu?',
+                        text: "Bạn đã nhập sai quá 5 lần!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Đồng ý đổi!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                           navigate("/login/forgot")
+                        }
+                    })
+                    return;
+                }
                 return;
             }
 
