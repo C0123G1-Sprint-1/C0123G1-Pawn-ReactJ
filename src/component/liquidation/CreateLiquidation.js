@@ -134,32 +134,32 @@ export function CreateLiquidation() {
     };
 
     const loadContracts = async () => {
-        setListProduct([]);
-        setIdCustomer(0);
-
-        // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
-        let timerInterval
-        Swal.fire({
-            title: 'Chúng tôi đang sử lí mong đợi trong vài giây',
-            html: 'Vui lòng đợi trong  <b></b> giây.',
-            timer: 4000,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-                console.log('I was closed by the timer')
-            }
-        })
+        // setListProduct([]);
+        // // setIdCustomer(0);
+        //
+        // // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
+        // let timerInterval
+        // Swal.fire({
+        //     title: 'Chúng tôi đang sử lí mong đợi trong vài giây',
+        //     html: 'Vui lòng đợi trong  <b></b> giây.',
+        //     timer: 4000,
+        //     timerProgressBar: true,
+        //     didOpen: () => {
+        //         Swal.showLoading()
+        //         const b = Swal.getHtmlContainer().querySelector('b')
+        //         timerInterval = setInterval(() => {
+        //             b.textContent = Swal.getTimerLeft()
+        //         }, 100)
+        //     },
+        //     willClose: () => {
+        //         clearInterval(timerInterval)
+        //     }
+        // }).then((result) => {
+        //     /* Read more about handling dismissals below */
+        //     if (result.dismiss === Swal.DismissReason.timer) {
+        //         console.log('I was closed by the timer')
+        //     }
+        // })
     };
 
     if (!customers) {

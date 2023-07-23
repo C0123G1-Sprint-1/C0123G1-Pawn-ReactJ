@@ -22,7 +22,7 @@ export const getContractList = async (page, contractCode, customerName, productN
 export const redeem = async (id) => {
     const token = localStorage.getItem('token')
     try {
-     await axios.patch("http://localhost:8080/api/employee/redeem/pay/" + id,{
+     await axios.patch("http://localhost:8080/api/employee/redeem/pay/" + id,id,{
          headers: {
              Authorization: `Bearer ${token}`,
          }

@@ -32,9 +32,11 @@ export const Redeeming = () => {
         setCustomerName('')
         setContractCode('')
         setProductName('')
+
     };
 
     const handleModalOpen = () => {
+        setPage(0)
         setShowModal(true);
         fetchContract()
     };
@@ -79,11 +81,13 @@ export const Redeeming = () => {
 
 
     const reset = async () => {
-        setContract([])
+
         setSelectedContract(0)
+
         // window.location.reload(false);
     }
-    const loadContracts = async () => {
+    const loadContracts = async (id) => {
+
 
         // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
         let timerInterval
@@ -479,7 +483,7 @@ export const Redeeming = () => {
 
 
                                                                 <div className="text-center m-auto">
-                                                                        <button onClick={loadContracts}
+                                                                        <button onClick={()=>loadContracts(selectedContract)}
                                                                                 disabled={!selectedContract} type="submit"
                                                                                 className="btn btn-success">
                                                                             <b className="text-center">Thanh toán</b>
