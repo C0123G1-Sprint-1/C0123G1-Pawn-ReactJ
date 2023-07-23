@@ -67,7 +67,7 @@ export default function EmployeeList() {
     return (
         <>
             <div className="row mx-0">
-                <div className="container mx-auto my-5 col-8" style={{width: "97%"}}>
+                <div className="container mx-auto my-5 col-8" style={{width: "90%"}}>
                     <div
 
                     >
@@ -86,7 +86,7 @@ export default function EmployeeList() {
                                     type="button"
                                     className="btn btn-outline-success"
                                     style={{
-                                        marginLeft: "6%",
+                                        // marginLeft: "6%",
                                         display: "flex",
                                         justifyContent: "center",
                                         alignItems: "center",
@@ -125,7 +125,7 @@ export default function EmployeeList() {
                                     <button
                                         className="btn btn-outline-success"
                                         style={{
-                                            marginRight: "4.5vw",
+                                            // marginRight: "4.5vw",
                                             marginBottom: "20px",
                                             height: "50px",
                                             width: "50px",
@@ -138,7 +138,7 @@ export default function EmployeeList() {
                             </Formik>
                         </div>
                     </div>
-                    <div className="table-responsive justify-content-center "  style={{width: '90%',marginLeft: "5%"}}>
+                    <div className="table-responsive justify-content-center "  style={{width: '100%'}}>
                             <table className="table table-striped "  >
                                 <thead>
                                 <tr>

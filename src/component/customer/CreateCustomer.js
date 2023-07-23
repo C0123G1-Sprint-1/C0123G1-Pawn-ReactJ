@@ -316,7 +316,7 @@ export function CreateCustomer() {
             >
                 {({isSubmitting, setFieldValue}) => (
                     <div className="dat-nt container mt-5 mb-5 p-2 ">
-                        <div className="row height d-flex justify-content-center align-items-center">
+                        <div className="row  d-flex justify-content-center align-items-center">
                             <div className="col-md-8 col-sm-12">
                                 <div className="card px-5 py-4">
                                     <div

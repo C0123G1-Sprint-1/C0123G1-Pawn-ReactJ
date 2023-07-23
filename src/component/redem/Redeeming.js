@@ -149,7 +149,7 @@ export const Redeeming = () => {
             <div className="container pt-3 pb-5">
                 <div className="row height d-flex justify-content-center align-items-center" style={{height: "85vh"}}>
                     <div className="col-md-6">
-                        <div className="card px-5 py-4">
+                        <div className="card px-5 py-4" style={{borderRadius: "7px",border: "1px solid rgba(0,0,0,0.17)"}}>
                             <div style={{textAlign: "center"}}>
                                 <h1>
                                     TRẢ ĐỒ
@@ -246,7 +246,7 @@ export const Redeeming = () => {
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
                                                                     <label style={{fontWeight: 500}} htmlFor="dateStart">Ngày làm hợp
-                                                                        đòng</label>
+                                                                        đồng</label>
                                                                     <Field
                                                                         id="dateStart" type="date" name="startDate"
                                                                         className="form-control"/>
@@ -401,7 +401,7 @@ export const Redeeming = () => {
                                                             border: "0px solid gray",
                                                             alignItems: "center",
                                                             display: "flex",
-                                                            backgroundColor: "#e2e2e2",
+                                                            backgroundColor: "#e9ecef",
                                                             height: "4.9vh",
                                                             borderRadius: "7px"
                                                         }}
@@ -416,7 +416,7 @@ export const Redeeming = () => {
                                                             border: "0px solid gray",
                                                             alignItems: "center",
                                                             display: "flex",
-                                                            backgroundColor: "#e2e2e2",
+                                                            backgroundColor: "#e9ecef",
                                                             height: "4.9vh",
                                                             borderRadius: "7px"
                                                         }}
@@ -432,7 +432,7 @@ export const Redeeming = () => {
                                                         border: "0px solid gray",
                                                         alignItems: "center",
                                                         display: "flex",
-                                                        backgroundColor: "#e2e2e2",
+                                                        backgroundColor: "#e9ecef",
                                                         height: "4.9vh",
                                                         borderRadius: "7px"
                                                     }}
@@ -447,7 +447,7 @@ export const Redeeming = () => {
                                                             border: "0px solid gray",
                                                             alignItems: "center",
                                                             display: "flex",
-                                                            backgroundColor: "#e2e2e2",
+                                                            backgroundColor: "#e9ecef",
                                                             height: "4.9vh",
                                                             borderRadius: "7px"
                                                         }}
@@ -462,7 +462,7 @@ export const Redeeming = () => {
                                                             border: "0px solid gray",
                                                             alignItems: "center",
                                                             display: "flex",
-                                                            backgroundColor: "#e2e2e2",
+                                                            backgroundColor: "#e9ecef",
                                                             height: "4.9vh",
                                                             borderRadius: "7px"
                                                         }}
@@ -479,7 +479,7 @@ export const Redeeming = () => {
                                                             border: "0px solid gray",
                                                             alignItems: "center",
                                                             display: "flex",
-                                                            backgroundColor: "#e2e2e2",
+                                                            backgroundColor: "#e9ecef",
                                                             height: "4.9vh",
                                                             borderRadius: "7px"
                                                         }}
@@ -495,7 +495,7 @@ export const Redeeming = () => {
                                                             border: "0px solid gray",
                                                             alignItems: "center",
                                                             display: "flex",
-                                                            backgroundColor: "#e2e2e2",
+                                                            backgroundColor: "#e9ecef",
                                                             height: "4.9vh",
                                                             borderRadius: "7px"
                                                         }}
@@ -510,7 +510,7 @@ export const Redeeming = () => {
                                                         border: "0px solid gray",
                                                         alignItems: "center",
                                                         display: "flex",
-                                                        backgroundColor: "#e2e2e2",
+                                                        backgroundColor: "#e9ecef",
                                                         height: "4.9vh",
                                                         borderRadius: "7px"
                                                     }}
