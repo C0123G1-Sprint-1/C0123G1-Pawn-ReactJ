@@ -293,30 +293,7 @@ export default function EmployeeInformation() {
                                                         type="number"
                                                         hidden
                                                     />
-                                                    <div className="row">
-                                                        <>
-                                                            <label id="label-dat" htmlFor="maKhau"
-                                                                   className="form-label mt-2">
-                                                                Mật khẩu
-                                                            </label>
-                                                            <div className="input-group">
-                                                                <input
-                                                                    value={inputPassword}
-                                                                    onChange={(e) => setInputPassword(e.target.value)}
-                                                                    type={showPassword ? 'text' : "password"}
-                                                                    className="form-control m-0"
-                                                                />
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn btn-outline-secondary"
-                                                                    onClick={handleToggleShowPassword}
-                                                                >
-                                                                    {showPassword ? <i class="bi bi-eye-slash"></i> :
-                                                                        <i class="bi bi-eye"></i>}
-                                                                </button>
-                                                            </div>
-                                                        </>
-                                                    </div>
+
                                                     <label className="mt-2" id="label-dat" htmlFor="hoTen">
                                                         Họ và tên
                                                         <span style={{color: "red"}}> *</span>
@@ -416,7 +393,31 @@ export default function EmployeeInformation() {
                                                     <ErrorMessage component="span"
                                                                   name="citizenCode"
                                                                   className="text-danger"/>
+                                                    {isEditing ? (<hr/>) : (<>
+                                                            <label id="label-dat" htmlFor="maKhau"
+                                                                   className="form-label mt-2">
+                                                                Mật khẩu<span style={{color: "red"}}> *</span>
+                                                            </label>
+                                                            <div className="input-group">
+                                                                <input
+                                                                    value={inputPassword}
+                                                                    onChange={(e) => setInputPassword(e.target.value)}
+                                                                    type={showPassword ? 'text' : "password"}
+                                                                    className="form-control m-0"
+                                                                />
+                                                                <button
+                                                                    type="button"
+                                                                    className="btn btn-outline-secondary"
+                                                                    onClick={handleToggleShowPassword}
+                                                                >
+                                                                    {showPassword ? <i class="bi bi-eye-slash"></i> :
+                                                                        <i class="bi bi-eye"></i>}
+                                                                </button>
+                                                            </div>
+                                                        </>
+                                                    )}
                                                 </div>
+
                                                 <div className="mt-2 inputs row">
 
                                                     {
