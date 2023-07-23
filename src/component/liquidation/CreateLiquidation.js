@@ -12,6 +12,7 @@ import {
 import {useNavigate} from "react-router";
 import * as Swal from "sweetalert2";
 import {Link, NavLink} from "react-router-dom";
+import ReactPaginate from "react-paginate";
 
 
 const token = localStorage.getItem('token');
@@ -71,13 +72,17 @@ export function CreateLiquidation() {
         const res = await getListProductTypeAPI();
         setProductTypes(res.data);
     }
-    const paginateCustomers = async (page) => {
-        setCustomerPage(page);
-    };
+    const handlePage1 = async (pages) => {
+        setCustomerPage(+pages.selected);
+        const res = await getListCustomerAPI(customerPage, name);
+        setCustomers(res.data.content)
+    }
 
-    const paginateContracts = (page) => {
-        setContractPage(page);
-    };
+    const handlePage = async (pages) => {
+        setContractPage(+pages.selected);
+        const res = await getListProductAPI(contractPage, productType,productName,loans)
+        setContracts(res.data.content)
+    }
 
     useEffect(() => {
         getListProductType();
@@ -129,6 +134,8 @@ export function CreateLiquidation() {
     };
 
     const loadContracts = async () => {
+        setListProduct([]);
+        setIdCustomer(0);
 
         // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
         let timerInterval
@@ -278,12 +285,13 @@ export function CreateLiquidation() {
                                                value={formatCurrency(totalPrice) + " VNĐ"} disabled/>
                                     </div>
                                     <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                        <div className="text-center m-auto">
+                                        <div  className="text-center m-auto">
                                             <NavLink
+                                                style={{marginLeft:"4vw",width:"130px"}}
                                                 type="button"
                                                 className="btn btn-secondary"
-                                                to={"/"}>
-                                                Quay lại
+                                                to={"/nav/info-store"}>
+                                               <b className="text-center">Quay lại</b>
                                             </NavLink>
                                         </div>
                                         <div
@@ -291,9 +299,10 @@ export function CreateLiquidation() {
 
 
                                             <button type="submit" className="btn btn-success"
+                                                    style={{marginRight:"4vw",width:"130px"}}
                                                     onClick={loadContracts}
                                                     disabled={!idCustomer || listProduct.length === 0}>
-                                                <b className="text-center">Thêm mới</b>
+                                                <b className="text-center">Thanh lý</b>
                                             </button>
                                         </div>
                                     </div>
@@ -392,44 +401,23 @@ export function CreateLiquidation() {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <div className="d-flex col-12 justify-content-end" style={{marginLeft: "-5%"}}>
-                        <nav aria-label="...">
-                            {customerTotalPages > 0 && (
-                                <ul className="pagination">
-                                    <li hidden={customerPage === 0} className="page-item">
-                                        <button className="page-link" tabIndex={-1} onClick={() => paginateCustomers(customerPage - 1)}>
-                                            Trước
-                                        </button>
-                                    </li>
-                                    {Array.from({ length: customerTotalPages }, (a, index) => index).map((page) => {
-                                        // Kiem tra neu trang hien tai gan voi trang dau tien hoac gan voi trang cuoi cung
-                                        if (page === 0 || page === customerTotalPages - 1 || Math.abs(page - customerPage) <= 1) {
-                                            return (
-                                                <li className={`page-item ${page === customerPage ? "active" : ""}`} key={page}>
-                                                    <button className="page-link" onClick={() => paginateCustomers(page)}>
-                                                        {page + 1}
-                                                    </button>
-                                                </li>
-                                            );
-                                        } else if (Math.abs(page - customerPage) === 2) {
-                                            // Them dau "..." khi trang cach trang hien tai chinh xac 2 trang
-                                            return (
-                                                <li className="page-item" key={page}>
-                                                    <span className="page-link">...</span>
-                                                </li>
-                                            );
-                                        }
-                                        return null; // Khong hien thi trang nay trong danh sach
-                                    })}
-                                    <li hidden={customerPage + 1 === customerTotalPages} className="page-item">
-                                        <button className="page-link" tabIndex={-1} onClick={() => paginateCustomers(customerPage + 1)}>
-                                            Sau
-                                        </button>
-                                    </li>
-                                </ul>
-                            )}
-                        </nav>
-                    </div>
+                    {customers.length === 0 ? '' :
+                        <div className="d-grid">
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Sau"
+                                onPageChange={handlePage1}
+                                pageCount={customerTotalPages}
+                                previousLabel="Trước"
+                                containerClassName="pagination"
+                                pageLinkClassName="page-num"
+                                nextLinkClassName="page-num"
+                                previousLinkClassName="page-num"
+                                activeClassName="active"
+                                disabledClassName="d-none"
+                            />
+                        </div>
+                    }
                 </Modal.Footer>
             </Modal>
 
@@ -509,7 +497,7 @@ export function CreateLiquidation() {
                                                 </Field>
                                             </div>
                                         </div>
-                                        <div className="col-lg-2" style={{marginTop: "1.9vw"}}>
+                                        <div className="col-lg-2" style={{marginTop: "1.6vw"}}>
                                             <div className="form-group">
                                                 <button type="submit" className="btn btn-outline-success ">
                                                     <i className="bi bi-search"></i></button>
@@ -564,44 +552,23 @@ export function CreateLiquidation() {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <div className="d-flex col-12 justify-content-end" style={{marginLeft: '-5%'}}>
-                        <nav aria-label="">
-                            {contractTotalPages > 0 && (
-                                <ul className="pagination">
-                                    <li hidden={contractPage === 0} className="page-item">
-                                        <button className="page-link" tabIndex={-1} onClick={() => paginateContracts(contractPage - 1)}>
-                                            Trước
-                                        </button>
-                                    </li>
-                                    {Array.from({ length: contractTotalPages }, (a, index) => index).map((page) => {
-                                        // Kiem tra neu trang hien tai gan voi trang dau tien hoac gan voi trang cuoi cung
-                                        if (page === 0 || page === contractTotalPages - 1 || Math.abs(page - contractPage) <= 1) {
-                                            return (
-                                                <li className={`page-item ${page === contractPage ? "active" : ""}`} key={page}>
-                                                    <button className="page-link" onClick={() => paginateContracts(page)}>
-                                                        {page + 1}
-                                                    </button>
-                                                </li>
-                                            );
-                                        } else if (Math.abs(page - contractPage) === 2) {
-                                            // Them dau "..." khi trang cach trang hien tai chinh xac 2 trang
-                                            return (
-                                                <li className="page-item" key={page}>
-                                                    <span className="page-link">...</span>
-                                                </li>
-                                            );
-                                        }
-                                        return null; // Khong hien thi trang nay trong danh sach
-                                    })}
-                                    <li hidden={contractPage + 1 === contractTotalPages} className="page-item">
-                                        <button className="page-link" tabIndex={-1} onClick={() => paginateContracts(contractPage + 1)}>
-                                            Sau
-                                        </button>
-                                    </li>
-                                </ul>
-                            )}
-                        </nav>
-                    </div>
+                    {contracts.length === 0 ? '' :
+                        <div className="d-grid">
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Sau"
+                                onPageChange={handlePage}
+                                pageCount={contractTotalPages}
+                                previousLabel="Trước"
+                                containerClassName="pagination"
+                                pageLinkClassName="page-num"
+                                nextLinkClassName="page-num"
+                                previousLinkClassName="page-num"
+                                activeClassName="active"
+                                disabledClassName="d-none"
+                            />
+                        </div>
+                    }
 
                 </Modal.Footer>
             </Modal>
