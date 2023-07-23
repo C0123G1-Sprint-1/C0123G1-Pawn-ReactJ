@@ -4,7 +4,7 @@ import {Button, Modal} from "react-bootstrap";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {storage} from "../../firebaseContract";
+import {storage} from "../../firebase";
 import Swal from "sweetalert2";
 import * as Yup from 'yup';
 import {ThreeCircles} from "react-loader-spinner";

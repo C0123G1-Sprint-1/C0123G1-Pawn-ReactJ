@@ -262,7 +262,7 @@ export default function Profit() {
                                     <li className="page-item">
                                         {
                                             currentPage !== 0 ?
-                                                <button className="page-link btn-outline-secondary text-success"
+                                                <button className="page-link page-link-khanhh btn-outline-secondary text-success"
                                                         style={{border: "1px solid gray", borderRadius: "5px"}}
                                                         onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage - 1, params.profitType || profitType)}>
                                                     Trước
@@ -277,7 +277,7 @@ export default function Profit() {
                                     <li className="page-item">
                                         {
                                             currentPage !== totalPage - 1 ?
-                                                <button className="page-link btn-outline-secondary text-success"
+                                                <button className="page-link page-link-khanhh btn-outline-secondary text-success"
                                                         style={{border: "1px solid gray", borderRadius: "5px"}}
                                                         onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage + 1, params.profitType || profitType)}>
                                                     Sau
