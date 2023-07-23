@@ -146,7 +146,7 @@ export const Redeeming = () => {
             {/*top: "50%",*/}
             {/*transform: "translate(-50%, -50%)",*/}
             {/*paddingRight: "20px"}}*/}
-            <div className="container pt-3">
+            <div className="container pt-3 pb-5">
                 <div className="row height d-flex justify-content-center align-items-center" style={{height: "85vh"}}>
                     <div className="col-md-6">
                         <div className="card px-5 py-4">
