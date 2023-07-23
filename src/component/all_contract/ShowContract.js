@@ -151,27 +151,41 @@ export const ShowContract = () => {
                                             <th>Chức Năng</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        {
-                                            contracts && contracts.map((value) => (
-                                                <tr key={value.contractId} className="text-center">
-                                                    <td>{value.contractCode}</td>
-                                                    <td>{value.productName}</td>
-                                                    <td>{value.productType}</td>
-                                                    <td>{value.contractStatus}</td>
-                                                    <td>{value.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                                    <td>
-
-                                                            <i style={{color: 'blue'}} onClick={() => handleShowDetail(value.contractId)}
-                                                                className=" bi bi-info-circle me-2"></i>
 
 
-                                                    </td>
-                                                </tr>
-                                            ))
+                                        {contracts.length === 0 ? <tr>
+                                            <td colSpan="6" className="text-center">
+                                                <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
+                                            </td>
+                                        </tr>
+                                            :
+                                            <tbody>
+                                            {
+                                            contracts.map((value) => (
+                                            <tr key={value.contractId} className="text-center">
+                                            <td>{value.contractCode}</td>
+                                            <td>{value.productName}</td>
+                                            <td>{value.productType}</td>
+                                            <td>{value.contractStatus}</td>
+                                            <td>{value.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                            <td>
+
+                                            <i style={{color: 'blue'}} onClick={() => handleShowDetail(value.contractId)}
+                                            className=" bi bi-info-circle me-2"></i>
+
+
+                                            </td>
+                                            </tr>
+
+
+                                        ))
+                                            }
+
+                                            </tbody>
                                         }
 
-                                        </tbody>
+
+
                                     </table>
                                     <div className="d-flex col-12 justify-content-end">
                                         <nav aria-label="...">

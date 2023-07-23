@@ -112,35 +112,6 @@ export default function Profit() {
     }
     return (
         <>
-            {/*<div id="content" className="container">*/}
-            {/*    <div className="row mt-5">*/}
-            {/*<div className="col-md-12 col-lg-3">*/}
-            {/*    <div className="list-group">*/}
-            {/*        <a*/}
-            {/*            href="#"*/}
-            {/*            className="list-group-item list-group-item-action active "*/}
-            {/*            id="nav-side-bar"*/}
-            {/*            aria-current="true"*/}
-            {/*        >*/}
-            {/*            Thông tin cửa hàng*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="list-group-item list-group-item-action">*/}
-            {/*            Tài chính*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="list-group-item list-group-item-action">*/}
-            {/*            Danh sách đồ cầm trong kho*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="list-group-item list-group-item-action">*/}
-            {/*            Lịch sử giao giao dịch*/}
-            {/*        </a>*/}
-            {/*        <a className="list-group-item list-group-item-action ">*/}
-            {/*            Top 10 hợp đồng mới nhất*/}
-            {/*        </a>*/}
-            {/*        <a className="list-group-item list-group-item-action active" id="statistic-profit">*/}
-            {/*            Thống kê lợi nhuận*/}
-            {/*        </a>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
             <div className="col-md-12 col-lg-9 content-profit">
                 <div className="row ">
                     <div className=" col-lg-12 " align="center">
@@ -205,13 +176,6 @@ export default function Profit() {
                                     await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, params.profitType || profitType)
                                     await getDataProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
                                     await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
-                                    // await getContract(values.startDate, values.endDate, 0,params.profitType || profitType  )
-                                    // await getDataProfit(values.startDate, values.endDate,params.profitType || profitType  )
-                                    // await getProfit(values.startDate, values.endDate,params.profitType || profitType  )
-                                    // await setDateTimeProfit({
-                                    //     startDate: values.startDate,
-                                    //     endDate: values.endDate
-                                    // })
                                 }}>
                                 <Form className="ps-5 col-lg-12 col-md-12 col-12" style={{boxSizing: "border-box"}}>
                                     <div className="d-flex row col-lg-12 col-md-12 col-12 justify-content-between p-0 m-0" style={{
@@ -234,7 +198,7 @@ export default function Profit() {
                                             height: "100%",
                                             alignItems: "center"
                                         }}>
-                                            <button type="submit" className="btn btn-sm btn-outline-success " style={{
+                                            <button type="submit" className="btn btn-sm btn-outline-success col-lg-6 col-md-6 col-6" style={{
                                                 height: "100%",
                                                 alignItems: "center",
                                                 display: "flex",
@@ -242,7 +206,7 @@ export default function Profit() {
                                             }}>Thống kê
                                             </button>
                                             <button type="button" onClick={() => setCancel()}
-                                                    className="btn btn-sm btn-outline-secondary ms-1" style={{
+                                                    className="btn btn-sm btn-outline-secondary col-lg-6 col-md-6 col-6 ms-1" style={{
                                                 height: "100%",
                                                 alignItems: "center",
                                                 display: "flex",

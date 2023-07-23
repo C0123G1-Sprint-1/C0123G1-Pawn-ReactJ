@@ -11,11 +11,11 @@ export default function Interest() {
                     <thead>
                     <tr>
                         <th>Mã HD</th>
-                        <th>Tiền Cho Vay(VND)</th>
-                        <th>Tiền Lãi (VND)</th>
-                        <th>Ngày Bắt Đầu</th>
-                        <th>Lợi Nhuận (VND)</th>
-                        <th id="actions">Chức Năng</th>
+                        <th>Tiền cho vay (VND)</th>
+                        <th>Tiền lãi (VND)</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Lợi nhuận (VND)</th>
+                        <th id="actions">Chức năng</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -23,11 +23,11 @@ export default function Interest() {
                         contracts ?
                             contracts.map((contract, index) =>
                                 <tr key={index}>
-                                    <td style={{textAlign: "center"}}>{contract.contractCode}</td>
-                                    <td style={{textAlign: "center"}}>{contract.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td style={{textAlign: "center"}}>{contract.interest?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td style={{textAlign: "center"}}>{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
-                                    <td style={{textAlign: "center"}}>{contract.profit?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td>{"HD-"+contract.contractCode}</td>
+                                    <td>{contract.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td>{contract.interest?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td>{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                    <td>{contract.profit?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                     <td className="detail-button">
                                         <a href="#">
                                             <i
