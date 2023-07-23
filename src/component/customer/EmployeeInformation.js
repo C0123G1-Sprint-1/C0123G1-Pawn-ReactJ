@@ -24,7 +24,8 @@ export default function EmployeeInformation() {
     const [isEditing, setIsEditing] = useState(true);
     const [newPass, setNewPass] = useState(0);
 
-    function handleEditClick() {
+    const handleEditClick = (e) => {
+        e.preventDefault();
         setIsEditing(false);
     }
 
@@ -120,82 +121,82 @@ export default function EmployeeInformation() {
     };
 
     const handleSubmit = async (values, {setSubmitting}) => {
-            try {
-                const isPasswordMatch = await bcrypt.compare(inputPassword, getPassword);
+        try {
+            const isPasswordMatch = await bcrypt.compare(inputPassword, getPassword);
 
-                if (!isPasswordMatch) {
-                    await Swal.fire({
-                        icon: "error",
-                        title: "Mật khẩu không đúng",
-                        text: "Vui lòng nhập lại mật khẩu",
-                        timer: 1500
-                    });
-                    setSubmitting(false);
-                    setNewPass(newPass + 1);
-                    console.log(newPass)
-                    return;
-                }
-
-                values.gender = parseInt(values.gender);
-                await handleAvatarFileUpload()
-                const newValues = {...values, image: firebaseImg};
-                newValues.image = await handleAvatarFileUpload();
-                await employeeInformationService.update({
-                    ...newValues,
-                })
-
-                setSubmitting(false)
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Chỉnh sửa thông tin thành công.',
-                    text: 'Nhân viên ' + values.name,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            } catch
-                (error) {
-                console.log(error);
+            if (!isPasswordMatch) {
                 await Swal.fire({
                     icon: "error",
-                    title: "Thất bại",
-                    text: "Vui lòng thực hiện lại."
+                    title: "Mật khẩu không đúng",
+                    text: "Vui lòng nhập lại mật khẩu",
+                    timer: 1500
                 });
                 setSubmitting(false);
+                setNewPass(newPass + 1);
+                console.log(newPass)
+                return;
             }
+
+            values.gender = parseInt(values.gender);
+            await handleAvatarFileUpload()
+            const newValues = {...values, image: firebaseImg};
+            newValues.image = await handleAvatarFileUpload();
+            await employeeInformationService.update({
+                ...newValues,
+            })
+
+            setSubmitting(false)
+            await Swal.fire({
+                icon: 'success',
+                title: 'Chỉnh sửa thông tin thành công.',
+                text: 'Nhân viên ' + values.name,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        } catch
+            (error) {
+            console.log(error);
+            await Swal.fire({
+                icon: "error",
+                title: "Thất bại",
+                text: "Vui lòng thực hiện lại."
+            });
+            setSubmitting(false);
         }
+    }
 
-return (
-    <>
-        <Formik
-            enableReinitialize={true}
-            initialValues={{
+    return (
+        <>
+            <Formik
+                enableReinitialize={true}
+                initialValues={{
 
-                id: employeeDetail?.id,
-                name: employeeDetail?.name,
-                gender: employeeDetail?.gender.toString(),
-                birthDay: employeeDetail?.birthDay,
-                salary: isAuth ? employeeDetail?.salary : employeeDetail?.salary.toLocaleString(),
-                phoneNumber: employeeDetail?.phoneNumber,
-                email: employeeDetail?.email,
-                address: employeeDetail?.address,
-                image: employeeDetail?.image,
-                citizenCode: employeeDetail?.citizenCode,
-            }}
-            validationSchema={Yup.object({
-                name: Yup.string().required('Không được bỏ trống')
-                    .matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
-                    .min(5, 'Ký tự phải nhiều hơn 5')
-                    .max(100, 'Ký tự phải ít hơn 100'),
-                birthDay: Yup.date().required('Không được bỏ trống').max(getMinDate(), 'Người dùng phải từ 15 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
-                gender: Yup.string().required('Không được bỏ trống'),
-                salary: Yup.number().typeError("Số lương phải là một số").required("Không được bỏ trống").positive("Số lương phải là số dương").min(1000000, "Số lương không được dưới 1 triệu").max(100000000, "Số lương không được quá 100 triệu"),
-                phoneNumber: Yup.string().required('Không được bỏ trống')
-                    .matches(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/, 'Nhập đúng định dạng SDT VD: 0903.XXX.XXX (X là chữ số)'),
-                address: Yup.string().required('Không được bỏ trống'),
-                email: Yup.string().required('Không được bỏ trống').email('Nhập đúng định dạng email'),
-                citizenCode: Yup.string().required('Không được bỏ trống')
-            })}
-            onSubmit={handleSubmit}
+                    id: employeeDetail?.id,
+                    name: employeeDetail?.name,
+                    gender: employeeDetail?.gender.toString(),
+                    birthDay: employeeDetail?.birthDay,
+                    salary: isAuth ? employeeDetail?.salary : employeeDetail?.salary.toLocaleString(),
+                    phoneNumber: employeeDetail?.phoneNumber,
+                    email: employeeDetail?.email,
+                    address: employeeDetail?.address,
+                    image: employeeDetail?.image,
+                    citizenCode: employeeDetail?.citizenCode,
+                }}
+                validationSchema={Yup.object({
+                    name: Yup.string().required('Không được bỏ trống')
+                        .matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
+                        .min(5, 'Ký tự phải nhiều hơn 5')
+                        .max(100, 'Ký tự phải ít hơn 100'),
+                    birthDay: Yup.date().required('Không được bỏ trống').max(getMinDate(), 'Người dùng phải từ 15 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
+                    gender: Yup.string().required('Không được bỏ trống'),
+                    salary: Yup.number().typeError("Số lương phải là một số").required("Không được bỏ trống").positive("Số lương phải là số dương").min(1000000, "Số lương không được dưới 1 triệu").max(100000000, "Số lương không được quá 100 triệu"),
+                    phoneNumber: Yup.string().required('Không được bỏ trống')
+                        .matches(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/, 'Nhập đúng định dạng SDT VD: 0903.XXX.XXX (X là chữ số)'),
+                    address: Yup.string().required('Không được bỏ trống'),
+                    email: Yup.string().required('Không được bỏ trống').email('Nhập đúng định dạng email'),
+                    citizenCode: Yup.string().required('Không được bỏ trống')
+                })}
+                onSubmit={handleSubmit}
             >
                 {
                     ({isSubmitting}) => (
@@ -353,9 +354,7 @@ return (
                                                               name="gender"
                                                               className="text-danger"/>
                                                 <div className="mt-2"><label id="label-dat" htmlFor="ngaySinh">
-
                                                     Ngày sinh
-
                                                     <span style={{color: "red"}}> *</span>
                                                 </label></div>
                                                 <Field id="ngaySinh" name="birthDay" type="date"
@@ -415,60 +414,77 @@ return (
                                                 <ErrorMessage component="span"
                                                               name="citizenCode"
                                                               className="text-danger"/>
-                                                <div className="mt-2 inputs row">
-                                                    <div className="mt-2 inputs col-md-3"></div>
-                                                    <div className="mt-2 inputs col-md-9 row">
+                                            </div>
+                                            <div className="mt-2 inputs row">
 
-
-                                                        <div className="row">
-                                                            {
-                                                                isSubmitting
-                                                                    ?
-                                                                    <div
-                                                                        className="d-flex justify-content-center mt-4 ms-4">
-                                                                        (<ThreeCircles
-                                                                        height="100"
-                                                                        width="100"
-                                                                        color="#4fa94d"
-                                                                        wrapperStyle={{}}
-                                                                        wrapperClass=""
-                                                                        visible={true}
-                                                                        ariaLabel="three-circles-rotating"
-                                                                        outerCircleColor=""
-                                                                        innerCircleColor=""
-                                                                        middleCircleColor=""
-                                                                    />)
-                                                                    </div>
-                                                                    :
-                                                                    <>
-                                                                        <div
-                                                                            className="text-center mt-2 btn-group col-md-6 mb-2">
-                                                                            <button type="button"
-                                                                                    className="btn btn-secondary">
-                                                                                <b>Quay lại</b>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div
-                                                                            className="text-center mt-2 btn-group col-md-6 mb-2">
-                                                                            {isEditing ? (
-                                                                                    <button type='button' id="chinhsua"
-                                                                                            onClick={handleEditClick}
-                                                                                            className="btn btn-primary">
-                                                                                        <b>Sửa</b>
-                                                                                    </button>
-
-                                                                            ) : (
-                                                                                <button type="submit" id="capnhat"
-                                                                                        className="btn btn-success">
-                                                                                    <b>Cập nhật</b>
-                                                                                </button>
-                                                                            )}
-                                                                        </div>
-                                                                    </>
-                                                            }
+                                                {
+                                                    isSubmitting
+                                                        ?
+                                                        <div
+                                                            className="d-flex justify-content-center mt-4 ms-4">
+                                                            (<ThreeCircles
+                                                            height="60"
+                                                            width="60"
+                                                            color="#4fa94d"
+                                                            wrapperStyle={{}}
+                                                            wrapperClass=""
+                                                            visible={true}
+                                                            ariaLabel="three-circles-rotating"
+                                                            outerCircleColor=""
+                                                            innerCircleColor=""
+                                                            middleCircleColor=""
+                                                        />)
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                        :
+                                                        <div className="mt-3 mb-3">
+                                                            <div className="text-center m-auto">
+                                                                <div className="d-flex justify-content-center" style={{
+                                                                    marginLeft: "3vw"
+                                                                }}>
+                                                                    <div
+                                                                        className="text-center">
+                                                                        <Link
+                                                                            style={{
+                                                                                marginLeft: "4vw",
+                                                                                marginRight: "8vw",
+                                                                                width: "130px"}}
+                                                                            type="button"
+                                                                            className="btn btn-secondary m-0"
+                                                                            to={"/nav/info-store"}
+                                                                        >
+                                                                            <b className="text-center">Quay lại</b>
+                                                                        </Link>
+                                                                    </div>
+                                                                    <div
+                                                                        className="text-center ms-lg-3 ms-md-2 ms-sm-2">
+                                                                        {isEditing ? (
+                                                                            <button
+                                                                                className="btn btn-success"
+                                                                                style={{
+                                                                                    marginLeft: "4vw",
+                                                                                    width: "130px"
+                                                                                }}
+                                                                                onClick={handleEditClick}
+                                                                            >
+                                                                                <b className="text-center">Chỉnh sửa</b>
+                                                                            </button>
+                                                                        ) : (
+                                                                            <button
+                                                                                type="submit"
+                                                                                className="btn btn-success"
+                                                                                style={{
+                                                                                    marginLeft: "4vw",
+                                                                                    width: "130px"
+                                                                                }}
+                                                                            >
+                                                                                <b className="text-center">Cập nhật</b>
+                                                                            </button>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -478,6 +494,6 @@ return (
                     )
                 }
             </Formik>
-            </>
-            )
-            }
+        </>
+    )
+}

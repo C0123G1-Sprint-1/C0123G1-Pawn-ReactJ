@@ -268,7 +268,9 @@ export function UpdateCustomer() {
                                                     <img
                                                         id="avatar-img"
                                                         src={avatarUrl ? avatarUrl : (avatar ? URL.createObjectURL(avatar) : defaultAvatar)}
-                                                        style={{width: "100%"}}
+                                                        style={{width: "100%",
+                                                            height: "auto",
+                                                            objectFit: "contain" }}
                                                         alt="Image Loading.."/>
                                                     {avatarUrl && (
                                                         <button
@@ -457,38 +459,7 @@ export function UpdateCustomer() {
                                                         className="text-danger"
                                                     />
                                                 </div>
-                                                {isSubmitting ? (
-                                                    (<ThreeCircles
-                                                        height="100"
-                                                        width="100"
-                                                        color="#4fa94d"
-                                                        wrapperStyle={{}}
-                                                        wrapperClass=""
-                                                        visible={true}
-                                                        ariaLabel="three-circles-rotating"
-                                                        outerCircleColor=""
-                                                        innerCircleColor=""
-                                                        middleCircleColor=""
-                                                    />)
-                                                ) : (
-                                                    <div>
-                                                        <div className="text-center ms-2 mt-3">
-                                                            <div className="d-flex justify-content-center">
-                                                                <div className="text-center ms-lg-3 ms-md-2 ms-sm-2">
-                                                                    <Link to={"/nav/manager-customer"} type="button"
-                                                                          className="btn btn-secondary">
-                                                                        <b className="text-center">Quay lại</b>
-                                                                    </Link>
-                                                                </div>
-                                                                <div className="text-center ms-lg-3 ms-md-2 ms-sm-2">
-                                                                    <button type="submit" className="btn btn-success">
-                                                                        <b className="text-center">Cập nhật</b>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )}
+
                                             </div>
                                             <div className="row mt-3">
                                                 <div className="m-auto d-flex justify-content-center">
@@ -609,6 +580,51 @@ export function UpdateCustomer() {
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div className="row">
+                                                {isSubmitting ? (
+                                                    (<ThreeCircles
+                                                        height="60"
+                                                        width="60"
+                                                        color="#4fa94d"
+                                                        wrapperStyle={{}}
+                                                        wrapperClass=""
+                                                        visible={true}
+                                                        ariaLabel="three-circles-rotating"
+                                                        outerCircleColor=""
+                                                        innerCircleColor=""
+                                                        middleCircleColor=""
+                                                    />)
+                                                ) : (
+                                                    <div>
+                                                        <div className="text-center m-auto">
+                                                            <div className="d-flex justify-content-center">
+                                                                <div
+                                                                    className="text-center">
+                                                                    <Link
+
+                                                                        style={{marginLeft:"4vw",width:"130px"}}
+                                                                        type="button"
+                                                                        className="btn btn-secondary m-0"
+                                                                        to={"/nav/manager-customer"}
+                                                                    >
+                                                                        <b className="text-center">Quay lại</b>
+                                                                    </Link>
+                                                                </div>
+                                                                <div
+                                                                    className="text-center ms-lg-3 ms-md-2 ms-sm-2">
+                                                                    <button
+                                                                        type="submit"
+                                                                        className="btn btn-success"
+                                                                        style={{marginLeft:"4vw",width:"130px"}}
+                                                                    >
+                                                                        <b className="text-center">Cập nhật</b>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </Form>
