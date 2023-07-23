@@ -1,21 +1,25 @@
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik, useFormikContext} from "formik";
 import * as customerService from "../../service/CustomerSaveService";
 import * as Yup from "yup";
 import {useNavigate} from "react-router";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../firebase";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Swal from "sweetalert2";
 import {Link} from "react-router-dom";
 import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
 import "../customer/style-customer-save.css";
 import {ThreeCircles} from "react-loader-spinner";
-import NavLink from "react-bootstrap/NavLink";
+import * as customersService from "../../service/customersService";
 
 export function CreateCustomer() {
 
     let navigate = useNavigate();
     const [avatar, setAvatarFile] = useState(null);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState('');
     const [avatarUrl, setAvatarUrl] = useState(null);
     const [frontCitizen, setFrontCitizenFile] = useState(null);
     const [frontCitizenUrl, setFrontCitizenUrl] = useState(null);
@@ -24,6 +28,64 @@ export function CreateCustomer() {
     const [fileSelected, setFileSelected] = useState(false);
     const messageError = "Ảnh không được để trống!!";
     const [responseText, setResponseText] = useState('');
+
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+
+    const [registerPawn, setRegisterPawn] = useState();
+    const [cus, setCusPawn] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const rs = await customersService.registerPawn();
+                setCusPawn(rs.content);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+        console.log(cus)
+    }, [registerPawn, name, phone, address, email]);
+
+    useEffect((e) => {
+        if (registerPawn) {
+
+            Swal.fire({
+                position: 'center',
+                icon: "success",
+                title: "Tìm thông tin thành công.",
+                text: "Khách hàng " + registerPawn.name,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else {
+            // Nếu không tìm thấy thông tin, bạn có thể hiển thị thông báo hoặc thực hiện xử lý khác tùy ý
+            Swal.fire({
+                icon: 'error',
+                title: 'Thất bại',
+                text: 'Không tìm thấy dữ liệu',
+                timer: 1500,
+            });
+        }
+    }, [registerPawn]);
+
+    const findRegisterPawnByPhoneNumber = (phoneNumber) => {
+        setName(cus.find((c) => c.phone == phoneNumber)?.name)
+        console.log("cus-2", cus)
+        return cus?.find((item) => item.phone === phoneNumber);
+    };
+
+    const handleGetInfoClick = async (e) => {
+        const foundRegisterPawn = await findRegisterPawnByPhoneNumber(phoneNumber);
+        console.log("Tìm kh có ", foundRegisterPawn)
+        await setRegisterPawn(foundRegisterPawn);
+        await setName(foundRegisterPawn?.name)
+        await setAddress(foundRegisterPawn?.address)
+        await setEmail(foundRegisterPawn?.email)
+       await setPhone(foundRegisterPawn?.phone)
+
+    };
 
     const handleFileSelect = (event, setFile, setFileUrl) => {
         const file = event.target.files[0];
@@ -36,7 +98,7 @@ export function CreateCustomer() {
         return new Promise((resolve, reject) => {
             if (!file) return reject("No file selected");
             const newName = "pawn_shop_topvn" + Date.now() + "_" + (file.name.length >= 5 ? file.name.slice(0, 5) : file.name);
-            ;
+
             const storageRef = ref(storage, `files/${newName}`);
             const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -99,70 +161,44 @@ export function CreateCustomer() {
         );
     };
 
-    // const handleSubmitScanOcr = async () => {
-    //     if (!frontCitizen) {
-    //         await Swal.fire({
-    //             icon: "error",
-    //             title: "Bạn cần upload Ảnh mặt trước căn cước.",
-    //             timer: 1500
-    //         });
-    //         return;
-    //     }
-    //
-    //     const url = 'https://api.fpt.ai/vision/idr/vnm';
-    //     const apiKey = 'm13aY7m758e1ejzmiSfs3BxyIYcHy1T8';
-    //
-    //     const formData = new FormData();
-    //     formData.append('image', handleFrontCitizenFileSelect);
-    //
-    //     const headers = {
-    //         'api-key': apiKey
-    //     };
-    //
-    //     try {
-    //         const response = await fetch(url, {
-    //             method: 'POST',
-    //             headers: headers,
-    //             body: formData
-    //         });
-    //
-    //         const data = await response.json();
-    //         setResponseText(JSON.stringify(data, null, 2));
-    //         console.log(setResponseText(JSON.stringify(data, null, 2)))
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //         await Swal.fire({
-    //             icon: "error",
-    //             title: "Gặp sự cố với server. Hãy thử lại sau ít phút.",
-    //             timer: 1500
-    //         });
-    //     }
-    // };
+    const handleSubmitScanOcr = async () => {
+        if (!frontCitizen) {
+            await Swal.fire({
+                icon: "error",
+                title: "Bạn cần upload Ảnh mặt trước căn cước.",
+                timer: 1500
+            });
+            return;
+        }
 
-    const loadingForm = async () => {
-        // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
-        let timerInterval;
-        Swal.fire({
-            title: 'Chúng tôi đang xử lí, vui lòng đợi trong vài giây',
-            html: 'Vui lòng đợi trong <b></b> giây.',
-            timer: 4000,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading();
-                const b = Swal.getHtmlContainer().querySelector('b');
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft();
-                }, 100);
-            },
-            willClose: () => {
-                clearInterval(timerInterval);
-            },
-        }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-                console.log('I was closed by the timer');
-            }
-        });
+        const url = 'https://api.fpt.ai/vision/idr/vnm';
+        const apiKey = 'm13aY7m758e1ejzmiSfs3BxyIYcHy1T8';
+
+        const formData = new FormData();
+        formData.append('image', handleFrontCitizenFileSelect);
+
+        const headers = {
+            'api-key': apiKey
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: formData
+            });
+
+            const data = await response.json();
+            setResponseText(JSON.stringify(data, null, 2));
+            console.log(setResponseText(JSON.stringify(data, null, 2)))
+        } catch (error) {
+            console.error('Error:', error);
+            await Swal.fire({
+                icon: "error",
+                title: "Gặp sự cố với server. Hãy thử lại sau ít phút.",
+                timer: 1500
+            });
+        }
     };
 
     return (
@@ -184,11 +220,12 @@ export function CreateCustomer() {
                     name: Yup.string().required("Tên không được để trống")
                         .min(5, 'Ký tự phải nhiều hơn 5')
                         .max(100, 'Ký tự phải ít hơn 100')
-                        .matches(
-                            /^[A-Z][A-Za-z0-9\s]*$/,
-                            "Tên không được chứa ký tự đặc biệt và chữ cái đầu tiên phải viết hoa"
-                        )
-                        .test('no-special-characters', 'Tên không được chứa các ký tự đặc biệt như @, #, !', value => {
+                        .matches(/^[\p{Lu}\p{Ll}\p{N}\s]+$/u, "Tên sản phẩm không được chứa ký tự đặc biệt")
+                        .test('first-letter-capitalized', 'Chữ đầu tiên của tên sản phẩm phải viết hoa', value => {
+                            const firstLetter = value.charAt(0);
+                            return firstLetter === firstLetter.toUpperCase();
+                        })
+                        .test('no-special-characters', 'Tên sản phẩm không được chứa các ký tự đặc biệt như @, #, !', value => {
                             return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
                         }),
 
@@ -278,7 +315,7 @@ export function CreateCustomer() {
                     }
                 }}
             >
-                {({isSubmitting}) => (
+                {({isSubmitting, setFieldValue}) => (
                     <div className="dat-nt container mt-5 mb-5 p-2 ">
                         <div className="row height d-flex justify-content-center align-items-center">
                             <div className="col-md-8 col-sm-12">
@@ -357,7 +394,20 @@ export function CreateCustomer() {
                                                 {fileSelected ? null : (
                                                     <span className="text-danger"> {messageError}</span>
                                                 )}
-                                                </div>
+                                                <hr/>
+
+                                                <button type="button" className="btn btn-sm btn-success float-start mb-1"
+                                                        onClick = {(e)=> handleGetInfoClick()}>Lấy thông tin KH Online
+                                                </button>
+                                                <input
+                                                    className="form-control"
+                                                    placeholder="Nhập số điện thoại"
+                                                    type="text"
+                                                    value={phoneNumber}
+                                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                                />
+
+                                            </div>
                                             <div className="col-md-8">
                                                 <div className="mt-2">
                                                     <label id="label-dat" htmlFor="f-name">
@@ -368,6 +418,11 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="name"
                                                         type="text"
+                                                        value={name}
+                                                        onChange={(e) => {
+                                                            setName(e.target.value);
+                                                            setFieldValue("name", e.target.value);
+                                                        }}
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -425,7 +480,11 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="email"
                                                         type="text"
-
+                                                        value={email}
+                                                        onChange={(e) => {
+                                                            setEmail(e.target.value);
+                                                            setFieldValue("email", e.target.value);
+                                                        }}
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -443,7 +502,11 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="phoneNumber"
                                                         type="text"
-
+                                                        value={phone}
+                                                        onChange={(e) => {
+                                                            setPhone(e.target.value);
+                                                            setFieldValue("phoneNumber", e.target.value);
+                                                        }}
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -479,7 +542,11 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="address"
                                                         type="text"
-
+                                                        value={address}
+                                                        onChange={(e) => {
+                                                            setAddress(e.target.value);
+                                                            setFieldValue("address", e.target.value);
+                                                        }}
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -628,7 +695,7 @@ export function CreateCustomer() {
                                             {/*        Phân tích hình ảnh lấy dữ liệu*/}
                                             {/*    </button>*/}
                                             {/*</div>*/}
-                                </div>
+                                        </div>
                                         <div className="row">
                                             {isSubmitting ? (
                                                 (<ThreeCircles
@@ -644,31 +711,32 @@ export function CreateCustomer() {
                                                     middleCircleColor=""
                                                 />)
                                             ) : (
-                                                    <div className="text-center m-auto">
-                                                        <div className="d-flex justify-content-center">
-                                                            <div
-                                                                className="text-center">
-                                                                <Link
-                                                                    style={{marginLeft:"4vw",width:"130px"}}
-                                                                    type="button"
-                                                                    className="btn btn-secondary m-0"
-                                                                    to={"/nav/manager-customer"}
-                                                                >
-                                                                    <b className="text-center">Quay lại</b>
-                                                                </Link>
-                                                            </div>
-                                                            <div
-                                                                className="text-center ms-lg-3 ms-md-2 ms-sm-2">
-                                                                <button
-                                                                    type="submit"
-                                                                    className="btn btn-success"
-                                                                    style={{marginLeft:"4vw",width:"130px"}}
-                                                                >
-                                                                    <b className="text-center">Thêm mới</b>
-                                                                </button>
-                                                            </div>
+                                                <div className="text-center m-auto">
+                                                    <div className="d-flex justify-content-center">
+                                                        <div
+                                                            className="text-center">
+                                                            <Link
+                                                                style={{marginLeft: "4vw", width: "130px"}}
+                                                                type="button"
+                                                                className="btn btn-secondary m-0"
+                                                                to={"/nav/manager-customer"}
+                                                            >
+                                                                <b className="text-center">Quay lại</b>
+                                                            </Link>
                                                         </div>
+                                                        <div
+                                                            className="text-center ms-lg-3 ms-md-2 ms-sm-2">
+                                                            <button
+                                                                type="submit"
+                                                                className="btn btn-success"
+                                                                style={{marginLeft: "4vw", width: "130px"}}
+                                                            >
+                                                                <b className="text-center">Thêm mới</b>
+                                                            </button>
+                                                        </div>
+
                                                     </div>
+                                                </div>
                                             )}
                                         </div>
                                     </Form>

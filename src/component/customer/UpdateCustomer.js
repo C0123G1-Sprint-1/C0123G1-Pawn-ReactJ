@@ -182,18 +182,23 @@ export function UpdateCustomer() {
                             "check-phone-number",
                             "Số điện thoại đã tồn tại",
                             async function (value) {
-                                if (!value) {
+                                if (value === customer.phoneNumber) {
+                                    return true
+                                } else if (!value) {
                                     return true;
-                                }
+                                } else {
                                 const isPhoneNumberExists = await checkPhoneNumberExists(value);
                                 return !isPhoneNumberExists;
+                                }
                             }),
                     email: Yup.string().required("Email không được để trống").email('Nhập đúng định dạng email')
                         .test(
                             "check-email",
                             "Email đã tồn tại",
                             async function (value) {
-                                if (!value) {
+                                if (value === customer.email) {
+                                    return true
+                                } else if (!value) {
                                     return true;
                                 }
                                 const isEmailExists = await checkEmailExists(value);
@@ -209,7 +214,9 @@ export function UpdateCustomer() {
                             "check-citizen-code",
                             "Số căn cước đã tồn tại",
                             async function (value) {
-                                if (!value) {
+                                if (value === customer.citizenCode) {
+                                    return true
+                                } else if (!value) {
                                     return true;
                                 }
                                 const isCitizenCodeExists = await checkCitizenCodeExists(value);
