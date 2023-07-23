@@ -2,11 +2,15 @@ import React, {useEffect, useState} from "react";
 import * as contractService from "../../service/ContractService"
 import {Link, NavLink} from "react-router-dom";
 import "../../css/UpdateContract.css"
-
+import jwt from 'jwt-decode';
 import Swal from "sweetalert2";
 import moment from "moment";
 
 
+const token = localStorage.getItem('token');
+const decodedToken = jwt(token);
+console.log(decodedToken.sub)
+console.log(decodedToken.role)
 
 
 export function Top10NewContract() {
