@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
 import {ThreeCircles} from "react-loader-spinner";
 
+
 export function UpdateCustomer() {
     let navigate = useNavigate();
     const params = useParams();
@@ -25,8 +26,8 @@ export function UpdateCustomer() {
     const [backCitizen, setBackCitizenFile] = useState();
     const [backCitizenUrl, setBackCitizenUrl] = useState();
     const [fileSelected, setFileSelected] = useState(false);
-    const messageError = "Các trường ảnh không được để trống!!";
-    console.log(fileSelected,"1 lan")
+    const messageError = "Ảnh không được để trống!!";
+    console.log(fileSelected, "1 lan")
     const handleFileSelect = (event, setFile) => {
         const file = event.target.files[0];
         if (file) {
@@ -87,21 +88,21 @@ export function UpdateCustomer() {
         if (avatarUrl) {
             return avatarUrl
         } else
-        return await handleFileUpload(avatar, setAvatarUrl);
+            return await handleFileUpload(avatar, setAvatarUrl);
     };
 
     const handleFrontCitizenFileUpload = async () => {
         if (frontCitizenUrl) {
             return frontCitizenUrl
         } else
-        return await handleFileUpload(frontCitizen, setFrontCitizenUrl);
+            return await handleFileUpload(frontCitizen, setFrontCitizenUrl);
     };
 
     const handleBackCitizenFileUpload = async () => {
         if (backCitizenUrl) {
             return backCitizenUrl
         } else
-        return await handleFileUpload(backCitizen, setBackCitizenUrl);
+            return await handleFileUpload(backCitizen, setBackCitizenUrl);
     };
 
 
@@ -239,7 +240,7 @@ export function UpdateCustomer() {
                             title: "Chỉnh sửa thông tin thành công. Khách hàng " + newValue.name,
                         });
                         resetForm();
-                        navigate("/");
+                        navigate("/nav/manager-customer");
                     } catch (error) {
                         console.error(error);
                         await Swal.fire({
@@ -258,7 +259,7 @@ export function UpdateCustomer() {
                                     <div
                                         className="m-2"
                                     >
-                                        <h1 style={{textAlign:"center"}}>Cập nhật thông tin khách hàng</h1>
+                                        <h2 style={{textAlign: "center",}}>CẬP NHẬT THÔNG TIN KHÁCH HÀNG</h2>
                                     </div>
                                     <Form>
                                         <div className="row">
@@ -267,24 +268,26 @@ export function UpdateCustomer() {
                                                     <img
                                                         id="avatar-img"
                                                         src={avatarUrl ? avatarUrl : (avatar ? URL.createObjectURL(avatar) : defaultAvatar)}
-                                                        style={{width: "100%"}}
-                                                        alt="Image Loading.."                                                    />
+                                                        style={{width: "100%",
+                                                            height: "auto",
+                                                            objectFit: "contain" }}
+                                                        alt="Image Loading.."/>
                                                     {avatarUrl && (
                                                         <button
-                                                        type="button"
-                                                        className="btn btn-danger btn-sm mt-2"
-                                                        onClick={() => {
-                                                            setAvatarUrl(null);
-                                                            setAvatarFile(null);
-                                                            setFileSelected(false);
-                                                        }}
-                                                    >
-                                                        Xoá
-                                                    </button>
+                                                            type="button"
+                                                            className="btn btn-danger btn-sm mt-2"
+                                                            onClick={() => {
+                                                                setAvatarUrl(null);
+                                                                setAvatarFile(null);
+                                                                setFileSelected(false);
+                                                            }}
+                                                        >
+                                                            Xoá
+                                                        </button>
                                                     )}
                                                 </div>
 
-                                                <label className="mt-2 text-file-name" >
+                                                <label id="label-dat" className="mt-2 text-file-name">
                                                     Ảnh chân dung
                                                 </label>
                                                 {!avatarUrl && (
@@ -322,25 +325,154 @@ export function UpdateCustomer() {
                                                         </label>
                                                     </div>
                                                 )}
-                                                {fileSelected ? null : (
-                                                    <span  className="error-flag"><br/> {messageError}</span>
+                                                {fileSelected || avatarUrl ? null : (
+                                                    <span className="text-danger mt-4"><br/> {messageError}</span>
                                                 )}
-                                                <hr/>
-                                                <div className="mb-3 mt-3">
-                                                    <button
-                                                        id="file-upload-label"
-                                                        type="button"
-                                                        className="btn btn-sm btn-danger"
-                                                        onClick={() => {
-                                                            document.getElementById("front-back-upload").classList.remove("hidden");
-                                                        }}
+
+                                            </div>
+                                            <Field
+                                                id="f-id"
+                                                className="form-control"
+                                                name="id"
+                                                type="number"
+                                                hidden
+                                            />
+                                            <div className="col-md-8">
+                                                <div className="mt-2">
+                                                    <label id="label-dat" htmlFor="f-name">
+                                                        Họ và tên<span style={{color: "red"}}> *</span>
+                                                    </label>
+                                                    <Field
+                                                        id="f-name"
+                                                        className="form-control"
+                                                        name="name"
+                                                        type="text"
+                                                    />
+                                                    <ErrorMessage component="span"
+                                                                  name="name"
+                                                                  className="text-danger"/>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <label id="label-dat" htmlFor="f-dateOfBirth">
+                                                        Ngày sinh<span style={{color: "red"}}> *</span>
+                                                    </label>
+                                                    <Field
+                                                        id="f-dateOfBirth"
+                                                        className="form-control"
+                                                        name="birthday"
+                                                        type="date"
+                                                    />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="birthday"
+                                                        className="text-danger"
+                                                    />
+                                                </div>
+                                                <div className="mt-2 row">
+                                                    <div className="col-md-">
+                                                        <label id="label-dat" htmlFor="gender" className="form-label">
+                                                            Giới tính<span style={{color: "red"}}> *</span>
+                                                        </label>
+                                                        <label className='m-2'>
+                                                            <Field type="radio" name="gender" value="0"/>
+                                                            {' '}Nam
+                                                        </label>
+                                                        <label className='m-2'>
+                                                            <Field type="radio" name="gender" value="1"/>
+                                                            {' '}Nữ
+                                                        </label>
+                                                        <label className='m-2'>
+                                                            <Field type="radio" name="gender" value="2"/>
+                                                            {' '}Khác
+                                                        </label>
+                                                        <ErrorMessage
+                                                            component="span"
+                                                            name="gender"
+                                                            className="text-danger"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <label id="label-dat" htmlFor="f-email">
+                                                        Email<span style={{color: "red"}}> *</span>
+                                                    </label>
+                                                    <Field
+                                                        id="f-email"
+                                                        className="form-control"
+                                                        name="email"
+                                                        type="text"
+                                                    />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="email"
+                                                        className="text-danger"
+                                                    />
+                                                </div>
+                                                <div className="mt-2">
+                                                    <label id="label-dat" htmlFor="f-phone">
+                                                        Số điện thoại
+                                                        <span style={{color: "red"}}> *</span>
+                                                    </label>
+                                                    <Field
+                                                        id="f-phone"
+                                                        className="form-control"
+                                                        name="phoneNumber"
+                                                        type="text"
+                                                    />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="phoneNumber"
+                                                        className="text-danger"
+                                                    />
+                                                </div>
+                                                <div className="mt-2">
+                                                    <label id="label-dat" htmlFor="f-idCard">
+                                                        Số căn cước
+                                                        <span style={{color: "red"}}> *</span>
+                                                    </label>
+                                                    <Field
+                                                        id="f-idCard"
+                                                        className="form-control"
+                                                        name="citizenCode"
+                                                        type="text"
+                                                    />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="citizenCode"
+                                                        className="text-danger"
+                                                    />
+                                                </div>
+                                                <div className="mt-2">
+                                                    <label id="label-dat" htmlFor="f-country">
+                                                        Nơi thường trú
+                                                        <span style={{color: "red"}}> *</span>
+                                                    </label>
+                                                    <Field
+                                                        id="f-country"
+                                                        className="form-control"
+                                                        name="address"
+                                                        type="text"
+                                                    />
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="address"
+                                                        className="text-danger"
+                                                    />
+                                                </div>
+
+                                            </div>
+                                            <div className="row mt-3">
+                                                <div className="m-auto d-flex justify-content-center">
+                                                    <button id="file-upload-label" type='button'
+                                                            className="btn btn-sm btn-danger"
                                                     >
                                                         Thêm căn cước <i className="bi bi-person-vcard"/>
                                                     </button>
                                                 </div>
-                                                <div id="front-back-upload" className="hidden">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="front-upload" className="text-name-file">
+                                                <div className="row mt-3">
+                                                    <div className="mb-3 col-md-6">
+                                                        <label id="label-dat" htmlFor="front-upload"
+                                                               className="text-name-file">
                                                             Tải lên mặt trước <span style={{color: "red"}}>*</span>
                                                         </label>
 
@@ -379,8 +511,8 @@ export function UpdateCustomer() {
                                                                 className="mt-2"
                                                                 src={frontCitizenUrl ? frontCitizenUrl : (frontCitizen ? URL.createObjectURL(frontCitizen) : defaultImag)}
                                                                 style={{width: "100%"}}
-                                                                alt="Image Loading.."                                                            />
-                                                            {frontCitizenUrl && (  <button
+                                                                alt="Image Loading.."/>
+                                                            {frontCitizenUrl && (<button
                                                                 type="button"
                                                                 className="btn btn-danger btn-sm mt-2"
                                                                 onClick={() => {
@@ -393,8 +525,9 @@ export function UpdateCustomer() {
                                                             </button>)}
                                                         </div>
                                                     </div>
-                                                    <div className="mb-3">
-                                                        <label htmlFor="back-upload" className="text-name-file">
+                                                    <div className="mb-3 col-md-6">
+                                                        <label id="label-dat" htmlFor="back-upload"
+                                                               className="text-name-file">
                                                             Tải lên mặt sau <span style={{color: "red"}}>*</span>
                                                         </label>
                                                         <input
@@ -433,7 +566,7 @@ export function UpdateCustomer() {
                                                                 src={backCitizenUrl ? backCitizenUrl : (backCitizen ? URL.createObjectURL(backCitizen) : defaultImag)}
                                                                 style={{width: "100%"}}
                                                                 alt="Image Loading.."/>
-                                                            {backCitizenUrl && ( <button
+                                                            {backCitizenUrl && (<button
                                                                 type="button"
                                                                 className="btn btn-danger btn-sm mt-2"
                                                                 onClick={() => {
@@ -448,146 +581,11 @@ export function UpdateCustomer() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <Field
-                                                id="f-id"
-                                                className="form-control"
-                                                name="id"
-                                                type="number"
-                                                hidden
-                                            />
-                                            <div className="col-md-8">
-                                                <div className="mt-2">
-                                                    <label htmlFor="f-name">
-                                                        Họ và tên:<span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field
-                                                        id="f-name"
-                                                        className="form-control"
-                                                        name="name"
-                                                        type="text"
-                                                        required
-                                                    />
-                                                    <ErrorMessage component="span"
-                                                                  name="name"
-                                                                  className="text-danger"/>
-                                                </div>
-                                                <div className="mt-2">
-                                                    <label htmlFor="f-dateOfBirth">
-                                                        Ngày sinh:<span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field
-                                                        id="f-dateOfBirth"
-                                                        className="form-control"
-                                                        name="birthday"
-                                                        type="date"
-                                                        required
-                                                    />
-                                                    <ErrorMessage
-                                                        component="span"
-                                                        name="birthday"
-                                                        className="text-danger"
-                                                    />
-                                                </div>
-                                                <div className="mt-2 row">
-                                                    <div className="col-md-">
-                                                        <label htmlFor="gender" className="form-label">
-                                                            Giới tính:<span style={{color: "red"}}>*</span>
-                                                        </label>
-                                                    <label className='m-2'>
-                                                        <Field  type="radio" name="gender" value="0"/>
-                                                        {' '}Nam
-                                                    </label>
-                                                    <label className='m-2'>
-                                                        <Field type="radio" name="gender" value="1"/>
-                                                        {' '}Nữ
-                                                    </label>
-                                                    <label className='m-2'>
-                                                        <Field type="radio" name="gender" value="2"/>
-                                                        {' '}Khác
-                                                    </label>
-                                                        <ErrorMessage
-                                                            component="span"
-                                                            name="gender"
-                                                            className="text-danger"
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="mt-2">
-                                                    <label htmlFor="f-email">
-                                                        Email:<span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field
-                                                        id="f-email"
-                                                        className="form-control"
-                                                        name="email"
-                                                        type="text"
-                                                        required
-                                                    />
-                                                    <ErrorMessage
-                                                        component="span"
-                                                        name="email"
-                                                        className="text-danger"
-                                                    />
-                                                </div>
-                                                <div className="mt-2">
-                                                    <label htmlFor="f-phone">
-                                                        Số điện thoại:
-                                                        <span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field
-                                                        id="f-phone"
-                                                        className="form-control"
-                                                        name="phoneNumber"
-                                                        type="text"
-                                                        required
-                                                    />
-                                                    <ErrorMessage
-                                                        component="span"
-                                                        name="phoneNumber"
-                                                        className="text-danger"
-                                                    />
-                                                </div>
-                                                <div className="mt-2">
-                                                    <label htmlFor="f-idCard">
-                                                        Số căn cước:
-                                                        <span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field
-                                                        id="f-idCard"
-                                                        className="form-control"
-                                                        name="citizenCode"
-                                                        type="text"
-                                                        required
-                                                    />
-                                                    <ErrorMessage
-                                                        component="span"
-                                                        name="citizenCode"
-                                                        className="text-danger"
-                                                    />
-                                                </div>
-                                                <div className="mt-2">
-                                                    <label htmlFor="f-country">
-                                                        Nơi thường trú:
-                                                        <span style={{color: "red"}}>*</span>
-                                                    </label>
-                                                    <Field
-                                                        id="f-country"
-                                                        className="form-control"
-                                                        name="address"
-                                                        type="text"
-                                                        required
-                                                    />
-                                                    <ErrorMessage
-                                                        component="span"
-                                                        name="address"
-                                                        className="text-danger"
-                                                    />
-                                                </div>
-
+                                            <div className="row">
                                                 {isSubmitting ? (
                                                     (<ThreeCircles
-                                                        height="100"
-                                                        width="100"
+                                                        height="60"
+                                                        width="60"
                                                         color="#4fa94d"
                                                         wrapperStyle={{}}
                                                         wrapperClass=""
@@ -599,16 +597,27 @@ export function UpdateCustomer() {
                                                     />)
                                                 ) : (
                                                     <div>
-                                                        <div className="text-center ms-2 mt-3">
+                                                        <div className="text-center m-auto">
                                                             <div className="d-flex justify-content-center">
-                                                                <div className="text-center ms-lg-3 ms-md-2 ms-sm-2">
-                                                                    <Link to={"/nav/manager-customer"} type="button"
-                                                                          className="btn btn-secondary">
+                                                                <div
+                                                                    className="text-center">
+                                                                    <Link
+
+                                                                        style={{marginLeft:"4vw",width:"130px"}}
+                                                                        type="button"
+                                                                        className="btn btn-secondary m-0"
+                                                                        to={"/nav/manager-customer"}
+                                                                    >
                                                                         <b className="text-center">Quay lại</b>
                                                                     </Link>
                                                                 </div>
-                                                                <div className="text-center ms-lg-3 ms-md-2 ms-sm-2">
-                                                                    <button type="submit" className="btn btn-success">
+                                                                <div
+                                                                    className="text-center ms-lg-3 ms-md-2 ms-sm-2">
+                                                                    <button
+                                                                        type="submit"
+                                                                        className="btn btn-success"
+                                                                        style={{marginLeft:"4vw",width:"130px"}}
+                                                                    >
                                                                         <b className="text-center">Cập nhật</b>
                                                                     </button>
                                                                 </div>
