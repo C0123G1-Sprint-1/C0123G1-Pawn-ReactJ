@@ -588,7 +588,7 @@ export const CreateContracts = () => {
                                 </div>
                                 <table className="table table-striped">
                                     <thead>
-                                    <tr>
+                                    <tr style={{textAlign: "start"}}>
                                         <th className="">STT</th>
                                         <th className="">Tên khách hàng</th>
                                         <th className="">CMND/CCCD</th>
@@ -605,8 +605,8 @@ export const CreateContracts = () => {
                                         <tbody>
                                         {customer.map((list, index) => (
                                             <tr key={index}>
-                                                <td className="">{list.id}</td>
-                                                <td className="">{list.name}</td>
+                                                <td >{list.id}</td>
+                                                <td className=" ">{list.name}</td>
                                                 <td className="">{list.citizenCode}</td>
                                                 <td className="text-center">
                                                     <button onClick={() => {

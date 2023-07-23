@@ -217,9 +217,9 @@ export const Redeeming = () => {
                                                 }}>
                                                     <Form>
                                                         <div className="row">
-                                                            <div className="col-lg-3">
+                                                            <div className="col-lg-2">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="ma">Mã hợp đồng</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="ma">Mã hợp đồng</label>
                                                                     <Field id="ma"
                                                                            type="text" name="contractCode"
                                                                            className="form-control"/>
@@ -228,7 +228,7 @@ export const Redeeming = () => {
                                                             </div>
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="kh">Tên khách hàng</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="kh">Tên khách hàng</label>
                                                                     <Field id="kh"
                                                                            type="text" name="customerName"
                                                                            className="form-control"/>
@@ -236,7 +236,7 @@ export const Redeeming = () => {
                                                             </div>
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="doCam">Đồ cầm</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="doCam">Đồ cầm</label>
                                                                     <Field id="doCam"
                                                                            type="text" name="productName"
                                                                            className="form-control"/>
@@ -245,7 +245,7 @@ export const Redeeming = () => {
                                                             </div>
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="dateStart">Ngày làm hợp
+                                                                    <label style={{fontWeight: 500}} htmlFor="dateStart">Ngày làm hợp
                                                                         đòng</label>
                                                                     <Field
                                                                         id="dateStart" type="date" name="startDate"
@@ -253,19 +253,15 @@ export const Redeeming = () => {
                                                                 </div>
 
                                                             </div>
-
-                                                        </div>
-
-
-                                                        <div className="row">
-                                                            <div className="col-md-12 d-flex justify-content-end">
+                                                            <div className="col-lg-1 d-flex justify-content-end">
                                                                 <button type="submit"
                                                                         className="btn btn-outline-success "
-                                                                        style={{width: "auto"}}><i
+                                                                        style={{width: "auto",height: "37px",marginTop: "3.7vh"}}><i
                                                                     className="bi bi-search"></i>
                                                                 </button>
 
                                                             </div>
+
                                                         </div>
 
                                                     </Form>
@@ -274,13 +270,13 @@ export const Redeeming = () => {
                                             </div>
                                             <table className="table table-striped">
                                                 <thead>
-                                                <tr>
-                                                    <th className="text-center">Mã HĐ</th>
-                                                    <th className="text-center">Khách Hàng</th>
-                                                    <th className="text-center">Đồ Cầm</th>
-                                                    <th className="text-center">Tiền Cho Vay (VNĐ)</th>
-                                                    <th className="text-center">Ngày Làm HĐ</th>
-                                                    <th className="text-center">Chức Năng</th>
+                                                <tr style={{textAlign: "start"}}>
+                                                    <th >Mã HĐ</th>
+                                                    <th >Khách Hàng</th>
+                                                    <th >Đồ Cầm</th>
+                                                    <th >Tiền Cho Vay (VNĐ)</th>
+                                                    <th >Ngày Làm HĐ</th>
+                                                    <th >Chức Năng</th>
                                                 </tr>
                                                 </thead>
 
@@ -296,13 +292,13 @@ export const Redeeming = () => {
 
                                                         {
                                                             contracts.map((contract) => (
-                                                                <tr key={contract.contractId}>
-                                                                    <td className="text-center">{contract.contractCode}</td>
+                                                                <tr key={contract.contractId} style={{textAlign: "start"}}>
+                                                                    <td >HD-{contract.contractCode}</td>
                                                                     <td>{contract.customerName}</td>
-                                                                    <td className="text-center">{contract.productName}</td>
-                                                                    <td className="text-center">{contract.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                                                    <td className="text-center">{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
-                                                                    <td className="text-center">
+                                                                    <td >{contract.productName}</td>
+                                                                    <td >{contract.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                                                    <td >{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                                                    <td >
                                                                         <button onClick={() => {
                                                                             handleModalClose(true);
                                                                             setSelectedContract(contract.contractId)
@@ -329,7 +325,9 @@ export const Redeeming = () => {
                                                         <nav aria-label="...">
                                                             <ul className="pagination">
                                                                 <li hidden={page === 0} className="page-item ">
-                                                                    <button className="page-link" tabIndex={-1}
+                                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
+
                                                                             onClick={() => paginate(page - 1)}>
                                                                         Trước
                                                                     </button>
@@ -340,7 +338,8 @@ export const Redeeming = () => {
                                                                     Array.from({length: totalPages}, (a, index) => index).map((pageNum) => (
                                                                         <li className="page-item">
                                                                             <button
-                                                                                className={page === pageNum ? " page-link active" : "page-link"}
+                                                                                className={page === pageNum ? "page-link-active" : "page-link-khanh"}
+                                                                                style={{border: "1px solid gray", borderRadius: "5px"}}
                                                                                 key={pageNum}
                                                                                 onClick={() => paginate(pageNum)}>
                                                                                 {pageNum + 1}
@@ -351,9 +350,11 @@ export const Redeeming = () => {
 
                                                                 <li hidden={page + 1 === totalPages}
                                                                     className="page-item">
-                                                                    <button className="page-link" tabIndex={-1}
+                                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
+
                                                                             onClick={() => paginate(page + 1)}>
-                                                                        Tiếp
+                                                                        Sau
                                                                     </button>
                                                                 </li>
                                                             </ul>
@@ -394,7 +395,7 @@ export const Redeeming = () => {
                                             <Form>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Mã HĐ</label>
+                                                        <label style={{fontWeight: 500}}>Mã HĐ</label>
 
                                                         <h5 style={{
                                                             border: "0px solid gray",
@@ -409,7 +410,7 @@ export const Redeeming = () => {
                                                         </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Tên khách hàng</label>
+                                                        <label style={{fontWeight: 500}}>Tên khách hàng</label>
 
                                                         <h5 style={{
                                                             border: "0px solid gray",
@@ -425,7 +426,7 @@ export const Redeeming = () => {
                                                     </div>
                                                 </div>
                                                 <div className="mt-2 inputs form-group">
-                                                    <label>Đồ cầm</label>
+                                                    <label style={{fontWeight: 500}}>Đồ cầm</label>
 
                                                     <h5 style={{
                                                         border: "0px solid gray",
@@ -441,7 +442,7 @@ export const Redeeming = () => {
                                                 </div>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs ">
-                                                        <label>Tiền cho vay (VNĐ)</label>
+                                                        <label style={{fontWeight: 500}}>Tiền cho vay (VNĐ)</label>
                                                         <h5 style={{
                                                             border: "0px solid gray",
                                                             alignItems: "center",
@@ -455,7 +456,7 @@ export const Redeeming = () => {
                                                         </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Tiền lãi (VNĐ)</label>
+                                                        <label style={{fontWeight: 500}}>Tiền lãi (VNĐ)</label>
 
                                                         <h5 style={{
                                                             border: "0px solid gray",
@@ -472,7 +473,7 @@ export const Redeeming = () => {
                                                 </div>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Ngày bắt đầu</label>
+                                                        <label style={{fontWeight: 500}}>Ngày bắt đầu</label>
 
                                                         <h5 style={{
                                                             border: "0px solid gray",
@@ -488,7 +489,7 @@ export const Redeeming = () => {
 
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Ngày kết thúc</label>
+                                                        <label style={{fontWeight: 500}}>Ngày kết thúc</label>
 
                                                         <h5 style={{
                                                             border: "0px solid gray",
@@ -504,7 +505,7 @@ export const Redeeming = () => {
                                                     </div>
                                                 </div>
                                                 <div className="mt-2 inputs">
-                                                    <label>Tiền thanh toán (VNĐ)</label>
+                                                    <label style={{fontWeight: 500}}>Tiền thanh toán (VNĐ)</label>
                                                     <h5 style={{
                                                         border: "0px solid gray",
                                                         alignItems: "center",
