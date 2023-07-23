@@ -183,7 +183,7 @@ export default function TransactionHistoryList() {
                                         <div className="d-flex justify-content-end">
                                             <button type="reset" className="btn btn-outline-secondary me-3"
                                             >Nhập lại</button>
-                                            <button type="submit" className="btn btn-outline-primary">Tìm kiếm
+                                            <button type="submit" className="btn btn-outline-success">Tìm kiếm
                                             </button>
                                         </div>
                                     </div>
@@ -197,7 +197,7 @@ export default function TransactionHistoryList() {
                 <div className="col-lg-12">
                     <table className="table table table-striped" border="1">
                         <thead>
-                        <tr style={{textAlign: "start"}}>
+                        <tr style={{textAlign: "center"}}>
                             <th>Mã HĐ</th>
                             <th>Tên đồ</th>
                             <th>Tên khách hàng</th>
@@ -211,17 +211,17 @@ export default function TransactionHistoryList() {
                         {
                             contracts?.length === 0 && (search.customerName !== "" || search.productName !== "" || search.contractType !== ""
                                 || search.contractStatus !== "" || search.startDate !== "" || search.endDate !== "") ? (
-                                    <tr>
+                                    <tr className="text-center">
                                         <td colSpan={7}>
                                             <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
                                         </td>
                                     </tr>
                                 ) :
                                 contracts.map((th, index) => (
-                                    <tr key={index} style={{textAlign: "start"}}>
+                                    <tr key={index} className="text-center">
                                         <td >HD-{th?.contractCode}</td>
-                                        <td>{th?.productName}</td>
-                                        <td>{th?.customers}</td>
+                                        <td style={{textAlign: "start"}} className="ps-3">{th?.productName}</td>
+                                        <td style={{textAlign: "start"}}>{th?.customers}</td>
                                         <td >{
                                             th?.startDate===""?"":
                                             moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')

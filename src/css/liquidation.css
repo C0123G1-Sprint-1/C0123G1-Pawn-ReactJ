@@ -61,6 +61,7 @@
     color:#00833e ;
     padding: 8px 15px;
     cursor: pointer;
+    list-style: none;
     border-radius: 3px;
     font-weight: 400;
     display: block;
