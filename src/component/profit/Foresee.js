@@ -5,12 +5,15 @@ import moment from "moment";
 
 export default function Foresee() {
     const contracts = useOutletContext();
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <>
-            <div style={{height: ""}}>
+            <div style={{height: "53vh"}}>
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
-                    <tr>
+                    <tr style={{textAlign: "start"}}>
                         <th>Mã HD</th>
                         <th>Tiền cho vay (VND)</th>
                         <th>Tiền lãi (VND)</th>

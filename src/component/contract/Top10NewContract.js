@@ -89,8 +89,8 @@ export function Top10NewContract() {
                             {
                                 currentContracts.map((contract) => (
                                     <tr key={contract.id}>
-                                        <td>{contract.contractCode}</td>
-                                        <td>HD-{contract.productName}</td>
+                                        <td>HD-{contract.contractCode}</td>
+                                        <td>{contract.productName}</td>
                                         <td>{contract.customers?.name}</td>
                                         <td>{
                                             moment(contract?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')

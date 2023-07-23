@@ -192,7 +192,7 @@ export function CustomerListMOI() {
                                 <Link to="/nav/register" className="btn btn-success"
 
                                       style={{marginLeft: '5%'}}>
-                                    Danh sách khách hàng mới
+                                    Khách hàng trên mạng
                                 </Link>
                             </div>
 
@@ -281,7 +281,7 @@ export function CustomerListMOI() {
                                                                                swalWithBootstrapButtons.fire({
                                                                                    icon: "warning",
                                                                                    title: "Xác nhận xóa",
-                                                                                   html: `Bạn có muốn xoá lịch sử khách hàng <span style="color: red">${value.name}</span> không ?`,
+                                                                                   html: `Bạn có muốn xoá khách hàng <span style="color: red">${value.name}</span> không ?`,
                                                                                    showCancelButton: true,
                                                                                    confirmButtonText: 'Có',
                                                                                    cancelButtonText: 'Không',

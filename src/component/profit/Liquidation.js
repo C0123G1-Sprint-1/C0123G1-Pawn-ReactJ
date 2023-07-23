@@ -1,15 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useOutletContext} from "react-router";
 import moment from "moment";
 
 export default function Liquidation() {
     const liquidations = useOutletContext();
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <>
-            <div style={{height: ""}}>
+            <div style={{minHeight: "53vh"}}>
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
-                    <tr>
+                    <tr style={{textAlign: "start"}}>
                         <th>Mã HD</th>
                         <th>Tiền mua (VND)</th>
                         <th>Tiền bán (VND)</th>

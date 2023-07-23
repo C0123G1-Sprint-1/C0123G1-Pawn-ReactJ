@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import jwt from 'jwt-decode';
 import {Modal} from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import '../../css/liquidation.css';
 import {
     getListCustomerAPI,
@@ -80,7 +79,7 @@ export function CreateLiquidation() {
 
     const handlePage = async (pages) => {
         setContractPage(+pages.selected);
-        const res = await getListProductAPI(contractPage, productType,productName,loans)
+        const res = await getListProductAPI(contractPage, productType, productName, loans)
         setContracts(res.data.content)
     }
 
@@ -134,28 +133,22 @@ export function CreateLiquidation() {
     };
 
     const loadContracts = async () => {
-        setListProduct([]);
-        setIdCustomer(0);
-
-        // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
         let timerInterval
         Swal.fire({
             title: 'Chúng tôi đang sử lí mong đợi trong vài giây',
             html: 'Vui lòng đợi trong  <b></b> giây.',
             timer: 4000,
             timerProgressBar: true,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
             didOpen: () => {
                 Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
+
             },
             willClose: () => {
                 clearInterval(timerInterval)
             }
         }).then((result) => {
-            /* Read more about handling dismissals below */
             if (result.dismiss === Swal.DismissReason.timer) {
                 console.log('I was closed by the timer')
             }
@@ -203,10 +196,10 @@ export function CreateLiquidation() {
                         save();
                     }}>
 
-                <div className="container " style={{marginTop:"3vw"}}>
+                <div className="container " style={{marginTop: "3vw"}}>
                     <div className="row height d-flex justify-content-center align-items-center">
                         <div className="col-md-6">
-                            <div className="card px-5 py-4" style={{marginBottom:"3vw"}}>
+                            <div className="card px-5 py-4" style={{marginBottom: "3vw"}}>
                                 <div style={{textAlign: "center"}}>
                                     <h1>
                                         THANH LÝ
@@ -285,13 +278,13 @@ export function CreateLiquidation() {
                                                value={formatCurrency(totalPrice) + " VNĐ"} disabled/>
                                     </div>
                                     <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                        <div  className="text-center m-auto">
+                                        <div className="text-center m-auto">
                                             <NavLink
-                                                style={{marginLeft:"4vw",width:"130px"}}
+                                                style={{marginLeft: "4vw", width: "130px"}}
                                                 type="button"
                                                 className="btn btn-secondary"
                                                 to={"/nav/info-store"}>
-                                               <b className="text-center">Quay lại</b>
+                                                <b className="text-center">Quay lại</b>
                                             </NavLink>
                                         </div>
                                         <div
@@ -299,7 +292,7 @@ export function CreateLiquidation() {
 
 
                                             <button type="submit" className="btn btn-success"
-                                                    style={{marginRight:"4vw",width:"130px"}}
+                                                    style={{marginRight: "4vw", width: "130px"}}
                                                     onClick={loadContracts}
                                                     disabled={!idCustomer || listProduct.length === 0}>
                                                 <b className="text-center">Thanh lý</b>
