@@ -370,7 +370,7 @@ export function CustomerListMOI() {
                         <div className="modal-header" align="center">
                             <h2 className="modal-title text-center"
                                 id="staticBackdropLabel"> Chi tiết khách
-                                hàng <span style={{color: 'green'}}>{names}</span></h2>
+                                hàng </h2>
                             <button type="button" className="btn-close"
                                     data-bs-dismiss="modal" aria-label="Close"/>
                         </div>
@@ -395,6 +395,11 @@ export function CustomerListMOI() {
                                                     khách hàng
                                                 </td>
                                                 <td className="col-sm-6"> {id}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="col-sm-4 fw-bold">Tên khách hàng
+                                                </td>
+                                                <td className="col-sm-6"> {names}</td>
                                             </tr>
                                             <tr>
                                                 <td className="col-sm-4 fw-bold"> Ngày

@@ -36,10 +36,6 @@ export function ListPosts() {
         setPosts(result.content)
         console.log(result.content)
     }
-    const propsDelete = async (id, name) => {
-        setIdDelete(id)
-        setNameDelete(name)
-    }
     const handleDelete = async (id) => {
         await servicePosts.remove(id)
         findAllListPost();
