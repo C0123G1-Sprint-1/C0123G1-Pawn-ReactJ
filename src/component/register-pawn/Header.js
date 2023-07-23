@@ -39,7 +39,7 @@ export function Header() {
         navigate("/login")
     };
     // console.log(decodedToken.sub)
-    return (
+    return(
         <>
             <>
                 {/*header*/}
@@ -66,6 +66,10 @@ export function Header() {
                                     <NavLink to="/create" className='font-a-header'
                                              style={{ color: "white", fontSize: '20px', }}>Đăng ký cầm đồ</NavLink>
                                 </li>
+                                <li>
+                                    <NavLink to="/condition"  className='font-a-header' style={{color : "white",fontSize:'20px',}} >Điều khoản & Điều kiện</NavLink>
+                                </li>
+
                                 {/*<li className="dropdown">*/}
                                 {/*    <a href="#">*/}
                                 {/*        <span>Cầm Đồ Theo Tỉnh</span>{" "}*/}
@@ -163,6 +167,8 @@ export function Header() {
     )
 
 }
+
+
 
 
 function mobileNavToggle() {

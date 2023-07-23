@@ -74,6 +74,7 @@ export function List() {
                 </div>
 
 
+
                 <div className="recommend">
                     <h2 style={{padding : "1.5rem",marginTop:"-1rem",fontFamily :"Times New Roman"}} className="title-thang">DỊCH VỤ CẦM ĐỒ PAWN SHOP </h2>
                     <div className="recommend-content">
@@ -86,7 +87,7 @@ export function List() {
                                 </a>
                                 . Cam kết đảm bảo bạn sẽ hài lòng vì tài sản của bạn được{" "}
                                 <b>niêm phong có chữ ký xác nhận và bảo hiểm 100% giá trị tài sản</b>{" "}
-                                khi bạn chọn <b>Cầm Đồ </b>tại đây.
+                                khi bạn chọn <b>Cầm đồ </b>tại đây.
                             </p>
                             <p>
                                 Thời hạn cầm cố tài sản linh động, có thể trả trước hạn linh hoạt tùy

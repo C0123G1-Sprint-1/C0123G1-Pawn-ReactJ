@@ -4,11 +4,17 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as contractService from "../../service/ContractService";
 import * as productTypeService from "../../service/ProductTypeService"
 import "../../css/UpdateContract.css"
-import * as Yup from "yup"
+import * as Yup from "yup";
 import {Link, NavLink} from "react-router-dom";
 import "../../css/liquidation.css";
 import Swal from "sweetalert2";
+import jwt from "jwt-decode";
 
+
+const token = localStorage.getItem('token');
+const decodedToken = jwt(token);
+console.log(decodedToken.sub)
+console.log(decodedToken.role)
 export function UpdateContract() {
     const param = useParams();
     const navigate = useNavigate();

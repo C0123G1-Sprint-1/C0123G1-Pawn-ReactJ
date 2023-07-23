@@ -6,9 +6,14 @@ import Swal from "sweetalert2";
 import jwt from 'jwt-decode';
 import moment from "moment";
 import {Link} from "react-router-dom";
+import swalWithBootstrapButtons from "sweetalert2";
 
+const token = localStorage.getItem('token');
+const decodedToken = jwt(token);
+console.log(decodedToken.sub)
+console.log(decodedToken.role)
 
-export function CustomerList() {
+export function CustomerListMOI() {
     const [listCustomer, setListCustomer] = useState([]);
     const [nameDelete, setNameDelete] = useState(null);
     const [idDelete, setIdDelete] = useState(null);
@@ -47,7 +52,8 @@ export function CustomerList() {
 
     const handlePageClick1 = async (page) => {
         setCurrentPage1(+page.selected);
-        const result = await customersService.registerPawn( page.selected);
+
+        const result = await customersService.registerPawn(page.selected);
         console.log(result.data);
         setRegisterPawn(result.content);
         setCount1(Math.ceil(result.size * page.selected + 1));
@@ -92,7 +98,7 @@ export function CustomerList() {
 
     useEffect(() => {
         showList();
-    },  [currentPage]);
+    }, [currentPage]);
 
     const handlePageClick = async (page) => {
         setCurrentPage(+page.selected);
@@ -144,7 +150,7 @@ export function CustomerList() {
     const [quantityContract, setQuantityContract] = useState("")
 
     function getDetail(id, name, birthday, gender, phoneNumber, email, address, citizenCode, image,
-                       frontCitizen, backCitizen, createDate, updateDate, note,quantityContract) {
+                       frontCitizen, backCitizen, createDate, updateDate, note, quantityContract) {
         setId(id);
         setNames(name);
         setBirthday(birthday);
@@ -167,80 +173,83 @@ export function CustomerList() {
 
             <div className="row mx-0">
                 <div className="container mx-auto my-5 col-8" style={{width: '85%'}}>
-                    <div style={{boxShadow: '1px 3px 10px 5px rgba(0, 0, 0, 0.2)'}}>
-                        <div style={{marginBottom: '20px'}}>
-                            <h2 className="d-flex justify-content-center"
-                                style={{padding: '16px', backgroundColor: 'seagreen', color: 'white'}}>
-                                DANH SÁCH KHÁCH HÀNG
-                            </h2>
-                        </div>
 
-                        <div className='container'>
-                            <div className="row ">
-                                <div className="col-6 mt-2">
-                                    <Link to="/nav/manager-customer/create"  className="btn btn-success" style={{marginLeft: "10%"}}>Thêm khách
-                                        hàng
-                                    </Link>
-                                    {/*<NavLink*/}
-                                    {/*    to='/listCustomerRegisterPawn' className="btn btn-outline-primary"*/}
-                                    {/*    style={{marginLeft: '5%'}}>Danh sách khách hàng mới*/}
-                                    {/*</NavLink>*/}
-                                    <button type="button" className="btn btn-success" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" style={{marginLeft: '5%'}}>
-                                        Danh sách khách hàng mới
-                                    </button>
-                                </div>
+                    <div style={{marginBottom: '20px'}}>
+                        <h2 className="d-flex justify-content-center"
+                        >
+                            DANH SÁCH KHÁCH HÀNG
+                        </h2>
+                    </div>
 
-                                <div className="col-6"
-                                >
-                                    <Formik
-                                        initialValues={{
-                                            name: ''
-                                        }}
-                                        onSubmit={(value) => {
-                                            search(value)
-                                        }
-                                        }>
-                                        <Form className="d-flex m-1">
-                                            <Field
-                                                style={{paddingTop: "5px", width: '70%'}}
-                                                className="form-control d-flex"
-                                                type="text"
-                                                placeholder="Tìm kiếm theo tên khách hàng"
-                                                aria-label="Search"
-                                                name='name'
-                                            />
-                                            <label htmlFor=""> </label>
-                                            <button type='submit' className="btn btn-outline-success m-2"><i
-                                                className="bi bi-search"/></button>
-                                        </Form>
-                                    </Formik>
-                                </div>
+                    <div className='container'>
+                        <div className="row ">
+                            <div className="col-6 mt-2">
+                                <Link to="/nav/manager-customer/create" className="btn btn-success"
+                                      style={{marginLeft: "10%"}}>Thêm khách
+                                    hàng
+                                </Link>
+
+                                <Link to="/nav/register" className="btn btn-success"
+
+                                      style={{marginLeft: '5%'}}>
+                                    Danh sách khách hàng mới
+                                </Link>
                             </div>
 
+                            <div className="col-6"
+                            >
+                                <Formik
+                                    initialValues={{
+                                        name: ''
+                                    }}
+                                    onSubmit={(value) => {
+                                        search(value)
+                                    }
+                                    }>
+                                    <Form className="d-flex m-2">
+                                        <Field
+                                            style={{width: "18vw", height: "38px",marginLeft:"20%"}}
+                                            className="form-control me-3"
+                                            type="text"
+                                            name="name"
+                                            placeholder="Tìm kiếm theo tên khách hàng"
+                                            aria-label="Search"
 
+                                        />
+                                        <button className="btn btn-outline-success" type="submit">
+                                            <i className="bi bi-search"/>
+                                        </button>
+                                    </Form>
+                                </Formik>
+                            </div>
                         </div>
                         <div style={{marginTop: '2%'}}>
                             <div className="row">
                                 <div className="col-12">
                                     <div className="d-flex justify-content-center">
-                                        {listCustomer.length === 0 && name !== "" ? (
-                                            <h3 className={"text-danger text-center my-3"}>
-                                                Không tìm thấy kết quả {name}
-                                            </h3>
-                                        ) : (
-                                            <div className="table-responsive" style={{width: '80%'}}>
-                                                <table className="table table-striped">
+
+                                            <div className="table-responsive" style={{width: '90%'}}>
+                                                <table className=" table table table-striped" border="1">
                                                     <thead>
                                                     <tr>
                                                         <th>STT</th>
                                                         <th>Tên khách hàng</th>
                                                         <th>Số điện thoại</th>
                                                         <th>CMND/Hộ chiếu</th>
-                                                        <th>Số lượng hợp đồng</th>
+                                                        <th>Số lượng HĐ</th>
                                                         <th>Chức năng</th>
                                                     </tr>
                                                     </thead>
+                                                    {listCustomer.length === 0 && name !== "" ? (
+                                                        <tr className="text-center">
+                                                            <td colSpan={6}>
+                                                                <h4 className={"text-danger text-center my-3"}>
+                                                                    Dữ liệu không tồn tại
+                                                                </h4>
+                                                            </td>
+                                                        </tr>
+
+                                                    ) : (
                                                     <tbody>
 
                                                     {
@@ -257,32 +266,32 @@ export function CustomerList() {
                                                                         style={{color: '#4698f9'}}
                                                                         className="bi bi-info-circle"
                                                                         onClick={() => getDetail(value.id, value.name, value.birthday, value.gender, value.phoneNumber, value.email, value.address,
-                                                                            value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate,value.quantityContract,
+                                                                            value.citizenCode, value.image, value.frontCitizen, value.backCitizen, value.createDate, value.quantityContract,
                                                                             value.updateDate, value.note)}/></a>
-                                                                    <Link to={`/nav/manager-customer/update/${value.id}`} href className="me-2"><i
+                                                                    <Link
+                                                                        to={`/nav/manager-customer/update/${value.id}`}
+                                                                        href className="me-2"><i
                                                                         style={{color: 'orange'}}
                                                                         className="bi bi-pencil-square"/></Link>
                                                                     <a type="button"
-                                                                       >
+                                                                    >
                                                                         <i style={{color: 'red'}}
                                                                            className="bi bi-trash3"
                                                                            onClick={() => {
-                                                                               Swal.fire({
+                                                                               swalWithBootstrapButtons.fire({
                                                                                    icon: "warning",
-                                                                                   title:"Xác nhận xóa",
-                                                                                   titleText: `Bạn có muốn xoá khách hàng ${value.name} không ?`,
+                                                                                   title: "Xác nhận xóa",
+                                                                                   html: `Bạn có muốn xoá lịch sử khách hàng <span style="color: red">${value.name}</span> không ?`,
                                                                                    showCancelButton: true,
-                                                                                   cancelButtonText: "Hủy",
-                                                                                   confirmButtonText: "Có",
-                                                                                   cancelButtonColor: "rgba(118,112,112,0.51)",
-                                                                                   confirmButtonColor: "#d33"
-                                                                               })
-                                                                                   .then((res) => {
-                                                                                       if (res.isConfirmed) {
-                                                                                           deleteCustomers(value.id)
-                                                                                       }
-                                                                                   })}}
-                                                                               />
+                                                                                   confirmButtonText: 'Có',
+                                                                                   cancelButtonText: 'Không',
+                                                                                   reverseButtons: true
+                                                                               }).then((res) => {
+                                                                                   if (res.isConfirmed) {
+                                                                                       deleteCustomers(value.id)
+                                                                                   }
+                                                                               })}}
+                                                                        />
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -323,25 +332,29 @@ export function CustomerList() {
 
 
                                                     </tbody>
+                                                    )}
                                                 </table>
                                             </div>
-                                        )}
+
                                     </div>
-                                    <div className="d-grid">
-                                        <ReactPaginate
-                                            breakLabel="..."
-                                            nextLabel="Trước"
-                                            onPageChange={handlePageClick}
-                                            pageCount={pageCount}
-                                            previousLabel="Sau"
-                                            containerClassName="pagination"
-                                            pageLinkClassName="page-num"
-                                            nextLinkClassName="page-num"
-                                            previousLinkClassName="page-num"
-                                            activeClassName="active"
-                                            disabledClassName="d-none"
-                                        />
-                                    </div>
+                                    {listCustomer ==0 ?'':
+                                        <div className="d-grid" style={{marginRight:"5.5%"}}>
+                                            <ReactPaginate
+                                                breakLabel="..."
+                                                nextLabel="Sau"
+                                                onPageChange={handlePageClick}
+                                                pageCount={pageCount}
+                                                previousLabel="Trước"
+                                                containerClassName="pagination"
+                                                pageLinkClassName="page-num"
+                                                nextLinkClassName="page-num"
+                                                previousLinkClassName="page-num"
+                                                activeClassName="active"
+                                                disabledClassName="d-none"
+                                            />
+                                        </div>
+                                    }
+
                                 </div>
                             </div>
                         </div>
@@ -350,7 +363,7 @@ export function CustomerList() {
             </div>
             {/*chi tiết khách hàng*/}
             <div className="modal fade " id="staticBackdrop"
-                  tabIndex={-1}
+                 tabIndex={-1}
                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog  modal-dialog-centered modal-lg">
                     <div className="modal-content">
@@ -387,7 +400,7 @@ export function CustomerList() {
                                                 <td className="col-sm-4 fw-bold"> Ngày
                                                     sinh
                                                 </td>
-                                                <td className="col-sm-6">{birthday}</td>
+                                                <td className="col-sm-6">{moment(note).format('DD/MM/YYYY')}</td>
                                             </tr>
                                             <tr>
                                                 <td className="col-sm-4 fw-bold"> Số
@@ -444,9 +457,6 @@ export function CustomerList() {
                                 </div>
                             </div>
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -456,7 +466,7 @@ export function CustomerList() {
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <div className="modal-header" style={{backgroundColor: 'seagreen'}}>
-                            <h5 className="modal-title"  id="exampleModalLabel">DANH SÁCH KHÁCH HÀNG ĐĂNG KÍ TRÊN
+                            <h5 className="modal-title" id="exampleModalLabel">DANH SÁCH KHÁCH HÀNG ĐĂNG KÍ TRÊN
                                 MẠNG</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
@@ -515,9 +525,6 @@ export function CustomerList() {
                                 />
                             </div>
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -526,4 +533,4 @@ export function CustomerList() {
         ;
 }
 
-export default CustomerList;
+export default CustomerListMOI;
