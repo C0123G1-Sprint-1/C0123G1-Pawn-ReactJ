@@ -79,8 +79,12 @@
     background-color: gray;
 }
 .page-link-khanhh:hover{
-    color: #fff;
+    /*color: #fff;*/
     background-color: gray;
+    color: #fff;
+}
+.page-link-khanhh{
+    color: green;
 }
 .page-link-active{
     position: relative;

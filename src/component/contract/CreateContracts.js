@@ -179,7 +179,7 @@ export const CreateContracts = () => {
                 '  width: "100%",\n' +
                 '  height: "100%",\n' +
                 '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
-            timer: 4000,
+            timer: 5000,
             title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
             showConfirmButton: false,
             allowOutsideClick: false,
@@ -226,7 +226,9 @@ export const CreateContracts = () => {
                                             .required('Không được để trống')
                                             .min(500000, 'Tiền cho vay phải lớn hớn 500.000'),
                                         productType: yup.number()
+                                            .required('Không được để trống')
                                             .min(1, 'Không được để trống'),
+
                                         startDate: Yup.date()
                                             .required('Không được để trống')
                                             .test("date", "Không được chọn quá khứ chỉ chọn hiện tại và tương lai",

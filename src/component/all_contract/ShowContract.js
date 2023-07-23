@@ -220,8 +220,8 @@ export const ShowContract = () => {
                                         <nav aria-label="...">
                                             <ul className="pagination">
                                                 <li hidden={page === 0} className="page-item ">
-                                                    <button className="page-link" tabIndex={-1}
-                                                            style={{border: "1px solid gray", borderRadius: "5px",color: "green"}}
+                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
                                                             onClick={() => paginate(page - 1)}>
                                                         Trước
                                                     </button>
@@ -253,8 +253,8 @@ export const ShowContract = () => {
                                                 {/*</li>*/}
                                                 <li hidden={page + 1 === totalPage || totalPage === 0}
                                                     className="page-item">
-                                                    <button className="page-link" tabIndex={-1}
-                                                            style={{border: "1px solid gray", borderRadius: "5px",color: "green"}}
+                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
                                                             onClick={() => paginate(page + 1)}>
                                                         Sau
                                                     </button>

@@ -17,6 +17,7 @@ export function ListPosts() {
             setDecodedToken(decoded);
         } else {
             // Xử lý khi không có token trong localStorage
+            console.log("abc")
         }
     }, [token]);
     const [posts, setPosts] = useState([])
@@ -132,67 +133,72 @@ export function ListPosts() {
                 </div>
             </div>
 
-            <button className="btn btn-success ms-5">
-                <NavLink className="text-decoration-none text-white" to={'/listPosts/createPosts'}>Đăng Tin</NavLink>
-            </button>
+            {
+                decodedToken.role === ("ROLE_ADMIN"||"EMPLOYEE") ?
+                    <button className="btn btn-success ms-5">
+                        <NavLink className="text-decoration-none text-white" to={'/listPosts/createPosts'}>Đăng Tin</NavLink>
+                    </button>
+                    : ""
+            }
             <ul className="cards-post text-posts">
                 {
                     currentPosts.length===0? (
-                                    <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
-                    ):
-                    currentPosts.map((post) => (
-                        <li className="cards_item">
-                            <div className="card-post">
-                                <div className="card_image">
-                                    <NavLink className="text-decoration-none" to={`detail/${post.id}`}>
-                                    <img
-                                    style={{height: "200px", width: "300px", verticalAlign: "middle"}}
-                                    src={post.image} alt=""/>
-                                    </NavLink>
+                            <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
+                        ):
+                        currentPosts.map((post) => (
+                            <li className="cards_item">
+                                <div className="card-post">
+                                    <div className="card_image">
+                                        <NavLink className="text-decoration-none" to={`detail/${post.id}`}>
+                                            <img
+                                                style={{height: "200px", width: "300px", verticalAlign: "middle"}}
+                                                src={post.image} alt=""/>
+                                        </NavLink>
+                                    </div>
+                                    <div className="card_content">
+                                        <NavLink className="text-decoration-none text-black" to={`detail/${post.id}`}>
+                                            <h6 className="card_title">
+                                                {post.title}</h6>
+                                        </NavLink>
+                                    </div>
+                                    <div className="card-date time-post">
+                                        {formatDateTime(post.createDate)}
+                                    </div>
+                                    <div className="d-flex justify-content-end">
+                                        {
+
+                                            decodedToken.role === ("ROLE_ADMIN" || "EMPLOYEE") ?
+                                                <>
+                                                    <button className=" btn btn-outline-danger m-2"
+                                                            onClick={() => {
+                                                                swalWithBootstrapButtons.fire({
+                                                                    icon: "warning",
+                                                                    title: "Xác nhận xóa",
+                                                                    html: `Bạn có muốn xoá <span style="color: red">${post.title}</span> không ?`,
+                                                                    showCancelButton: true,
+                                                                    confirmButtonText: 'Có',
+                                                                    cancelButtonText: 'Không',
+                                                                    reverseButtons: true
+                                                                }).then((res) => {
+                                                                    if (res.isConfirmed) {
+                                                                        handleDelete(post?.id)
+                                                                    }
+                                                                })
+                                                            }}
+                                                    >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                             fill="currentColor" className="bi bi-trash3" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                                        </svg>
+                                                    </button>
+                                                </>
+                                                :""
+                                        }
+                                    </div>
                                 </div>
-                                <div className="card_content">
-                                    <NavLink className="text-decoration-none text-black" to={`detail/${post.id}`}>
-                                        <h6 className="card_title">
-                                            {post.title}</h6>
-                                    </NavLink>
-                                </div>
-                                <div className="card-date time-post">
-                                    {formatDateTime(post.createDate)}
-                                </div>
-                                <div className="d-flex justify-content-end">
-                                    {
-                                        decodedToken === "ROLE_ADMIN" || "EMPLOYEE" ?
-                                            <>
-                                                <button className=" btn btn-outline-danger m-2"
-                                                        onClick={() => {
-                                                            swalWithBootstrapButtons.fire({
-                                                                icon: "warning",
-                                                                title: "Xác nhận xóa",
-                                                                html: `Bạn có muốn xoá <span style="color: red">${post.title}</span> không ?`,
-                                                                showCancelButton: true,
-                                                                confirmButtonText: 'Có',
-                                                                cancelButtonText: 'Không',
-                                                                reverseButtons: true
-                                                            }).then((res) => {
-                                                                if (res.isConfirmed) {
-                                                                    handleDelete(post?.id)
-                                                                }
-                                                            })
-                                                        }}
-                                                >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" className="bi bi-trash3" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                                                    </svg>
-                                                </button>
-                                            </>
-                                            :""
-                                    }
-                                </div>
-                            </div>
-                        </li>
-                    ))
+                            </li>
+                        ))
                 }
             </ul>
             <div className="pagination-container-huy me-5">
