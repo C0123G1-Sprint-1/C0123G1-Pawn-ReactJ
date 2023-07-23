@@ -33,14 +33,18 @@
         <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:DEV-1" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add merge team">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +155,7 @@
       <workItem from="1689916991349" duration="310000" />
       <workItem from="1690004585725" duration="15356000" />
       <workItem from="1690076190720" duration="1507000" />
-      <workItem from="1690079798271" duration="6665000" />
+      <workItem from="1690079798271" duration="7709000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -335,7 +339,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690080191169</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="&quot;add merge team">
+      <created>1690086704338</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1690086704338</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -346,7 +357,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="DEV-1" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -375,28 +398,28 @@
     </state>
     <state x="515" y="173" key="FileChooserDialogImpl/0.0.1440.852@0.0.1440.852" timestamp="1689754775251" />
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1689586329113" />
-    <state width="1306" height="174" key="GridCell.Tab.0.bottom" timestamp="1689945809069">
+    <state width="1306" height="50" key="GridCell.Tab.0.bottom" timestamp="1690086744946">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1306" height="174" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1689945809069" />
+    <state width="1306" height="50" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1690086744946" />
     <state width="1420" height="220" key="GridCell.Tab.0.bottom/0.0.1440.852@0.0.1440.852" timestamp="1689848838177" />
     <state width="1515" height="200" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1689586602727" />
-    <state width="1306" height="174" key="GridCell.Tab.0.center" timestamp="1689945809068">
+    <state width="1306" height="50" key="GridCell.Tab.0.center" timestamp="1690086744946">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1306" height="174" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1689945809068" />
+    <state width="1306" height="50" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1690086744946" />
     <state width="1420" height="220" key="GridCell.Tab.0.center/0.0.1440.852@0.0.1440.852" timestamp="1689848838177" />
     <state width="1515" height="200" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1689586602727" />
-    <state width="1306" height="174" key="GridCell.Tab.0.left" timestamp="1689945809068">
+    <state width="1306" height="50" key="GridCell.Tab.0.left" timestamp="1690086744945">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1306" height="174" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1689945809068" />
+    <state width="1306" height="50" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1690086744945" />
     <state width="1420" height="220" key="GridCell.Tab.0.left/0.0.1440.852@0.0.1440.852" timestamp="1689848838173" />
     <state width="1515" height="200" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1689586602726" />
-    <state width="1306" height="174" key="GridCell.Tab.0.right" timestamp="1689945809068">
+    <state width="1306" height="50" key="GridCell.Tab.0.right" timestamp="1690086744946">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1306" height="174" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1689945809068" />
+    <state width="1306" height="50" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1690086744946" />
     <state width="1420" height="220" key="GridCell.Tab.0.right/0.0.1440.852@0.0.1440.852" timestamp="1689848838177" />
     <state width="1515" height="200" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1689586602727" />
     <state x="0" y="0" key="MergeDialog" timestamp="1689945640386">
@@ -413,10 +436,10 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="498" y="129" key="RollbackChangesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689917583569" />
-    <state x="321" y="128" key="Vcs.Push.Dialog.v2" timestamp="1690026678256">
+    <state x="321" y="128" key="Vcs.Push.Dialog.v2" timestamp="1690086715979">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="321" y="128" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1690026678256" />
+    <state x="321" y="128" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1690086715979" />
     <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689919957325" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689586761444" />
     <state x="277" y="77" width="1166" height="524" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1690085730844">
