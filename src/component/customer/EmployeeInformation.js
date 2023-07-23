@@ -21,11 +21,11 @@ export default function EmployeeInformation() {
     const [avatarUrl, setAvatarUrl] = useState();
     const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
     const messageError = "Ảnh không được để trống!!";
-    const [isEditing, setIsEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(true);
     const [newPass, setNewPass] = useState(0);
 
     function handleEditClick() {
-        setIsEditing(true);
+        setIsEditing(false);
     }
 
     const [showPassword, setShowPassword] = useState(false);
@@ -319,7 +319,7 @@ return (
                                                     <span style={{color: "red"}}> *</span>
                                                 </label>
                                                 <div className="mt-2">
-                                                    {isEditing ? (
+                                                    {!isEditing ? (
                                                         <Field id="hoTen" name="name" type="text"
                                                                className="form-control"/>
                                                     ) : (
@@ -368,7 +368,7 @@ return (
                                                         Email
                                                         <span style={{color: "red"}}> *</span>
                                                     </label></div>
-                                                {isEditing ? (
+                                                {!isEditing ? (
                                                     <Field id="email" name="email" type="text"
                                                            className="form-control"/>
                                                 ) : (
@@ -381,7 +381,7 @@ return (
                                                     <label id="label-dat" htmlFor="diaChi">
                                                         Địa chỉ<span style={{color: "red"}}> *</span>
                                                     </label></div>
-                                                {isEditing ? (
+                                                {!isEditing ? (
                                                     <Field id="diaChi" name="address" type="text"
                                                            className="form-control"/>) : (
                                                     <div className="ms-2">{employeeDetail?.address}</div>
@@ -393,7 +393,7 @@ return (
                                                     <label id="label-dat" htmlFor="soDienThoai">
                                                         Số điện thoại<span style={{color: "red"}}> *</span>
                                                     </label></div>
-                                                {isEditing ? (
+                                                {!isEditing ? (
                                                     <Field id="soDienThoai" name="phoneNumber" type="text"
                                                            className="form-control"/>
                                                 ) : (
@@ -406,7 +406,7 @@ return (
                                                     <label id="label-dat" htmlFor="CMND/CCCD">
                                                         Số căn cước<span style={{color: "red"}}> *</span>
                                                     </label></div>
-                                                {isEditing ? (
+                                                {!isEditing ? (
                                                     <Field id="CMND/CCCD" name="citizenCode" type="text"
                                                            className="form-control"/>
                                                 ) : (
@@ -451,15 +451,16 @@ return (
                                                                         <div
                                                                             className="text-center mt-2 btn-group col-md-6 mb-2">
                                                                             {isEditing ? (
+                                                                                    <button type='button' id="chinhsua"
+                                                                                            onClick={handleEditClick}
+                                                                                            className="btn btn-primary">
+                                                                                        <b>Sửa</b>
+                                                                                    </button>
+
+                                                                            ) : (
                                                                                 <button type="submit" id="capnhat"
                                                                                         className="btn btn-success">
                                                                                     <b>Cập nhật</b>
-                                                                                </button>
-                                                                            ) : (
-                                                                                <button type='button' id="chinhsua"
-                                                                                        onClick={handleEditClick}
-                                                                                        className="btn btn-primary">
-                                                                                    <b>Sửa</b>
                                                                                 </button>
                                                                             )}
                                                                         </div>

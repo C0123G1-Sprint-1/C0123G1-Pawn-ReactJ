@@ -38,7 +38,6 @@
   <component name="ChangeListManager">
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add merge team">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/account/NewPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/account/NewPassword.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -148,7 +147,8 @@
       <workItem from="1689834571370" duration="2360000" />
       <workItem from="1689850891478" duration="3644000" />
       <workItem from="1689916991349" duration="310000" />
-      <workItem from="1690004585725" duration="15263000" />
+      <workItem from="1690004585725" duration="15356000" />
+      <workItem from="1690076190720" duration="1507000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -318,7 +318,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690021072834</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="&quot;add merge team">
+      <created>1690026659996</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1690026659996</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -396,10 +403,10 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="498" y="129" key="RollbackChangesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689917583569" />
-    <state x="321" y="128" key="Vcs.Push.Dialog.v2" timestamp="1689945782971">
+    <state x="321" y="128" key="Vcs.Push.Dialog.v2" timestamp="1690026678256">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="321" y="128" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1689945782971" />
+    <state x="321" y="128" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1690026678256" />
     <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689919957325" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689586761444" />
     <state x="-72" y="130" width="1166" height="524" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1690020604241">
