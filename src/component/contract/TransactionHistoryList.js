@@ -65,8 +65,6 @@ export default function TransactionHistoryList() {
         getContractTypeApi();
         showList()
     }, [search, currentPage]);
-
-
     const deleteTransactionHistory = async (id) => {
         let res = await contractService.deleteTransactionHistoryByID(id);
         result(res.data)
@@ -199,7 +197,7 @@ export default function TransactionHistoryList() {
                 <div className="col-lg-12">
                     <table className="table table table-striped" border="1">
                         <thead>
-                        <tr className="text-center">
+                        <tr style={{textAlign: "start"}}>
                             <th>Mã HĐ</th>
                             <th>Tên đồ</th>
                             <th>Tên khách hàng</th>
@@ -215,22 +213,22 @@ export default function TransactionHistoryList() {
                                 || search.contractStatus !== "" || search.startDate !== "" || search.endDate !== "") ? (
                                     <tr>
                                         <td colSpan={7}>
-                                            <h4 style={{color: "red", textAlign: "center"}}>Dữ liệu không tồn tại</h4>
+                                            <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
                                         </td>
                                     </tr>
                                 ) :
                                 contracts.map((th, index) => (
-                                    <tr key={index}>
-                                        <td className="text-center">HD-{th?.contractCode}</td>
+                                    <tr key={index} style={{textAlign: "start"}}>
+                                        <td >HD-{th?.contractCode}</td>
                                         <td>{th?.productName}</td>
                                         <td>{th?.customers}</td>
-                                        <td className="text-center">{
+                                        <td >{
                                             th?.startDate===""?"":
                                             moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
                                         }</td>
-                                        <td className="text-center">{th?.contractType}</td>
-                                        <td className="text-center">{th?.contractStatus}</td>
-                                        <td className="text-center">
+                                        <td >{th?.contractType}</td>
+                                        <td >{th?.contractStatus}</td>
+                                        <td >
                                             <Link to={`/nav/info-store/transaction-history/detail/${th?.id}`}><i
                                                 className="bi bi-info-circle me-3"/></Link>
                                             <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}

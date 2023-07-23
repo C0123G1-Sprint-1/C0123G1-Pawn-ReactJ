@@ -53,7 +53,7 @@ export function Footer() {
                                 </li>
                             </ul>
                         </div>
-                        <div className="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                        <div style={{marginLeft :"-2.5rem"}} className="col-lg-3 col-md-12 footer-contact text-center text-md-start">
                             <h4>Liên hệ</h4>
                             <p className='font-a' >
                                 280 Trần Hưng Đạo, <br />
@@ -74,7 +74,7 @@ export function Footer() {
                         <strong>
                             <span>C0123G1</span>
                         </strong>
-                        . All Rights Reserved
+                        . All rights reserved
                     </div>
                 </div>
             </footer>

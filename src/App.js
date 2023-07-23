@@ -26,7 +26,6 @@ import {CreatePosts} from "./component/post/CreatePosts";
 import {ShowContract} from "./component/all_contract/ShowContract";
 import TransactionHistoryList from "./component/contract/TransactionHistoryList";
 import {TransactionHistoryDetail} from "./component/contract/TransactionHistoryDetail";
-import CustomerList from "./component/customer/CustomerList";
 import {CreateLiquidation} from "./component/liquidation/CreateLiquidation";
 import EmployeeList from "./component/employee/ListEmployee";
 import {CreateEmployee} from "./component/employee/CreateEmployee";
@@ -42,6 +41,9 @@ import {Header} from "./component/register-pawn/Header";
 import {RegisterPawn} from "./component/register-pawn/RegisterPawn";
 import {Footer} from "./component/register-pawn/Footer";
 import {UpdateContract} from "./component/contract/UpdateContract";
+import {Condition} from "./component/register-pawn/Condition";
+import {CustomerListMOI} from "./component/customer/CustomerListMOI";
+import {RegisterPawnAnhQoc} from "./component/customer/RegisterPawnAnhQoc";
 
 function App() {
     return (
@@ -49,6 +51,7 @@ function App() {
             <Header/>
             <Routes>
                 <Route path='/' element={<List/>}/>
+                <Route path='/condition' element={<Condition/>}/>
                 <Route path={"/nav"} element={<Navbars/>}>
                     <Route path={"/nav/info-store"} element={<InfoStore/>}>
                         <Route path={"/nav/info-store"} element={<Profit/>}>
@@ -69,7 +72,8 @@ function App() {
                     <Route path="/nav/api/employee" element={<EmployeeList/>}/>
                     <Route path="/nav/api/employee/create-employee" element={<CreateEmployee/>}/>
                     <Route path="/nav/redeem" element={<Redeeming/>}/>
-                    <Route path={"/nav/manager-customer"} element={<CustomerList/>}/>
+                    <Route path={"/nav/manager-customer"} element={<CustomerListMOI/>}/>
+                    <Route path={"/nav/manager-customer/register"} element={<RegisterPawnAnhQoc/>}/>
                     <Route path={"/nav/manager-customer/create"} element={<CreateCustomer/>}/>
                     <Route path={"/nav/manager-customer/update/:id"} element={<UpdateCustomer/>}/>
                     <Route path={"/nav/detail/employee/:id"} element={<EmployeeInformation/>}/>

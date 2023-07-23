@@ -7,15 +7,8 @@ import * as Yup from "yup";
 import {useNavigate} from "react-router";
 import {NavLink} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {storage} from "../../firebaseContract";
+import {storage} from "../../firebase";
 import Swal from "sweetalert2";
-import jwt from 'jwt-decode';
-
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
-
 
 export function CreatePosts() {
     const navigate = useNavigate()
@@ -191,7 +184,7 @@ export function CreatePosts() {
                                     <div className="form-group m-2">
                                         <label className="label-post" htmlFor="content">Nội dung <span
                                             className="err-class">*</span></label>
-                                        <Field as="textarea" id="content" name="content"
+                                        <Field as="textarea" id="content" name="content" className="textarea-posts"
                                                placeholder="Nhập nội dung tin tức" rows="15"/>
                                         <ErrorMessage name="content" component="span" className="err-class"/>
                                     </div>

@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {ThreeCircles} from "react-loader-spinner";
 import jwt from 'jwt-decode';
 import {Modal} from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css"
 import '../../css/liquidation.css';
 import {
     getListCustomerAPI,
@@ -13,10 +11,13 @@ import {
 import {useNavigate} from "react-router";
 import * as Swal from "sweetalert2";
 import {Link, NavLink} from "react-router-dom";
-import * as contractService from "../../service/ContractService";
+import ReactPaginate from "react-paginate";
 
 
-
+const token = localStorage.getItem('token');
+const decodedToken = jwt(token);
+console.log(decodedToken.sub)
+console.log(decodedToken.role)
 
 export function CreateLiquidation() {
     const navigate = useNavigate();
@@ -38,8 +39,6 @@ export function CreateLiquidation() {
     const [loans, setLoans] = useState('');
 
 
-
-
     const formatCurrency = (amount) => {
         return amount.toLocaleString({style: 'currency', currency: 'VND'});
     };
@@ -52,8 +51,8 @@ export function CreateLiquidation() {
     const getListCustomer = async () => {
         try {
             const response = await getListCustomerAPI(customerPage, name);
-            setCustomers(response.data.content);
-            setCustomerTotalPages(response.data.totalPages);
+            setCustomers(response.data?.content);
+            setCustomerTotalPages(response?.data.totalPages);
         } catch (error) {
             console.error('Error while loading customers:', error);
         }
@@ -62,8 +61,8 @@ export function CreateLiquidation() {
     const getListProduct = async () => {
         try {
             const response = await getListProductAPI(contractPage, productName, productType, loans);
-            setContracts(response.data.content);
-            setContractTotalPages(response.data.totalPages);
+            setContracts(response?.data.content);
+            setContractTotalPages(response?.data.totalPages);
         } catch (error) {
             console.error('Error while loading products:', error);
         }
@@ -72,13 +71,17 @@ export function CreateLiquidation() {
         const res = await getListProductTypeAPI();
         setProductTypes(res.data);
     }
-    const paginateCustomers = (page) => {
-        setCustomerPage(page);
-    };
+    const handlePage1 = async (pages) => {
+        setCustomerPage(+pages.selected);
+        const res = await getListCustomerAPI(customerPage, name);
+        setCustomers(res.data.content)
+    }
 
-    const paginateContracts = (page) => {
-        setContractPage(page);
-    };
+    const handlePage = async (pages) => {
+        setContractPage(+pages.selected);
+        const res = await getListProductAPI(contractPage, productType, productName, loans)
+        setContracts(res.data.content)
+    }
 
     useEffect(() => {
         getListProductType();
@@ -87,9 +90,9 @@ export function CreateLiquidation() {
     }, [customerPage, name, contractPage, productType, productName, loans]);
 
 
-    const getProduct = (id) => {
+    const onSelectContract = (id) => {
         const selectedContract = contracts.find((c) => c.id === id);
-        if (selectedContract) {
+        if (selectedContract && !listProduct.filter(lp => lp.id === selectedContract.id)[0]) {
             setListProduct([...listProduct, selectedContract]);
         }
     };
@@ -106,12 +109,13 @@ export function CreateLiquidation() {
     }, [listProduct]);
 
     const data = {
-        products: listProduct.map((p) => p.productName).join(",")
+        products: listProduct.map((p) => p.id).join(",")
     };
 
     const handleModalClose = () => {
         setCustomerPage(0);
         setShowModal(false);
+        setName('');
     };
     const handleModalOpen = () => {
         setShowModal(true);
@@ -120,10 +124,37 @@ export function CreateLiquidation() {
     const handleModalClose1 = () => {
         setContractPage(0);
         setShowModal1(false);
+        setProductType('');
+        setProductName('');
+        setProductName('');
     };
     const handleModalOpen1 = () => {
         setShowModal1(true);
     };
+
+    const loadContracts = async () => {
+        let timerInterval
+        Swal.fire({
+            title: 'Chúng tôi đang sử lí mong đợi trong vài giây',
+            html: 'Vui lòng đợi trong  <b></b> giây.',
+            timer: 4000,
+            timerProgressBar: true,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer')
+            }
+        })
+    };
+
     if (!customers) {
         return null
     }
@@ -133,27 +164,26 @@ export function CreateLiquidation() {
     return (
         <>
             <Formik initialValues={{
-                id: '',
+                contractType: 2,
+                contractStatus: 5,
                 customers: '',
+                image: contracts.image,
                 products: '',
                 totalPrice: 0,
                 createTime: null
             }}
-                    // validationSchema={yup.object({
-                    //     customers: yup.string().required("Vui lòng chọn khách hàng."),
-                    //     products: yup.string().required("Vui lòng chọn sản phẩm.")
-                    // })}
-                    onSubmit={async (values, {setSubmitting}) => {
-                        setTimeout(() => {
-                            setSubmitting(false);
-                        }, 5000)
+                // validationSchema={yup.object({
+                //     customers: yup.string().required("Vui lòng chọn khách hàng."),
+                //     products: yup.string().required("Vui lòng chọn sản phẩm.")
+                // })}
+                    onSubmit={async (values) => {
                         await saveLiquidationAPI({
                             ...values,
                             totalPrice: totalPrice,
                             customers: customers.find((c) => c.id === idCustomer),
                             products: data.products
                         });
-                        navigate("/nav/info-store/all-contract")
+                        navigate("/nav/info-store/transaction-history")
                         const save = () => {
                             Swal.fire({
                                 position: 'center',
@@ -165,132 +195,115 @@ export function CreateLiquidation() {
                         }
                         save();
                     }}>
-                {
-                    ({isSubmitting}) => (
-                        <>
-                            <div className="container mt-5">
-                                <div className="row height d-flex justify-content-center align-items-center">
-                                    <div className="col-md-6">
-                                        <div className="card px-5 py-4">
-                                            <div style={{textAlign: "center"}}>
-                                                <h2>THANH LÝ HÀNG</h2>
-                                            </div>
-                                            <Form>
-                                                <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                                    <div className="text-center m-auto">
-                                                        <button onClick={handleModalOpen} type="button"
-                                                                className="btn btn-outline-success ">
-                                                            <b className="text-center">Chọn khách hàng</b>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <ErrorMessage name="customers" component="span" style={{color: "red"}}/>
-                                                <Field type="text" className="form-control" id="name" name="customers"
-                                                       hidden
-                                                       value={customers.find((c) => c.id === idCustomer)?.id}/>
 
-                                                <div className="mt-4 inputs"><label>Tên khách hàng</label>
-                                                    <Field type="text" className="form-control" id="name" name="name"
-                                                           disabled
-                                                           value={customers.find((c) => c.id === idCustomer)?.name}/>
-                                                </div>
-                                                <div className="mt-4 inputs"><label>CMND</label>
-                                                    <Field type="text" className="form-control" id="cmnd"
-                                                           name="citizenCode"
-                                                           disabled
-                                                           value={customers.find((c) => c.id === idCustomer)?.citizenCode}/>
-                                                </div>
-                                                <div className="mt-4 inputs">
-                                                    <label>Đồ thanh lý</label>
-
-                                                    <div className="justify-content-between mt-4">
-                                                        <div className="input-group">
-                                                            <div className="product-list">
-                                                                {listProduct.map((p) => (
-                                                                    <div style={{position: 'relative'}}>
-                                                                        <div style={{
-                                                                            position: 'absolute',
-                                                                            top: -5,
-                                                                            right: -5,
-                                                                            width: '15px',
-                                                                            height: '15px',
-                                                                            border: '1px solid gray',
-                                                                            borderRadius: '50%',
-                                                                            display: 'flex',
-                                                                            alignItems: 'center',
-                                                                            justifyContent: 'center',
-                                                                            fontSize: '10px',
-                                                                            cursor: 'pointer'
-                                                                        }} onClick={() => handleDeleteProduct(p.id)}>
-                                                                            <span>x</span>
-                                                                        </div>
-                                                                        <div
-                                                                            key={p.id}
-                                                                            className="product-item"
-                                                                        >{p.productName}</div>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="text-center m-auto">
-                                                        <button type="button" className="btn btn-outline-success"
-                                                                onClick={handleModalOpen1}>
-                                                            <b className="text-center">Chọn đồ thanh lý</b>
-                                                        </button>
-                                                    </div>
-                                                    <ErrorMessage name="products" component="span"
-                                                                  style={{color: "red"}}/>
-                                                </div>
-
-                                                <div className="mt-2 inputs"><label>Tổng tiền</label>
-                                                    <Field type="text" className="form-control" id="" name="totalPrice"
-                                                           value={formatCurrency(totalPrice) + " VNĐ"} disabled/>
-                                                </div>
-                                                <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                                    <div className="text-center m-auto">
-                                                        <NavLink
-                                                            type="button"
-                                                            className="btn btn-secondary"
-                                                            to={"/nav/info-store/transaction-history"}>
-                                                            Quay lại
-                                                        </NavLink>
-                                                    </div>
-                                                    <div
-                                                        className="text-center m-auto">                                                    {
-
-                                                        isSubmitting ? (
-                                                                <ThreeCircles
-                                                                    height="100"
-                                                                    width="100"
-                                                                    color="#4fa94d"
-                                                                    wrapperStyle={{}}
-                                                                    wrapperClass=""
-                                                                    visible={true}
-                                                                    ariaLabel="three-circles-rotating"
-                                                                    outerCircleColor=""
-                                                                    innerCircleColor=""
-                                                                    middleCircleColor=""
-                                                                />
-                                                            )
-                                                            :
-                                                            (
-                                                                <button type="submit" className="btn btn-success"
-                                                                    disabled={!idCustomer || listProduct.length === 0}>
-                                                                    <b className="text-center">Thêm mới</b>
-                                                                </button>
-                                                            )
-                                                    }
-                                                    </div>
-                                                </div>
-                                            </Form>
+                <div className="container " style={{marginTop: "4.5vh"}}>
+                    <div className="row height d-flex justify-content-center align-items-center" style={{height: "74vh"}}>
+                        <div className="col-md-6">
+                            <div className="card px-5 py-4" style={{marginBottom: "3vw"}}>
+                                <div style={{textAlign: "center"}}>
+                                    <h1>
+                                        THANH LÝ
+                                    </h1>
+                                </div>
+                                <Form>
+                                    <div className="text-center mt-4 btn-group p-3 m-l-2">
+                                        <div className="text-center m-auto">
+                                            <button onClick={handleModalOpen} type="button"
+                                                    className="btn btn-outline-success ">
+                                                <b className="text-center">Chọn khách hàng</b>
+                                            </button>
                                         </div>
                                     </div>
-                                </div>
+                                    <ErrorMessage name="customers" component="span" style={{color: "red"}}/>
+                                    <Field type="text" className="form-control" id="name" name="customers"
+                                           hidden
+                                           value={customers.find((c) => c.id === idCustomer)?.id}/>
+
+                                    <div className="mt-4 inputs"><label>Tên khách hàng</label>
+                                        <Field type="text" className="form-control" id="name" name="name"
+                                               disabled
+                                               value={customers.find((c) => c.id === idCustomer)?.name}/>
+                                    </div>
+                                    <div className="mt-4 inputs"><label>CMND</label>
+                                        <Field type="text" className="form-control" id="cmnd"
+                                               name="citizenCode"
+                                               disabled
+                                               value={customers.find((c) => c.id === idCustomer)?.citizenCode}/>
+                                    </div>
+                                    <div className="mt-4 inputs">
+                                        <label>Đồ thanh lý</label>
+
+                                        <div className="justify-content-between mt-4">
+                                            <div className="input-group">
+                                                <div className="product-list">
+                                                    {listProduct.map((p) => (
+                                                        <div style={{position: 'relative'}}>
+                                                            <div style={{
+                                                                position: 'absolute',
+                                                                top: -5,
+                                                                right: -5,
+                                                                width: '15px',
+                                                                height: '15px',
+                                                                border: '1px solid gray',
+                                                                borderRadius: '50%',
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                justifyContent: 'center',
+                                                                fontSize: '10px',
+                                                                cursor: 'pointer'
+                                                            }} onClick={() => handleDeleteProduct(p.id)}>
+                                                                <span>x</span>
+                                                            </div>
+                                                            <div
+                                                                key={p.id}
+                                                                className="product-item"
+                                                            >{p.productName}</div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="text-center m-auto">
+                                            <button type="button" className="btn btn-outline-success"
+                                                    onClick={handleModalOpen1}>
+                                                <b className="text-center">Chọn đồ thanh lý</b>
+                                            </button>
+                                        </div>
+                                        <ErrorMessage name="products" component="span"
+                                                      style={{color: "red"}}/>
+                                    </div>
+
+                                    <div className="mt-2 inputs"><label>Tổng tiền</label>
+                                        <Field type="text" className="form-control" id="" name="totalPrice"
+                                               value={formatCurrency(totalPrice) + " VNĐ"} disabled/>
+                                    </div>
+                                    <div className="text-center mt-4 btn-group p-3 m-l-2">
+                                        <div className="text-center m-auto">
+                                            <NavLink
+                                                style={{marginLeft: "4vw", width: "130px"}}
+                                                type="button"
+                                                className="btn btn-secondary"
+                                                to={"/nav/info-store"}>
+                                                <b className="text-center">Quay lại</b>
+                                            </NavLink>
+                                        </div>
+                                        <div
+                                            className="text-center m-auto">
+
+
+                                            <button type="submit" className="btn btn-success"
+                                                    style={{marginRight: "4vw", width: "130px"}}
+                                                    onClick={loadContracts}
+                                                    disabled={!idCustomer || listProduct.length === 0}>
+                                                <b className="text-center">Thanh lý</b>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Form>
                             </div>
-                        </>
-                    )
-                }
+                        </div>
+                    </div>
+                </div>
             </Formik>
 
 
@@ -342,10 +355,11 @@ export function CreateLiquidation() {
 
                     <table className=" table table-striped">
                         <thead>
-                        <tr>
-                            <th className="text-center">Tên khách hàng</th>
-                            <th className="text-center">CMND</th>
-                            <th className="text-center">Số lượng hợp đồng</th>
+                        <tr style={{textAlign: "start"}}>
+                            <th >Tên khách hàng</th>
+                            <th >CMND</th>
+                            <th >Số lượng HĐ</th>
+                            <th >Chức năng</th>
                         </tr>
                         </thead>
                         {customers.length === 0 ?
@@ -360,10 +374,10 @@ export function CreateLiquidation() {
                                 customers.map((c) => {
                                     return (
                                         <tr key={c.id}>
-                                            <td className="text-md-start">{c.name}</td>
-                                            <td className="text-center">{c.citizenCode}</td>
-                                            <td className="text-center">{c.quantityContract}</td>
-                                            <td className="text-center">
+                                            <td >{c.name}</td>
+                                            <td >{c.citizenCode}</td>
+                                            <td >{c.quantityContract}</td>
+                                            <td >
                                                 <button className="btn btn-success text-center" onClick={async () => {
                                                     await setIdCustomer(c.id)
                                                     handleModalClose(true)
@@ -381,35 +395,23 @@ export function CreateLiquidation() {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <div className="d-flex col-12 justify-content-end" style={{marginLeft: "-5%"}}>
-                        <nav aria-label="...">
-                            <ul className="pagination">
-                                <li hidden={customerPage === 0} className="page-item">
-                                    <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginateCustomers(customerPage - 1)}>
-                                        Trước
-                                    </button>
-                                </li>
-                                {Array.from({length: customerTotalPages}, (a, index) => index).map((page) => (
-                                    <li className="page-item">
-                                        <button
-                                            className={`page-link ${page === customerPage ? "active" : ""}`}
-                                            key={page}
-                                            onClick={() => paginateCustomers(page)}
-                                        >
-                                            {page + 1}
-                                        </button>
-                                    </li>
-                                ))}
-                                <li disabled={customerPage + 1 === customerTotalPages} className="page-item">
-                                    <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginateCustomers(customerPage + 1)}>
-                                        Tiếp
-                                    </button>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                    {customers.length === 0 ? '' :
+                        <div className="d-grid">
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Sau"
+                                onPageChange={handlePage1}
+                                pageCount={customerTotalPages}
+                                previousLabel="Trước"
+                                containerClassName="pagination"
+                                pageLinkClassName="page-num"
+                                nextLinkClassName="page-num"
+                                previousLinkClassName="page-num"
+                                activeClassName="active"
+                                disabledClassName="d-none"
+                            />
+                        </div>
+                    }
                 </Modal.Footer>
             </Modal>
 
@@ -489,7 +491,7 @@ export function CreateLiquidation() {
                                                 </Field>
                                             </div>
                                         </div>
-                                        <div className="col-lg-2" style={{marginTop: "1.9vw"}}>
+                                        <div className="col-lg-2" style={{marginTop: "1.6vw"}}>
                                             <div className="form-group">
                                                 <button type="submit" className="btn btn-outline-success ">
                                                     <i className="bi bi-search"></i></button>
@@ -504,11 +506,12 @@ export function CreateLiquidation() {
 
                     <table className="table table-striped">
                         <thead>
-                        <tr>
-                            <th className="text-center">Tên đồ</th>
-                            <th className="text-center">Loại đồ</th>
-                            <th className="text-center">Số lượng</th>
-                            <th className="text-center">Giá (VNĐ)</th>
+                        <tr style={{textAlign: "start"}}>
+                            <th >Tên đồ</th>
+                            <th >Loại đồ</th>
+                            <th >Số lượng</th>
+                            <th >Giá (VNĐ)</th>
+                            <th >Chức năng</th>
                         </tr>
                         </thead>
                         {contracts.length === 0 ? <tr>
@@ -522,13 +525,13 @@ export function CreateLiquidation() {
                                 contracts.map((ct) => {
                                     return (
                                         <tr key={ct.id}>
-                                            <td className="text-md-start">{ct.productName}</td>
-                                            <td className="text-center">{ct.productType}</td>
-                                            <td className="text-center">1</td>
-                                            <td className="text-center">{(+ct.loans).toLocaleString()}</td>
-                                            <td className="text-center">
+                                            <td >{ct.productName}</td>
+                                            <td >{ct.productType}</td>
+                                            <td >1</td>
+                                            <td >{(+ct.loans).toLocaleString()}</td>
+                                            <td >
                                                 <button type="button" onClick={() => {
-                                                    getProduct(ct.id);
+                                                    onSelectContract(ct.id);
                                                     handleModalClose1(true);
                                                 }}
                                                         className="btn btn-success text-center">Chọn
@@ -544,43 +547,26 @@ export function CreateLiquidation() {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <div className="d-flex col-12 justify-content-end" style={{marginLeft: '-5%'}}>
-                        <nav aria-label="...">
-                            <ul className="pagination">
-                                <li hidden={contractPage === 0} className="page-item">
-                                    <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginateContracts(contractPage - 1)}>
-                                        Trước
-                                    </button>
-                                </li>
-                                {Array.from({length: contractTotalPages}, (a, index) => index).map((page) => (
-                                    <li className="page-item">
-                                        <button
-                                            className={`page-link ${page === contractPage ? "active" : ""}`}
-                                            key={page}
-                                            onClick={() => paginateContracts(page)}
-                                        >
-                                            {page + 1}
-                                        </button>
-                                    </li>
-                                ))}
-                                <li disabled={contractPage + 1 === contractTotalPages} className="page-item">
-                                    <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginateContracts(contractPage + 1)}>
-                                        Tiếp
-                                    </button>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                    {contracts.length === 0 ? '' :
+                        <div className="d-grid">
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Sau"
+                                onPageChange={handlePage}
+                                pageCount={contractTotalPages}
+                                previousLabel="Trước"
+                                containerClassName="pagination"
+                                pageLinkClassName="page-num"
+                                nextLinkClassName="page-num"
+                                previousLinkClassName="page-num"
+                                activeClassName="active"
+                                disabledClassName="d-none"
+                            />
+                        </div>
+                    }
 
                 </Modal.Footer>
             </Modal>
-
-
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-                    crossorigin="anonymous"/>
         </>
     )
 }
