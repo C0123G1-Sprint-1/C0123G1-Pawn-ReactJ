@@ -191,7 +191,7 @@ export function CreatePosts() {
                                     <div className="form-group m-2">
                                         <label className="label-post" htmlFor="content">Nội dung <span
                                             className="err-class">*</span></label>
-                                        <Field as="textarea" id="content" name="content"
+                                        <Field as="textarea" id="content" name="content" className="textarea-posts"
                                                placeholder="Nhập nội dung tin tức" rows="15"/>
                                         <ErrorMessage name="content" component="span" className="err-class"/>
                                     </div>
