@@ -4,9 +4,9 @@ import {Outlet} from "react-router";
 
 export default function InfoStore() {
     const [isActives, setIsActive] = useState(true);
-    useEffect(()=>{
-        setIsActive(false)
-    },[isActives])
+    const setActive = async ()=>{
+        setIsActive(()=>false)
+    }
     return (
         <>
             <div id="content" className="container">
@@ -20,46 +20,45 @@ export default function InfoStore() {
                             >
                                 Thông tin cửa hàng
                             </button>
-                            <NavLink to={"/nav/info-store/profit"} style={({isActive})=>{
-                                if(isActive){
-                                    // alert(isActive)
-                                    setIsActive(()=>false)
+                            <NavLink to={"/nav/info-store/profit"} style={({isActive}) => {
+                                if (isActive === false) {
+                                    setActive(false)
                                 }
-                                return{
-                                    backgroundColor: isActive || isActives === true  ? "#27533e": "",
-                                    color: isActive || isActives === true ? "#fff": ""
+                                return {
+                                    backgroundColor: isActive || isActives ? "#27533e" : "",
+                                    color: isActive || isActives ? "#fff" : ""
                                 }
-                            }}  className="border-0 list-group-item list-group-item-action" id="statistic-profit">
+                            }} className="border-0 list-group-item list-group-item-action" id="statistic-profit">
                                 Thống kê lợi nhuận
                             </NavLink>
-                            <NavLink to={"/nav/info-store/all-contract"} onClick={()=>{
-                                setIsActive(false)
-                            }} style={({isActive})=>{
-                                return{
-                                    backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "#fff": ""
+                            <NavLink to={"/nav/info-store/all-contract"} onClick={() => {
+                                setActive(false)
+                            }} style={({isActive}) => {
+                                return {
+                                    backgroundColor: isActive ? "#27533e" : "",
+                                    color: isActive ? "#fff" : ""
                                 }
-                            }}  className="border-0 list-group-item list-group-item-action">
+                            }} className="border-0 list-group-item list-group-item-action">
                                 Danh sách đồ cầm trong kho
                             </NavLink>
-                            <NavLink to={"/nav/info-store/transaction-history"} onClick={()=>{
-                                setIsActive(false)
-                            }} style={({isActive})=>{
-                                return{
-                                    backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "#fff": ""
+                            <NavLink to={"/nav/info-store/transaction-history"} onClick={() => {
+                                setActive(false)
+                            }} style={({isActive}) => {
+                                return {
+                                    backgroundColor: isActive ? "#27533e" : "",
+                                    color: isActive ? "#fff" : ""
                                 }
-                            }}  className="border-0 list-group-item list-group-item-action">
+                            }} className="border-0 list-group-item list-group-item-action">
                                 Lịch sử giao giao dịch
                             </NavLink>
-                            <NavLink to={"/nav/info-store/top-10"} onClick={()=>{
-                                setIsActive(false)
-                            }} style={({isActive})=>{
-                                return{
-                                    backgroundColor: isActive ? "#27533e": "",
-                                    color: isActive ? "#fff": ""
+                            <NavLink to={"/nav/info-store/top-10"} onClick={() => {
+                                setActive(false)
+                            }} style={({isActive}) => {
+                                return {
+                                    backgroundColor: isActive ? "#27533e" : "",
+                                    color: isActive ? "#fff" : ""
                                 }
-                            }}  className="border-0 list-group-item list-group-item-action ">
+                            }} className="border-0 list-group-item list-group-item-action ">
                                 Top 10 hợp đồng mới nhất
                             </NavLink>
                         </div>

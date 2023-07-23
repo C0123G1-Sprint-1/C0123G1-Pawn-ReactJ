@@ -2,11 +2,15 @@ import React, {useEffect, useState} from "react";
 import * as contractService from "../../service/ContractService"
 import {Link, NavLink} from "react-router-dom";
 import "../../css/UpdateContract.css"
-
+import jwt from 'jwt-decode';
 import Swal from "sweetalert2";
 import moment from "moment";
 
 
+const token = localStorage.getItem('token');
+const decodedToken = jwt(token);
+console.log(decodedToken.sub)
+console.log(decodedToken.role)
 
 
 export function Top10NewContract() {
@@ -85,8 +89,8 @@ export function Top10NewContract() {
                             {
                                 currentContracts.map((contract) => (
                                     <tr key={contract.id}>
-                                        <td>{contract.contractCode}</td>
-                                        <td>HD-{contract.productName}</td>
+                                        <td>HD-{contract.contractCode}</td>
+                                        <td>{contract.productName}</td>
                                         <td>{contract.customers?.name}</td>
                                         <td>{
                                             moment(contract?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')

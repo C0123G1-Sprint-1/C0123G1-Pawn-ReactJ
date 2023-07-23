@@ -1,30 +1,29 @@
 import axios from "axios";
 
+
 export const save = async (customer) => {
+    const token = localStorage.getItem('token')
     try {
         await axios.post(`http://localhost:8080/api/customer/`, {...customer},
-            // {
-            //     headers:
-            //         {
-            //             'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN"),
-            //             //   'Authorization': 'Bearer ' + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUaG9uZ0FkbWluIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODg1NDIxMDcsImV4cCI6MTY4ODYyODUwN30.HvyaQWe8aJdKeByZqB6_8nwVyoVa890IKdiFDMnH5g3YKIt1Leg9Ek8rqsrIVfrR1lDKeIEIttrnZv_mrUydDg"
-            //         },
-            // }
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }
         );
     } catch (e) {
         console.log(e)
     }
 }
 export const update = async (customer) => {
+    const token = localStorage.getItem('token')
     try {
         await axios.patch(`http://localhost:8080/api/customer/${customer.id}`, {...customer},
-            // {
-            //     headers:
-            //         {
-            //             'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN"),
-            //             //   'Authorization': 'Bearer ' + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUaG9uZ0FkbWluIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODg1NDIxMDcsImV4cCI6MTY4ODYyODUwN30.HvyaQWe8aJdKeByZqB6_8nwVyoVa890IKdiFDMnH5g3YKIt1Leg9Ek8rqsrIVfrR1lDKeIEIttrnZv_mrUydDg"
-            //         },
-            // }
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }
         );
     } catch (e) {
         console.log(e)
@@ -32,8 +31,14 @@ export const update = async (customer) => {
 }
 
 export const findAllRegisterPawn = async () => {
+    const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/register-pawn`)
+        const result = await axios.get(`http://localhost:8080/api/register-pawn`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
         return result.data
     } catch (error) {
         console.log(error)
@@ -42,8 +47,14 @@ export const findAllRegisterPawn = async () => {
 
 
 export const findByIdCustomer = async (id) => {
+    const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/customer/${id}`)
+        const result = await axios.get(`http://localhost:8080/api/customer/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
         return result.data
     } catch (e) {
         console.log(e)
@@ -51,8 +62,14 @@ export const findByIdCustomer = async (id) => {
 }
 
 export const checkPhoneNumberExists = async (phoneNumber) => {
+    const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/customer/check-phone/${phoneNumber}`)
+        const result = await axios.get(`http://localhost:8080/api/customer/check-phone/${phoneNumber}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
         return result.data
     } catch (e) {
         console.log(e)
@@ -60,8 +77,14 @@ export const checkPhoneNumberExists = async (phoneNumber) => {
 }
 
 export const checkEmailExists = async (email) => {
+    const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/customer/check-email/${email}`)
+        const result = await axios.get(`http://localhost:8080/api/customer/check-email/${email}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
         return result.data
     } catch (e) {
         console.log(e)
@@ -69,8 +92,14 @@ export const checkEmailExists = async (email) => {
 }
 
 export const checkCitizenCodeExists = async (citizenCode) => {
+    const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/customer/check-citizen-code/${citizenCode}`)
+        const result = await axios.get(`http://localhost:8080/api/customer/check-citizen-code/${citizenCode}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
         return result.data
     } catch (e) {
         console.log(e)
