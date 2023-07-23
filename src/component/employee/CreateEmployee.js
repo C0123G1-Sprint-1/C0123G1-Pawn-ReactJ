@@ -171,7 +171,7 @@ export function CreateEmployee() {
                             await createEmployee(newValue);
                             console.log(values)
                             save();
-                            navigate("/api/employee");
+                            navigate("/nav/api/employee");
                             resetForm(false);
                         } catch (e) {
                             resetForm(true);

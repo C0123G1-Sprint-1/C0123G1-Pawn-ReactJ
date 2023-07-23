@@ -318,7 +318,20 @@ section {
         z-index: 9996;
     }
 }
-
+/*#dropdown-info-user{*/
+/*    color: black;*/
+/*    font-size:15px;*/
+/*    ursor: pointer*/
+/*}*/
+/*#dropdown-info-user:hover{*/
+/*    color: red;*/
+/*}*/
+.dropdown-item-info-user:hover{
+    color: black !important;
+    font-size:15px !important;
+    cursor: pointer !important;
+    background-color: #0D6EFD !important;
+}
 
 @media screen and (max-width: 768px) {
 
@@ -334,7 +347,4 @@ body {
     background-color: #eee;
     font-family: "Poppins", sans-serif;
     font-weight: 300
-}
-#dropdown-info-user{
-    color: red;
 }

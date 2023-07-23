@@ -18,7 +18,7 @@ export default function Interest() {
                         <th>Tiền lãi (VND)</th>
                         <th>Ngày bắt đầu</th>
                         <th>Lợi nhuận (VND)</th>
-                        <th id="actions">Chức năng</th>
+                        {/*<th id="actions">Chức năng</th>*/}
                     </tr>
                     </thead>
                     <tbody>
@@ -31,14 +31,14 @@ export default function Interest() {
                                     <td>{contract.interest?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                     <td>{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
                                     <td>{contract.profit?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td className="detail-button">
-                                        <a href="#">
-                                            <i
-                                                className="bi bi-info-circle detail"
-                                                title="Chi tiết"
-                                            />
-                                        </a>
-                                    </td>
+                                    {/*<td className="detail-button">*/}
+                                    {/*    <a href="#">*/}
+                                    {/*        <i*/}
+                                    {/*            className="bi bi-info-circle detail"*/}
+                                    {/*            title="Chi tiết"*/}
+                                    {/*        />*/}
+                                    {/*    </a>*/}
+                                    {/*</td>*/}
                                 </tr>
                             )
                             :

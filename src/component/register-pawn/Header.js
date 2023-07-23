@@ -136,21 +136,18 @@ export function Header() {
                                                         {username}
                                                     </DropdownToggle>
                                                     <DropdownMenu className="abc">
-                                                        <a className="dropdown-item " id="dropdown-info-user" style={{color: "black"}}>
+                                                        <a className="dropdown-item " id="dropdown-info-user" style={{color: "black",fontSize:"15px"}}>
                                                             Thông tin cá nhân<i style={{marginRight: "0.5rem"}}
                                                                                 className="fa-solid fa-info"></i></a>
                                                         <a className="dropdown-item " onClick={() => handlerLogout()}
-                                                           style={{color: "black"}}>Đăng xuất<i
+                                                           style={{color: "black",fontSize:"15px"}}>Đăng xuất<i
                                                             className="fa-solid fa-right-from-bracket"></i></a>
                                                         <Link to="/nav/info-store" className="dropdown-item "
-                                                              style={{color: "black"}}>Quản lý cửa hàng<i
+                                                              style={{color: "black",fontSize:"15px"}}>Quản lý cửa hàng<i
                                                             className="fa-solid fa-list-check"></i></Link>
                                                     </DropdownMenu>
                                                 </Dropdown>
-                                                {/*<i style={{ marginLeft: "0.5rem" }}*/}
-                                                {/*   className="fa-solid fa-right-from-bracket"*/}
-                                                {/*   onClick={() => handlerLogout()}></i>*/}
-                                                <i style={{marginLeft: "0.5rem"}} className="fa-regular fa-user"></i>
+                                                <i style={{marginLeft: "0.5rem",fontSize:"20px"}} className="fa-regular fa-user"></i>
                                             </>
                                         )
                                         :
@@ -158,7 +155,7 @@ export function Header() {
                                             <>
                                                 <a onClick={() => navigate("/login")} style={{fontSize: "18px"}}>Đăng
                                                     nhập</a>
-                                                <i style={{marginLeft: "0.5rem"}} className="fa-regular fa-user"></i>
+                                                <i style={{marginLeft: "0.5rem",fontSize:"15px"}} className="fa-regular fa-user"></i>
                                             </>
                                         )
                                     }

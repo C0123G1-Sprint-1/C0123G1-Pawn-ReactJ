@@ -13,7 +13,6 @@ export default function Navbars() {
         if (token) {
             const decoded = jwt(token);
             setDecodedToken(decoded);
-            alert(decoded.id)
         } else {
             // Xử lý khi không có token trong localStorage
         }
@@ -36,7 +35,7 @@ export default function Navbars() {
                     <ul className=""
                         style={{
                             height: "100%", display: "flex",
-                            justifyContent: "center",
+                            justifyContent: "space-evenly",
                             flexDirection: "row",
                             listStyle: "none",
                             alignItems: "center"

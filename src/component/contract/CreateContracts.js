@@ -197,7 +197,7 @@ export const CreateContracts = () => {
     return (
         <>
             <div className="container" >
-                <div className="row height d-flex justify-content-center align-items-center" style={{height: "80vh"}}>
+                <div className="row d-flex justify-content-center align-items-center" style={{minHeight: "80vh"}}>
                     <div className="col-md-6">
                         <div className="card px-5 py-4">
                             <div style={{textAlign: "center"}}>
