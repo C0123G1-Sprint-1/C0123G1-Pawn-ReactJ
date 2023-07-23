@@ -31,7 +31,18 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;" />
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/all_contract/ShowContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/all_contract/ShowContract.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profit/Foresee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Foresee.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profit/Interest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Interest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profit/Liquidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Liquidation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profit/Profit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Profit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/interest.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/interest.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,7 +58,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="DEV-1" />
+        <entry key="$PROJECT_DIR$" value="createContract-DinhHD" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../css/header.css"
 import "../../css/home.css"
-import { useNavigate } from "react-router";
+import {useNavigate} from "react-router";
 import jwt from 'jwt-decode';
-import { ToastContainer, toast } from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Link, NavLink} from "react-router-dom";
-import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
+import {Dropdown, DropdownToggle, DropdownMenu} from 'reactstrap';
+
 export function Header() {
 
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ export function Header() {
         navigate("/login")
     };
     // console.log(decodedToken.sub)
-    return(
+    return (
         <>
             <>
                 {/*header*/}
@@ -49,25 +50,29 @@ export function Header() {
                         <NavLink to="/" className="logo d-flex align-items-center">
                             {/* Uncomment the line below if you also wish to use an image logo */}
                             <div className="pnj">
-                                <img src="/anh/pawnshop.png" style={{ marginLeft: "40%", maxHeight: 90 }} alt="" />
+                                <img src="/anh/pawnshop.png" style={{marginLeft: "40%", maxHeight: 90}} alt=""/>
                             </div>
                         </NavLink>
                         <nav id="navbar" className="navbar">
                             <ul>
                                 <li>
-                                    <NavLink style={{ color: "white", fontSize: '20px', }} to="/" className=" font-a-header">
+                                    <NavLink style={{color: "white", fontSize: '20px',}} to="/"
+                                             className=" font-a-header">
                                         Trang Chủ
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink style={{ color: "white", fontSize: '20px', }} to="/listPosts">Tin Tức</NavLink>
+                                    <NavLink style={{color: "white", fontSize: '20px',}} to="/listPosts">Tin
+                                        Tức</NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/create" className='font-a-header'
-                                             style={{ color: "white", fontSize: '20px', }}>Đăng ký cầm đồ</NavLink>
+                                             style={{color: "white", fontSize: '20px',}}>Đăng ký cầm đồ</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/condition"  className='font-a-header' style={{color : "white",fontSize:'20px',}} >Điều khoản & Điều kiện</NavLink>
+                                    <NavLink to="/condition" className='font-a-header'
+                                             style={{color: "white", fontSize: '20px',}}>Điều khoản & Điều
+                                        kiện</NavLink>
                                 </li>
 
                                 {/*<li className="dropdown">*/}
@@ -113,7 +118,8 @@ export function Header() {
                                     {isLogin ?
                                         (
                                             <>
-                                                <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="nav-info-user">
+                                                <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}
+                                                          className="nav-info-user">
                                                     <DropdownToggle
                                                         style={{
                                                             backgroundColor: "#00833e",
@@ -129,25 +135,29 @@ export function Header() {
                                                         {username}
                                                     </DropdownToggle>
                                                     <DropdownMenu className="abc">
-                                                        <a className="dropdown-item" style={{ color: "black" }}>
-                                                            <i style={{ marginLeft: "0.5rem" }} className="fa-solid fa-info"></i>
-                                                            Thông tin cá nhân</a>
-                                                        <a className="dropdown-item" onClick={() => handlerLogout()} style={{ color: "black" }}>Đăng xuất</a>
-                                                        <Link to="/nav/info-store" className="dropdown-item"  style={{ color: "black" }}>Quản lý cửa hàng</Link>
+                                                        <a className="dropdown-item " id="dropdown-info-user" style={{color: "black"}}>
+                                                            Thông tin cá nhân<i style={{marginRight: "0.5rem"}}
+                                                                                className="fa-solid fa-info"></i></a>
+                                                        <a className="dropdown-item " onClick={() => handlerLogout()}
+                                                           style={{color: "black"}}>Đăng xuất<i
+                                                            className="fa-solid fa-right-from-bracket"></i></a>
+                                                        <Link to="/nav/info-store" className="dropdown-item "
+                                                              style={{color: "black"}}>Quản lý cửa hàng<i
+                                                            className="fa-solid fa-list-check"></i></Link>
                                                     </DropdownMenu>
                                                 </Dropdown>
                                                 {/*<i style={{ marginLeft: "0.5rem" }}*/}
                                                 {/*   className="fa-solid fa-right-from-bracket"*/}
                                                 {/*   onClick={() => handlerLogout()}></i>*/}
-                                                <i style={{ marginLeft: "0.5rem" }} className="fa-regular fa-user"></i>
+                                                <i style={{marginLeft: "0.5rem"}} className="fa-regular fa-user"></i>
                                             </>
                                         )
                                         :
                                         (
                                             <>
-                                                <a onClick={() => navigate("/login")} style={{ fontSize: "18px" }}>Đăng
+                                                <a onClick={() => navigate("/login")} style={{fontSize: "18px"}}>Đăng
                                                     nhập</a>
-                                                <i style={{ marginLeft: "0.5rem" }} className="fa-regular fa-user"></i>
+                                                <i style={{marginLeft: "0.5rem"}} className="fa-regular fa-user"></i>
                                             </>
                                         )
                                     }
@@ -157,22 +167,20 @@ export function Header() {
                         </nav>
 
                         <i onClick={() => mobileNavToggle()}
-                           className="fa-solid fa-bars mobile-nav-toggle mobile-nav-show bi bi-list" />
+                           className="fa-solid fa-bars mobile-nav-toggle mobile-nav-show bi bi-list"/>
                         <i onClick={() => mobileNavToggle()}
-                           className="fa-solid fa-xmark mobile-nav-toggle mobile-nav-hide d-none bi bi-x" />
+                           className="fa-solid fa-xmark mobile-nav-toggle mobile-nav-hide d-none bi bi-x"/>
 
 
                     </div>
                 </header>
             </>
-            <ToastContainer />
+            <ToastContainer/>
         </>
 
     )
 
 }
-
-
 
 
 function mobileNavToggle() {

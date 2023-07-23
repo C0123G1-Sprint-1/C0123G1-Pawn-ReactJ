@@ -13,7 +13,7 @@ export default function Foresee() {
             <div style={{height: "53vh"}}>
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
-                    <tr>
+                    <tr style={{textAlign: "start"}}>
                         <th>Mã HD</th>
                         <th>Tiền cho vay (VND)</th>
                         <th>Tiền lãi (VND)</th>
