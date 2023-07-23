@@ -133,7 +133,7 @@
     font-weight: 700;
     margin: 2rem 4rem;
 }
-textarea {
+.textarea-posts {
     width: 100%;
     padding: 10px;
     /*height: 100px;*/

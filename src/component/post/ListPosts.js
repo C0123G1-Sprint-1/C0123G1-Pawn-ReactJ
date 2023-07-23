@@ -1,7 +1,7 @@
 import * as servicePosts from "../../service/ServicePosts";
 import React, {useEffect, useState} from "react";
 import "../../css/Posts.css";
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -17,14 +17,11 @@ export function ListPosts() {
             setDecodedToken(decoded);
         } else {
             // Xử lý khi không có token trong localStorage
-            console.log("abc")
         }
     }, [token]);
     const [posts, setPosts] = useState([])
-    const [idDelete, setIdDelete] = useState()
-    const [nameDelete, setNameDelete] = useState()
     let [search, setSearch] = useState({
-        title:''
+        title: ''
     });
 
 // Hàm định dạng ngày giờ
@@ -102,7 +99,8 @@ export function ListPosts() {
                             findName()
                         }}>{
                         <Form className="d-flex">
-                            <Field className="form-control me-1" style={{width: "18rem"}} type="text" placeholder="Tìm kiếm tin tức" name="title"/>
+                            <Field className="form-control me-1" style={{width: "18rem"}} type="text"
+                                   placeholder="Tìm kiếm tin tức" name="title"/>
                             <button className="btn btn-outline-success me-4" type="submit" style={{width: '3rem'}}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                      className="bi bi-search" viewBox="0 0 16 16">
@@ -114,20 +112,23 @@ export function ListPosts() {
                     </Formik>
                 </div>
                 <div className="">
-                    <h2 className="ms-3 text-posts" style={{background: "url(https://chovayhanoi.com/wp-content/uploads/2020/04/border-title-02.png) no-repeat center bottom",
+                    <h2 className="ms-3 text-posts" style={{
+                        background: "url(https://chovayhanoi.com/wp-content/uploads/2020/04/border-title-02.png) no-repeat center bottom",
                         paddingBottom: "20px",
                         textTransform: "uppercase",
                         color: "#c57101",
                         textAlign: "center",
                         fontSize: "30px",
                         fontWeight: "600",
-                        margin: "20px 0"}}>
+                        margin: "20px 0"
+                    }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                              className="bi bi-postcard-fill" viewBox="0 0 16 16">
                             <path d="M11 8h2V6h-2v2Z"/>
                             <path
                                 d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm8.5.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7ZM2 5.5a.5.5 0 0 0 .5.5H6a.5.5 0 0 0 0-1H2.5a.5.5 0 0 0-.5.5ZM2.5 7a.5.5 0 0 0 0 1H6a.5.5 0 0 0 0-1H2.5ZM2 9.5a.5.5 0 0 0 .5.5H6a.5.5 0 0 0 0-1H2.5a.5.5 0 0 0-.5.5Zm8-4v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5Z"/>
-                        </svg><span>  </span>
+                        </svg>
+                        <span>  </span>
                         Tin tức - Kinh nghiệm cầm đồ
                     </h2>
                 </div>
@@ -201,27 +202,30 @@ export function ListPosts() {
                         ))
                 }
             </ul>
-            <div className="pagination-container-huy me-5">
-                {currentPage !== 1 && (
-                    <button onClick={() => handlePageChange(currentPage - 1)}>
-                        Trước
-                    </button>
-                )}
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => handlePageChange(index + 1)}
-                        style={{ fontWeight: currentPage === index + 1 ? 'bold' : 'normal' }}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-                {currentPage !== totalPages && (
-                    <button onClick={() => handlePageChange(currentPage + 1)}>
-                        Sau
-                    </button>
-                )}
-            </div>
+
+            {(currentPosts.length === 0) ? ("") : (
+                <div className="pagination-container-huy me-5">
+                    {currentPage !== 1 && (
+                        <button onClick={() => handlePageChange(currentPage - 1)}>
+                            Trước
+                        </button>
+                    )}
+                    {Array.from({length: totalPages}, (_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handlePageChange(index + 1)}
+                            style={{fontWeight: currentPage === index + 1 ? 'bold' : 'normal'}}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                    {currentPage !== totalPages && (
+                        <button onClick={() => handlePageChange(currentPage + 1)}>
+                            Sau
+                        </button>
+                    )}
+                </div>
+            )}
         </>
     )
 }

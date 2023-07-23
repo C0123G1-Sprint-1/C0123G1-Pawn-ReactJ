@@ -54,7 +54,7 @@ import {Field, Form, Formik} from "formik";
                     <div style={{marginBottom: '20px'}}>
                         <h2 className="d-flex justify-content-center"
                             >
-                            DANH SÁCH KHÁCH HÀNG MỚI
+                            KHÁCH HÀNG TRÊN MẠNG
                         </h2>
                     </div>
                     <div style={{marginTop: '2%'}}>
@@ -104,13 +104,13 @@ import {Field, Form, Formik} from "formik";
                             </div>
 
                         </div>
-                        <div className="d-grid" style={{marginRight:"5.5%"}}>
+                        <div className="d-grid" style={{marginRight:"10%"}}>
                             <ReactPaginate
                                 breakLabel="..."
-                                nextLabel=">"
+                                nextLabel="Sau"
                                 onPageChange={handlePageClick1}
                                 pageCount={pageCount1}
-                                previousLabel="< "
+                                previousLabel="Trước"
                                 containerClassName="pagination"
                                 pageLinkClassName="page-num"
                                 nextLinkClassName="page-num"
