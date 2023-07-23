@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import jwt from 'jwt-decode';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { NavLink } from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 export function Header() {
 
@@ -113,7 +113,7 @@ export function Header() {
                                     {isLogin ?
                                         (
                                             <>
-                                                <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+                                                <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="nav-info-user">
                                                     <DropdownToggle
                                                         style={{
                                                             backgroundColor: "#00833e",
@@ -128,14 +128,18 @@ export function Header() {
                                                     >
                                                         {username}
                                                     </DropdownToggle>
-                                                    <DropdownMenu>
-                                                        <a className="dropdown-item" style={{ color: "black" }}>Thông tin cá nhân</a>
+                                                    <DropdownMenu className="abc">
+                                                        <a className="dropdown-item" style={{ color: "black" }}>
+                                                            <i style={{ marginLeft: "0.5rem" }} className="fa-solid fa-info"></i>
+                                                            Thông tin cá nhân</a>
                                                         <a className="dropdown-item" onClick={() => handlerLogout()} style={{ color: "black" }}>Đăng xuất</a>
+                                                        <Link to="/nav/info-store" className="dropdown-item"  style={{ color: "black" }}>Quản lý cửa hàng</Link>
                                                     </DropdownMenu>
                                                 </Dropdown>
-                                                <i style={{ marginLeft: "0.5rem" }}
-                                                   className="fa-solid fa-right-from-bracket"
-                                                   onClick={() => handlerLogout()}></i>
+                                                {/*<i style={{ marginLeft: "0.5rem" }}*/}
+                                                {/*   className="fa-solid fa-right-from-bracket"*/}
+                                                {/*   onClick={() => handlerLogout()}></i>*/}
+                                                <i style={{ marginLeft: "0.5rem" }} className="fa-regular fa-user"></i>
                                             </>
                                         )
                                         :
