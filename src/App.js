@@ -73,7 +73,7 @@ function App() {
                     <Route path="/nav/api/employee/create-employee" element={<CreateEmployee/>}/>
                     <Route path="/nav/redeem" element={<Redeeming/>}/>
                     <Route path={"/nav/manager-customer"} element={<CustomerListMOI/>}/>
-                    <Route path={"/nav/register"} element={<RegisterPawnAnhQoc/>}/>
+                    <Route path={"/nav/manager-customer/register"} element={<RegisterPawnAnhQoc/>}/>
                     <Route path={"/nav/manager-customer/create"} element={<CreateCustomer/>}/>
                     <Route path={"/nav/manager-customer/update/:id"} element={<UpdateCustomer/>}/>
                     <Route path={"/nav/detail/employee/:id"} element={<EmployeeInformation/>}/>

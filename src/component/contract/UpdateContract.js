@@ -101,7 +101,7 @@ export function UpdateContract() {
                             return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
                         }),
                     contractCode: Yup.string()
-                        .required("Không được để trống"),
+                        .required("Không được để trống").matches(/^[a-zA-Z0-9]+$/, "Mã hợp đồng không được chứa ký tự đặc biệt"),
 
                     startDate: Yup
                         .date()

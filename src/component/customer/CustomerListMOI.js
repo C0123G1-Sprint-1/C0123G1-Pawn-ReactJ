@@ -189,7 +189,7 @@ export function CustomerListMOI() {
                                     hàng
                                 </Link>
 
-                                <Link to="/nav/register" className="btn btn-success"
+                                <Link to="/nav/manager-customer/register" className="btn btn-success"
 
                                       style={{marginLeft: '5%'}}>
                                     Danh sách khách hàng mới
