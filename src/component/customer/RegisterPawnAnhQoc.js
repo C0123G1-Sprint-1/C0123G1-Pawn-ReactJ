@@ -52,10 +52,10 @@ import {Field, Form, Formik} from "formik";
             <div className="row mx-0">
                 <div className="container mx-auto my-5 col-8" style={{width: '90%'}}>
                     <div style={{marginBottom: '20px'}}>
-                        <h2 className="d-flex justify-content-center"
+                        <h1 className="d-flex justify-content-center"
                             >
                             KHÁCH HÀNG TRÊN MẠNG
-                        </h2>
+                        </h1>
                     </div>
                     <div style={{marginTop: '2%'}}>
                         <div className="row">
@@ -69,11 +69,10 @@ import {Field, Form, Formik} from "formik";
                             </div>
                             <div className="col-12">
                                 <div className="d-flex justify-content-center">
-
                                     <div className="table-responsive" style={{width: '80%'}}>
                                         <table className="table table-striped">
                                             <thead>
-                                            <tr>
+                                            <tr style={{textAlign: "start"}}>
                                                 <th>STT</th>
                                                 <th>Tên khách hàng</th>
                                                 <th>Số điện thoại</th>

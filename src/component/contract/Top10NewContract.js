@@ -74,7 +74,7 @@ export function Top10NewContract() {
                         </h2>
                         <table className="table table-striped">
                             <thead>
-                            <tr>
+                            <tr style={{textAlign: "start"}}>
                                 <th>Mã HĐ</th>
                                 <th>Tên đồ</th>
                                 <th>Tên khách hàng</th>
@@ -88,7 +88,7 @@ export function Top10NewContract() {
                             <tbody>
                             {
                                 currentContracts.map((contract) => (
-                                    <tr key={contract.id}>
+                                    <tr key={contract.id} >
                                         <td>HD-{contract.contractCode}</td>
                                         <td>{contract.productName}</td>
                                         <td>{contract.customers?.name}</td>

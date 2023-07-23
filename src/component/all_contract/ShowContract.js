@@ -169,7 +169,7 @@ export const ShowContract = () => {
                                 <div>
                                     <table className="table table-striped">
                                         <thead>
-                                        <tr className="text-center">
+                                        <tr style={{textAlign: "start"}}>
                                             <th>Mã HĐ</th>
                                             <th>Tên đồ</th>
                                             <th>Loại đồ</th>
@@ -189,7 +189,7 @@ export const ShowContract = () => {
                                             <tbody>
                                             {
                                                 contracts.map((value) => (
-                                                    <tr key={value.contractId} className="text-center">
+                                                    <tr key={value.contractId} style={{textAlign: "start"}}>
                                                         <td>{value.contractCode}</td>
                                                         <td>{value.productName}</td>
                                                         <td>{value.productType}</td>
@@ -220,8 +220,8 @@ export const ShowContract = () => {
                                         <nav aria-label="...">
                                             <ul className="pagination">
                                                 <li hidden={page === 0} className="page-item ">
-                                                    <button className="page-link" tabIndex={-1}
-                                                            style={{border: "1px solid gray", borderRadius: "5px",color: "green"}}
+                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
                                                             onClick={() => paginate(page - 1)}>
                                                         Trước
                                                     </button>
@@ -253,8 +253,8 @@ export const ShowContract = () => {
                                                 {/*</li>*/}
                                                 <li hidden={page + 1 === totalPage || totalPage === 0}
                                                     className="page-item">
-                                                    <button className="page-link" tabIndex={-1}
-                                                            style={{border: "1px solid gray", borderRadius: "5px",color: "green"}}
+                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
                                                             onClick={() => paginate(page + 1)}>
                                                         Sau
                                                     </button>

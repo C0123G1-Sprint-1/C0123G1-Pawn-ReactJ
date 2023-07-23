@@ -7,12 +7,13 @@ import jwt from 'jwt-decode';
 
 export default function Navbars() {
     const token = localStorage.getItem('token');
-    const [decodedToken, setDecodedToken] = useState("");
+    const [decodedToken, setDecodedToken] = useState(0);
 
     useEffect(() => {
         if (token) {
             const decoded = jwt(token);
             setDecodedToken(decoded);
+            alert(decoded.id)
         } else {
             // Xử lý khi không có token trong localStorage
         }
@@ -163,7 +164,7 @@ export default function Navbars() {
                                     display: "flex",
                                     padding: "10px"
                                 }
-                            }} className="nav-link" to={`/nav/detail/employee/`+token.id}>
+                            }} className="nav-link" to={`/nav/detail/employee/`+decodedToken.id}>
                                 Thông tin cá nhân
                             </NavLink>
                         </li>

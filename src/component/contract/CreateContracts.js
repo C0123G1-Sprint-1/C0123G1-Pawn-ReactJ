@@ -4,7 +4,7 @@ import {Button, Modal} from "react-bootstrap";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {storage} from "../../firebaseContract";
+import {storage} from "../../firebase";
 import Swal from "sweetalert2";
 import * as Yup from 'yup';
 import {ThreeCircles} from "react-loader-spinner";
@@ -179,7 +179,7 @@ export const CreateContracts = () => {
                 '  width: "100%",\n' +
                 '  height: "100%",\n' +
                 '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
-            timer: 4000,
+            timer: 5000,
             title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
             showConfirmButton: false,
             allowOutsideClick: false,
@@ -196,8 +196,8 @@ export const CreateContracts = () => {
 
     return (
         <>
-            <div className="container pt-5">
-                <div className="row height d-flex justify-content-center align-items-center">
+            <div className="container" >
+                <div className="row height d-flex justify-content-center align-items-center" style={{height: "80vh"}}>
                     <div className="col-md-6">
                         <div className="card px-5 py-4">
                             <div style={{textAlign: "center"}}>
@@ -226,7 +226,9 @@ export const CreateContracts = () => {
                                             .required('Không được để trống')
                                             .min(500000, 'Tiền cho vay phải lớn hớn 500.000'),
                                         productType: yup.number()
+                                            .required('Không được để trống')
                                             .min(1, 'Không được để trống'),
+
                                         startDate: Yup.date()
                                             .required('Không được để trống')
                                             .test("date", "Không được chọn quá khứ chỉ chọn hiện tại và tương lai",
@@ -549,9 +551,9 @@ export const CreateContracts = () => {
                             <Modal.Body>
                                 <div className="controlsmodal-body d-flex justify-content-between">
                                     <div style={{marginTop: "0.6%"}}>
-                                        <button type="submit" className="btn btn-outline-success ">
+                                        <Link to="/nav/manager-customer/create" type="submit" className="btn btn-outline-success ">
                                             <b className="textcenter">Thêm khách hàng</b>
-                                        </button>
+                                        </Link>
                                     </div>
                                     <Formik initialValues={{
                                         name: ""
@@ -586,7 +588,7 @@ export const CreateContracts = () => {
                                 </div>
                                 <table className="table table-striped">
                                     <thead>
-                                    <tr>
+                                    <tr style={{textAlign: "start"}}>
                                         <th className="">STT</th>
                                         <th className="">Tên khách hàng</th>
                                         <th className="">CMND/CCCD</th>
@@ -603,8 +605,8 @@ export const CreateContracts = () => {
                                         <tbody>
                                         {customer.map((list, index) => (
                                             <tr key={index}>
-                                                <td className="">{list.id}</td>
-                                                <td className="">{list.name}</td>
+                                                <td >{list.id}</td>
+                                                <td className=" ">{list.name}</td>
                                                 <td className="">{list.citizenCode}</td>
                                                 <td className="text-center">
                                                     <button onClick={() => {

@@ -255,14 +255,14 @@ export default function Profit() {
                     contracts ?
                         <div className="d-flex  col-lg-12 justify-content-between align-items-center">
                             <div className="col-lg-2 col-md-3 col-3 pb-3">
-                                <ExportExcelButton data={contracts} fileName="user_data"/>
+                                {/*<ExportExcelButton data={contracts} fileName="user_data"/>*/}
                             </div>
                             <nav aria-label="...">
                                 <ul className="pagination">
                                     <li className="page-item">
                                         {
                                             currentPage !== 0 ?
-                                                <button className="page-link btn-outline-secondary text-success"
+                                                <button className="page-link page-link-khanhh btn-outline-secondary"
                                                         style={{border: "1px solid gray", borderRadius: "5px"}}
                                                         onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage - 1, params.profitType || profitType)}>
                                                     Trước
@@ -277,7 +277,7 @@ export default function Profit() {
                                     <li className="page-item">
                                         {
                                             currentPage !== totalPage - 1 ?
-                                                <button className="page-link btn-outline-secondary text-success"
+                                                <button className="page-link page-link-khanhh btn-outline-secondary"
                                                         style={{border: "1px solid gray", borderRadius: "5px"}}
                                                         onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage + 1, params.profitType || profitType)}>
                                                     Sau

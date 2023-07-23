@@ -196,8 +196,8 @@ export function CreateLiquidation() {
                         save();
                     }}>
 
-                <div className="container " style={{marginTop: "3vw"}}>
-                    <div className="row height d-flex justify-content-center align-items-center">
+                <div className="container " style={{marginTop: "4.5vh"}}>
+                    <div className="row height d-flex justify-content-center align-items-center" style={{height: "74vh"}}>
                         <div className="col-md-6">
                             <div className="card px-5 py-4" style={{marginBottom: "3vw"}}>
                                 <div style={{textAlign: "center"}}>
@@ -355,10 +355,11 @@ export function CreateLiquidation() {
 
                     <table className=" table table-striped">
                         <thead>
-                        <tr>
-                            <th className="text-center">Tên khách hàng</th>
-                            <th className="text-center">CMND</th>
-                            <th className="text-center">Số lượng HĐ</th>
+                        <tr style={{textAlign: "start"}}>
+                            <th >Tên khách hàng</th>
+                            <th >CMND</th>
+                            <th >Số lượng HĐ</th>
+                            <th >Chức năng</th>
                         </tr>
                         </thead>
                         {customers.length === 0 ?
@@ -373,10 +374,10 @@ export function CreateLiquidation() {
                                 customers.map((c) => {
                                     return (
                                         <tr key={c.id}>
-                                            <td className="text-md-start">{c.name}</td>
-                                            <td className="text-center">{c.citizenCode}</td>
-                                            <td className="text-center">{c.quantityContract}</td>
-                                            <td className="text-center">
+                                            <td >{c.name}</td>
+                                            <td >{c.citizenCode}</td>
+                                            <td >{c.quantityContract}</td>
+                                            <td >
                                                 <button className="btn btn-success text-center" onClick={async () => {
                                                     await setIdCustomer(c.id)
                                                     handleModalClose(true)
@@ -505,11 +506,12 @@ export function CreateLiquidation() {
 
                     <table className="table table-striped">
                         <thead>
-                        <tr>
-                            <th className="text-center">Tên đồ</th>
-                            <th className="text-center">Loại đồ</th>
-                            <th className="text-center">Số lượng</th>
-                            <th className="text-center">Giá (VNĐ)</th>
+                        <tr style={{textAlign: "start"}}>
+                            <th >Tên đồ</th>
+                            <th >Loại đồ</th>
+                            <th >Số lượng</th>
+                            <th >Giá (VNĐ)</th>
+                            <th >Chức năng</th>
                         </tr>
                         </thead>
                         {contracts.length === 0 ? <tr>
@@ -523,11 +525,11 @@ export function CreateLiquidation() {
                                 contracts.map((ct) => {
                                     return (
                                         <tr key={ct.id}>
-                                            <td className="text-md-start">{ct.productName}</td>
-                                            <td className="text-center">{ct.productType}</td>
-                                            <td className="text-center">1</td>
-                                            <td className="text-center">{(+ct.loans).toLocaleString()}</td>
-                                            <td className="text-center">
+                                            <td >{ct.productName}</td>
+                                            <td >{ct.productType}</td>
+                                            <td >1</td>
+                                            <td >{(+ct.loans).toLocaleString()}</td>
+                                            <td >
                                                 <button type="button" onClick={() => {
                                                     onSelectContract(ct.id);
                                                     handleModalClose1(true);
