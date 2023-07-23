@@ -58,6 +58,7 @@
     background: #00833e;
 }
 .pagination .page-num, .pagination .page-previous, .pagination .page-next {
+    color:#00833e ;
     padding: 8px 15px;
     cursor: pointer;
     border-radius: 3px;
