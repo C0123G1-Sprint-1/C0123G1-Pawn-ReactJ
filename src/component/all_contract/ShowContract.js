@@ -196,7 +196,7 @@ export const ShowContract = () => {
                                                         <td>{value.contractStatus}</td>
                                                         <td>{value.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                                         <td>
-                                                            <a >
+                                                            <a style={{cursor: "pointer"}} >
                                                                 <i style={{color: 'blue'}}
                                                                    onClick={() => handleShowDetail(value.contractId)}
                                                                    className=" bi bi-info-circle me-2"></i>
@@ -221,6 +221,7 @@ export const ShowContract = () => {
                                             <ul className="pagination">
                                                 <li hidden={page === 0} className="page-item ">
                                                     <button className="page-link" tabIndex={-1}
+                                                            style={{border: "1px solid gray", borderRadius: "5px",color: "green"}}
                                                             onClick={() => paginate(page - 1)}>
                                                         Trước
                                                     </button>
@@ -234,7 +235,8 @@ export const ShowContract = () => {
                                                     Array.from({length: totalPage}, (a, index) => index).map((pageNum) => (
                                                         <li className="page-item">
                                                             <button
-                                                                className={pageNum === page ? "page-link active" : "page-link"}
+                                                                style={{border: "1px solid gray", borderRadius: "5px"}}
+                                                                className={pageNum === page ? "page-link-active" : "page-link-khanh"}
                                                                 key={pageNum}
                                                                 onClick={() => paginate(pageNum)}>
                                                                 {pageNum + 1}
@@ -252,6 +254,7 @@ export const ShowContract = () => {
                                                 <li hidden={page + 1 === totalPage || totalPage === 0}
                                                     className="page-item">
                                                     <button className="page-link" tabIndex={-1}
+                                                            style={{border: "1px solid gray", borderRadius: "5px",color: "green"}}
                                                             onClick={() => paginate(page + 1)}>
                                                         Sau
                                                     </button>

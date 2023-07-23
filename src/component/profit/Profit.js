@@ -31,7 +31,7 @@ export default function Profit() {
         const page = [];
         for (let i = 0; i < totalPage; i++) {
             const isCurrentPage = currentPage === i;
-            const pageLinkClassName = isCurrentPage ? 'page-link active' : 'page-link-khanh';
+            const pageLinkClassName = isCurrentPage ? 'page-link-active' : 'page-link-khanh';
             page.push(
                 <li className="page-item" key={i}>
                     <button className={pageLinkClassName}

@@ -12,7 +12,7 @@ export default function Liquidation() {
             <div style={{minHeight: "53vh"}}>
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
-                    <tr>
+                    <tr style={{textAlign: "start"}}>
                         <th>Mã HD</th>
                         <th>Tiền mua (VND)</th>
                         <th>Tiền bán (VND)</th>

@@ -335,3 +335,6 @@ body {
     font-family: "Poppins", sans-serif;
     font-weight: 300
 }
+#dropdown-info-user{
+    color: red;
+}
