@@ -60,7 +60,7 @@ const navigate = useNavigate();
                                     <NavLink to="/create"  className='font-a-header' style={{color : "white",fontSize:'20px',}} >Đăng ký cầm đồ</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/condition"  className='font-a-header' style={{color : "white",fontSize:'20px',}} >Điều kiện & Điều khoản</NavLink>
+                                    <NavLink to="/condition"  className='font-a-header' style={{color : "white",fontSize:'20px',}} >Điều khoản & Điều kiện</NavLink>
                                 </li>
 
                                 {/*<li className="dropdown">*/}
@@ -116,6 +116,10 @@ const navigate = useNavigate();
 
                                                 {/*    </ul>*/}
                                                 {/*</div>*/}
+
+
+
+
                                                 <a onClick={() => handlerLogout()}>{username}</a>
                                                 <i style={{marginLeft : "0.5rem"}} className="fa-solid fa-right-from-bracket" onClick={() => handlerLogout()}></i>
                                                 {/*<i style={{marginLeft : "0.5rem"}} className="fa-light fa-right-from-bracket" onClick={() => handlerLogout()}></i>*/}

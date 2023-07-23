@@ -12,20 +12,20 @@
     padding: 15px
 }
 
-.truyen-thong-ct .main-content .title-news {
+.truyen-thong-ct .main-content .title-newss {
     color: #00833e;
     font-size: 20px;
     font-weight: 700
 }
 
 @media (min-width: 1024px) {
-    .truyen-thong-ct .main-content .title-news {
+    .truyen-thong-ct .main-content .title-newss {
         font-size:22px
     }
 }
 
 @media (min-width: 1200px) {
-    .truyen-thong-ct .main-content .title-news {
+    .truyen-thong-ct .main-content .title-newss {
         font-size:24px
     }
 }

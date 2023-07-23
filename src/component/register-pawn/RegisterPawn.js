@@ -88,7 +88,7 @@ export function RegisterPawn() {
                                     return !emailExists;
                                 }),
                         address: yup.string().required("Vui lòng nhập địa chỉ của bạn"),
-                        contentNote: yup.string().required("Vui lòng nhập nội dung - Ghi chú "),
+                        contentNote: yup.string().required("Vui lòng nhập nội dung - ghi chú "),
                         productTypeId: yup.number().min(1,'Vui lòng chọn dịch vụ cầm đồ')
 
                     })}

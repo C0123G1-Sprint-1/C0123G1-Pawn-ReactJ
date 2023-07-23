@@ -7,44 +7,46 @@ export function Condition() {
 
         <>
             <div style={{margin : "30px 55px"}} className="truyen-thong-ct main-section" >
-                <div className="main-content"><h2 style={{  textAlign: "center",fontFamily: "Times New Roman", fontSize: "29px" }} className="uk-text-center title-news"> ĐIỀU KHOẢN THI HÀNH ÁP DỤNG CHO HỢP
-                    ĐỒNG  CẦM CỐ TÀI SẢN TẠI PAWN SHOP </h2> <p  style={{  fontSize: "12px",fontWeight: "400"}} className="term-title uk-text-center"> (Áp dụng cho các Hợp
-                    đồng cho vay cầm cố tài sản phát sinh hiệu lực từ ngày 01 tháng 07 năm 2023) </p> <p style={{  fontSize: "12px",fontWeight: "400"  }}
+                <div className="main-content"><h2 style={{  textAlign: "center",fontFamily: "Times New Roman", fontSize: "29px" }} className="uk-text-center title-newss"> ĐIỀU KHOẢN THI HÀNH ÁP DỤNG CHO HỢP
+                    ĐỒNG  CẦM CỐ TÀI SẢN TẠI PAWN SHOP </h2> <p  style={{  fontSize: "12px",fontWeight: "400",textAlign:"center",fontStyle:"italic"}} className="term-title uk-text-center"> (Áp dụng cho các Hợp
+                    đồng  cầm cố tài sản phát sinh hiệu lực từ ngày 01 tháng 07 năm 2023) </p> <p style={{  fontSize: "12px",fontWeight: "400"  }}
                     className="term-title"> Các cá nhân, tổ chức (“Khách hàng”) ký kết Hợp đồng  cầm cố tài sản (“Hợp
                     đồng”) với Công ty Cổ phần Kinh doanh Pawn Shop  (“Pawn Shop”) được yêu cầu phải đọc kỹ, đã hiểu, đồng ý và chịu sự
                     ràng buộc với các quy định trong Điều khoản thi hành này đối với toàn bộ Khách hàng sử dụng dịch vụ của
                     Pawn Shop, cụ thể như sau: </p>
                     <div style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
+                        fontSize: "20px",
                      fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line">
-                        <span className="number">I</span> ĐIỀU KHOẢN KHOẢN CẦM
+                        <span style={{  display: "inline-block",   verticalAlign: "middle",  width: "30px",  height: "30px",
+                            borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                            lineHeight:" 28px", marginRight: "10px",  color: "#fff",}} className="number">I</span> ĐIỀU KHOẢN KHOẢN CẦM
                     </div>
                     <p  className="term-content"><strong>1.</strong> Tại bất kỳ thời điểm nào chưa đến kỳ cầm đồ, lãi và
-                        chi phí vay (bao gồm phí của khoản vay và các khoản tiền phạt (nếu có) theo Hợp đồng), tùy theo loại
+                        chi phí cầm (bao gồm phí của khoản cầm và các khoản tiền phạt (nếu có) theo Hợp đồng), tùy theo loại
                         tài sản cầm cố theo chính sách của Pawn Shop, Khách hàng có quyền trả trước bất kỳ khoản nào cho Pawn Shop để
                         thực hiện nghĩa vụ tại Hợp đồng. Pawn Shop sẽ khấu trừ khoản tiền này vào nghĩa vụ trả nợ gốc, lãi và chi
-                        phí vay mà Khách hàng phải thực hiện được quy định tại Hợp đồng khi đến hạn. Tại ngày cuối cùng của
+                        phí cầm mà Khách hàng phải thực hiện được quy định tại Hợp đồng khi đến hạn. Tại ngày cuối cùng của
                         thời hạn hiệu lực của Hợp đồng, nếu số tiền mà Khách hàng đã thanh toán vẫn còn dư sau khi đã khấu
                         trừ cho tất cả các nghĩa vụ theo Hợp đồng này, Khách hàng có quyền yêu cầu Pawn Shop hoàn trả khoản tiền
                         dư đó. </p> <p className="term-content"><strong>2.</strong> Trường hợp đến hạn của Hợp đồng, Khách
-                        hàng có nhu cầu vay đồng thời đáp ứng yêu cầu về thẩm định điều kiện cho vay của Pawn Shop theo từng thời
-                        kỳ và khoản trả trước hạn đủ để Pawn Shop thực hiện khấu trừ cho toàn bộ tiền lãi và chi phí vay đến hạn
+                        hàng có nhu cầu cầm đồng thời đáp ứng yêu cầu về thẩm định điều kiện cho cầm của Pawn Shop theo từng thời
+                        kỳ và khoản trả trước hạn đủ để Pawn Shop thực hiện khấu trừ cho toàn bộ tiền lãi và chi phí cầm đến hạn
                         của Khách hàng, hai Bên thống nhất rằng Hợp đồng sẽ được tự động gia hạn thêm 01 (một) kỳ thanh toán
                         tính từ ngày liền sau ngày đến hạn Hợp đồng. </p> <p className="term-content"><strong>3.</strong>Trường
-                        hợp quá hạn của Hợp đồng, Khách hàng có nhu cầu vay đồng thời đáp ứng điều kiện để được gia hạn nợ
+                        hợp quá hạn của Hợp đồng, Khách hàng có nhu cầu cầm đồng thời đáp ứng điều kiện để được gia hạn nợ
                         theo chính sách sản phẩm được Pawn Shop ban hành từng thời kỳ, bao gồm nhưng không giới hạn bởi điều kiện
-                        về khoản thanh toán đủ để Pawn Shop cấn trừ cho toàn bộ nghĩa vụ trả lãi và chi phí vay đến hạn của kỳ
+                        về khoản thanh toán đủ để Pawn Shop cấn trừ cho toàn bộ nghĩa vụ trả lãi và chi phí cầm đến hạn của kỳ
                         thanh toán gần nhất trước đó và các nghĩa vụ khác (nếu có), hai Bên thống nhất rằng Hợp đồng sẽ được
                         tự động gia hạn thêm 01 (một) kỳ thanh toán tính từ ngày liền sau ngày đến hạn Hợp đồng. </p> <p
                         className="term-content"><strong>4.</strong> Trường hợp tại thời điểm Khách hàng thực hiện nghĩa vụ
                         thanh toán để được gia hạn theo quy định tại Khoản 2 Điều này, khoản tiền Khách hàng đã thanh toán
                         sau khi khấu trừ đi nghĩa vụ phải thanh toán tại Hợp đồng vẫn còn dư thì các Bên đồng thuận rằng
-                        phần tiền dư sẽ tự động được Pawn Shop khấu trừ vào phần nợ gốc còn lại tương ứng. Lãi suất và chi phí vay
+                        phần tiền dư sẽ tự động được Pawn Shop khấu trừ vào phần nợ gốc còn lại tương ứng. Lãi suất và chi phí cầm
                         của kỳ tiếp theo tính trên nợ gốc đã khấu trừ. </p> <p className="term-content">
                         <strong>5.</strong> Trường hợp Hợp đồng được tự động gia hạn theo quy định tại Khoản 2 Điều này, tại
                         ngày đến hạn thanh toán, Khách hàng có quyền chủ động trả bớt một phần nợ gốc mà không phải chịu bất
                         kỳ khoản phạt trả nợ trước hạn nào (nếu có). Sau khi hoàn tất thanh toán, Hợp đồng sẽ tự động ghi
-                        giá trị nợ gốc mới bằng giá trị khoản vay ban đầu trừ các phần giá trị trả bớt gốc. Quyền và nghĩa
+                        giá trị nợ gốc mới bằng giá trị khoản cầm ban đầu trừ các phần giá trị trả bớt gốc. Quyền và nghĩa
                         vụ của các Bên căn cứ trên nợ gốc mới. </p> <p className="term-content"><strong>6.</strong> Thanh
                         toán gốc, tiền lãi và chi phí vay: Tại mỗi kỳ hạn thanh toán, Khách hàng có trách nhiệm thanh toán
                         theo lịch thanh toán đính kèm (nếu có) và/hoặc theo quy định tại Hợp đồng. </p> <p
@@ -52,15 +54,15 @@ export function Condition() {
                         Khách hàng có trách nhiệm thanh toán ngay khoản tiền phạt vi phạm và/hoặc bồi thường thiệt hại theo
                         Hợp đồng cùng với thời điểm Khách hàng thanh toán gốc, tiền lãi và chi phí vay hoặc tại bất kỳ thời
                         điểm nào theo yêu cầu của Pawn Shop khi Khách hàng vi phạm. </p> <p className="term-content">
-                        <strong>8.</strong> Khoản vay và các khoản phải thu của Pawn Shop phát sinh từ khoản vay, theo toàn quyền
+                        <strong>8.</strong> Khoản cầm đồ và các khoản phải thu của Pawn Shop phát sinh từ khoản cầm đồ, theo toàn quyền
                         quyết định của Pawn Shop, có thể được sử dụng để, bao gồm nhưng không giới hạn, bảo đảm cho nghĩa vụ của
                         Pawn Shop với bất kỳ bên thứ ba nào. </p> <p className="term-content"><strong>9.</strong> Trường hợp Khách
-                        hàng có nhu cầu vay, căn cứ theo chính sách sản phẩm của Pawn Shop ban hành từng thời kỳ, Pawn Shop đồng ý Khách
+                        hàng có nhu cầu cầm đồ, căn cứ theo chính sách sản phẩm của Pawn Shop ban hành từng thời kỳ, Pawn Shop đồng ý Khách
                         hàng được quyền mở thêm (các) Hợp đồng mới với cùng tài sản cầm cố như trong Hợp đồng hiện tại.
                         Trường hợp Khách hàng vi phạm nghĩa vụ thanh toán của bất kỳ Hợp đồng nào thì tất cả nghĩa vụ thanh
-                        toán khoản vay trong các Hợp đồng còn lại đều được coi là đã đến hạn. </p> <p
+                        toán khoản cầm trong các Hợp đồng còn lại đều được coi là đã đến hạn. </p> <p
                         className="term-content"><strong>10.</strong> Trường hợp Khách hàng có nhu cầu chủ động trả bớt gốc
-                        của khoản vay, phụ thuộc vào chính sách do Pawn Shop ban hành từng thời kỳ, Khách hàng có quyền chủ động
+                        của khoản cầm, phụ thuộc vào chính sách do Pawn Shop ban hành từng thời kỳ, Khách hàng có quyền chủ động
                         trả bớt gốc thông qua thực hiện thanh toán số tiền trả bớt gốc và phạt trả nợ trước hạn tương ứng
                         theo quy định tại Hợp đồng (nếu có). Sau khi hoàn tất thanh toán, Hợp đồng sẽ tự động ghi giá trị nợ
                         gốc mới bằng giá trị khoản vay ban đầu trừ các phần giá trị trả bớt gốc. Quyền và nghĩa vụ của các
@@ -69,37 +71,33 @@ export function Condition() {
                         thì hai bên đồng thuận rằng phần tiền dư sẽ tự động được Pawn Shop khấu trừ vào phần nợ gốc còn lại tương
                         ứng. Lãi suất và chi phí vay của kỳ tiếp theo tính trên nợ gốc đã khấu trừ. </p>
                     <div style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
-                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span className="number">II </span> NGHĨA VỤ CỦA CÁC BÊN TẠI HỢP ĐỒNG CẦM CỐ
+                        fontSize: "20px",fontFamily : "Times New Roman",
+                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span style={{  display: "inline-block",   verticalAlign: "middle",  width: "30px",  height: "30px",
+                        borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                        lineHeight:" 28px", marginRight: "10px",  color: "#fff",}} className="number">II </span> NGHĨA VỤ CỦA CÁC BÊN TẠI HỢP ĐỒNG CẦM CỐ
                     </div>
                     <p  style={{fontSize: "18px",fontWeight : "300"}} className="term-content">
                         <strong>1. Pawn Shop có các nghĩa vụ sau: </strong>
                     </p>
                     <div style={{paddingLeft : "25px"}} className="term-line-sub">
-                        <p  className="term-content"><strong>i.</strong> Giải ngân khoản vay cho
-                        Khách hàng theo đúng quy định của Hợp đồng; </p> <p className="term-content">
+                        <p  className="term-content"><strong>i.</strong> Website  Pawn Shop và các dịch vụ được cung cấp dựa trên nguyên tắc không bảo hành, trên cơ sở dịch vụ và tính năng sẵn có mà Chúng tôi không đảm bảo rằng các tính năng trên website hoặc các dịch vụ sẽ đáp ứng các yêu cầu của Bạn hoặc đảm bảo rằng sự vận hành các phần mềm hoặc các dịch vụ sẽ không bị gián đoạn hoặc bị lỗi.
+                        </p> <p className="term-content">
                         <strong>ii.</strong> Quản lý và bảo quản đầy đủ, nguyên trạng tài sản cầm cố và các giấy tờ kèm theo
                         (nếu có); nếu làm mất mát hoặc hư hỏng (ngoại trừ các hao mòn tự nhiên và các trường hợp bất khả
                         kháng) thì Pawn Shop sẽ phải bồi thường thiệt hại cho Khách hàng; </p> <p className="term-content">
-                        <strong>iii.</strong>Hàng tháng, thẩm định lại điều kiện cho vay để đảm bảo giá trị tài sản cầm cố
-                        phù hợp với biến động của thị trường và đảm bảo cho giá trị khoản vay. Trường hợp sau khi kiểm tra
-                        lại giá trị tài sản cầm cố bị giảm sút nghiêm trọng, Pawn Shop có quyền yêu cầu và Khách hàng có nghĩa vụ
-                        bổ sung tài sản cầm cố để đảm bảo giá trị khoản vay. Trong thời hạn 05 (năm) ngày kể từ ngày Pawn Shop
-                        thông báo cho Khách hàng về việc bổ sung tài sản cầm cố mà Khách hàng không thực hiện nghĩa vụ bổ
-                        sung tài sản cầm cố hoặc tài sản cầm cố bổ sung đó vẫn chưa đủ để bảo đảm giá trị khoản vay (theo
-                        quyết định của Pawn Shop) thì Pawn Shop có quyền chấm dứt Hợp đồng này trước thời hạn và yêu cầu Khách hàng
-                        thanh toán giá trị khoản vay, tiền lãi, các chi phí khác. Nếu Khách hàng không thực hiện thanh toán,
-                        Pawn Shop có toàn quyền xử lý tài sản cầm cố để thu hồi khoản nợ. </p> <p className="term-content">
+                        <strong>iii.</strong>Chúng tôi không chịu trách nhiệm đối với bất kỳ sự mất mát dữ liệu, tổn thất lợi ích nào hoặc các vấn đề khác liên quan đến việc truy cập website pawn shop và sử dụng các dịch vụ, bao gồm nhưng không giới hạn đến tất cả các thông tin, dữ liệu, văn bản, phần mềm, âm nhạc, âm thanh, hình ảnh, đồ họa, video, thông điệp hoặc các nguyên liệu khác (“Nội dung”) mà Bạn có thể lưu giữ, đưa lên, hoặc truyền tải thông qua dịch vụ. Bạn đồng ý sử dụng các dịch vụ với tất cả sự rủi ro.
+
+
+                      </p> <p className="term-content">
                         <strong>iv.</strong> Hoàn trả lại tài sản cầm cố và giấy tờ kèm theo (nếu có) cho Khách hàng sau khi
-                        Khách hàng đã hoàn thành mọi nghĩa vụ thanh toán nợ gốc, tiền lãi và các chi phí vay khác theo Hợp
-                        đồng và các sửa đổi, bổ sung (nếu có); </p> <p className="term-content"><strong>v.</strong> Các
+                        Khách hàng đã hoàn thành mọi nghĩa vụ cầm cố tài sản,  </p> <p className="term-content"><strong>v.</strong> Các
                         nghĩa vụ khác theo quy định tại Hợp đồng và pháp luật có liên quan. </p></div>
                     <p  style={{fontSize: "18px",fontWeight : "300"}}  className="term-content">
                         <strong>2. Khách hàng có các nghĩa vụ sau: </strong></p>
                     <div style={{paddingLeft : "25px"}} className="term-line-sub">
                         <p className="term-content"><strong>i.</strong> Cam kết rằng Khách hàng
                         có đầy đủ năng lực hành vi dân sự, tự do ý chí, đầy đủ quyền ký kết và thực hiện Hợp đồng; </p> <p
-                        className="term-content"><strong>ii.</strong> Đảm bảo nghĩa vụ trả nợ gốc, tiền lãi, các chi phí quy
+                        className="term-content"><strong>ii.</strong> Đảm bảo nghĩa vụ cầm cố tài sản quy
                         định tại Hợp đồng và các chi phí xử lý tài sản đảm bảo (nếu có) đầy đủ và đúng hạn; </p> <p
                         className="term-content"><strong>iii.</strong> Cam đoan rằng Khách hàng là (i) chủ sở hữu hợp pháp
                         và duy nhất hoặc (ii) người được ủy quyền hợp pháp đối với tài sản cầm cố và không một bên nào khác
@@ -118,9 +116,11 @@ export function Condition() {
                     </p> <p className="term-content"><strong>vii.</strong> Các nghĩa vụ khác theo quy định tại Hợp đồng và
                         pháp luật có liên quan. </p></div>
                     <div style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
+                        fontSize: "20px",fontFamily : "Times New Roman",
                         fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line">
-                        <span className="number">III </span> SỰ KIỆN VI PHẠM</div>
+                        <span style={{  display: "inline-block",   verticalAlign: "middle",  width: "30px",  height: "30px",
+                            borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                            lineHeight:" 28px", marginRight: "10px",  color: "#fff",}} className="number">III </span> SỰ KIỆN VI PHẠM</div>
                     <p  style={{fontSize: "18px",fontWeight : "300"}} className="term-content">
                         <strong> 1. Mỗi sự kiện hoặc trường hợp quy định sau đây là một Sự Kiện Vi
                         Phạm: </strong></p>
@@ -130,7 +130,7 @@ export function Condition() {
                         className="term-content"><strong>ii.</strong>Khách hàng khẳng định hoặc tuyên bố hoặc cung cấp thông
                         tin hoặc giấy tờ liên quan đến tài sản cầm cố, thông tin nhân thân Khách hàng không đúng, không
                         chính xác, không trung thực làm ảnh hưởng đến kết quả thẩm định của Pawn Shop hoặc ảnh hưởng đến khả năng
-                        thu hồi giá trị khoản vay của Pawn Shop hoặc ảnh hưởng đến quyền và lợi ích của Pawn Shop; </p> <p
+                        thu hồi giá trị khoản cho cầm  của Pawn Shop hoặc ảnh hưởng đến quyền và lợi ích của Pawn Shop; </p> <p
                         className="term-content"><strong>iii.</strong> Khách hàng chết hoặc bị tuyên bố chết hoặc bị tuyên
                         bố mất năng lực hành vi dân sự; và </p> <p className="term-content"><strong>iv.</strong> Bất cứ sự
                         kiện nào hoặc một loạt các sự kiện nào xảy ra mà theo quan điểm của Pawn Shop là có thể ảnh hưởng bất lợi
@@ -146,8 +146,10 @@ export function Condition() {
                         hiện tất cả các quyền và chế tài của Pawn Shop theo quy định tại Hợp đồng và các văn bản liên quan. </p>
                     </div>
                     <div  style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
-                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span className="number">IV </span> ĐIỀU KHOẢN BỔ SUNG:</div>
+                        fontSize: "20px",fontFamily : "Times New Roman",
+                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span  style={{  display: "inline-block",   verticalAlign: "middle",  width: "30px",  height: "30px",
+                        borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                        lineHeight:" 28px", marginRight: "10px",  color: "#fff",}} className="number">IV </span> ĐIỀU KHOẢN BỔ SUNG:</div>
                     <p style={{fontSize: "18px",fontWeight : "300"}} className="term-content"><em> <strong> 1. Áp dụng với sản phẩm cầm cố xe máy và ô tô </strong> </em>
                     </p> <p className="term-content"> Trong thời hạn khoản vay theo quy định tại Hợp đồng và các Phụ lục gia
                         hạn (nếu có), Khách hàng chỉ được phép lưu giữ tài sản cầm cố khi có sự chấp thuận của Pawn Shop. Khách
@@ -160,10 +162,10 @@ export function Condition() {
                         đảm đã đăng ký trong suốt thời hạn hiệu lực của Hợp đồng và các Phụ lục (nếu có). Khách hàng đồng ý
                         ủy quyền cho Pawn Shop rằng Pawn Shop sẽ thay mặt Khách hàng thực hiện thủ tục đăng ký biện pháp bảo đảm đối với
                         tài sản cầm cố tại Trung tâm Đăng ký giao dịch, tài sản của Cục Đăng ký quốc gia giao dịch bảo đảm
-                        thuộc Bộ Tư pháp (“Trung tâm Đăng ký”). Để làm rõ, giá trị Khoản vay, chi phí vay không bao gồm các
+                        thuộc Bộ Tư pháp (“Trung tâm Đăng ký”). Để làm rõ, giá trị Khoản cầm, chi phí cầm không bao gồm các
                         loại phí, lệ phí mà Khách hàng phải trả cho Trung tâm Đăng ký được quy định cụ thể tại
                         https://dktructuyen.moj.gov.vn/phi. Pawn Shop có quyền yêu cầu và Khách hàng có nghĩa vụ hoàn trả hoặc tạm
-                        ứng cho Pawn Shop các khoản chi phí này ngay tại thời điểm đề nghị vay vốn hoặc bất kỳ thời điểm nào do
+                        ứng cho Pawn Shop các khoản chi phí này ngay tại thời điểm đề nghị cầm vốn hoặc bất kỳ thời điểm nào do
                         Pawn Shop quyết định. </p> <p className="term-content"><em> <strong style={{fontSize: "18px",fontWeight : "400"}}>3. Áp dụng cho Hợp đồng được lập dưới
                         hình thức hợp đồng điện tử</strong> </em></p> <p className="term-content"> Hợp đồng được lập dưới
                         hình thức hợp đồng điện tử (“Hợp đồng điện tử”) là Hợp đồng được thiết lập dưới dạng thông điệp dữ
@@ -200,10 +202,12 @@ export function Condition() {
                         chuyển thông tin cá nhân đã cung cấp cho Pawn Shop cho công ty cung cấp dịch vụ chứng thực chữ ký số công
                         cộng để đăng ký và tạo lập chữ ký số, chứng thư số cho mục đích ký kết Hợp đồng điện tử. </p></div>
                     <div style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
-                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span className="number">V </span> TIẾT LỘ THÔNG TIN CHO BÊN THỨ BA:</div>
+                        fontSize: "20px",fontFamily : "Times New Roman",
+                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span style={{  display: "inline-block",   verticalAlign: "middle",  width: "30px",  height: "30px",
+                        borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                        lineHeight:" 28px", marginRight: "10px",  color: "#fff",}}  className="number">V </span> TIẾT LỘ THÔNG TIN CHO BÊN THỨ BA:</div>
                     <p className="term-content"> Khách hàng đồng ý rằng Pawn Shop sẽ không bán, chia sẻ thông tin của Khách hàng
-                        bao gồm các thông tin của Khách hàng, khoản vay của Khách hàng, bao gồm cả các thông tin từ các văn
+                        bao gồm các thông tin của Khách hàng, khoản cầm của Khách hàng, bao gồm cả các thông tin từ các văn
                         bản, các tài liệu do Khách hàng cung cấp; các hợp đồng, văn bản ký giữa Khách hàng và Pawn Shop cho bên
                         thứ ba dưới bất kỳ hình thức nào mà không được sự cho phép của Khách hàng, ngoại trừ các trường
                         hợp: </p>
@@ -219,32 +223,39 @@ export function Condition() {
                         className="term-content"> Điều khoản này sẽ tiếp tục có hiệu lực sau khi Hợp đồng chấm dứt hoặc hết
                         hạn. </p></div>
                     <div style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
-                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span className="number">VI </span> TIẾP THỊ, QUẢNG CÁO:</div>
+                        fontSize: "20px",fontFamily : "Times New Roman",
+                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span style={{  display: "inline-block",   verticalAlign: "middle",  width: "30px",  height: "30px",
+                        borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                        lineHeight:" 28px", marginRight: "10px",  color: "#fff",}}  className="number">VI </span> TIẾP THỊ, QUẢNG CÁO:</div>
                     <p className="term-content"> Khách hàng tại đây, chấp thuận và đồng ý rằng Pawn Shop, các đối tác tiếp thị
                         trực tiếp của Pawn Shop hoặc các nhà cung cấp dịch vụ của Pawn Shop, có thể liên hệ với Khách hàng qua email,
                         tin nhắn văn bản hoặc các phương tiện điện tử khác, bất cứ lúc nào, để cung cấp cho Khách hàng thông
                         tin liên quan đến các sản phẩm hoặc dịch vụ mà Khách hàng có thể quan tâm. Điều khoản này sẽ tiếp
                         tục có hiệu lực sau khi Hợp đồng chấm dứt hoặc hết hạn. </p>
                     <div style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
-                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span className="number">VII </span> ỦY QUYỀN:</div>
+                        fontSize: "20px",fontFamily : "Times New Roman",
+                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span style={{  display: "inline-block",   verticalAlign: "middle",  width: "30px",  height: "30px",
+                        borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                        lineHeight:" 28px", marginRight: "10px",  color: "#fff",}} className="number">VII </span> ỦY QUYỀN:</div>
                     <p className="term-content"> Trong trường hợp Khách hàng đã và/hoặc đang vi phạm nghĩa vụ Hợp đồng,
                         Khách hàng chấp thuận và cho phép người liên hệ, được nhận ủy quyền để đại diện và thay mặt Khách
                         hàng thực hiện các quyền và nghĩa vụ theo Hợp đồng, bao gồm nhưng không giới hạn bởi quyền yêu cầu
                         Pawn Shop cung cấp thông tin liên quan đến lịch thanh toán, nghĩa vụ thanh toán và/hoặc quyền yêu cầu tất
-                        toán khoản vay trước hạn. </p>
+                        toán khoản cầm trước hạn. </p>
                     <div style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
-                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span className="number">VIII </span> CHUYỂN GIAO:</div>
-                    <p className="term-content"> Khách hàng đồng ý rằng Pawn Shop có quyền chuyển giao toàn bộ quyền yêu cầu thanh
-                        toán nợ gốc, tiền lãi, các chi phí khác và các nghĩa vụ của Pawn Shop theo Hợp đồng cho bên thứ ba tại bất
-                        kỳ thời điểm nào trong thời gian có hiệu lực của Hợp đồng. Đồng thời, Khách hàng đồng ý rằng bên thứ
-                        ba sẽ kế thừa toàn bộ nghĩa vụ của Pawn Shop theo Hợp đồng. Pawn Shop sẽ thông báo cho Khách hàng chậm nhất là
-                        03 ngày trước ngày Pawn Shop hoàn tất việc chuyển giao này. </p>
+                        fontSize: "20px",fontFamily : "Times New Roman",
+                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span style={{  display: "inline-block",   verticalAlign: "middle",  width: "33px",  height: "30px",
+                        borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                        lineHeight:" 28px", marginRight: "10px",  color: "#fff",fontSize:"16px"}}  className="number">VIII </span> GIỚI HẠN TRÁCH NHIỆM:</div>
+                    <p className="term-content"> Bạn xác nhận và đồng ý rằng chúng tôi chỉ sẵn sàng cung cấp các dịch vụ nếu Bạn đồng ý giới hạn trách nhiệm của chúng tôi đối với Bạn và các bên thứ ba. Bạn đồng ý rằng Bạn chịu trách nhiệm bồi thường duy nhất và toàn bộ đối với bất kỳ khiếu nại, khiếu kiện nào tới chúng tôi liên quan đến bất kỳ sự vi phạm quy định sử dụng nào do việc Bạn sử dụng các dịch vụ hoặc ngừng sử dụng dịch vụ của chúng tôi. </p>
+                    <p className="term-content">Bạn đồng ý tự chịu trách nhiệm với các nội dung và thông tin cung cấp cho chúng tôi</p>
+                    <p className="term-content">Bạn đồng ý bảo vệ, bồi thường và giữ cho chúng tôi và các công ty liên kết của chúng tôi và mỗi nhân viên, giám đốc, người lao động, đại lý, đại diện, người cung cấp thông tin và bên cấp phép của chúng tôi không bị tổn hại bởi bất kỳ khiếu nại, khiếu kiện, chi phí, tổn thất, thiệt hại, phán quyết của tòa án và phí tổn nào, bao gồm nhưng không giới hạn phí luật sư, phí bồi thường thiệt hại, chi phí tố tụng, lãi chậm trả liên quan đến hoặc phát sinh từ bất kỳ khiếu nại, mâu thuẫn, tranh chấp, thủ tục tố tụng pháp lý tại Tòa án hoặc các tổ chức Trọng tài, tổ chức Hòa giải, các quyết định của cơ quan Nhà nước có thẩm quyền … liên quan đến hoặc phát sinh từ các sản phẩm và dịch vụ. Chúng tôi giữ quyền, bằng chi phí của mình, đảm nhận hoàn toàn việc bảo vệ và kiểm soát (nhưng không có trách nhiệm) đối với bất kỳ vấn đề nào phát sinh như vậy tùy thuộc vào sự bồi thường của Bạn</p>
+
                     <div  style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
-                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }}  className="term-line"><span className="number">IX </span> TRAO ĐỔI THÔNG TIN:</div>
+                        fontSize: "20px",fontFamily : "Times New Roman",
+                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }}  className="term-line"><span  style={{  display: "inline-block",   verticalAlign: "middle",  width: "30px",  height: "30px",
+                        borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                        lineHeight:" 28px", marginRight: "10px",  color: "#fff",}} className="number">IX </span> TRAO ĐỔI THÔNG TIN:</div>
                     <p className="term-content"><strong>1. </strong>Các Bên thống nhất đồng ý rằng địa chỉ, số điện thoại và
                         email của Khách hàng là địa chỉ, số điện thoại và email mà Khách hàng đã đăng ký và/hoặc cung cấp
                         cho Pawn Shop tại thời điểm gần nhất và được lưu trữ trên hệ thống của Pawn Shop. Khách hàng được coi là đã nhận
@@ -258,43 +269,34 @@ export function Condition() {
                         className="term-content"><strong>2. </strong>Trường hợp trong thời hạn 03 (ba) ngày kể từ ngày Pawn Shop
                         gửi thông báo tới Khách hàng mà Pawn Shop không nhận được phản hồi từ Khách hàng, thì các Bên mặc nhiên
                         hiểu rằng Khách hàng đã đồng ý với thông tin trong thông báo mà Pawn Shop gửi đến. </p>
+
                     <div style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
-                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }}  className="term-line"><span className="number">X </span> THỨ TỰ TRẢ NỢ:</div>
-                    <p className="term-content"> Ngoại trừ trường hợp chính sách của Pawn Shop ban hành từng thời kỳ có quy định
-                        khác, trong trường hợp Pawn Shop nhận được khoản thanh toán không đủ để thanh toán tất cả các nghĩa vụ đến
-                        hạn và phải trả theo Hợp đồng, Pawn Shop sẽ ưu tiên khấu trừ tất cả các nghĩa vụ thanh toán đã đến hạn
-                        trong một kỳ tính từ kỳ đầu tiên Khách hàng chưa hoàn tất nghĩa vụ thanh toán và theo thứ tự
-                        sau: </p> <div style={{marginLeft:"25px"}}>
-                        <p className="term-content"><strong>i.</strong> Khoản nợ gốc; </p> <p
-                        className="term-content"><strong>ii.</strong> Lãi và Chi phí vay; </p> <p className="term-content">
-                        <strong>iii.</strong> Phạt vi phạm (bao gồm nhưng không giới hạn Phạt tất toán Khoản vay trước hạn
-                        và Phạt quá hạn thanh toán); </p> <p className="term-content"><strong>iv.</strong> Các nghĩa vụ
-                        thanh toán khác theo quy định tại Hợp đồng hoặc thỏa thuận giữa các Bên. </p>
-                    </div>
-                    <div style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
-                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span className="number">XI </span> MỤC ĐÍCH VAY:</div>
+                        fontSize: "20px",fontFamily : "Times New Roman",
+                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }} className="term-line"><span  style={{  display: "inline-block",   verticalAlign: "middle",  width: "30px",  height: "30px",
+                        borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                        lineHeight:" 28px", marginRight: "10px",  color: "#fff",}} className="number">X </span> MỤC ĐÍCH CẦM:</div>
                     <p style={{fontSize: "18px",fontWeight : "400"}}><strong>1. </strong>Các Bên thống nhất đồng ý rằng, mục đích sử dụng tiền
-                        vay được các Bên thỏa thuận và ghi nhận tại Hợp đồng thuộc một trong các trường hợp sau: </p> <div style={{marginLeft :"25px"}}>
+                        cầm được các Bên thỏa thuận và ghi nhận tại Hợp đồng thuộc một trong các trường hợp sau: </p> <div style={{marginLeft :"25px"}}>
                         <p
-                            className="term-content"><strong>i.</strong> Vay để trang trải chi phí y tế; </p> <p
-                        className="term-content"><strong>ii.</strong> Vay để chu cấp cho người thân; </p> <p
-                        className="term-content"><strong>iii.</strong>Vay để trả sinh hoạt phí; </p> <p
-                        className="term-content"><strong>iv.</strong> Vay để trả học phí; </p> <p className="term-content">
-                        <strong>v.</strong> Vay để mua sắm dụng cụ gia đình; </p> <p className="term-content">
-                        <strong>vi.</strong> Vay để xây, sửa nhà ở; </p> <p className="term-content">
-                        <strong>vii.</strong> Vay để bổ sung vốn kinh doanh; </p> <p className="term-content">
-                        <strong>viii.</strong> Vay nhằm mục đích du lịch/giải trí; </p> <p className="term-content">
-                        <strong>ix.</strong> Vay cho nhu cầu phát sinh </p> <p className="term-content">
-                        <strong>x.</strong> Vay cho các mục đích khác phù hợp với quy định pháp luật mà chưa xác định ngay.
+                            className="term-content"><strong>i.</strong> Cầm để trang trải chi phí y tế; </p> <p
+                        className="term-content"><strong>ii.</strong> Cầm để chu cấp cho người thân; </p> <p
+                        className="term-content"><strong>iii.</strong>Cầm để trả sinh hoạt phí; </p> <p
+                        className="term-content"><strong>iv.</strong> Cầm để trả học phí; </p> <p className="term-content">
+                        <strong>v.</strong> Cầm để mua sắm dụng cụ gia đình; </p> <p className="term-content">
+                        <strong>vi.</strong> Cầm để xây, sửa nhà ở; </p> <p className="term-content">
+                        <strong>vii.</strong> Cầm để bổ sung vốn kinh doanh; </p> <p className="term-content">
+                        <strong>viii.</strong> Cầm nhằm mục đích du lịch/giải trí; </p> <p className="term-content">
+                        <strong>ix.</strong> Cầm cho nhu cầu phát sinh </p> <p className="term-content">
+                        <strong>x.</strong> Cầm cho các mục đích khác phù hợp với quy định pháp luật mà chưa xác định ngay.
                     </p>
                     </div>
-                    <p style={{fontSize: "18px",fontWeight : "400"}} className="term-content"><strong>2. </strong>Khách hàng có trách nhiệm sử dụng vốn vay đúng mục
+                    <p style={{fontSize: "18px",fontWeight : "400"}} className="term-content"><strong>2. </strong>Khách hàng có trách nhiệm sử dụng vốn cầm đúng mục
                         đích và cam kết chịu trách nhiệm trước pháp luật và Pawn Shop về mục đích sử dụng vốn vay của mình. </p>
                     <div style={{
-                        fontSize: "22px",fontFamily : "Times New Roman",
-                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }}  className="term-line"><span className="number">XII </span> CAM KẾT DỊCH VỤ TỪ PAWN SHOP (Trích từ quy tắc
+                        fontSize: "20px",fontFamily : "Times New Roman",
+                        fontWeight: "bold", lineHeight: "1.5",   color: "#333"  }}  className="term-line"><span style={{  display: "inline-block",   verticalAlign: "middle",  width: "30px",  height: "30px",
+                        borderRadius: "50%",    background: "#4a4a4a", textAlign: "center",
+                        lineHeight:" 28px", marginRight: "10px",  color: "#fff",fontSize:"18px"}}  className="number">XI </span> CAM KẾT DỊCH VỤ TỪ PAWN SHOP (Trích từ quy tắc
                         ứng  xử pawn  shop):
                     </div>
                     <p style={{fontSize:"20px",fontWeight:"400"}} className="term-content"> Tại Pawn Shop, chúng tôi trân trọng và vun đắp mối quan hệ với khách hàng. Chúng

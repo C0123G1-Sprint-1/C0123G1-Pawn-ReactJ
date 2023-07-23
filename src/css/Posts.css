@@ -130,7 +130,7 @@
 textarea {
     width: 100%;
     padding: 10px;
-    height: 200px;
+    /*height: 100px;*/
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
