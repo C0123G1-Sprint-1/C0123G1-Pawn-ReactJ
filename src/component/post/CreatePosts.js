@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import {useNavigate} from "react-router";
 import {NavLink} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {storage} from "../../firebaseContract";
+import {storage} from "../../firebase";
 import Swal from "sweetalert2";
 
 export function CreatePosts() {
