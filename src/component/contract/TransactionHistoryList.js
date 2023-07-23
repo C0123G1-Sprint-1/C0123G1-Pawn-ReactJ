@@ -65,8 +65,6 @@ export default function TransactionHistoryList() {
         getContractTypeApi();
         showList()
     }, [search, currentPage]);
-
-
     const deleteTransactionHistory = async (id) => {
         let res = await contractService.deleteTransactionHistoryByID(id);
         result(res.data)
