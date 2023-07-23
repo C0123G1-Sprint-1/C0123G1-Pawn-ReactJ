@@ -15,7 +15,6 @@ const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const [decodedToken, setDecodedToken] = useState("");
     const [username, setUsername] = useState();
-
     useEffect(() => {
         if (token) {
             const decoded = jwt(token);
@@ -31,6 +30,7 @@ const navigate = useNavigate();
         localStorage.removeItem("token");
         setIsLogin(false);
         toast.success("Đăng xuất thành công !!");
+        navigate("/login")
     };
     // console.log(decodedToken.sub)
     return(
@@ -50,15 +50,19 @@ const navigate = useNavigate();
                             <ul>
                                 <li>
                                     <NavLink style={{color : "white",fontSize:'20px',}} to= "/" className=" font-a-header">
-                                        Trang Chủ
+                                        Trang chủ
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink  style={{color : "white",fontSize:'20px',}} to="/listPosts">Tin Tức</NavLink>
+                                    <NavLink  style={{color : "white",fontSize:'20px',}} to="/listPosts">Tin tức</NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/create"  className='font-a-header' style={{color : "white",fontSize:'20px',}} >Đăng ký cầm đồ</NavLink>
                                 </li>
+                                <li>
+                                    <NavLink to="/condition"  className='font-a-header' style={{color : "white",fontSize:'20px',}} >Điều khoản & Điều kiện</NavLink>
+                                </li>
+
                                 {/*<li className="dropdown">*/}
                                 {/*    <a href="#">*/}
                                 {/*        <span>Cầm Đồ Theo Tỉnh</span>{" "}*/}
@@ -112,6 +116,10 @@ const navigate = useNavigate();
 
                                                 {/*    </ul>*/}
                                                 {/*</div>*/}
+
+
+
+
                                                 <a onClick={() => handlerLogout()}>{username}</a>
                                                 <i style={{marginLeft : "0.5rem"}} className="fa-solid fa-right-from-bracket" onClick={() => handlerLogout()}></i>
                                                 {/*<i style={{marginLeft : "0.5rem"}} className="fa-light fa-right-from-bracket" onClick={() => handlerLogout()}></i>*/}

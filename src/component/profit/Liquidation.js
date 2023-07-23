@@ -11,11 +11,11 @@ export default function Liquidation() {
                     <thead>
                     <tr>
                         <th>Mã HD</th>
-                        <th>Tiền Mua(VND)</th>
-                        <th>Tiền Bán(VND)</th>
-                        <th>Ngày Thanh lý</th>
-                        <th>Lợi Nhuận(VND)</th>
-                        <th id="actions">Chức Năng</th>
+                        <th>Tiền mua (VND)</th>
+                        <th>Tiền bán (VND)</th>
+                        <th>Ngày thanh lý</th>
+                        <th>Lợi nhuận (VND)</th>
+                        <th id="actions">Chức năng</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -23,11 +23,11 @@ export default function Liquidation() {
                         liquidations ?
                             liquidations.map((liquidation, index) =>
                                 <tr key={index}>
-                                    <td style={{textAlign: "center"}}>{liquidation.contractCode}</td>
-                                    <td style={{textAlign: "center"}}>{liquidation.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td style={{textAlign: "center"}}>{liquidation.proceedsOfSale?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                    <td style={{textAlign: "center"}}>{moment(liquidation.createDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
-                                    <td style={{textAlign: "center"}}>{liquidation.profit?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td>{"HD-"+liquidation.contractCode}</td>
+                                    <td>{liquidation.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td>{liquidation.proceedsOfSale?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td>{moment(liquidation.createDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                    <td>{liquidation.profit?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                     <td className="detail-button">
                                         <a href="#">
                                             <i

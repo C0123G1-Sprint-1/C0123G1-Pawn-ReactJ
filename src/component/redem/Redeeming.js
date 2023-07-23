@@ -2,16 +2,14 @@ import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Modal} from 'react-bootstrap';
 import * as redeemingService from '../../service/RedeemingService'
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Field, Form, Formik, isNaN} from "formik";
 import * as Swal from "sweetalert2";
 import moment from "moment";
-import {ThreeCircles} from "react-loader-spinner";
 import {Link} from "react-router-dom";
 
 
 export const Redeeming = () => {
     const [showModal, setShowModal] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [contractCode, setContractCode] = useState('');
     const [customerName, setCustomerName] = useState('');
     const [productName, setProductName] = useState('');
@@ -84,6 +82,32 @@ export const Redeeming = () => {
         setSelectedContract(0)
         // window.location.reload(false);
     }
+    const loadContracts = async () => {
+
+        // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
+        let timerInterval
+        Swal.fire({
+            title: 'Chúng tôi đang sử lí mong đợi trong vài giây',
+            html: 'Vui lòng đợi trong  <b>3</b> giây.',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer')
+            }
+        })
+    };
 
     return (
 
@@ -105,8 +129,10 @@ export const Redeeming = () => {
             />
             <style
                 dangerouslySetInnerHTML={{
+
+
                     __html:
-                        '\n        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");\n\n        .card {\n            border: none;\n            padding: 20px;\n            position: relative;\n            background-color: rgba(255, 255, 255, 0.7);\n            border-radius: 20px;\n        }\n\n        body {\n        }\n\n        body {\n            background-color: #eee;\n            font-family: "Poppins", sans-serif;\n            font-weight: 300\n        }\n\n        .height {\n            height: 100vh\n        }\n\n        .card {\n            border: none;\n            padding: 20px;\n            position: relative\n        }\n\n        .btn-group {\n            display: flex;\n            justify-content: space-between;\n        }\n\n        label {\n            font-family: Arial, sans-serif;\n            font-size: 14px;\n            font-weight: bold;\n            color: #222222;\n            margin-bottom: 5px;\n            display: inline-block;\n        }\n\n    '
+                        '\n        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");\n\n       .card {\n            border: none;\n            padding: 20px;\n            position: relative;\n            background-color: rgba(255, 255, 255, 0.7);\n            border-radius: 20px;\n        }\n\n        body {\n        }\n\n        body {\n            background-color: #eee;\n            font-family: "Poppins", sans-serif;\n            font-weight: 300\n        }\n\n        .height {\n            height: 100vh\n        }\n\n        .card {\n            border: none;\n            padding: 20px;\n            position: relative\n        }\n\n        .btn-group {\n            display: flex;\n            justify-content: space-between;\n        }\n\n        label {\n            font-family: Arial, sans-serif;\n            font-size: 14px;\n            font-weight: bold;\n            color: #222222;\n            margin-bottom: 5px;\n            display: inline-block;\n        }\n\n    '
                 }}
             />
             <br/>
@@ -305,11 +331,11 @@ export const Redeeming = () => {
 
 
                                                                 {
-                                                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
+                                                                    Array.from({length: totalPages}, (a, index) => index).map((pageNum) => (
                                                                         <li className="page-item">
-                                                                            <button className={page === page ? "page-link active" : "page-link"} key={page}
-                                                                                    onClick={() => paginate(page)}>
-                                                                                {page + 1}
+                                                                            <button className={page === pageNum ? " page-link active" : "page-link"} key={pageNum}
+                                                                                    onClick={() => paginate(pageNum)}>
+                                                                                {pageNum + 1}
                                                                             </button>
                                                                         </li>
                                                                     ))
@@ -439,39 +465,31 @@ export const Redeeming = () => {
 
                                                 <div className="text-center mt-4 btn-group p-3 m-l-2">
                                                     <div className="text-center m-auto">
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-secondary "
 
-                                                        >
-                                                            <Link to="/nav/info-store/" className="text-center text-light">Quay lại</Link>
-                                                        </button>
+                                                        <div className="text-center m-auto">
+                                                            <button
+                                                                    type="button"
+                                                                    className="btn btn-secondary "
+                                                                    style={{width:'130px'}}>
+                                                                <Link to="/nav/info-store/" className="text-center text-light"><b>Quay lại</b></Link>
+                                                            </button>
+                                                        </div>
                                                     </div>
 
                                                     <div className="text-center m-auto">
-                                                        {
-                                                            isSubmitting ? (<ThreeCircles
-                                                                    height="100"
-                                                                    width="100"
-                                                                    color="#4fa94d"
-                                                                    wrapperStyle={{}}
-                                                                    wrapperClass=""
-                                                                    visible={true}
-                                                                    ariaLabel="three-circles-rotating"
-                                                                    outerCircleColor=""
-                                                                    innerCircleColor=""
-                                                                    middleCircleColor=""
-                                                                />) :
-                                                                (<div className="text-center m-auto">
-                                                                        <button
-                                                                                disabled={!selectedContract} type="submit"
-                                                                                className="btn btn-success">
-                                                                            <b className="text-center">Thanh toán</b>
-                                                                        </button>
-                                                                    </div>
-                                                                )
 
-                                                        }
+
+                                                        <div className="text-center m-auto">
+                                                            <button onClick={loadContracts}
+                                                                    disabled={!selectedContract} type="submit"
+                                                                    className="btn btn-success"
+                                                                    style={{width: '130px'}}>
+                                                                <b className="text-center">Thanh toán</b>
+                                                            </button>
+                                                        </div>
+
+
+
                                                     </div>
 
                                                 </div>
