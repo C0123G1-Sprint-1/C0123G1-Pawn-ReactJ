@@ -232,15 +232,15 @@ export function UpdateContract() {
                                         <ErrorMessage name="contractStatus" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
                                     <div className="d-flex mt-4 justify-content-between">
-                                        <div className="text-center" style={{marginLeft: "20%"}}>
-                                            <Link to="/nav/info-store/transaction-history"
+                                        <div className="text-center">
+                                            <Link style={{marginLeft:"5vw",width:"130px"}} to="/nav/info-store/transaction-history"
                                                   className="btn btn-secondary ">
                                                 <b className="text-center">Quay lại</b>
                                             </Link>
                                         </div>
                                         <div className="text-center m-auto">
                                             <div className="text-center">
-                                                <button  type="submit" style={{width: "90px"}}
+                                                <button  type="submit" style={{marginLeft:"4vw",width:"130px"}}
                                                         className="btn btn-success" >
                                                     <b className="text-center">Sửa</b>
                                                 </button>

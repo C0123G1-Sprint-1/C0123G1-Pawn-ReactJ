@@ -31,7 +31,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="" />
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/contract/Top10NewContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/Top10NewContract.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/contract/UpdateContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/UpdateContract.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/UpdateContract.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/UpdateContract.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -125,7 +130,7 @@
       <workItem from="1689834571370" duration="2360000" />
       <workItem from="1689894454331" duration="3042000" />
       <workItem from="1689902502071" duration="12154000" />
-      <workItem from="1690076330587" duration="1601000" />
+      <workItem from="1690076330587" duration="6320000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -260,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690078014206</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="&quot;add component TransactionHistoryList&quot;">
+      <created>1690079432235</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1690079432235</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,10 +305,10 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="451" y="173" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689841276826" />
-    <state x="419" y="0" key="CommitChangelistDialog2" timestamp="1690078012902">
+    <state x="419" y="0" key="CommitChangelistDialog2" timestamp="1690079431506">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="419" y="0" key="CommitChangelistDialog2/0.0.1536.816@0.0.1536.816" timestamp="1690078012902" />
+    <state x="419" y="0" key="CommitChangelistDialog2/0.0.1536.816@0.0.1536.816" timestamp="1690079431506" />
     <state x="515" y="173" key="FileChooserDialogImpl" timestamp="1689754775251">
       <screen x="0" y="0" width="1440" height="852" />
     </state>
@@ -340,26 +352,26 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="498" y="129" key="RollbackChangesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689774864295" />
-    <state x="361" y="144" key="Vcs.Push.Dialog.v2" timestamp="1690078023443">
+    <state x="361" y="144" key="Vcs.Push.Dialog.v2" timestamp="1690079443993">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689837206678" />
-    <state x="361" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.816@0.0.1536.816" timestamp="1690078023443" />
+    <state x="361" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.816@0.0.1536.816" timestamp="1690079443993" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689586761444" />
-    <state x="563" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1689947300198">
+    <state x="563" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1690079450982">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="528" y="340" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.852@0.0.1440.852" timestamp="1689837289088" />
-    <state x="563" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.816@0.0.1536.816" timestamp="1689947300198" />
+    <state x="563" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.816@0.0.1536.816" timestamp="1690079450982" />
     <state x="541" y="133" key="git4idea.branch.GitSmartOperationDialog" timestamp="1689935732522">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="507" y="139" key="git4idea.branch.GitSmartOperationDialog/0.0.1440.852@0.0.1440.852" timestamp="1689837299383" />
     <state x="541" y="133" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.816@0.0.1536.816" timestamp="1689935732522" />
-    <state x="464" y="212" key="git4idea.merge.GitPullDialog" timestamp="1689935824975">
+    <state x="464" y="212" key="git4idea.merge.GitPullDialog" timestamp="1690079404537">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="464" y="212" key="git4idea.merge.GitPullDialog/0.0.1536.816@0.0.1536.816" timestamp="1689935824975" />
+    <state x="464" y="212" key="git4idea.merge.GitPullDialog/0.0.1536.816@0.0.1536.816" timestamp="1690079404537" />
     <state x="431" y="137" width="672" height="678" key="search.everywhere.popup" timestamp="1689910502118">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
