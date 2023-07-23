@@ -31,14 +31,14 @@ export default function Profit() {
         const page = [];
         for (let i = 0; i < totalPage; i++) {
             const isCurrentPage = currentPage === i;
-            const pageLinkClassName = isCurrentPage ? 'page-link active' : 'page-link';
-
+            const pageLinkClassName = isCurrentPage ? 'page-link-active' : 'page-link-khanh';
             page.push(
                 <li className="page-item" key={i}>
-                    <a className={pageLinkClassName}
-                       onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, i, params.profitType || profitType)}>
+                    <button className={pageLinkClassName}
+                            style={{border: "1px solid gray", borderRadius: "5px"}}
+                            onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, i, params.profitType || profitType)}>
                         {i + 1}
-                    </a>
+                    </button>
                 </li>
             )
         }
@@ -112,42 +112,14 @@ export default function Profit() {
     }
     return (
         <>
-            {/*<div id="content" className="container">*/}
-            {/*    <div className="row mt-5">*/}
-            {/*<div className="col-md-12 col-lg-3">*/}
-            {/*    <div className="list-group">*/}
-            {/*        <a*/}
-            {/*            href="#"*/}
-            {/*            className="list-group-item list-group-item-action active "*/}
-            {/*            id="nav-side-bar"*/}
-            {/*            aria-current="true"*/}
-            {/*        >*/}
-            {/*            Thông tin cửa hàng*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="list-group-item list-group-item-action">*/}
-            {/*            Tài chính*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="list-group-item list-group-item-action">*/}
-            {/*            Danh sách đồ cầm trong kho*/}
-            {/*        </a>*/}
-            {/*        <a href="#" className="list-group-item list-group-item-action">*/}
-            {/*            Lịch sử giao giao dịch*/}
-            {/*        </a>*/}
-            {/*        <a className="list-group-item list-group-item-action ">*/}
-            {/*            Top 10 hợp đồng mới nhất*/}
-            {/*        </a>*/}
-            {/*        <a className="list-group-item list-group-item-action active" id="statistic-profit">*/}
-            {/*            Thống kê lợi nhuận*/}
-            {/*        </a>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
             <div className="col-md-12 col-lg-9 content-profit">
                 <div className="row ">
                     <div className=" col-lg-12 " align="center">
                         <ul className="d-flex nav-content justify-content-center p-0">
-                            <li className="col-4"><NavLink onClick={() => setProfit("interest")}
+                            <li className="col-4"><NavLink onClick={() => {
+                                setProfit("interest")
+                            }}
                                                            style={({isActive}) => {
-                                                               // alert(isActives)
                                                                return {
                                                                    backgroundColor: isActive || isActives === true ? "#27533e" : "",
                                                                    color: isActive ? "#fff" : "",
@@ -160,7 +132,8 @@ export default function Profit() {
                                                            }} to="/nav/info-store/profit/interest/interest"
                                                            className="btn btn-sm rounded-3  ">Lợi nhuận từ tiền
                                 lãi</NavLink></li>
-                            <li className="col-4"><NavLink onClick={() => {setProfit("liquidation")
+                            <li className="col-4"><NavLink onClick={() => {
+                                setProfit("liquidation")
                                 setIsActive(false)
                             }}
                                                            style={({isActive}) => {
@@ -177,7 +150,8 @@ export default function Profit() {
                                                            className="btn btn-sm rounded-3  ">Lợi nhuận từ thanh
                                 lý</NavLink>
                             </li>
-                            <li className="col-4"><NavLink onClick={() => {setProfit("foresee")
+                            <li className="col-4"><NavLink onClick={() => {
+                                setProfit("foresee")
                                 setIsActive(false)
                             }} style={({isActive}) => {
                                 return {
@@ -205,50 +179,50 @@ export default function Profit() {
                                     await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, params.profitType || profitType)
                                     await getDataProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
                                     await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
-                                    // await getContract(values.startDate, values.endDate, 0,params.profitType || profitType  )
-                                    // await getDataProfit(values.startDate, values.endDate,params.profitType || profitType  )
-                                    // await getProfit(values.startDate, values.endDate,params.profitType || profitType  )
-                                    // await setDateTimeProfit({
-                                    //     startDate: values.startDate,
-                                    //     endDate: values.endDate
-                                    // })
                                 }}>
                                 <Form className="ps-5 col-lg-12 col-md-12 col-12" style={{boxSizing: "border-box"}}>
-                                    <div className="d-flex row col-lg-12 col-md-12 col-12 justify-content-between p-0 m-0" style={{
-                                        height: "3.7vh"
-                                    }}>
+                                    <div
+                                        className="d-flex row col-lg-12 col-md-12 col-12 justify-content-between p-0 m-0"
+                                        style={{
+                                            height: "3.7vh"
+                                        }}>
                                         <div className=" col-lg-4 col-md-4 col-6 p-0">
-                                            <span>Từ ngày : <Field name="startDate" type="date"
-                                                                   onChange={(event) => setStartDate(event)}
-                                                                   value={dateTimeProfit?.startDate}
+                                            <span style={{fontWeight: "500"}}>Từ ngày : <Field name="startDate"
+                                                                                               type="date"
+                                                                                               onChange={(event) => setStartDate(event)}
+                                                                                               value={dateTimeProfit?.startDate}
                                             /></span>
                                         </div>
                                         <div className=" col-lg-4 col-md-4 col-6">
-                                            <span>Đến : <Field name="endDate" type="date"
-                                                               onChange={(event) => setEndDate(event)}
-                                                               value={dateTimeProfit?.endDate}
+                                            <span style={{fontWeight: "500"}}>Đến : <Field name="endDate" type="date"
+                                                                                           onChange={(event) => setEndDate(event)}
+                                                                                           value={dateTimeProfit?.endDate}
                                             /></span>
                                         </div>
-                                        <div className=" col-lg-4 col-md-4 col-12 p-0 d-flex justify-content-end" style={{
-                                            displayFlex: "flex",
-                                            height: "100%",
-                                            alignItems: "center"
-                                        }}>
-                                            <button type="submit" className="btn btn-sm btn-outline-success " style={{
-                                                height: "100%",
-                                                alignItems: "center",
-                                                display: "flex",
-                                                justifyContent: "center"
-                                            }}>Thống kê
+                                        <div className=" col-lg-4 col-md-4 col-12 p-0 d-flex justify-content-end"
+                                             style={{
+                                                 displayFlex: "flex",
+                                                 height: "100%",
+                                                 alignItems: "center"
+                                             }}>
+                                            <button type="submit"
+                                                    className="btn btn-sm btn-outline-success col-lg-6 col-md-6 col-6"
+                                                    style={{
+                                                        height: "100%",
+                                                        alignItems: "center",
+                                                        display: "flex",
+                                                        justifyContent: "center"
+                                                    }}>Thống kê
                                             </button>
                                             <button type="button" onClick={() => setCancel()}
-                                                    className="btn btn-sm btn-outline-secondary ms-1" style={{
-                                                height: "100%",
-                                                alignItems: "center",
-                                                display: "flex",
-                                                justifyContent: "center",
-                                                // border: "1px solid red"
-                                            }}>
+                                                    className="btn btn-sm btn-outline-secondary col-lg-6 col-md-6 col-6 ms-1"
+                                                    style={{
+                                                        height: "100%",
+                                                        alignItems: "center",
+                                                        display: "flex",
+                                                        justifyContent: "center",
+                                                        // border: "1px solid red"
+                                                    }}>
                                                 Nhập lại
                                             </button>
                                         </div>
@@ -257,9 +231,9 @@ export default function Profit() {
                             </Formik>
                         </div>
                         <label className="mt-3 p-0 ms-5" style={{color: "indianred"}}>
-                            Tổng lợi nhuận :{" "}
+                            <span style={{fontWeight: "500"}}>Tổng lợi nhuận :{" "}</span>
                             <input type="text" disabled value={" " +
-                                totalProfit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + " VND "
+                            totalProfit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + " VND "
                             }/>
                         </label>
                     </div>
@@ -279,8 +253,8 @@ export default function Profit() {
                 <Outlet context={contracts}/>
                 {
                     contracts ?
-                        <div className="d-flex  col-lg-12 justify-content-between align-items-center" >
-                            <div className="col-lg-2 col-md-3 col-3">
+                        <div className="d-flex  col-lg-12 justify-content-between align-items-center">
+                            <div className="col-lg-2 col-md-3 col-3 pb-3">
                                 <ExportExcelButton data={contracts} fileName="user_data"/>
                             </div>
                             <nav aria-label="...">
@@ -288,24 +262,26 @@ export default function Profit() {
                                     <li className="page-item">
                                         {
                                             currentPage !== 0 ?
-                                                <a className="page-link"
-                                                   onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage - 1, params.profitType || profitType)}>
+                                                <button className="page-link btn-outline-secondary text-success"
+                                                        style={{border: "1px solid gray", borderRadius: "5px"}}
+                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage - 1, params.profitType || profitType)}>
                                                     Trước
-                                                </a>
+                                                </button>
                                                 :
                                                 ""
                                         }
                                     </li>
                                     {
-                                        pagination()
+                                       totalPage === 1 ? "" : pagination()
                                     }
                                     <li className="page-item">
                                         {
                                             currentPage !== totalPage - 1 ?
-                                                <a className="page-link"
-                                                   onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage + 1, params.profitType || profitType)}>
+                                                <button className="page-link btn-outline-secondary text-success"
+                                                        style={{border: "1px solid gray", borderRadius: "5px"}}
+                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage + 1, params.profitType || profitType)}>
                                                     Sau
-                                                </a>
+                                                </button>
                                                 :
                                                 ""
                                         }
