@@ -14,6 +14,7 @@ export function Header() {
     const navigate = useNavigate();
     const [isLogin, setIsLogin] = useState(false);
     const token = localStorage.getItem('token');
+
     const [decodedToken, setDecodedToken] = useState("");
     const [username, setUsername] = useState();
     const [dropdownOpen, setDropdownOpen] = useState(false);

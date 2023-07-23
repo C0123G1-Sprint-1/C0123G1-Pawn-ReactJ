@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import jwt from 'jwt-decode';
+import React from "react";
 
 export function LoginForm() {
   const navigate =useNavigate()
@@ -43,13 +44,13 @@ export function LoginForm() {
               // Kiểm tra nếu response có chứa token
               if (response.data.token) {
                 // Giải mã token và lấy thông tin payload
-                const decodedToken = jwt(response.data.token);
-                console.log(decodedToken.sub)
+
+                // const decodedToken = jwt(response.data.token);
                 // Lưu trữ thông tin người dùng vào localStorage hoặc state
                 localStorage.setItem('token', response.data.token);
                 // localStorage.setItem('userId', decodedToken.userId);
               }
-              
+
               // Đăng nhập thành công, chuyển hướng hoặc thực hiện hành động khác
               navigate('/nav/info-store');
             } catch (e) {
