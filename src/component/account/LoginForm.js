@@ -1,18 +1,12 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from "react-router-dom";
-import Swal from "sweetalert2";
 import * as Yup from "yup"
 import "./Style.css"
 import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 import { ErrorMessage, Field, Form, Formik } from "formik";
-// import jwtDecode from 'jsonwebtoken';
-// import jwt from 'jsonwebtoken';
 import jwt from 'jwt-decode';
 
 export function LoginForm() {
