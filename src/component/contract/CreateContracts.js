@@ -184,7 +184,7 @@ export const CreateContracts = () => {
                 '  width: "100%",\n' +
                 '  height: "100%",\n' +
                 '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
-            // timer: 4000,
+            timer: 4000,
             title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
             showConfirmButton: false,
             allowOutsideClick: false,
@@ -398,8 +398,8 @@ export const CreateContracts = () => {
                                                 <ErrorMessage name="endDate" component="p" style={{color: "red"}}/>
                                             </div>
                                         </div>
-                                        <div className="row mt-2">
-                                            <div className=" col-md-6 mt-2 inputs">
+                                        <div className="row mt-1">
+                                            <div className=" col-md-6 mt-1 inputs">
                                                 <label>Tiền cho vay (VNĐ) <span style={{color: "red"}}>*</span></label>
                                                 <Field
                                                     type="text"
@@ -415,7 +415,7 @@ export const CreateContracts = () => {
 
                                                 <ErrorMessage name="loans" component="p" style={{color: "red"}}/>
                                             </div>
-                                            <div className=" col-md-6 mt-2 inputs">
+                                            <div className=" col-md-6 mt-1 inputs">
                                                 <label>Tiền lãi (VNĐ) </label>
                                                 <div aria-disabled style={{
                                                     border: "1px solid #DDDDDD",
@@ -506,20 +506,26 @@ export const CreateContracts = () => {
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="d-flex mt-4 justify-content-between">
-                                            <div className="text-center" style={{marginLeft: "23.6%"}}>
-                                                <Link to="/nav/info-store/transaction-history"
-                                                      className="btn btn-secondary ">
-                                                    <b className="text-center">Quay lại</b>
+                                        <div className="text-center mt-4 btn-group p-3 m-l-2">
+                                            <div  className="text-center m-auto">
+                                                <Link
+                                                    style={{marginLeft:"4vw",width:"130px"}}
+                                                    type="button"
+                                                    className="btn btn-secondary"
+                                                    to={"/nav/info-store"}>
+                                                    Quay lại
                                                 </Link>
                                             </div>
-                                            <div className="text-center m-auto">
-                                                <div className="text-center">
-                                                    <button disabled={!idCustomer} type="submit"
-                                                            className="btn btn-success" onClick={showLoadingScreen}>
-                                                        <b className="text-center">Thêm mới</b>
-                                                    </button>
-                                                </div>
+                                            <div
+                                                className="text-center m-auto">
+
+
+                                                <button type="submit" className="btn btn-success"
+                                                        style={{marginRight:"4vw",width:"130px"}}
+                                                        onClick={showLoadingScreen}
+                                                        disabled={!idCustomer || idCustomer.length === 0}>
+                                                    <b className="text-center">Thêm mới</b>
+                                                </button>
                                             </div>
                                         </div>
                                        
