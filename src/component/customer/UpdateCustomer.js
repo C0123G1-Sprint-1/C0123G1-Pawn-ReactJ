@@ -163,49 +163,53 @@ export function UpdateCustomer() {
                     backCitizen: customer?.backCitizen,
                 }}
                 validationSchema={Yup.object({
-                    name: Yup.string().required("Tên không được để trống").matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
+                    name: Yup.string().required("Tên không được để trống")
                         .min(5, 'Ký tự phải nhiều hơn 5')
-                        .max(100, 'Ký tự phải ít hơn 100'),
-                    birthday: Yup.date().required("Ngày tháng năm sinh không được để trống").max(getMinDate(), 'Người dùng phải từ 18 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
+                        .max(100, 'Ký tự phải ít hơn 100')
+                        .matches(
+                            /^[A-Z][A-Za-z0-9\s]*$/,
+                            "Tên không được chứa ký tự đặc biệt và chữ cái đầu tiên phải viết hoa"
+                        )
+                        .test('no-special-characters', 'Tên không được chứa các ký tự đặc biệt như @, #, !', value => {
+                            return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
+                        }),
+
+                    birthday: Yup.date().required("Ngày, tháng, năm sinh không được để trống").max(getMinDate(), 'Người dùng phải từ 18 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
                     gender: Yup.number().required("Giới tính không được để trống"),
-                    phoneNumber: Yup.string().required("Số diện thoại không được để trống").matches(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/, 'Nhập đúng định dạng SDT VD: 098XXXXXXX (X là chữ số)')
+                    phoneNumber: Yup.string().required("Số diện thoại không được để trống")
+                        .matches(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/, 'Nhập đúng định dạng SDT VD: 098XXXXXXX (X là chữ số)')
                         .test(
                             "check-phone-number",
                             "Số điện thoại đã tồn tại",
                             async function (value) {
-                                if (value === customer.phoneNumber) {
-                                    return true
-                                } else if (!value) {
+                                if (!value) {
                                     return true;
-                                } else {
-                                    const isPhoneNumberExists = await checkPhoneNumberExists(value);
-                                    return !isPhoneNumberExists;
                                 }
+                                const isPhoneNumberExists = await checkPhoneNumberExists(value);
+                                return !isPhoneNumberExists;
                             }),
                     email: Yup.string().required("Email không được để trống").email('Nhập đúng định dạng email')
                         .test(
                             "check-email",
                             "Email đã tồn tại",
                             async function (value) {
-                                if (value === customer.email) {
-                                    return true
-                                } else if (!value) {
+                                if (!value) {
                                     return true;
                                 }
                                 const isEmailExists = await checkEmailExists(value);
                                 return !isEmailExists;
                             }),
-                    address: Yup.string().required("Địa chỉ không được để trống"),
+                    address: Yup.string().required("Địa chỉ không được để trống")
+                        .min(10, 'Ký tự phải nhiều hơn 10')
+                        .max(100, 'Ký tự phải ít hơn 100')
+                        .matches(/^[^+.#()?&]*$/, "Địa chỉ không chứa các ký tự +,.,#,(,),?,&"),
                     citizenCode: Yup.string().required("Căn cước không được để trống")
-                        .length(12, "Bạn không được nhập quá 12 ký tự")
-                        .matches(/^(\d{12})$/, "Số CCCD không đúng định dạng.")
+                        .matches(/^(\d{12})$/, "Nhập không đúng định dạng. Vui lòng kiểm tra lại")
                         .test(
                             "check-citizen-code",
                             "Số căn cước đã tồn tại",
                             async function (value) {
-                                if (value === customer.citizenCode) {
-                                    return true
-                                } else if (!value) {
+                                if (!value) {
                                     return true;
                                 }
                                 const isCitizenCodeExists = await checkCitizenCodeExists(value);

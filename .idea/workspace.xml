@@ -42,9 +42,11 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment=" comiit">
+    <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="fix_employee">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CreateCustomer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/customer/RegisterPawnAnhQoc.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/RegisterPawnAnhQoc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,7 +320,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690089278318</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fix_employee">
+      <created>1690090580090</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1690090580090</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -342,7 +351,8 @@
     <MESSAGE value="up" />
     <MESSAGE value="&quot;add component TransactionHistoryList&quot;" />
     <MESSAGE value=" comiit" />
-    <option name="LAST_COMMIT_MESSAGE" value=" comiit" />
+    <MESSAGE value="fix_employee" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix_employee" />
   </component>
   <component name="WindowStateProjectService">
     <state x="489" y="228" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1689774850055">
@@ -394,10 +404,10 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="498" y="129" key="RollbackChangesDialog/0.0.1440.852@0.0.1440.852" timestamp="1689917583569" />
-    <state x="321" y="128" key="Vcs.Push.Dialog.v2" timestamp="1690089307768">
+    <state x="321" y="128" key="Vcs.Push.Dialog.v2" timestamp="1690090587122">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="321" y="128" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1690089307768" />
+    <state x="321" y="128" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1690090587122" />
     <state x="338" y="150" key="Vcs.Push.Dialog.v2/0.0.1440.852@0.0.1440.852" timestamp="1689919957325" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1689945210355" />
     <state x="374" y="23" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1689941673832">

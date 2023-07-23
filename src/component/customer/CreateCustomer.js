@@ -181,9 +181,17 @@ export function CreateCustomer() {
                     backCitizen: "",
                 }}
                 validationSchema={Yup.object({
-                    name: Yup.string().required("Tên không được để trống").matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀẾỂưạảấầẩẫậắằẳẵặẹẻẽềếểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
+                    name: Yup.string().required("Tên không được để trống")
                         .min(5, 'Ký tự phải nhiều hơn 5')
-                        .max(100, 'Ký tự phải ít hơn 100'),
+                        .max(100, 'Ký tự phải ít hơn 100')
+                        .matches(
+                            /^[A-Z][A-Za-z0-9\s]*$/,
+                            "Tên không được chứa ký tự đặc biệt và chữ cái đầu tiên phải viết hoa"
+                        )
+                        .test('no-special-characters', 'Tên không được chứa các ký tự đặc biệt như @, #, !', value => {
+                            return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
+                        }),
+
                     birthday: Yup.date().required("Ngày, tháng, năm sinh không được để trống").max(getMinDate(), 'Người dùng phải từ 18 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
                     gender: Yup.number().required("Giới tính không được để trống"),
                     phoneNumber: Yup.string().required("Số diện thoại không được để trống")
@@ -209,7 +217,10 @@ export function CreateCustomer() {
                                 const isEmailExists = await checkEmailExists(value);
                                 return !isEmailExists;
                             }),
-                    address: Yup.string().required("Địa chỉ không được để trống"),
+                    address: Yup.string().required("Địa chỉ không được để trống")
+                        .min(10, 'Ký tự phải nhiều hơn 10')
+                        .max(100, 'Ký tự phải ít hơn 100')
+                        .matches(/^[^+.#()?&]*$/, "Địa chỉ không chứa các ký tự +,.,#,(,),?,&"),
                     citizenCode: Yup.string().required("Căn cước không được để trống")
                         .matches(/^(\d{12})$/, "Nhập không đúng định dạng. Vui lòng kiểm tra lại")
                         .test(
