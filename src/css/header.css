@@ -12,7 +12,7 @@ section {
     transition: all 0.5s;
     z-index: 997;
     height: 90px;
-    background-color:#00833e ;
+    background-color: #00833e;
 }
 
 .header.sticked {
@@ -44,6 +44,21 @@ section {
 
 .sticked-header-offset {
     margin-top: 70px;
+}
+
+.abc {
+    padding-top: 0 !important;
+}
+
+.abc>a {
+    padding: 4pt 10pt !important;
+    margin-top: 10px;
+}
+
+.abc>a:hover {
+    background-color: #00833e;
+    color: white !important;
+    cursor: pointer;
 }
 
 /*--------------------------------------------------------------
@@ -319,7 +334,20 @@ section {
         z-index: 9996;
     }
 }
-
+/*#dropdown-info-user{*/
+/*    color: black;*/
+/*    font-size:15px;*/
+/*    ursor: pointer*/
+/*}*/
+/*#dropdown-info-user:hover{*/
+/*    color: red;*/
+/*}*/
+.dropdown-item-info-user:hover{
+    color: black !important;
+    font-size:15px !important;
+    cursor: pointer !important;
+    background-color: #0D6EFD !important;
+}
 
 @media screen and (max-width: 768px) {
 
@@ -330,7 +358,9 @@ section {
         font-weight: 300
     }
 }
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+
 body {
     background-color: #eee;
     font-family: "Poppins", sans-serif;

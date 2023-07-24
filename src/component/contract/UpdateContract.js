@@ -4,19 +4,17 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as contractService from "../../service/ContractService";
 import * as productTypeService from "../../service/ProductTypeService"
 import "../../css/UpdateContract.css"
-import * as Yup from "yup"
-import {NavLink} from "react-router-dom";
-import jwt from 'jwt-decode';
-import {toast} from "react-toastify";
+import * as Yup from "yup";
+import {Link, NavLink} from "react-router-dom";
 import "../../css/liquidation.css";
 import Swal from "sweetalert2";
-
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
+import jwt from "jwt-decode";
 
 
+// const token = localStorage.getItem('token');
+// const decodedToken = jwt(token);
+// console.log(decodedToken.sub)
+// console.log(decodedToken.role)
 export function UpdateContract() {
     const param = useParams();
     const navigate = useNavigate();
@@ -94,16 +92,17 @@ export function UpdateContract() {
                 validationSchema={Yup.object({
                     productName: Yup.string()
                         .required("Không được để trống")
-                        .matches(/^[\p{L}\p{N}\s]+$/u, "Tên sản phẩm không được chứa ký tự đặc biệt")
+                        .matches(/^[\p{Lu}\p{Ll}\p{N}\s]+$/u, "Tên sản phẩm không được chứa ký tự đặc biệt")
+                        .test('first-letter-capitalized', 'Chữ đầu tiên của tên sản phẩm phải viết hoa', value => {
+                            const firstLetter = value.charAt(0);
+                            return firstLetter === firstLetter.toUpperCase();
+                        })
                         .test('no-special-characters', 'Tên sản phẩm không được chứa các ký tự đặc biệt như @, #, !', value => {
                             return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
                         }),
                     contractCode: Yup.string()
-                        .required("Không được để trống")
-                        .matches(/^[a-zA-Z0-9\s\-]*$/, "Tên sản phẩm không được chứa ký tự đặc biệt")
-                        .test('no-special-characters', 'Tên sản phẩm không được chứa các ký tự đặc biệt như @, #, !', value => {
-                            return !/[!@#\$%\^&*()_\+\=\[\]{};':"\\|,.<>\/?]/.test(value);
-                        }),
+                        .required("Không được để trống").matches(/^[a-zA-Z0-9]+$/, "Mã hợp đồng không được chứa ký tự đặc biệt"),
+
                     startDate: Yup
                         .date()
                         .typeError('Vui lòng nhập một ngày hợp lệ')
@@ -149,7 +148,7 @@ export function UpdateContract() {
                                     <h1>CHỈNH SỬA HỢP ĐỒNG</h1>
                                 </div>
                                 <Form>
-                                    <div className="mt-4 inputs"><label htmlFor="contractCode">Mã hợp đồng <span
+                                    <div className="mt-4 inputs"><label htmlFor="contractCode" style={{fontWeight:"500"}}>Mã hợp đồng <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field type="text" className="form-control" id="contractCode"
                                                name="contractCode"
@@ -157,14 +156,14 @@ export function UpdateContract() {
                                         <ErrorMessage name="contractCode" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
 
-                                    <div className="mt-2 inputs"><label htmlFor="productName">Tên Đồ <span
+                                    <div className="mt-2 inputs"><label htmlFor="productName" style={{fontWeight:"500"}}>Tên đồ <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field type="text" className="form-control" name="productName"
                                         />
                                         <ErrorMessage name="productName" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
 
-                                    <div className="mt-2 inputs"><label htmlFor="customers">Tên khách hàng<span
+                                    <div className="mt-2 inputs"><label htmlFor="customers" style={{fontWeight:"500"}}>Tên khách hàng <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field as="select" name="customers" id="customers" className="form-control">
                                             {
@@ -176,7 +175,7 @@ export function UpdateContract() {
                                         </Field>
                                         <ErrorMessage name="customers" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
-                                    <div className="mt-2 inputs"><label>Loại đồ<span
+                                    <div className="mt-2 inputs"><label style={{fontWeight:"500"}}>Loại đồ <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field as="select" name="productType" className="form-control">
                                             {
@@ -189,18 +188,18 @@ export function UpdateContract() {
                                         <ErrorMessage name="productType" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
 
-                                    <div className="mt-2 inputs"><label htmlFor="startDate">Ngày bắt đầu <span
+                                    <div className="mt-2 inputs"><label htmlFor="startDate" style={{fontWeight:"500"}}>Ngày bắt đầu <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field type="date" className="form-control" name="startDate" id="startDate"/>
                                         <ErrorMessage name="startDate" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
-                                    <div className="mt-2 inputs"><label htmlFor="endDate">Ngày kết thúc <span
+                                    <div className="mt-2 inputs"><label htmlFor="endDate" style={{fontWeight:"500"}}>Ngày kết thúc <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field type="date" className="form-control" name="endDate" id="endDate"
                                         />
                                         <ErrorMessage name="endDate" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
-                                    <div className="mt-2 inputs"><label htmlFor="contractType">Loại hợp đồng <span
+                                    <div className="mt-2 inputs"><label htmlFor="contractType" style={{fontWeight:"500"}}>Loại hợp đồng <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field as="select" className="form-control" name="contractType"
                                                id="contractType">
@@ -213,7 +212,7 @@ export function UpdateContract() {
                                         </Field>
                                         <ErrorMessage name="contractType" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
-                                    <div className="mt-2 inputs"><label htmlFor="contractStatus">Trạng Thái <span
+                                    <div className="mt-2 inputs"><label htmlFor="contractStatus" style={{fontWeight:"500"}}>Trạng thái <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field as="select" className="form-control" name="contractStatus"
                                                id="contractStatus">
@@ -226,22 +225,20 @@ export function UpdateContract() {
                                         </Field>
                                         <ErrorMessage name="contractStatus" component="span" style={{color:"red",fontSize:"13px"}}/>
                                     </div>
-                                    <div className=" mt-4 bm-5 btn-group-tri">
-                                        <div className="text-center m-auto">
-                                            <button type="button" className="btn btn-secondary" style={{
-                                                marginRight: "3px",
-                                            }}>
-                                                <NavLink to="/nav/info-store/transaction-history"
-                                                         className="text-decoration-none"><b
-                                                    className="text-center text-white">Quay lại</b></NavLink>
-                                            </button>
+                                    <div className="d-flex mt-4 justify-content-between">
+                                        <div className="text-center" style={{marginLeft: "20%"}}>
+                                            <Link to="/nav/info-store/transaction-history"
+                                                  className="btn btn-secondary ">
+                                                <b className="text-center">Quay lại</b>
+                                            </Link>
                                         </div>
-                                        <div className="text-center m-auto" style={{marginRight: "19px"}}>
-                                            <button type="submit" className=" btn btn-success "
-                                                    data-mdb-toggle="modal"
-                                                    data-mdb-target="#exampleModalToggle1">
-                                                <b className="text-center">Lưu</b>
-                                            </button>
+                                        <div className="text-center m-auto">
+                                            <div className="text-center">
+                                                <button  type="submit" style={{width: "90px"}}
+                                                        className="btn btn-success" >
+                                                    <b className="text-center">Sửa</b>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </Form>

@@ -6,10 +6,12 @@ import jwt from 'jwt-decode';
 import Swal from "sweetalert2";
 import moment from "moment";
 
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
+
+// const token = localStorage.getItem('token');
+// const decodedToken = jwt(token);
+// console.log(decodedToken.sub)
+// console.log(decodedToken.role)
+
 
 export function Top10NewContract() {
     const [contracts, setContract] = useState([]);
@@ -23,6 +25,7 @@ export function Top10NewContract() {
     }
     useEffect(() => {
         fetchTop10NewContract();
+            window.scrollTo(0,0)
     }, [])
     const indexOfLastContract = currentPage * contractsPerPage;
     const indexOfFirstContract = indexOfLastContract - contractsPerPage;
@@ -40,7 +43,7 @@ export function Top10NewContract() {
     const deleteTransactionHistory = async (id) => {
         let res = await contractService.deleteTransactionHistoryByID(id);
         result(res.data)
-        fetchTop10NewContract();
+       fetchTop10NewContract();
 
     }
     const result = (res) => {
@@ -72,12 +75,12 @@ export function Top10NewContract() {
                         </h2>
                         <table className="table table-striped">
                             <thead>
-                            <tr>
+                            <tr style={{textAlign: "start"}}>
                                 <th>Mã HĐ</th>
-                                <th>Tên Dồ</th>
+                                <th>Tên đồ</th>
                                 <th>Tên khách hàng</th>
                                 <th>Ngày làm HĐ</th>
-                                <th>Loại hợp đồng</th>
+                                <th>Loại HĐ</th>
                                 <th>Trạng thái</th>
                                 <th>Chức năng</th>
 
@@ -86,8 +89,8 @@ export function Top10NewContract() {
                             <tbody>
                             {
                                 currentContracts.map((contract) => (
-                                    <tr key={contract.id}>
-                                        <td>{contract.contractCode}</td>
+                                    <tr key={contract.id} >
+                                        <td>HD-{contract.contractCode}</td>
                                         <td>{contract.productName}</td>
                                         <td>{contract.customers?.name}</td>
                                         <td>{
@@ -97,15 +100,30 @@ export function Top10NewContract() {
                                         <td>{contract.contractStatus.name}</td>
                                         <td>
                                             <Link
-                                                to={`/nav/info-store/transaction-history/detail/${contract?.contractCode}`}><i
+                                                to={`/nav/info-store/transaction-history/detail/${contract?.id}`}><i
                                                 className="bi bi-info-circle me-2"/></Link>
                                             <Link
                                                 to={`/nav/info-store/transaction-history/update-contract/${contract?.id}`}
                                                 className="me-2"><i style={{color: "orange"}}
                                                                     className="bi bi-pencil-square"/></Link>
-                                            <a type="button" data-bs-toggle="modal"
+                                            <a type="button"
                                                data-bs-target="#exampleModal" onClick={() => {
-                                                setDeleteTHList(contract?.contractCode)
+                                                Swal.fire({
+                                                    icon: "warning",
+                                                    title: "Xóa",
+                                                    html: `Bạn có muốn xoá lịch sử giao dịch có mã hợp đồng <span style="color: red">HD-${contract?.contractCode}</span> không ?`,
+                                                    showCancelButton: true,
+                                                    cancelButtonText: "Hủy",
+                                                    confirmButtonText: "Có",
+                                                    cancelButtonColor: "rgba(118,112,112,0.51)",
+                                                    confirmButtonColor: "#d33"
+                                                })
+                                                    .then((res) => {
+                                                        if (res.isConfirmed) {
+                                                            deleteTransactionHistory(+contract?.id)
+                                                        }
+                                                    })
+
                                             }}><i
                                                 style={{color: "red"}}
                                                 className="bi bi-trash3"/></a>
@@ -116,58 +134,25 @@ export function Top10NewContract() {
                             </tbody>
                         </table>
                         <div className="pagination-container-tri">
-                            <button
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                            >
-                                Trước
-                            </button>
-                            {Array.from({length: totalPages}, (_, index) => (
+                            {currentPage !== 1 && (
+                                <button onClick={() => handlePageChange(currentPage - 1)}>
+                                    Trước
+                                </button>
+                            )}
+                            {Array.from({ length: totalPages }, (_, index) => (
                                 <button
                                     key={index}
                                     onClick={() => handlePageChange(index + 1)}
-                                    style={{fontWeight: currentPage === index + 1 ? 'bold' : 'normal'}}
+                                    style={{ fontWeight: currentPage === index + 1 ? 'bold' : 'normal' }}
                                 >
                                     {index + 1}
                                 </button>
                             ))}
-                            <button
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === totalPages}
-                            >
-                                Sau
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="modal fade" id="exampleModal"
-                 data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1}
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title"
-                                id="staticBackdropLabel6">
-                                Xóa lịch sử giao dịch</h5>
-                            <button type="button" className="btn-close"
-                                    data-bs-dismiss="modal" aria-label="Close"/>
-                        </div>
-                        <div className="modal-body">
-                            <span>Bạn muốn xóa lịch sử giao dịch có mã code </span><span
-                            style={{color: 'red'}}>HD-{deleteTHList}</span><span> ?</span>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary"
-                                    data-bs-dismiss="modal">Thoát
-                            </button>
-                            <button type="button" className="btn btn-danger"
-                                    data-bs-dismiss="modal"
-                                    onClick={() => {
-                                        deleteTransactionHistory(deleteTHList);
-                                    }}
-                            >Xóa
-                            </button>
+                            {currentPage !== totalPages && (
+                                <button onClick={() => handlePageChange(currentPage + 1)}>
+                                    Sau
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

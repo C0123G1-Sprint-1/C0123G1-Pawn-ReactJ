@@ -67,7 +67,10 @@
 }
 
 .card_content {
-    height: 5rem;
+    height: 3rem;
+}
+.card-date {
+    height: 2rem;
 }
 
 .card_title {
@@ -75,7 +78,7 @@
     font-weight: 700;
     /*letter-spacing: 1px;*/
     text-transform: capitalize;
-    margin: 0;
+    margin-top: 1rem;
     text-align: center;
     width: 290px;
 }
@@ -95,15 +98,17 @@
 }
 .time-post {
     margin-top: 10px;
+    margin-right: 1rem;
     text-align: right;
     color: #999;
     font-size: 16px;
 }
 .time-post1 {
     margin-top: 4px;
+    margin-right: 4px;
     text-align: right;
     color: #999;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .hideContent {
@@ -117,8 +122,9 @@
     height: auto;
 }
 .label-post {
+    font-family: "Times New Roman";
     display: block;
-    font-weight: bold;
+    font-weight: bold ;
     color: #333;
 }
 .title-news{
@@ -127,10 +133,10 @@
     font-weight: 700;
     margin: 2rem 4rem;
 }
-textarea {
+.textarea-posts {
     width: 100%;
     padding: 10px;
-    height: 200px;
+    /*height: 100px;*/
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -239,11 +245,11 @@ textarea {
 /* CSS cho nút chuyển trang hiện tại */
 .pagination-container-huy button[style*="bold"] {
     font-weight: bold;
-    background-color: #007bff;
+    background-color: #00833e;
     color: #fff;
-    border-color: #007bff;
+    border-color: #00833e;
 }
 
 .pagination-container-huy button[style*="bold"]:hover {
-    background-color: #0056b3;
+    background-color: #00833e;
 }

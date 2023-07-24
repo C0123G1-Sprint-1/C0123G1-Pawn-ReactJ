@@ -2,16 +2,15 @@ import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Modal} from 'react-bootstrap';
 import * as redeemingService from '../../service/RedeemingService'
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Field, Form, Formik, isNaN} from "formik";
 import * as Swal from "sweetalert2";
 import moment from "moment";
-import {ThreeCircles} from "react-loader-spinner";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 export const Redeeming = () => {
+    const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [contractCode, setContractCode] = useState('');
     const [customerName, setCustomerName] = useState('');
     const [productName, setProductName] = useState('');
@@ -33,9 +32,11 @@ export const Redeeming = () => {
         setCustomerName('')
         setContractCode('')
         setProductName('')
+
     };
 
     const handleModalOpen = () => {
+        setPage(0)
         setShowModal(true);
         fetchContract()
     };
@@ -80,10 +81,38 @@ export const Redeeming = () => {
 
 
     const reset = async () => {
-        setContract([])
+
         setSelectedContract(0)
+
         // window.location.reload(false);
     }
+    const loadContracts = async () => {
+
+
+        Swal.fire({
+            html: '<div className="loading-screen" style={{position: "fixed",\n' +
+                '  top: "0;",\n' +
+                '  left: "0",\n' +
+                '  width: "100%",\n' +
+                '  height: "100%",\n' +
+                '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
+            timer: 5000,
+            title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: async () => {
+                await Swal.showLoading();
+            },
+            willClose: () => {
+                // Thêm xử lý khi SweetAlert2 đóng (nếu cần thiết).
+            }
+        });
+    };
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
 
     return (
 
@@ -105,8 +134,10 @@ export const Redeeming = () => {
             />
             <style
                 dangerouslySetInnerHTML={{
+
+
                     __html:
-                        '\n        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");\n\n        .card {\n            border: none;\n            padding: 20px;\n            position: relative;\n            background-color: rgba(255, 255, 255, 0.7);\n            border-radius: 20px;\n        }\n\n        body {\n        }\n\n        body {\n            background-color: #eee;\n            font-family: "Poppins", sans-serif;\n            font-weight: 300\n        }\n\n        .height {\n            height: 100vh\n        }\n\n        .card {\n            border: none;\n            padding: 20px;\n            position: relative\n        }\n\n        .btn-group {\n            display: flex;\n            justify-content: space-between;\n        }\n\n        label {\n            font-family: Arial, sans-serif;\n            font-size: 14px;\n            font-weight: bold;\n            color: #222222;\n            margin-bottom: 5px;\n            display: inline-block;\n        }\n\n    '
+                        '\n        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");\n\n       .card {\n            border: none;\n            padding: 20px;\n            position: relative;\n            background-color: rgba(255, 255, 255, 0.7);\n            border-radius: 20px;\n        }\n\n        body {\n        }\n\n        body {\n            background-color: #eee;\n            font-family: "Poppins", sans-serif;\n            font-weight: 300\n        }\n\n        .height {\n            height: 100vh\n        }\n\n        .card {\n            border: none;\n            padding: 20px;\n            position: relative\n        }\n\n        .btn-group {\n            display: flex;\n            justify-content: space-between;\n        }\n\n        label {\n            font-family: Arial, sans-serif;\n            font-size: 14px;\n            font-weight: bold;\n            color: #222222;\n            margin-bottom: 5px;\n            display: inline-block;\n        }\n\n    '
                 }}
             />
             <br/>
@@ -115,10 +146,10 @@ export const Redeeming = () => {
             {/*top: "50%",*/}
             {/*transform: "translate(-50%, -50%)",*/}
             {/*paddingRight: "20px"}}*/}
-            <div className="container">
-                <div className="row height d-flex justify-content-center align-items-center">
+            <div className="container pt-3 pb-5">
+                <div className="row height d-flex justify-content-center align-items-center" style={{height: "85vh"}}>
                     <div className="col-md-6">
-                        <div className="card px-5 py-4">
+                        <div className="card px-5 py-4" style={{borderRadius: "7px",border: "1px solid rgba(0,0,0,0.17)"}}>
                             <div style={{textAlign: "center"}}>
                                 <h1>
                                     TRẢ ĐỒ
@@ -186,9 +217,9 @@ export const Redeeming = () => {
                                                 }}>
                                                     <Form>
                                                         <div className="row">
-                                                            <div className="col-lg-3">
+                                                            <div className="col-lg-2">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="ma">Mã hợp đồng</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="ma">Mã hợp đồng</label>
                                                                     <Field id="ma"
                                                                            type="text" name="contractCode"
                                                                            className="form-control"/>
@@ -197,7 +228,7 @@ export const Redeeming = () => {
                                                             </div>
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="kh">Tên khách hàng</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="kh">Tên khách hàng</label>
                                                                     <Field id="kh"
                                                                            type="text" name="customerName"
                                                                            className="form-control"/>
@@ -205,7 +236,7 @@ export const Redeeming = () => {
                                                             </div>
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="doCam">Đồ cầm</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="doCam">Đồ cầm</label>
                                                                     <Field id="doCam"
                                                                            type="text" name="productName"
                                                                            className="form-control"/>
@@ -214,26 +245,23 @@ export const Redeeming = () => {
                                                             </div>
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="dateStart">Ngày làm hợp
-                                                                        đòng</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="dateStart">Ngày làm hợp
+                                                                        đồng</label>
                                                                     <Field
                                                                         id="dateStart" type="date" name="startDate"
                                                                         className="form-control"/>
                                                                 </div>
 
                                                             </div>
-
-                                                        </div>
-
-
-                                                        <div className="row">
-                                                            <div className="col-md-12 d-flex justify-content-end">
+                                                            <div className="col-lg-1 d-flex justify-content-end">
                                                                 <button type="submit"
-                                                                        className="btn btn-outline-success " style={{width: "auto"}}><i
+                                                                        className="btn btn-outline-success "
+                                                                        style={{width: "auto",height: "37px",marginTop: "3.7vh"}}><i
                                                                     className="bi bi-search"></i>
                                                                 </button>
 
                                                             </div>
+
                                                         </div>
 
                                                     </Form>
@@ -242,13 +270,13 @@ export const Redeeming = () => {
                                             </div>
                                             <table className="table table-striped">
                                                 <thead>
-                                                <tr>
-                                                    <th className="text-center">Mã HĐ</th>
-                                                    <th className="text-center">Khách Hàng</th>
-                                                    <th className="text-center">Đồ Cầm</th>
-                                                    <th className="text-center">Tiền Cho Vay (VNĐ)</th>
-                                                    <th className="text-center">Ngày Làm HĐ</th>
-                                                    <th className="text-center">Chức Năng</th>
+                                                <tr style={{textAlign: "start"}}>
+                                                    <th >Mã HĐ</th>
+                                                    <th >Khách Hàng</th>
+                                                    <th >Đồ Cầm</th>
+                                                    <th >Tiền Cho Vay (VNĐ)</th>
+                                                    <th >Ngày Làm HĐ</th>
+                                                    <th >Chức Năng</th>
                                                 </tr>
                                                 </thead>
 
@@ -264,13 +292,13 @@ export const Redeeming = () => {
 
                                                         {
                                                             contracts.map((contract) => (
-                                                                <tr key={contract.contractId}>
-                                                                    <td className="text-center">{contract.contractCode}</td>
-                                                                    <td >{contract.customerName}</td>
-                                                                    <td className="text-center">{contract.productName}</td>
-                                                                    <td className="text-center">{contract.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
-                                                                    <td className="text-center">{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
-                                                                    <td className="text-center">
+                                                                <tr key={contract.contractId} style={{textAlign: "start"}}>
+                                                                    <td >HD-{contract.contractCode}</td>
+                                                                    <td>{contract.customerName}</td>
+                                                                    <td >{contract.productName}</td>
+                                                                    <td >{contract.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                                                    <td >{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                                                    <td >
                                                                         <button onClick={() => {
                                                                             handleModalClose(true);
                                                                             setSelectedContract(contract.contractId)
@@ -297,7 +325,9 @@ export const Redeeming = () => {
                                                         <nav aria-label="...">
                                                             <ul className="pagination">
                                                                 <li hidden={page === 0} className="page-item ">
-                                                                    <button className="page-link" tabIndex={-1}
+                                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
+
                                                                             onClick={() => paginate(page - 1)}>
                                                                         Trước
                                                                     </button>
@@ -305,11 +335,14 @@ export const Redeeming = () => {
 
 
                                                                 {
-                                                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
+                                                                    Array.from({length: totalPages}, (a, index) => index).map((pageNum) => (
                                                                         <li className="page-item">
-                                                                            <button className={page === page ? "page-link active" : "page-link"} key={page}
-                                                                                    onClick={() => paginate(page)}>
-                                                                                {page + 1}
+                                                                            <button
+                                                                                className={page === pageNum ? "page-link-active" : "page-link-khanh"}
+                                                                                style={{border: "1px solid gray", borderRadius: "5px"}}
+                                                                                key={pageNum}
+                                                                                onClick={() => paginate(pageNum)}>
+                                                                                {pageNum + 1}
                                                                             </button>
                                                                         </li>
                                                                     ))
@@ -317,9 +350,11 @@ export const Redeeming = () => {
 
                                                                 <li hidden={page + 1 === totalPages}
                                                                     className="page-item">
-                                                                    <button className="page-link" tabIndex={-1}
+                                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
+
                                                                             onClick={() => paginate(page + 1)}>
-                                                                        Tiếp
+                                                                        Sau
                                                                     </button>
                                                                 </li>
                                                             </ul>
@@ -331,80 +366,110 @@ export const Redeeming = () => {
                                 </div>
                             </div>
 
-                            <Formik initialValues={{
+                            <Formik initialValues={{}}
 
 
-
-
-
-                            }}
-
-
-                                    onSubmit={(value, {setSubmitting }) => {
+                                    onSubmit={async (value) => {
                                         const res = async () => {
                                             try {
                                                 await redeemingService.redeem(selectedContract);
+
                                             } catch (e) {
                                                 console.log(e)
                                             }
                                         }
-                                        setTimeout(async () => {
-                                            await setSubmitting(false)
-                                            await res().then(Swal.fire({
-                                                icon: "success",
-                                                title: "Đã chuộc thành công",
 
-                                            }))
-                                        }, 4000)
+                                       await loadContracts()
+                                       await res()
+
+                                        Swal.fire({
+                                            icon:"success",
+                                            title:"Trả đồ thành công",
+                                            timer:2000
+                                        })
+                                        navigate('/nav/info-store/all-contract')
 
 
                                         reset()
-
                                         fetchContract()
-
                                     }}>
-                                {
-                                    ({isSubmitting}) => (
+
+
                                         <>
                                             <Form>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Mã HĐ</label>
+                                                        <label style={{fontWeight: 500}}>Mã HĐ</label>
 
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
-                                                            {  contracts.find((c) => c.contractId == selectedContract)?.contractCode}
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.contractCode}
                                                         </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Tên khách hàng</label>
+                                                        <label style={{fontWeight: 500}}>Tên khách hàng</label>
 
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
                                                             {contracts.find((c) => c.contractId == selectedContract)?.customerName}
                                                         </h5>
                                                     </div>
                                                 </div>
                                                 <div className="mt-2 inputs form-group">
-                                                    <label>Đồ cầm</label>
+                                                    <label style={{fontWeight: 500}}>Đồ cầm</label>
 
-                                                    <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                    <h5 style={{
+                                                        border: "0px solid gray",
+                                                        alignItems: "center",
+                                                        display: "flex",
+                                                        backgroundColor: "#e9ecef",
+                                                        height: "4.9vh",
+                                                        borderRadius: "7px"
+                                                    }}
                                                         className="p-0 m-0">
                                                         {contracts.find((c) => c.contractId == selectedContract)?.productName}
                                                     </h5>
                                                 </div>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs ">
-                                                        <label>Tiền cho vay (VNĐ)</label>
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <label style={{fontWeight: 500}}>Tiền cho vay (VNĐ)</label>
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
                                                             {contracts.find((c) => c.contractId == selectedContract)?.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                                         </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Tiền lãi (VNĐ)</label>
+                                                        <label style={{fontWeight: 500}}>Tiền lãi (VNĐ)</label>
 
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
                                                             {contracts.find((c) => c.contractId == selectedContract)?.profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                                                         </h5>
@@ -412,26 +477,47 @@ export const Redeeming = () => {
                                                 </div>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Ngày bắt đầu</label>
+                                                        <label style={{fontWeight: 500}}>Ngày bắt đầu</label>
 
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
-                                                            {selectedContract ? moment( contracts.find((c) => c.contractId == selectedContract)?.startDate,'YYYY/MM/DD' ).format('DD/MM/YYYY') : '' }
+                                                            {selectedContract ? moment(contracts.find((c) => c.contractId == selectedContract)?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY') : ''}
                                                         </h5>
 
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Ngày kết thúc</label>
+                                                        <label style={{fontWeight: 500}}>Ngày kết thúc</label>
 
-                                                        <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
                                                             className="p-0 m-0">
-                                                            {selectedContract ? moment( contracts.find((c) => c.contractId == selectedContract)?.endDate,'YYYY/MM/DD' ).format('DD/MM/YYYY') : ''}
+                                                            {selectedContract ? moment(contracts.find((c) => c.contractId == selectedContract)?.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY') : ''}
                                                         </h5>
                                                     </div>
                                                 </div>
                                                 <div className="mt-2 inputs">
-                                                    <label>Tiền thanh toán (VNĐ)</label>
-                                                    <h5 style={{border: "0px solid gray",alignItems: "center", display: "flex", backgroundColor: "#e2e2e2",height: "4.9vh" ,borderRadius: "7px"}}
+                                                    <label style={{fontWeight: 500}}>Tiền thanh toán (VNĐ)</label>
+                                                    <h5 style={{
+                                                        border: "0px solid gray",
+                                                        alignItems: "center",
+                                                        display: "flex",
+                                                        backgroundColor: "#e9ecef",
+                                                        height: "4.9vh",
+                                                        borderRadius: "7px"
+                                                    }}
                                                         className="p-0 m-0">
 
                                                         {isNaN(contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')) ? '' : (contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} </h5>
@@ -439,47 +525,39 @@ export const Redeeming = () => {
 
                                                 <div className="text-center mt-4 btn-group p-3 m-l-2">
                                                     <div className="text-center m-auto">
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-secondary "
 
-                                                        >
-                                                            <Link to="/nav/info-store/" className="text-center text-light">Quay lại</Link>
-                                                        </button>
+                                                        <div className="text-center m-auto">
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-secondary "
+                                                                style={{width: '130px'}}>
+                                                                <Link to="/nav/info-store/"
+                                                                      className="text-center text-light"><b>Quay lại</b></Link>
+                                                            </button>
+                                                        </div>
                                                     </div>
 
                                                     <div className="text-center m-auto">
-                                                        {
-                                                            isSubmitting ? (<ThreeCircles
-                                                                    height="100"
-                                                                    width="100"
-                                                                    color="#4fa94d"
-                                                                    wrapperStyle={{}}
-                                                                    wrapperClass=""
-                                                                    visible={true}
-                                                                    ariaLabel="three-circles-rotating"
-                                                                    outerCircleColor=""
-                                                                    innerCircleColor=""
-                                                                    middleCircleColor=""
-                                                                />) :
-                                                                (<div className="text-center m-auto">
-                                                                        <button
-                                                                                disabled={!selectedContract} type="submit"
-                                                                                className="btn btn-success">
-                                                                            <b className="text-center">Thanh toán</b>
-                                                                        </button>
-                                                                    </div>
-                                                                )
 
-                                                        }
+
+                                                        <div className="text-center m-auto">
+                                                            <button
+                                                                    disabled={!selectedContract} type="submit"
+                                                                    className="btn btn-success"
+                                                                    style={{width: '130px'}}>
+                                                                <b className="text-center">Thanh toán</b>
+                                                            </button>
+                                                        </div>
+
+
                                                     </div>
 
                                                 </div>
                                             </Form>
                                         </>
 
-                                    )
-                                }
+
+
 
                             </Formik>
 

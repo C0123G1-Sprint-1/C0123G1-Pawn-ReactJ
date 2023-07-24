@@ -4,15 +4,17 @@ import {Button, Modal} from "react-bootstrap";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {storage} from "../../firebaseContract";
+import {storage} from "../../firebase";
 import Swal from "sweetalert2";
 import * as Yup from 'yup';
 import {ThreeCircles} from "react-loader-spinner";
 import {FormattedNumber} from "react-intl";
+import ReactPaginate from "react-paginate";
+import * as yup from "yup";
+import {useOutletContext} from "react-router";
 
 export const CreateContracts = () => {
-    const [page, setPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0); // Tổng số trang
+
 
     const [selectedFile, setSelectedFile] = useState(null);
     const [firebaseImg, setImg] = useState(null);
@@ -34,6 +36,10 @@ export const CreateContracts = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDay] = useState('');
 
+    const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0); // Tổng số trang
+
+
     const n = useNavigate();
 
     const handleLoans = async (event) => {
@@ -48,10 +54,10 @@ export const CreateContracts = () => {
         await setEndDay(event.target.value)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        })
-    let percent = 0.67/100;
+    })
+    let percent = 0.67 / 100;
     const moment = require('moment');
     const startDates = moment(startDate);
     const endDates = moment(endDate);
@@ -94,17 +100,25 @@ export const CreateContracts = () => {
             );
         });
     };
+    const getAllCustomer = async () => {
+        try {
+            const res = await contractService.findAllCustomer(currentPage, customerName)
+            setCustomer(res.content)
+            setPageCount(res.totalPages)
+        } catch (e) {
+        }
+    }
 
     //  Sổ list  chọn khách hàng
     useEffect(() => {
-        const getAllCustomer = async () => {
-            const res = await contractService.findAllCustomer(page, customerName)
-            setCustomer(res.content)
-            await setTotalPages(res.totalPages)
-        }
         getAllCustomer()
-    }, [page, customerName])
+    }, [currentPage, customerName])
 
+    const handlePage = async (pages) => {
+        setCurrentPage(+pages.selected);
+        const res = await contractService.findAllCustomer(currentPage, customerName)
+        setCustomer(res.content)
+    }
     // Modal
     const handleModalClose = () => {
         setShowModal(false);
@@ -135,9 +149,7 @@ export const CreateContracts = () => {
     }
 
     // page
-    const paginate = (page) => {
-        setPage(page)
-    }
+
     // random mã
     const createContractCodeApi = async () => {
         const res = await contractService.createCodeContract();
@@ -152,7 +164,9 @@ export const CreateContracts = () => {
         }
     }
 
-
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     useEffect(() => {
         getAllProductType()
         getAllContractType()
@@ -161,11 +175,33 @@ export const CreateContracts = () => {
         createContractCodeApi()
     }, [])
 
+    const showLoadingScreen = () => {
+        Swal.fire({
+            html: '<div className="loading-screen" style={{position: "fixed",\n' +
+                '  top: "0;",\n' +
+                '  left: "0",\n' +
+                '  width: "100%",\n' +
+                '  height: "100%",\n' +
+                '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
+            timer: 5000,
+            title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: async () => {
+                await Swal.showLoading();
+            },
+            willClose: () => {
+                // Thêm xử lý khi SweetAlert2 đóng (nếu cần thiết).
+            }
+        });
+    };
 
     return (
         <>
-            <div className="container pt-5">
-                <div className="row height d-flex justify-content-center align-items-center">
+            <div className="container">
+                <div className="row d-flex justify-content-center align-items-center" style={{minHeight: "80vh"}}>
                     <div className="col-md-6">
                         <div className="card px-5 py-4">
                             <div style={{textAlign: "center"}}>
@@ -183,7 +219,7 @@ export const CreateContracts = () => {
                                 profit: '',
                                 contractStatus: 2,
                                 contractType: 1,
-                                employees: 4
+                                employees: 1
                             }}
                                     validationSchema={Yup.object({
                                         productName: Yup.string()
@@ -193,6 +229,10 @@ export const CreateContracts = () => {
                                         loans: Yup.number()
                                             .required('Không được để trống')
                                             .min(500000, 'Tiền cho vay phải lớn hớn 500.000'),
+                                        productType: yup.number()
+                                            .required('Không được để trống')
+                                            .min(1, 'Không được để trống'),
+
                                         startDate: Yup.date()
                                             .required('Không được để trống')
                                             .test("date", "Không được chọn quá khứ chỉ chọn hiện tại và tương lai",
@@ -219,19 +259,12 @@ export const CreateContracts = () => {
                                                     const startDate = this.resolve(Yup.ref('startDate'));
                                                     return value > startDate;
                                                 }),
-                                        image:Yup.string()
+                                        image: Yup.string()
                                             .required('Không được để trống')
                                     })}
 
 
                                     onSubmit={async (values, {resetForm}) => {
-                                        // let percent = 0.067;
-                                        // const moment = require('moment');
-                                        // const startDates = moment(values.startDate);
-                                        // const endDates = moment(values.endDate);
-                                        // // tính khoảng cách ngày
-                                        // const duration = endDates.diff(startDates, 'days');
-                                        // const profits = +(values.loans * percent * duration)
                                         const createContracts = async () => {
                                             const newValue = {
                                                 ...values,
@@ -254,7 +287,7 @@ export const CreateContracts = () => {
                                             })
 
                                         }
-
+                                        await showLoadingScreen()
                                         await createContracts()
                                         // resetForm(false)
                                         Swal.fire({
@@ -315,7 +348,7 @@ export const CreateContracts = () => {
 
                                             </div>
                                             <div className="col-md-6 inputs">
-                                                <label>Loại đồ cầm</label>
+                                                <label>Loại đồ cầm <span style={{color: "red"}}>*</span></label>
                                                 <Field
                                                     name="productType"
                                                     as="select"
@@ -329,6 +362,7 @@ export const CreateContracts = () => {
                                                         <option key={index} value={list.id}>{list.name}</option>
                                                     ))}
                                                 </Field>
+                                                <ErrorMessage name="productType" component="p" style={{color: "red"}}/>
                                             </div>
                                         </div>
                                         <div className="row mt-2  ">
@@ -365,7 +399,7 @@ export const CreateContracts = () => {
                                         </div>
                                         <div className="row mt-2">
                                             <div className=" col-md-6 mt-2 inputs">
-                                                <label>Tiền cho vay <span style={{color: "red"}}>*</span></label>
+                                                <label>Tiền cho vay (VNĐ) <span style={{color: "red"}}>*</span></label>
                                                 <Field
                                                     type="number"
                                                     className="form-control"
@@ -380,22 +414,34 @@ export const CreateContracts = () => {
                                                 <ErrorMessage name="loans" component="p" style={{color: "red"}}/>
                                             </div>
                                             <div className=" col-md-6 mt-2 inputs">
-                                                <label>Tiền lãi</label>
-                                                <div aria-disabled style={{border: "1px solid #DDDDDD",fontSize:"0.9rem",fontWeight:"bolder",alignItems: "center", display: "flex", backgroundColor: "#EEEEEE",height: "4.5vh" ,borderRadius: "7px"}}
-                                                     className="p-0 m-0">
-                                                <FormattedNumber
-                                                    value={profits || 0} disabled
-                                                                 thousandSeparator={true} currency="VND"
-                                                                 minimumFractionDigits={0}
-                                                >
-                                                </FormattedNumber>
-                                            </div>
+                                                <label>Tiền lãi (VNĐ) <span style={{fontStyle: "italic",color:"gray"}}>0.67% / ngày</span></label>
+                                                <div aria-disabled style={{
+                                                    border: "1px solid #DDDDDD",
+                                                    fontSize: "0.9rem",
+                                                    fontWeight: "bolder",
+                                                    alignItems: "center",
+                                                    display: "flex",
+                                                    backgroundColor: "#EEEEEE",
+                                                    height: "4.5vh",
+                                                    borderRadius: "7px",
+                                                    // height: '35px',
+                                                    paddingLeft: '10px'
+                                                }}
+                                                     className="m-0">
+                                                    <FormattedNumber
+                                                        value={profits || 0} disabled
+                                                        thousandSeparator={true} currency="VND"
+                                                        minimumFractionDigits={0}
+                                                    >
+                                                    </FormattedNumber>
+                                                </div>
                                             </div>
                                         </div>
 
 
                                         <div className="mt-2 inputs">
-                                              <label htmlFor="image">Hình ảnh <span style={{color: "red"}}>*</span></label>
+                                            <label htmlFor="image">Hình ảnh <span
+                                                style={{color: "red"}}>*</span></label>
                                             <Field
                                                 type="file"
                                                 className="form-control"
@@ -409,7 +455,7 @@ export const CreateContracts = () => {
                                                 values={firebaseImg}
                                             />
                                         </div>
-                                            <ErrorMessage name="image" component="p" style={{color: "red"}}/>
+                                        <ErrorMessage name="image" component="p" style={{color: "red"}}/>
                                         <div className="mt-2 inputs">
                                             {/*<label>Trạng thái</label>*/}
                                             <Field
@@ -460,38 +506,23 @@ export const CreateContracts = () => {
                                                 )}
                                             </div>
                                         </div>
-                                                    <div className="d-flex mt-4 justify-content-between">
-                                                        <div className="text-center" style={{marginLeft: "23.6%"}}>
-                                                            <Link to="/nav/info-store/transaction-history" className="btn btn-secondary ">
-                                                                <b className="text-center">Quay lại</b>
-                                                            </Link>
-                                                        </div>
-                                                        <div className="text-center m-auto">
-                                                            {isSubmitting ? (
-                                                                    <ThreeCircles
-                                                                        height="100"
-                                                                        width="100"
-                                                                        color="#4fa94d"
-                                                                        wrapperStyle={{}}
-                                                                        wrapperClass=""
-                                                                        visible={true}
-                                                                        ariaLabel="three-circles-rotating"
-                                                                        outerCircleColor=""
-                                                                        innerCircleColor=""
-                                                                        middleCircleColor=""
-                                                                    />
-                                                                )
-                                                                :
-                                                                (
-                                                        <div className="text-center">
-                                                            <button type="submit" className="btn btn-success">
-                                                                <b className="text-center">Thêm mới</b>
-                                                            </button>
-                                                        </div>
-                                                                )
-                                                            }
-                                                        </div>
-                                                    </div>
+                                        <div className="d-flex mt-4 justify-content-between">
+                                            <div className="text-center" style={{marginLeft: "23.6%"}}>
+                                                <Link to="/nav/info-store/transaction-history"
+                                                      className="btn btn-secondary ">
+                                                    <b className="text-center">Quay lại</b>
+                                                </Link>
+                                            </div>
+                                            <div className="text-center m-auto">
+                                                <div className="text-center">
+                                                    <button disabled={!idCustomer} type="submit"
+                                                            className="btn btn-success">
+                                                        <b className="text-center">Thêm mới</b>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </Form>
                                 )}
                             </Formik>
@@ -526,9 +557,10 @@ export const CreateContracts = () => {
                             <Modal.Body>
                                 <div className="controlsmodal-body d-flex justify-content-between">
                                     <div style={{marginTop: "0.6%"}}>
-                                        <button type="submit" className="btn btn-outline-success ">
+                                        <Link to="/nav/manager-customer/create" type="submit"
+                                              className="btn btn-outline-success ">
                                             <b className="textcenter">Thêm khách hàng</b>
-                                        </button>
+                                        </Link>
                                     </div>
                                     <Formik initialValues={{
                                         name: ""
@@ -537,9 +569,9 @@ export const CreateContracts = () => {
 
                                                 const search = async () => {
                                                     await setCustomerName(values.name)
-                                                    const res = await contractService.findAllCustomer(page, values.name)
+                                                    const res = await contractService.findAllCustomer(pageCount, values.name)
                                                     setCustomer(res.content)
-                                                    setPage(0)
+                                                    setPageCount(0)
                                                     console.log(values)
                                                 }
                                                 search()
@@ -563,10 +595,10 @@ export const CreateContracts = () => {
                                 </div>
                                 <table className="table table-striped">
                                     <thead>
-                                    <tr>
-                                        <th className="text-center">Mã khách hàng</th>
-                                        <th className="text-center">Tên khách Hàng</th>
-                                        <th className="text-center">CMND/CCCD</th>
+                                    <tr style={{textAlign: "start"}}>
+                                        <th className="">STT</th>
+                                        <th className="">Tên khách hàng</th>
+                                        <th className="">CMND/CCCD</th>
                                         <th className="text-center">Chức Năng</th>
                                     </tr>
                                     </thead>
@@ -580,9 +612,9 @@ export const CreateContracts = () => {
                                         <tbody>
                                         {customer.map((list, index) => (
                                             <tr key={index}>
-                                                <td className="text-center">{list.id}</td>
-                                                <td className="text-center">{list.name}</td>
-                                                <td className="text-center">{list.citizenCode}</td>
+                                                <td>{list.id}</td>
+                                                <td className=" ">{list.name}</td>
+                                                <td className="">{list.citizenCode}</td>
                                                 <td className="text-center">
                                                     <button onClick={() => {
                                                         setIdCustomer(list.id)
@@ -599,40 +631,20 @@ export const CreateContracts = () => {
                                     }
                                 </table>
                                 {customer.length === 0 ? '' :
-                                    <div className="d-flex col-12 justify-content-end">
-                                        <nav aria-label="...">
-                                            <ul className="pagination">
-                                                <li hidden={page === 0} className="page-item ">
-                                                    <button className="page-link" tabIndex={-1}
-                                                            onClick={() => paginate(page - 1)}>
-                                                        Trước
-                                                    </button>
-                                                </li>
-
-                                                {
-                                                    Array.from({length: totalPages}, (a, index) => index).map((pageNumber) => (
-                                                        <li className="page-item">
-                                                            <button
-                                                                className={pageNumber === page ? "page-link active" : "page-link "}
-                                                                key={pageNumber}
-                                                                onClick={() => paginate(pageNumber)}>
-                                                                {pageNumber + 1}
-                                                            </button>
-                                                        </li>
-                                                    ))
-                                                }
-                                                {page + 1 === totalPages ?
-                                                    ""
-                                                    : <li disabled={page + 1 === totalPages}
-                                                          className="page-item">
-                                                        <button className="page-link" tabIndex={-1}
-                                                                onClick={() => paginate(page + 1)}>
-                                                            Tiếp
-                                                        </button>
-                                                    </li>}
-                                            </ul>
-                                        </nav>
-
+                                    <div className="d-grid">
+                                        <ReactPaginate
+                                            breakLabel="..."
+                                            nextLabel="Sau"
+                                            onPageChange={handlePage}
+                                            pageCount={pageCount}
+                                            previousLabel="Trước"
+                                            containerClassName="pagination"
+                                            pageLinkClassName="page-num"
+                                            nextLinkClassName="page-num"
+                                            previousLinkClassName="page-num"
+                                            activeClassName="active"
+                                            disabledClassName="d-none"
+                                        />
                                     </div>
                                 }
                             </Modal.Body>
