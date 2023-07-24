@@ -86,33 +86,33 @@ export const Redeeming = () => {
 
         // window.location.reload(false);
     }
-    const loadContracts = async (id) => {
+    const loadContracts = async () => {
 
 
-        // Sử dụng hàm fire() của Swal bằng cách gán kết quả vào biến result.
-        let timerInterval
         Swal.fire({
-            title: 'Chúng tôi đang sử lí mong đợi trong vài giây',
-            html: 'Vui lòng đợi trong  <b>3</b> giây.',
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
+            html: '<div className="loading-screen" style={{position: "fixed",\n' +
+                '  top: "0;",\n' +
+                '  left: "0",\n' +
+                '  width: "100%",\n' +
+                '  height: "100%",\n' +
+                '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
+            timer: 5000,
+            title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: async () => {
+                await Swal.showLoading();
             },
             willClose: () => {
-                clearInterval(timerInterval)
+                // Thêm xử lý khi SweetAlert2 đóng (nếu cần thiết).
             }
-        }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-                console.log('I was closed by the timer')
-            }
-        })
+        });
     };
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
 
     return (
 
@@ -369,28 +369,32 @@ export const Redeeming = () => {
                             <Formik initialValues={{}}
 
 
-                                    onSubmit={(value, {setSubmitting}) => {
+                                    onSubmit={async (value) => {
                                         const res = async () => {
                                             try {
                                                 await redeemingService.redeem(selectedContract);
+
                                             } catch (e) {
                                                 console.log(e)
                                             }
                                         }
-                                        setTimeout(async () => {
-                                            await setSubmitting(false)
-                                            await res().then(Swal.fire({
-                                                icon: "success",
-                                                title: "Đã chuộc thành công",
 
-                                            }))
-                                            await navigate("/nav/info-store/all-contract")
-                                        }, 4000)
+                                       await loadContracts()
+                                       await res()
+
+                                        Swal.fire({
+                                            icon:"success",
+                                            title:"Trả đồ thành công",
+                                            timer:2000
+                                        })
+                                        navigate('/nav/info-store/all-contract')
+
+
                                         reset()
                                         fetchContract()
                                     }}>
-                                {
-                                    ({isSubmitting}) => (
+
+
                                         <>
                                             <Form>
                                                 <div className="row mt-2  ">
@@ -537,7 +541,7 @@ export const Redeeming = () => {
 
 
                                                         <div className="text-center m-auto">
-                                                            <button onClick={loadContracts}
+                                                            <button
                                                                     disabled={!selectedContract} type="submit"
                                                                     className="btn btn-success"
                                                                     style={{width: '130px'}}>
@@ -552,8 +556,8 @@ export const Redeeming = () => {
                                             </Form>
                                         </>
 
-                                    )
-                                }
+
+
 
                             </Formik>
 

@@ -144,11 +144,7 @@ export function Header() {
                                                                 className="fa-solid fa-right-from-bracket"></i></a>
                                                     </DropdownMenu>
                                                 </Dropdown>
-                                                {/*<i style={{ marginLeft: "0.5rem" }}*/}
-                                                {/*   className="fa-solid fa-right-from-bracket"*/}
-                                                {/*   onClick={() => handlerLogout()}></i>*/}
                                                 <i style={{ marginLeft: "0.5rem" }} className="fa-regular fa-user"></i>
-                                                <i style={{marginLeft: "0.5rem",fontSize:"20px"}} className="fa-regular fa-user"></i>
                                             </>
                                         )
                                         :

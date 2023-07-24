@@ -1,5 +1,6 @@
-import {ErrorMessage, Field, Form, Formik, useFormikContext} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as customerService from "../../service/CustomerSaveService";
+import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
 import * as Yup from "yup";
 import {useNavigate} from "react-router";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
@@ -7,19 +8,13 @@ import {storage} from "../../firebase";
 import React, {useEffect, useState} from "react";
 import Swal from "sweetalert2";
 import {Link} from "react-router-dom";
-import {checkCitizenCodeExists, checkEmailExists, checkPhoneNumberExists} from "../../service/CustomerSaveService";
 import "../customer/style-customer-save.css";
 import {ThreeCircles} from "react-loader-spinner";
-import * as customersService from "../../service/customersService";
 
 export function CreateCustomer() {
 
     let navigate = useNavigate();
     const [avatar, setAvatarFile] = useState(null);
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [address, setAddress] = useState('');
     const [avatarUrl, setAvatarUrl] = useState(null);
     const [frontCitizen, setFrontCitizenFile] = useState(null);
     const [frontCitizenUrl, setFrontCitizenUrl] = useState(null);
@@ -28,38 +23,66 @@ export function CreateCustomer() {
     const [fileSelected, setFileSelected] = useState(false);
     const messageError = "Ảnh không được để trống!!";
     const [responseText, setResponseText] = useState('');
-
     const [phoneNumber, setPhoneNumber] = useState('');
 
-
-    const [registerPawn, setRegisterPawn] = useState();
+    const [registerPawn, setRegisterPawn] = useState(null);
     const [cus, setCusPawn] = useState([]);
+
+    const [initValues, setInitValues] = useState(
+        {
+            name: "",
+            birthday: "",
+            gender: "",
+            phoneNumber: "",
+            email: "",
+            address: "",
+            citizenCode: "",
+            image: "",
+            frontCitizen: "",
+            backCitizen: "",
+        }
+    );
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const rs = await customersService.registerPawn();
-                setCusPawn(rs.content);
+                const rs = await customerService.findAllRegisterPawn();
+                setCusPawn(rs);
             } catch (error) {
                 console.error(error);
             }
         };
         fetchData();
-        console.log(cus)
-    }, [registerPawn, name, phone, address, email]);
+    }, [phoneNumber]);
 
-    useEffect((e) => {
-        if (registerPawn) {
+    const findRegisterPawnByPhoneNumber = (phoneNumber) => {
+        // setName(cus.find((c) => c.phone == phoneNumber)?.name)
+        console.log("cus-2", cus)
+        return cus?.find((item) => item.phone === phoneNumber);
+    };
+
+    const handleGetInfoClick = async (e) => {
+        const foundRegisterPawn = await findRegisterPawnByPhoneNumber(phoneNumber);
+        console.log("Tìm có ", foundRegisterPawn)
+        setRegisterPawn(foundRegisterPawn);
+        if (foundRegisterPawn) {
+            setInitValues({
+                name: foundRegisterPawn?.name,
+                phoneNumber: foundRegisterPawn?.phone,
+                email: foundRegisterPawn?.email,
+                address: foundRegisterPawn?.address,
+                citizenCode: '',
+            });
             Swal.fire({
                 position: 'center',
                 icon: "success",
                 title: "Tìm thông tin thành công.",
-                text: "Khách hàng " + registerPawn.name,
+                text: "Khách hàng " + foundRegisterPawn.name,
                 showConfirmButton: false,
                 timer: 1500
             });
         } else {
-            // Nếu không tìm thấy thông tin, bạn có thể hiển thị thông báo hoặc thực hiện xử lý khác tùy ý
             Swal.fire({
                 icon: 'error',
                 title: 'Thất bại',
@@ -67,24 +90,8 @@ export function CreateCustomer() {
                 timer: 1500,
             });
         }
-    }, [registerPawn]);
-
-    const findRegisterPawnByPhoneNumber = (phoneNumber) => {
-        setName(cus.find((c) => c.phone == phoneNumber)?.name)
-        console.log("cus-2", cus)
-        return cus?.find((item) => item.phone === phoneNumber);
     };
 
-    const handleGetInfoClick = async (e) => {
-        const foundRegisterPawn = await findRegisterPawnByPhoneNumber(phoneNumber);
-        console.log("Tìm kh có ", foundRegisterPawn)
-        await setRegisterPawn(foundRegisterPawn);
-        await setName(foundRegisterPawn?.name)
-        await setAddress(foundRegisterPawn?.address)
-        await setEmail(foundRegisterPawn?.email)
-       await setPhone(foundRegisterPawn?.phone)
-
-    };
 
     const handleFileSelect = (event, setFile, setFileUrl) => {
         const file = event.target.files[0];
@@ -160,12 +167,40 @@ export function CreateCustomer() {
         );
     };
 
+     const transformData = (data) => {
+        const formatName = (name) => {
+            return name
+                .split(' ')
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+        };
+
+        const formatAddress = (address) => {
+            return address
+                .split(', ')
+                .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+                .join(', ');
+        };
+
+        const name = formatName(data.name);
+        const dob = data.dob.split('/').reverse().join('-');
+        const sex = data.sex === 'NAM' ? 0 : 1;
+        const address = formatAddress(data.address);
+
+        return {
+            name,
+            dob,
+            sex,
+            address,
+        };
+    };
+
     const handleSubmitScanOcr = async () => {
         if (!frontCitizen) {
             await Swal.fire({
-                icon: "error",
-                title: "Bạn cần upload Ảnh mặt trước căn cước.",
-                timer: 1500
+                icon: 'error',
+                title: 'Bạn cần upload Ảnh mặt trước căn cước.',
+                timer: 1500,
             });
             return;
         }
@@ -174,28 +209,40 @@ export function CreateCustomer() {
         const apiKey = 'm13aY7m758e1ejzmiSfs3BxyIYcHy1T8';
 
         const formData = new FormData();
-        formData.append('image', handleFrontCitizenFileSelect);
+        formData.append('image', frontCitizen);
 
         const headers = {
-            'api-key': apiKey
+            'api-key': apiKey,
         };
 
         try {
             const response = await fetch(url, {
                 method: 'POST',
                 headers: headers,
-                body: formData
+                body: formData,
             });
 
             const data = await response.json();
-            setResponseText(JSON.stringify(data, null, 2));
-            console.log(setResponseText(JSON.stringify(data, null, 2)))
-        } catch (error) {
+            console.log(data.data[0])
+            const transformedData = transformData(data.data[0]);
+            setInitValues({
+                name: transformedData.name,
+                birthday: transformedData.dob,
+                gender: transformedData.sex,
+                address: transformedData.address,
+                citizenCode: data.data[0].id,
+            });
+        }
+
+catch
+    (error)
+    {
             console.error('Error:', error);
             await Swal.fire({
-                icon: "error",
-                title: "Gặp sự cố với server. Hãy thử lại sau ít phút.",
-                timer: 1500
+            icon: 'error',
+            title: 'Gặp sự cố với server.',
+            text: 'Hãy thử lại sau ít phút.',
+            timer: 1500,
             });
         }
     };
@@ -203,18 +250,7 @@ export function CreateCustomer() {
     return (
         <>
             <Formik
-                initialValues={{
-                    name: "",
-                    birthday: "",
-                    gender: "",
-                    phoneNumber: "",
-                    email: "",
-                    address: "",
-                    citizenCode: "",
-                    image: "",
-                    frontCitizen: "",
-                    backCitizen: "",
-                }}
+            initialValues={initValues} enableReinitialize
                 validationSchema={Yup.object({
                     name: Yup.string().required("Tên không được để trống")
                         .min(5, 'Ký tự phải nhiều hơn 5')
@@ -395,7 +431,8 @@ export function CreateCustomer() {
                                                 )}
                                                 <hr/>
 
-                                                <button type="button" className="btn btn-sm btn-success float-start mb-1"
+                                            <button type="button"
+                                                    className="btn btn-sm btn-success float-start mb-1"
                                                         onClick = {(e)=> handleGetInfoClick()}>Lấy thông tin KH Online
                                                 </button>
                                                 <input
@@ -417,11 +454,6 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="name"
                                                         type="text"
-                                                        value={name}
-                                                        onChange={(e) => {
-                                                            setName(e.target.value);
-                                                            setFieldValue("name", e.target.value);
-                                                        }}
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -446,11 +478,12 @@ export function CreateCustomer() {
                                                         className="text-danger"
                                                     />
                                                 </div>
-                                                <div className="mt-2 row">
-                                                    <div className="col-md-">
+                                            <div className="mt-2">
+                                                <div className="mt-2">
                                                         <label id="label-dat" htmlFor="gender" className="form-label">
                                                             Giới tính<span style={{color: "red"}}> *</span>
                                                         </label>
+                                                </div>
                                                         <label className='m-2'>
                                                             <Field type="radio" name="gender" value="0"/>
                                                             {' '}Nam
@@ -468,7 +501,7 @@ export function CreateCustomer() {
                                                             name="gender"
                                                             className="text-danger"
                                                         />
-                                                    </div>
+
                                                 </div>
                                                 <div className="mt-2">
                                                     <label id="label-dat" htmlFor="f-email">
@@ -479,11 +512,6 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="email"
                                                         type="text"
-                                                        value={email}
-                                                        onChange={(e) => {
-                                                            setEmail(e.target.value);
-                                                            setFieldValue("email", e.target.value);
-                                                        }}
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -501,11 +529,6 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="phoneNumber"
                                                         type="text"
-                                                        value={phone}
-                                                        onChange={(e) => {
-                                                            setPhone(e.target.value);
-                                                            setFieldValue("phoneNumber", e.target.value);
-                                                        }}
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -541,11 +564,6 @@ export function CreateCustomer() {
                                                         className="form-control"
                                                         name="address"
                                                         type="text"
-                                                        value={address}
-                                                        onChange={(e) => {
-                                                            setAddress(e.target.value);
-                                                            setFieldValue("address", e.target.value);
-                                                        }}
                                                     />
                                                     <ErrorMessage
                                                         component="span"
@@ -682,18 +700,19 @@ export function CreateCustomer() {
                                                             </button>
                                                         </div>
                                                     )}
-                                                </div>
                                             </div>
-                                            {/*<div className="mt-3">*/}
-                                            {/*    <button*/}
-                                            {/*        id="show-alert-button"*/}
-                                            {/*        type="button"*/}
-                                            {/*        className="btn btn-sm btn-success"*/}
-                                            {/*        onClick={handleSubmitScanOcr}*/}
-                                            {/*    >*/}
-                                            {/*        Phân tích hình ảnh lấy dữ liệu*/}
-                                            {/*    </button>*/}
-                                            {/*</div>*/}
+                                                </div>
+                                        <div className="m-3 d-flex justify-content-center">
+                                            <button
+                                                id="show-alert-button"
+                                                type="button"
+                                                className="btn btn-sm btn-success"
+                                                onClick={handleSubmitScanOcr}
+                                            >
+                                                Phân tích hình ảnh lấy dữ liệu
+                                            </button>
+                                            <span>{responseText}</span>
+                                            </div>
                                         </div>
                                         <div className="row">
                                             {isSubmitting ? (
