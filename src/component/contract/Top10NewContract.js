@@ -25,6 +25,7 @@ export function Top10NewContract() {
     }
     useEffect(() => {
         fetchTop10NewContract();
+            window.scrollTo(0,0)
     }, [])
     const indexOfLastContract = currentPage * contractsPerPage;
     const indexOfFirstContract = indexOfLastContract - contractsPerPage;

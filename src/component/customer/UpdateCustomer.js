@@ -264,7 +264,7 @@ export function UpdateCustomer() {
             >
                 {({isSubmitting}) => (
                     <div className="dat-nt container mt-5 mb-5">
-                        <div className="row height d-flex justify-content-center align-items-center">
+                        <div className="row d-flex justify-content-center align-items-center">
                             <div className="col-md-8 col-sm-12">
                                 <div className="card px-5 py-4">
                                     <div
@@ -379,11 +379,12 @@ export function UpdateCustomer() {
                                                         className="text-danger"
                                                     />
                                                 </div>
-                                                <div className="mt-2 row">
-                                                    <div className="col-md-">
+                                                <div className="mt-2">
+                                                    <div className="mt-2">
                                                         <label id="label-dat" htmlFor="gender" className="form-label">
                                                             Giới tính<span style={{color: "red"}}> *</span>
                                                         </label>
+                                                    </div>
                                                         <label className='m-2'>
                                                             <Field type="radio" name="gender" value="0"/>
                                                             {' '}Nam
@@ -401,7 +402,7 @@ export function UpdateCustomer() {
                                                             name="gender"
                                                             className="text-danger"
                                                         />
-                                                    </div>
+
                                                 </div>
                                                 <div className="mt-2">
                                                     <label id="label-dat" htmlFor="f-email">

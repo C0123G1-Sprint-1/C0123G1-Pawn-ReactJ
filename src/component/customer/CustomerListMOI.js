@@ -45,7 +45,9 @@ export function CustomerListMOI() {
         }
     };
 
-
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     useEffect(() => {
         showList1();
     }, [currentPage1]);

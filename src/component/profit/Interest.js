@@ -13,11 +13,11 @@ export default function Interest() {
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
                     <tr style={{textAlign: "start"}}>
-                        <th>Mã HD</th>
-                        <th>Tiền cho vay (VND)</th>
-                        <th>Tiền lãi (VND)</th>
+                        <th>Mã HĐ</th>
+                        <th>Tiền cho vay (VNĐ)</th>
+                        <th>Tiền lãi (VNĐ)</th>
                         <th>Ngày bắt đầu</th>
-                        <th>Lợi nhuận (VND)</th>
+                        <th>Lợi nhuận (VNĐ)</th>
                         {/*<th id="actions">Chức năng</th>*/}
                     </tr>
                     </thead>

@@ -13,11 +13,11 @@ export default function Liquidation() {
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
                     <tr style={{textAlign: "start"}}>
-                        <th>Mã HD</th>
-                        <th>Tiền mua (VND)</th>
-                        <th>Tiền bán (VND)</th>
+                        <th>Mã HĐ</th>
+                        <th>Tiền mua (VNĐ)</th>
+                        <th>Tiền bán (VNĐ)</th>
                         <th>Ngày thanh lý</th>
-                        <th>Lợi nhuận (VND)</th>
+                        <th>Lợi nhuận (VNĐ)</th>
                         {/*<th id="actions">Chức năng</th>*/}
                     </tr>
                     </thead>

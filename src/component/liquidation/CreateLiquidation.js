@@ -133,28 +133,30 @@ export function CreateLiquidation() {
     };
 
     const loadContracts = async () => {
-        let timerInterval
         Swal.fire({
-            title: 'Chúng tôi đang sử lí mong đợi trong vài giây',
-            html: 'Vui lòng đợi trong  <b></b> giây.',
+            html: '<div className="loading-screen" style={{position: "fixed",\n' +
+                '  top: "0;",\n' +
+                '  left: "0",\n' +
+                '  width: "100%",\n' +
+                '  height: "100%",\n' +
+                '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
             timer: 4000,
-            timerProgressBar: true,
-            allowEscapeKey: false,
+            title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
+            showConfirmButton: false,
             allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading()
-
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: async () => {
+                await Swal.showLoading();
             },
             willClose: () => {
-                clearInterval(timerInterval)
+                // Thêm xử lý khi SweetAlert2 đóng (nếu cần thiết).
             }
-        }).then((result) => {
-            if (result.dismiss === Swal.DismissReason.timer) {
-                console.log('I was closed by the timer')
-            }
-        })
+        });
     };
-
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     if (!customers) {
         return null
     }
@@ -188,16 +190,16 @@ export function CreateLiquidation() {
                             Swal.fire({
                                 position: 'center',
                                 icon: 'success',
-                                title: 'Thêm mới tin thành công ',
-                                showConfirmButton: false,
-                                timer: 1500
+                                title: 'Thanh lý thành công ',
+                                showConfirmButton: true,
+                                timer: 2000
                             })
                         }
                         save();
                     }}>
 
                 <div className="container " style={{marginTop: "4.5vh"}}>
-                    <div className="row height d-flex justify-content-center align-items-center" style={{height: "74vh"}}>
+                    <div className="row  d-flex justify-content-center align-items-center" style={{minHeight: "80vh"}}>
                         <div className="col-md-6">
                             <div className="card px-5 py-4" style={{marginBottom: "3vw"}}>
                                 <div style={{textAlign: "center"}}>
@@ -333,9 +335,9 @@ export function CreateLiquidation() {
                         }
                         searchCustomer();
                     }}>
-                        <div className="d-flex justify-content-between">
-                            <Link to="/nav/create" type="submit" className="btn btn-outline-success ">
-                                <b className="textcenter">Thêm khách hàng</b>
+                        <div className="d-flex justify-content-between" style={{alignItems:"center"}}>
+                            <Link to="/nav/manager-customer/create" type="submit" className="btn btn-outline-success " style={{alignItems: "center",display: "flex",height:"95%"}}>
+                                <b className="textcenter" >Thêm khách hàng</b>
                             </Link>
                             <Form className="d-flex m-1">
 
@@ -364,7 +366,7 @@ export function CreateLiquidation() {
                         </thead>
                         {customers.length === 0 ?
                             <tr>
-                                <td colSpan="4" className="text-center">
+                                <td colSpan="5" className="text-center">
                                     <h4 style={{color: "red"}}>Dữ liêu không tồn tại</h4>
                                 </td>
                             </tr>
@@ -515,7 +517,7 @@ export function CreateLiquidation() {
                         </tr>
                         </thead>
                         {contracts.length === 0 ? <tr>
-                                <td colSpan="4" className="text-center">
+                                <td colSpan="5" className="text-center">
                                     <h4 style={{color: "red"}}>Dữ liêu không tồn tại</h4>
                                 </td>
                             </tr>

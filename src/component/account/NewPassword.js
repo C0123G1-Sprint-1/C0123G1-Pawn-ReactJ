@@ -65,7 +65,7 @@ export function NewPassword() {
                             } catch (error) {
                                 console.log(error)
                                 console.log(password1)
-                                toast.error(error.response.data.error);
+                                toast.error(error.response.data);
                             } finally {
                                 setSubmitting(false);
                             }

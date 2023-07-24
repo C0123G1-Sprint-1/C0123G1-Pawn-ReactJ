@@ -112,7 +112,9 @@ export function CustomerList() {
         }
         list()
     }, [])
-
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
 
     async function deleteCustomers(id) {
         await customersService.deleteCustomer(id)

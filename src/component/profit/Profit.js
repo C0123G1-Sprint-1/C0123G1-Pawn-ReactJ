@@ -179,6 +179,9 @@ export default function Profit() {
                                 }}
                                 onSubmit={async (values) => {
                                     await setYearCurrent("")
+                                    if(dateTimeProfit.startDate === "" && dateTimeProfit.endDate === ""){
+                                        setYearCurrent(" (2023) ")
+                                    }
                                     await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, params.profitType || profitType)
                                     await getDataProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
                                     await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
@@ -236,7 +239,7 @@ export default function Profit() {
                         <label className="mt-3 p-0 ms-5" style={{color: "indianred"}}>
                             <span style={{fontWeight: "500"}}>Tổng lợi nhuận :{" "}</span>
                             <input type="text" disabled value={" " +
-                            totalProfit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + " VND "
+                            totalProfit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + " VNĐ "
                             }/>
                         </label>
                     </div>

@@ -14,12 +14,12 @@ export default function Foresee() {
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
                     <tr style={{textAlign: "start"}}>
-                        <th>Mã HD</th>
-                        <th>Tiền cho vay (VND)</th>
-                        <th>Tiền lãi (VND)</th>
+                        <th>Mã HĐ</th>
+                        <th>Tiền cho vay (VNĐ)</th>
+                        <th>Tiền lãi (VNĐ)</th>
                         <th>Ngày bắt đầu</th>
                         <th>Ngày kết thúc</th>
-                        <th>Lợi nhuận dự kiến (VND)</th>
+                        <th>Lợi nhuận dự kiến (VNĐ)</th>
                         {/*<th id="actions">Chức năng</th>*/}
                     </tr>
                     </thead>

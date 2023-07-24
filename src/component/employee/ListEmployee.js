@@ -42,11 +42,16 @@ export default function EmployeeList() {
 
     useEffect(() => {
         (async () => {
-            const res = await employeeService.search(name, currentPage);
-            setEmployeeList(res.content);
-            setPageCount(res.totalPages);
-            setCurrentPage(res.number)
-            setSize(res.size)
+            try {
+                const res = await employeeService.search(name, currentPage);
+                setEmployeeList(res.content);
+                setPageCount(res.totalPages);
+                setCurrentPage(res.number)
+                setSize(res.size)
+            }
+            catch (e) {
+                setEmployeeList([])
+            }
         })()
     }, [currentPage, name])
 
@@ -59,6 +64,8 @@ export default function EmployeeList() {
 
     useEffect(() => {
         document.title = "Danh sách nhân viên"; // Thay đổi title
+
+            window.scrollTo(0,0)
     }, []);
 
     if (!employeeList) {
@@ -141,7 +148,7 @@ export default function EmployeeList() {
                     <div className="table-responsive justify-content-center "  style={{width: '100%'}}>
                             <table className="table table-striped "  >
                                 <thead>
-                                <tr>
+                                <tr style={{textAlign: "start"}}>
                                     <th>Mã nhân viên</th>
                                     <th>Tên nhân viên</th>
                                     <th>Ngày sinh</th>
@@ -162,8 +169,8 @@ export default function EmployeeList() {
                                 ) : (
                                     <tbody>
                                     {employeeList?.map((employee, index) => (
-                                        <tr key={index} style={{textAlign: "center"}}>
-                                            <td className="text-center">{count++}</td>
+                                        <tr key={index}>
+                                            <td >{count++}</td>
                                             <td className="text-cut">{employee.name}</td>
                                             <td>
                                                 {moment(employee.birthDay, "YYYY/MM/DD").format(
@@ -181,7 +188,7 @@ export default function EmployeeList() {
                                             </td>
                                             <td>{employee.citizenCode}</td>
                                             <td>
-                                                <a
+                                                <Link
                                                     className="me-2"
                                                     onClick={() => handleModalOpen(employee)}
                                                 >
@@ -189,7 +196,7 @@ export default function EmployeeList() {
                                                         style={{color: "blue"}}
                                                         className="bi bi-info-circle"
                                                     />
-                                                </a>
+                                                </Link>
                                             </td>
                                         </tr>
                                     ))}
@@ -222,30 +229,43 @@ export default function EmployeeList() {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Chi tiết nhân viên</h5>
+                        <div>
+                            <Link
+                                type="button "
+                                className="btn-close"
+                                onClick={() => handleModalClose()}
+
+                            >
+
+                            </Link>
+                        </div>
                     </div>
-                    <div className="modal-body text-center">
-                        <img
-                            className="rounded-circle"
-                            style={{
-                                width: "130px",
-                                height: "130px",
-                                margin: `0 auto`,
-                                border: "1px solid",
-                            }}
-                            height="100px"
-                            src={selectedEmployee?.image}
-                            alt=""
-                        />
-                        <p className="mt-3">Tiền lương : {(+selectedEmployee?.salary).toLocaleString()} VND</p>
-                    </div>
-                    <div className="modal-footer">
-                        <button
-                            type="button "
-                            onClick={() => handleModalClose()}
-                            className="btn btn-secondary"
-                        >
-                            Hủy
-                        </button>
+
+                    <div className="row">
+                        <div className="col-6">
+                            <div className="modal-body text-center mt-3">
+                                <img
+                                    className="rounded-circle"
+                                    style={{
+                                        width: "180px",
+                                        height: "180px",
+                                        margin: `0 auto`,
+                                        border: "1px solid",
+                                    }}
+                                    height="100px"
+                                    src={selectedEmployee?.image}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                        <div className="col-6">
+                            <p className="text-cut">Tên : {selectedEmployee?.name}</p>
+                            <p className="mt-3">Lương : {(+selectedEmployee?.salary).toLocaleString()} VND</p>
+                            <p className="text-cut"> Ngày sinh : {selectedEmployee?.birthDay}</p>
+                            <p className="text-cut">Địa chỉ : {selectedEmployee?.address}</p>
+                            <p className="text-cut">Số điện thoại : {selectedEmployee?.phoneNumber}</p>
+                            <p className="text-cut">CCCD : {selectedEmployee?.citizenCode}</p>
+                        </div>
                     </div>
                 </div>
             </Modal>
