@@ -183,7 +183,7 @@ export default function TransactionHistoryList() {
                                         <div className="d-flex justify-content-end">
                                             <button type="reset" className="btn btn-outline-secondary me-3"
                                             >Nhập lại</button>
-                                            <button type="submit" className="btn btn-outline-primary">Tìm kiếm
+                                            <button type="submit" className="btn btn-outline-success">Tìm kiếm
                                             </button>
                                         </div>
                                     </div>
