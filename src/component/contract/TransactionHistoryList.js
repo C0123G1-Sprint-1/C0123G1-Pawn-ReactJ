@@ -18,6 +18,10 @@ export default function TransactionHistoryList() {
 
     const getContractStatusApi = async () => {
         const res = await contractService.findAllContractStatus();
+<<<<<<< HEAD
+        console.log(res.data)
+=======
+>>>>>>> DEV-1
         setContractStatus(res.data)
     }
     const getContractTypeApi = async () => {
@@ -98,7 +102,11 @@ export default function TransactionHistoryList() {
             <div className="col-lg-9 col-md-12 ">
                 <div className="row">
                     <div className="col-lg-12 col-md-12">
+<<<<<<< HEAD
+                        <h1 className="text-center my-5">LỊCH SỬ GIAO DỊCH</h1>
+=======
                         <h2 className="text-center">LỊCH SỬ GIAO DỊCH</h2>
+>>>>>>> DEV-1
                         <Formik initialValues={({
                             customerName: search?.customerName,
                             productName: search?.productName,
@@ -181,6 +189,12 @@ export default function TransactionHistoryList() {
                                                         ))
                                                     }
                                                 </Field>
+<<<<<<< HEAD
+                                                <a type="submit" className="btn btn-outline-primary">
+                                                    <i className="bi bi-search"></i>
+                                                </a>
+=======
+>>>>>>> DEV-1
                                             </div>
                                         </div>
                                     </div>
@@ -203,8 +217,13 @@ export default function TransactionHistoryList() {
                 <div className="col-lg-12">
                     <table className="table table table-striped" border="1">
                         <thead>
+<<<<<<< HEAD
+                        <tr>
+                            <th>Mã hợp đồng</th>
+=======
                         <tr style={{textAlign: "start"}}>
                             <th>Mã HĐ</th>
+>>>>>>> DEV-1
                             <th>Tên đồ</th>
                             <th>Tên khách hàng</th>
                             <th>Ngày làm HĐ</th>
@@ -215,15 +234,46 @@ export default function TransactionHistoryList() {
                         </thead>
                         <tbody>
                         {
+<<<<<<< HEAD
+                            contracts?.length === 0 && (search.customerName!=="" || search.productName!=="" || search.contractType!==""
+                            || search.contractStatus!=="" || search.startDate!=="" || search.endDate!=="" )? (
+                                    <tr>
+                                        <td colSpan={7}>
+                                            <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
+=======
                             contracts?.length === 0 && (search.customerName !== "" || search.productName !== "" || search.contractType !== ""
                                 || search.contractStatus !== "" || search.startDate !== "" || search.endDate !== "") ? (
                                     <tr>
                                         <td colSpan={7}>
                                             <h4 style={{color: "red",textAlign:"center"}}>Dữ liệu không tồn tại</h4>
+>>>>>>> DEV-1
                                         </td>
                                     </tr>
                                 ) :
                                 contracts.map((th, index) => (
+<<<<<<< HEAD
+                                    <tr key={index}>
+                                        <td>HD-{th?.contractCode}</td>
+                                        <td>{th?.productName}</td>
+                                        <td>{th?.customers}</td>
+                                        <td>{
+                                            moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
+                                        }</td>
+                                        <td>{th?.contractType}</td>
+                                        <td>{th?.contractStatus}</td>
+                                        <td>
+                                            <Link to={`/nav/info-store/transaction-history/detail/${th?.contractCode}`}><i
+                                                className="bi bi-info-circle me-2"></i></Link>
+                                            <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}
+                                                  className="me-2"><i style={{color: "orange"}}
+                                                                      className="bi bi-pencil-square"></i></Link>
+                                            <a type="button" data-bs-toggle="modal"
+                                               data-bs-target="#exampleModal" onClick={() => {
+                                                setDeleteTHList(th?.contractCode)
+                                            }}><i
+                                                style={{color: "red"}}
+                                                className="bi bi-trash3"></i></a>
+=======
                                     <tr key={index} style={{textAlign: "start"}}>
                                         <td >HD-{th?.contractCode}</td>
                                         <td>{th?.productName}</td>
@@ -261,6 +311,7 @@ export default function TransactionHistoryList() {
                                                 style={{color: "red"}}
                                                 className="bi bi-trash3"/></a>
                                                 :""}
+>>>>>>> DEV-1
                                         </td>
                                     </tr>
                                 ))}
@@ -271,6 +322,72 @@ export default function TransactionHistoryList() {
             </div>
             <div className="row mt-3 mb-5">
                 <div className="d-flex col-12 justify-content-end">
+<<<<<<< HEAD
+                    <nav aria-label="..." className="me-4">
+                        <ul className="pagination">
+                            <li hidden={page === 0} className="page-item">
+                                <button className="page-link" tabIndex={-1}
+                                        onClick={() => paginate(page - 1)}>
+                                    Trước
+                                </button>
+                            </li>
+                            {
+                                Array.from({length: totalPages}, (a, index) => index).map((pageNum) => (
+                                    <li className="page-item" key={pageNum}>
+                                        <button
+                                            className={page === pageNum ? "active page-link" : "page-link"}
+                                            key={pageNum}
+                                            onClick={() => {
+                                                paginate(pageNum)
+                                            }}>
+                                            {pageNum + 1}
+                                        </button>
+                                    </li>
+                                ))
+                            }
+
+                            <li hidden={page + 1 === totalPages}
+                                className="page-item">
+                                <button className="page-link" tabIndex={-1}
+                                        onClick={() => paginate(page + 1)}>
+                                    Tiếp
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            {/* Modal */}
+            <div className="modal fade" id="exampleModal"
+                 data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1}
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header" style={{backgroundColor:"red"
+                        }}>
+                            <h5 className="modal-title"
+                                id="staticBackdropLabel6">
+                                Xóa lịch sử giao dịch</h5>
+                            <button type="button" className="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"/>
+                        </div>
+                        <div className="modal-body">
+                            <span>Bạn muốn xóa lịch sử giao dịch có mã code </span><span
+                            style={{color: 'red'}}>{deleteTHList}</span><span> ?</span>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary"
+                                    data-bs-dismiss="modal">Thoát
+                            </button>
+                            <button type="button" className="btn btn-danger"
+                                    data-bs-dismiss="modal"
+                                    onClick={() => {
+                                        deleteTransactionHistory(deleteTHList);
+                                    }}
+                            >Xóa
+                            </button>
+                        </div>
+=======
                     <div className="d-grid">
                         <ReactPaginate
                             breakLabel="..."
@@ -285,6 +402,7 @@ export default function TransactionHistoryList() {
                             activeClassName="active"
                             disabledClassName="d-none"
                         />
+>>>>>>> DEV-1
                     </div>
                 </div>
             </div>

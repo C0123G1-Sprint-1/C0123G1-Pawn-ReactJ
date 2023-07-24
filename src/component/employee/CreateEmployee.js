@@ -315,7 +315,6 @@ export function CreateEmployee() {
                                                             <ErrorMessage name="phoneNumber" component="p"
                                                                           style={{color: "red"}}/>
                                                         </div>
-
                                                         <div className="mt-2 inputs">
                                                             <label className="dong">
                                                                 CMND/Hộ chiếu <span style={{color: "red"}}>*</span>

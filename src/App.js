@@ -83,6 +83,32 @@ function App() {
                 </Route>
 
 
+<<<<<<< HEAD
+          {/* <Route path="/api/employee" element={<EmployeeList/>}/>
+                    <Route path="/api/employee/create-employee" element={<CreateEmployee/>}/>
+                    <Route path="/redeem" element={<Redeeming/>}/> */}
+        </Route>
+        <Route path='/create' element={<RegisterPawn />} />
+        <Route path='/' element={<List />} />
+        {/*<Route path="/" element={<Header/>} />*/}
+        {/*<Route path="/" element={<Footer/>} />*/}
+        {/*<Route path="/" element={<Navigate/>} />*/}
+        <Route path="/create" element={<RegisterPawn />} />
+        <Route path={"/login"} element={<LoginHome />}>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/login/forgot" element={<ForgotPassword />} />
+          <Route path="/login/confirmCode" element={<ConfirmCode />} />
+          <Route path="/login/newPassword" element={<NewPassword />} />
+        </Route>
+        <Route path={'/listPost'} element={<ListPosts />} />
+        <Route path={'/detail/:id'} element={<DetailPosts />} />
+        <Route path={'/createPosts'} element={<CreatePosts />} />
+        <Route path={'/manager-customer'} element={<CustomerList />} />
+      </Routes>
+      <Footer />
+    </>
+  );
+=======
                 <Route path='/register-pawn' element={<RegisterPawn/>}/>
                 <Route path={"/login"} element={<LoginHome/>}>
                     <Route path="/login" element={<LoginForm/>}/>
@@ -99,6 +125,7 @@ function App() {
 
         </>
     );
+>>>>>>> DEV-1
 }
 
 export default App;
