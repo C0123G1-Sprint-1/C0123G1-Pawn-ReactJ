@@ -15,6 +15,9 @@ export default function TransactionHistoryList() {
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
     const [statisticsStatus, setStatisticsStatus] = useState(true);
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem("role");
+
     const getContractStatusApi = async () => {
         const res = await contractService.findAllContractStatus();
         setContractStatus(res.data)
@@ -251,6 +254,8 @@ export default function TransactionHistoryList() {
                                             <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}
                                                   className="me-3"><i style={{color: "orange"}}
                                                                       className="bi bi-pencil-square"/></Link>
+                                            {
+                                                role === ("ROLE_ADMIN")?
                                             <a type="button"
                                                data-bs-target="#exampleModal" onClick={() => {
                                                 swalWithBootstrapButtons.fire({
@@ -269,6 +274,7 @@ export default function TransactionHistoryList() {
                                             }}><i
                                                 style={{color: "red"}}
                                                 className="bi bi-trash3"/></a>
+                                                :""}
                                         </td>
                                     </tr>
                                 ))}
