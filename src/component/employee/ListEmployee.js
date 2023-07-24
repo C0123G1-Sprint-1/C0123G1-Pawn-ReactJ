@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import * as employeeService from "../../service/employeeService";
 import ReactPaginate from "react-paginate";
-import {NavLink, useParams} from "react-router-dom";
+import {Link, NavLink, useParams} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import "../employee/employee.css";
 import moment from "moment";
@@ -42,11 +42,16 @@ export default function EmployeeList() {
 
     useEffect(() => {
         (async () => {
-            const res = await employeeService.search(name, currentPage, token);
-            setEmployeeList(res.content);
-            setPageCount(res.totalPages);
-            setCurrentPage(res.number)
-            setSize(res.size)
+            try {
+                const res = await employeeService.search(name, currentPage, token);
+                setEmployeeList(res.content);
+                setPageCount(res.totalPages);
+                setCurrentPage(res.number)
+                setSize(res.size)
+            }
+            catch (e) {
+                setEmployeeList([])
+            }
         })()
     }, [currentPage, name, token])
 
@@ -68,12 +73,7 @@ export default function EmployeeList() {
         <>
             <div className="row mx-0">
                 <div className="container mx-auto my-5 col-8" style={{width: "97%"}}>
-                    <div
-                        style={{
-                            boxShadow: "1px 3px 10px 5px rgba(0, 0, 0, 0.2)",
-                            height: "160px",
-                        }}
-                    >
+                    <div>
                         <div style={{marginBottom: 20}}>
                             <h2
                                 className="d-flex justify-content-center"
@@ -185,7 +185,7 @@ export default function EmployeeList() {
                                         </td>
                                         <td>{employee.citizenCode}</td>
                                         <td>
-                                            <a
+                                            <Link
                                                 className="me-2"
                                                 onClick={() => handleModalOpen(employee)}
                                             >
@@ -193,7 +193,7 @@ export default function EmployeeList() {
                                                     style={{color: "blue"}}
                                                     className="bi bi-info-circle"
                                                 />
-                                            </a>
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))}
@@ -226,30 +226,43 @@ export default function EmployeeList() {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Chi tiết nhân viên</h5>
+                        <div>
+                            <Link
+                                type="button "
+                                className="btn-close"
+                                onClick={() => handleModalClose()}
+
+                            >
+
+                            </Link>
+                        </div>
                     </div>
-                    <div className="modal-body text-center">
-                        <img
-                            className="rounded-circle"
-                            style={{
-                                width: "130px",
-                                height: "130px",
-                                margin: `0 auto`,
-                                border: "1px solid",
-                            }}
-                            height="100px"
-                            src={selectedEmployee?.image}
-                            alt=""
-                        />
-                        <p className="mt-3">Tiền lương : {(+selectedEmployee?.salary).toLocaleString()} VND</p>
-                    </div>
-                    <div className="modal-footer">
-                        <button
-                            type="button "
-                            onClick={() => handleModalClose()}
-                            className="btn btn-secondary"
-                        >
-                            Hủy
-                        </button>
+
+                    <div className="row">
+                        <div className="col-6">
+                            <div className="modal-body text-center mt-3">
+                                <img
+                                    className="rounded-circle"
+                                    style={{
+                                        width: "180px",
+                                        height: "180px",
+                                        margin: `0 auto`,
+                                        border: "1px solid",
+                                    }}
+                                    height="100px"
+                                    src={selectedEmployee?.image}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                        <div className="col-6">
+                            <p className="text-cut">Tên : {selectedEmployee?.name}</p>
+                            <p className="mt-3">Lương : {(+selectedEmployee?.salary).toLocaleString()} VND</p>
+                            <p className="text-cut"> Ngày sinh : {selectedEmployee?.birthDay}</p>
+                            <p className="text-cut">Địa chỉ : {selectedEmployee?.address}</p>
+                            <p className="text-cut">Số điện thoại : {selectedEmployee?.phoneNumber}</p>
+                            <p className="text-cut">CCCD : {selectedEmployee?.citizenCode}</p>
+                        </div>
                     </div>
                 </div>
             </Modal>

@@ -92,9 +92,9 @@ export function CreateEmployee() {
                 validationSchema={Yup.object({
                     name: Yup.string()
                         .trim()
-                        .required("Vui lòng nhập họ tên đầy đủ")
-                        .min(2, "Tên quá ngắn , phải từ 2 ký tự")
-                        .max(50, "Tên không đúng , vui lòng nhập lại")
+                        .required("Vui lòng nhập họ và tên !")
+                        .min(2, "Vui lòng nhập họ tên đầy đủ !")
+                        .max(50, "Tên không đúng , vui lòng nhập lại !")
                         .matches(/^[^!@#$%^&*()+=\[\]{};':"\\|.<>?`~/]+$/, "Tên không chứa ký tự đặc biệt như @#$.."),
                     birthDay: Yup.date()
                         .test("is-over-18", "Bạn chưa đủ 18 tuổi ", function (value) {
@@ -110,8 +110,8 @@ export function CreateEmployee() {
                     email: Yup.string()
                         .matches(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
                             "Email phải đúng định dạng xxx@gmail.com")
-                        .required("Vui lòng nhập email")
-                        .test("check-email", "Email đã tồn tại", async function (value) {
+                        .required("Vui lòng nhập email !")
+                        .test("check-email", "Email đã tồn tại !", async function (value) {
                             if (!value) {
                                 return true; // Không ki?m tra n?u không có giá tr?
                             }
@@ -120,14 +120,14 @@ export function CreateEmployee() {
                             return !isEmailExists;
                         }),
                     phoneNumber: Yup.string()
-                        .required("Vui lòng nhập số điện thoại")
+                        .required("Vui lòng nhập số điện thoại !")
                         .matches(
                             /^(\+?84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-9])[0-9]{7}$/,
                             "Số điện thoại không hợp lệ, phải từ 10 hoặc 11 số"
                         )
                         .test(
                             "check-phone-number",
-                            "Số điện thoại đã tồn tại",
+                            "Số điện thoại đã tồn tại !",
                             async function (value) {
                                 if (!value) {
                                     return true;
@@ -138,19 +138,19 @@ export function CreateEmployee() {
                         ),
                     address: Yup.string()
                         .trim()
-                        .required("Vui lòng nhập địa chỉ")
+                        .required("Vui lòng nhập địa chỉ !")
                         .min(4, "Địa chỉ quá ngắn")
-                        .max(100, "Vui lòng xác nhận lại địa chỉ"),
+                        .max(100, "Vui lòng xác nhận lại địa chỉ !"),
                     salary: Yup.string()
-                        .required("Vui lòng nhập lương")
-                        .matches(/^\d+(\.\d+)?$/, "Tiền không được nhập số âm"),
+                        .required("Vui lòng nhập lương !")
+                        .matches(/^\d+(\.\d+)?$/, "Tiền không được nhập số âm !"),
                     citizenCode: Yup.string()
-                        .required("Vui lòng nhập địa chỉ")
-                        .matches(/^[0-9]{12}$/, "CCCD/Hộ chiếu không đúng")
-                        .max(12, "CCCD/Hộ chiếu không chính xác")
+                        .required("Vui lòng nhập địa chỉ !")
+                        .matches(/^[0-9]{12}$/, "CCCD/Hộ chiếu không đúng !")
+                        .max(12, "CCCD/Hộ chiếu không chính xác !")
                         .test(
                             "check-citizen-code",
-                            "CCCD/Hộ chiếu đã tồn tại",
+                            "CCCD/Hộ chiếu đã tồn tại !",
                             async function (value) {
                                 if (!value) {
                                     return true;
@@ -263,16 +263,17 @@ export function CreateEmployee() {
                                                             <ErrorMessage name="birthDay" component="p"
                                                                           style={{color: "red"}}/>
                                                         </div>
+
                                                         <div className="mt-2 inputs row">
-                                                            <div className="col-md-3">
+                                                            <div className="col-md-5">
                                                                 <label className="form-label dong">Giới tính</label>
                                                             </div>
-                                                            <div className="d-flex col-md-9">
-                                                                <div style={{marginLeft: "20px"}}>
+                                                            <div className="d-flex col-md-7">
+                                                                <div style={{marginLeft: "5px"}}>
                                                                     <Field type="radio" name="gender" value="1"/>
                                                                     Nam
                                                                 </div>
-                                                                <div style={{marginLeft: "20px"}}>
+                                                                <div style={{marginLeft: "5px"}}>
                                                                     <Field type="radio" name="gender" value="0"/>
                                                                     Nữ
                                                                 </div>
@@ -297,35 +298,9 @@ export function CreateEmployee() {
                                                             <ErrorMessage name="salary" component="p"
                                                                           style={{color: "red"}}/>
                                                         </div>
-
-                                                        <div style={{display : "block"}}>
-                                                            <div className="text-center mt-4 p-4">
-                                                                <div className="text-center" style={{marginLeft: "10%"}}>
-                                                                    <NavLink
-                                                                        type="button"
-                                                                        className="btn btn-secondary"
-                                                                        to={"/nav/api/employee"}>
-                                                                        Quay lại
-                                                                    </NavLink>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
 
                                                     <div className="col-6" >
-                                                        <div className="mt-2 inputs">
-                                                            <label className="dong">
-                                                                Địa chỉ <span style={{color: "red"}}>*</span>
-                                                            </label>
-                                                            <Field as="textarea"
-                                                                   type="text"
-                                                                   className="form-control"
-                                                                   name="address"
-                                                                   id="address"
-                                                            />
-                                                            <ErrorMessage name="address" component="p"
-                                                                          style={{color: "red"}}/>
-                                                        </div>
                                                         <div className="mt-2 inputs">
                                                             <label className="dong">
                                                                 Số điện thoại <span style={{color: "red"}}>*</span>
@@ -348,16 +323,35 @@ export function CreateEmployee() {
                                                             <ErrorMessage name="citizenCode" component="p"
                                                                           style={{color: "red"}}/>
                                                         </div>
-
-                                                        <div style={{display : "block"}}>
-                                                            <div className="text-center mt-3  p-3"
-                                                                 style={{marginRight: "20%"}}>
-                                                                <button type="submit" className="btn btn-success">
-                                                                    <b className="text-center">Thêm mới</b>
-                                                                </button>
-                                                            </div>
+                                                        <div className="mt-2 inputs">
+                                                            <label className="dong">
+                                                                Địa chỉ <span style={{color: "red"}}>*</span>
+                                                            </label>
+                                                            <Field as="textarea"
+                                                                   type="text"
+                                                                   className="form-control"
+                                                                   name="address"
+                                                                   id="address"
+                                                            />
+                                                            <ErrorMessage name="address" component="p"
+                                                                          style={{color: "red"}}/>
                                                         </div>
+                                                    </div>
 
+                                                    <div style={{ display: 'flex', justifyContent: 'center', margin: '20px auto' }}>
+                                                        <div>
+                                                            <NavLink
+                                                                type="button"
+                                                                className="btn btn-secondary"
+                                                                to={"/nav/api/employee"}>
+                                                                Quay lại
+                                                            </NavLink>
+                                                        </div>
+                                                        <div style={{ marginLeft: '100px' }}>
+                                                            <button type="submit" className="btn btn-success">
+                                                                <b className="text-center">Thêm mới</b>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

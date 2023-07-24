@@ -42,19 +42,19 @@ thead {
 
 .pagination a {
     text-decoration: none;
-    color: #0D6EFD;
+    color: green;
 }
 
 .pagination .active {
-    background-color: #0D6EFD;
+    background-color: green;
 }
 
 .pagination .active .page-num {
     color: #fff;
-    background: #0D6EFD;
+    background: green;
 }
 
-.height {
+.height .dong {
     height: 100vh
 }
 
