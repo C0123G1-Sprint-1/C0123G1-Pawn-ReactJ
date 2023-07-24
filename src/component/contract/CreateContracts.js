@@ -549,9 +549,9 @@ export const CreateContracts = () => {
                             <Modal.Body>
                                 <div className="controlsmodal-body d-flex justify-content-between">
                                     <div style={{marginTop: "0.6%"}}>
-                                        <button type="submit" className="btn btn-outline-success ">
+                                        <Link to={"/nav/manager-customer/create"} type="submit" className="btn btn-outline-success ">
                                             <b className="textcenter">Thêm khách hàng</b>
-                                        </button>
+                                        </Link>
                                     </div>
                                     <Formik initialValues={{
                                         name: ""

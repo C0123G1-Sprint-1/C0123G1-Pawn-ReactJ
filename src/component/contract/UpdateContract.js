@@ -90,16 +90,10 @@ export function UpdateContract() {
                     employees: contract?.employees
                 }}
                 validationSchema={Yup.object({
-                    productName: Yup.string()
-                        .required("Không được để trống")
-                        .matches(
-                            /^[A-Z][A-Za-z0-9\s]*$/,
-                            "Tên sản phẩm không được chứa ký tự đặc biệt và chữ cái đầu tiên phải viết hoa"
-                        )
-                        .test('no-special-characters', 'Tên sản phẩm không được chứa các ký tự đặc biệt như @, #, !', value => {
-                            return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
-                        }),
                     contractCode: Yup.string()
+                        .required("Không được để trống") .matches(/^[a-zA-Z0-9]+$/, "Mã hợp đồng không được chứa ký tự đặc biệt"),
+
+                    productName: Yup.string()
                         .required("Không được để trống")
                         .matches(/^[\p{Lu}\p{Ll}\p{N}\s]+$/u, "Tên sản phẩm không được chứa ký tự đặc biệt")
                         .test('first-letter-capitalized', 'Chữ đầu tiên của tên sản phẩm phải viết hoa', value => {
