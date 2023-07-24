@@ -32,11 +32,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/contract/TransactionHistoryList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/EmployeeInformation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/UpdateCustomer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/register-pawn/RegisterPawn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/register-pawn/RegisterPawn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/customer/CustomerListMOI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CustomerListMOI.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +147,7 @@
       <workItem from="1690112602518" duration="2127000" />
       <workItem from="1690119033605" duration="8659000" />
       <workItem from="1690159856668" duration="12443000" />
-      <workItem from="1690177178936" duration="2295000" />
+      <workItem from="1690177178936" duration="2677000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;add component TransactionHistoryList&quot;">
       <created>1689586680389</created>
@@ -426,7 +422,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690173445974</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Up">
+      <created>1690180068879</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1690180068880</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
