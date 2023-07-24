@@ -40,12 +40,16 @@ export const deleteTransactionHistoryByID = async (id) => {
 export const findAllContractStatus = async () => {
     const token = localStorage.getItem('token');
     try {
+<<<<<<< HEAD
+        const res = await axios.get("http://localhost:8080/api/employee/contract/list-contract-status");
+=======
         const res = await axios.get("http://localhost:8080/api/employee/contract/list-contract-status",
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             });
+>>>>>>> DEV-1
         return res;
     } catch (e) {
         console.log(e)
@@ -55,12 +59,16 @@ export const findAllContractStatus = async () => {
 export const findAllContractType = async () => {
     const token = localStorage.getItem('token')
     try {
+<<<<<<< HEAD
+        const res = await axios.get("http://localhost:8080/api/employee/contract/list-contract-type");
+=======
         const res = await axios.get("http://localhost:8080/api/employee/contract/list-contract-type",
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             });
+>>>>>>> DEV-1
         return res;
     } catch (e) {
         console.log(e)

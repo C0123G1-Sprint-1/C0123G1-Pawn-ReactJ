@@ -29,7 +29,11 @@ export function TransactionHistoryDetail() {
     return (
         <>
             <div className="col-lg-9 col-md-9">
+<<<<<<< HEAD
+                <h1 className="text-center my-5">CHI TIẾT GIAO DỊCH</h1>
+=======
                 <h2 className="text-center mt-2 mb-4">CHI TIẾT GIAO DỊCH</h2>
+>>>>>>> DEV-1
                 <table className="table table-bordered">
                     <tbody>
                     <tr>

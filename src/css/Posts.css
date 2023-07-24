@@ -1,7 +1,75 @@
 /* Font */
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
 
+<<<<<<< HEAD
+/* Design */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    background-color: #ecf9ff;
+}
+
+/*body {*/
+/*    color: #272727;*/
+/*    !*font-family: 'Quicksand', serif;*!*/
+/*    font-style: normal;*/
+/*    font-weight: 400;*/
+/*    letter-spacing: 0;*/
+/*    padding: 1rem;*/
+/*}*/
+
+.main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+h1 {
+    font-size: 28px;
+    font-weight: 400;
+    text-align: center;
+    font-family: "Courier New", monospace;
+}
+* {
+    font-family: Times New Roman!important;
+}
+h2 {
+    font-size: 33px;
+    font-weight: 500;
+    font-family: Times New Roman!important;
+}
+/*img {*/
+/*    !*height: auto;*!*/
+/*    !*max-width: 100%;*!*/
+/*    height: 200px;*/
+/*    width: 400px;*/
+/*    vertical-align: middle;*/
+/*}*/
+
+/*.btn {*/
+/*    !*color: #ffffff;*!*/
+/*    padding: 0.8rem;*/
+/*    font-size: 14px;*/
+/*    text-transform: uppercase;*/
+/*    border-radius: 4px;*/
+/*    font-weight: 400;*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    cursor: pointer;*/
+/*    border: 1px solid rgba(255, 255, 255, 0.2);*/
+/*    !*background: transparent;*!*/
+/*}*/
+
+/*.btn:hover {*/
+/*    !*background-color: rgba(255, 255, 255, 0.12);*!*/
+/*}*/
+
+.cards {
+=======
 .cards-post {
+>>>>>>> DEV-1
     display: flex;
     flex-wrap: wrap;
     list-style: initial;
@@ -174,6 +242,23 @@
     background: #fff;
     padding: 0 15px;
 }
+<<<<<<< HEAD
+/*.image {*/
+/*    -webkit-box-pack: center;*/
+/*    -ms-flex-pack: center;*/
+/*    -webkit-box-align: center;*/
+/*    -ms-flex-align: center;*/
+/*    display: -webkit-box;*/
+/*    display: -ms-flexbox;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    width: 70px;*/
+/*    min-width: 70px;*/
+/*    height: 70px;*/
+/*    overflow: hidden;*/
+/*}*/
+=======
 .image-post {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
@@ -189,6 +274,7 @@
     height: 80px;
     overflow: hidden;
 }
+>>>>>>> DEV-1
 .other-item .content {
     padding-left: 10px;
     width: calc(100% - 70px);
