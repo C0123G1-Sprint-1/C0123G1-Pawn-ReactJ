@@ -7,10 +7,10 @@ import Swal from "sweetalert2";
 import moment from "moment";
 
 
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
+// const token = localStorage.getItem('token');
+// const decodedToken = jwt(token);
+// console.log(decodedToken.sub)
+// console.log(decodedToken.role)
 
 
 export function Top10NewContract() {
@@ -25,6 +25,7 @@ export function Top10NewContract() {
     }
     useEffect(() => {
         fetchTop10NewContract();
+            window.scrollTo(0,0)
     }, [])
     const indexOfLastContract = currentPage * contractsPerPage;
     const indexOfFirstContract = indexOfLastContract - contractsPerPage;

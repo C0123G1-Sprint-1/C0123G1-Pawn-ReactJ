@@ -1,5 +1,5 @@
 // import './App.css';
-import {Routes, Route} from "react-router-dom"
+import {Routes, Route, useLocation, useNavigate, Navigate} from "react-router-dom"
 import React from "react";
 // import {RegisterPawn} from "./component/register-pawn/RegisterPawn";
 
@@ -46,6 +46,7 @@ import {CustomerListMOI} from "./component/customer/CustomerListMOI";
 import {RegisterPawnAnhQoc} from "./component/customer/RegisterPawnAnhQoc";
 
 function App() {
+    const navigate = useNavigate();
     return (
         <>
             <Header/>
@@ -76,13 +77,13 @@ function App() {
                     <Route path={"/nav/manager-customer/register"} element={<RegisterPawnAnhQoc/>}/>
                     <Route path={"/nav/manager-customer/create"} element={<CreateCustomer/>}/>
                     <Route path={"/nav/manager-customer/update/:id"} element={<UpdateCustomer/>}/>
-                    <Route path={"/nav/detail/employee/:id"} element={<EmployeeInformation/>}/>
+                    <Route path={"/nav/detail/employee"} element={<EmployeeInformation/>}/>
                     <Route path={"/nav/info-store/transaction-history/update-contract/:id"}
                            element={<UpdateContract/>}/>
                 </Route>
 
 
-                <Route path='/create' element={<RegisterPawn/>}/>
+                <Route path='/register-pawn' element={<RegisterPawn/>}/>
                 <Route path={"/login"} element={<LoginHome/>}>
                     <Route path="/login" element={<LoginForm/>}/>
                     <Route path="/login/forgot" element={<ForgotPassword/>}/>

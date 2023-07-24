@@ -8,10 +8,10 @@ import moment from "moment";
 import {Link} from "react-router-dom";
 import swalWithBootstrapButtons from "sweetalert2";
 
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
+// const token = localStorage.getItem('token');
+// const decodedToken = jwt(token);
+// console.log(decodedToken.sub)
+// console.log(decodedToken.role)
 
 export function CustomerListMOI() {
     const [listCustomer, setListCustomer] = useState([]);
@@ -45,7 +45,9 @@ export function CustomerListMOI() {
         }
     };
 
-
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     useEffect(() => {
         showList1();
     }, [currentPage1]);

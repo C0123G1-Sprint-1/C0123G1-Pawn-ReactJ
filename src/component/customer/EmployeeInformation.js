@@ -9,6 +9,7 @@ import {storage} from "../../firebase";
 import {useParams} from "react-router";
 import {ThreeCircles} from "react-loader-spinner";
 import bcrypt from "bcryptjs";
+import {toast} from "react-toastify";
 
 export default function EmployeeInformation() {
     const [employeeDetail, setEmployeeDetail] = useState()
@@ -56,7 +57,7 @@ export default function EmployeeInformation() {
     useEffect(() => {
         const fectApi = async () => {
             try {
-                const res = await employeeInformationService.findById(params.id);
+                const res = await employeeInformationService.findById();
                 setEmployeeDetail(res);
                 console.log(res)
 
@@ -103,6 +104,7 @@ export default function EmployeeInformation() {
 
     useEffect(() => {
         document.title = "Thông tin tài khoản";
+            window.scrollTo(0,0)
     }, [])
     useEffect(() => {
         setAvatarUrl(employeeDetail?.image)
@@ -133,7 +135,28 @@ export default function EmployeeInformation() {
                 });
                 setSubmitting(false);
                 setNewPass(newPass + 1);
-                console.log(newPass)
+                if (newPass >= 5) {
+                    Swal.fire({
+                        title: 'Xác nhận đổi mật khẩu?',
+                        text: "Bạn đã nhập sai quá 5 lần!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Đồng ý đổi!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate("/login/forgot")
+                        } else {
+                            setIsEditing(false)
+                            setNewPass(0)
+                            localStorage.removeItem("token");
+                            toast.success("Đăng xuất thành công !!");
+                            navigate("/login")
+                        }
+                    })
+                    return;
+                }
                 return;
             }
 
@@ -414,6 +437,13 @@ export default function EmployeeInformation() {
                                                                         <i class="bi bi-eye"></i>}
                                                                 </button>
                                                             </div>
+                                                            {newPass === 0 ? (
+                                                                <div className='mt-2 text-danger'>Bạn cần nhập mật khẩu để xác
+                                                                    nhận.</div>
+                                                            ) : (
+                                                                <span
+                                                                    className="text-danger"> Bạn nhập sai mật khẩu {newPass}/5 lần</span>
+                                                            )}
                                                         </>
                                                     )}
                                                 </div>

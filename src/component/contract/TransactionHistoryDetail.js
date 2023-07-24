@@ -13,10 +13,15 @@ export function TransactionHistoryDetail() {
     const getContractApi = async () => {
         const res = await contractService.getTransactionHistoryById(param.id);
         setContract(res)
+        console.log(res)
     }
     useEffect(() => {
         getContractApi();
     }, [param.id])
+
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     if (!contract) {
         return null;
     }
@@ -51,10 +56,9 @@ export function TransactionHistoryDetail() {
                         <th style={{lineHeight: "240px"}} className="ps-4">Ảnh đồ cầm</th>
                         <td className="text-center" style={{verticalAlign: "middle",maxWidth:"100%",maxHeight:"100%"}}>
                             <img
-                                style={{maxWidth:"100%",maxHeight:"auto"}}
+                                style={{objectFit:"cover",maxWidth:"100%"}}
                                 src={contract.image === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract.image}
-                                height={200}
-                                width={300}
+                                height={280}
                                 alt=""
                             />
                         </td>
@@ -96,16 +100,16 @@ export function TransactionHistoryDetail() {
                     </tr>
                     <tr>
                         <th className="ps-4">Tên khách hàng</th>
-                        <td className="ps-4">{contract?.customers.name}</td>
+                        <td className="ps-4">{contract?.customers?.name}</td>
                     </tr>
                     <tr>
                         <th className="ps-4">Giới tính</th>
-                        <td className="ps-4">{contract?.customers.gender === 1 ? "Nam" : "Nữ"}</td>
+                        <td className="ps-4">{contract?.customers?.gender === 1 ? "Nam" : "Nữ"}</td>
                     </tr>
                     <tr>
                         <th className="ps-4">SĐT khách hàng</th>
                         <td className="ps-4">
-                            {contract?.customers.phoneNumber.replace(
+                            {contract?.customers?.phoneNumber.replace(
                                 /(\d{3})(\d{3})(\d{4})/,
                                 "($1) $2-$3"
                             )}
@@ -113,15 +117,15 @@ export function TransactionHistoryDetail() {
                     </tr>
                     <tr>
                         <th className="ps-4">Email</th>
-                        <td className="ps-4">{contract?.customers.email}</td>
+                        <td className="ps-4">{contract?.customers?.email}</td>
                     </tr>
                     <tr>
                         <th className="ps-4">Địa chỉ</th>
-                        <td className="ps-4">{contract?.customers.address}</td>
+                        <td className="ps-4">{contract?.customers?.address}</td>
                     </tr>
                     <tr>
                         <th className="ps-4">CMND</th>
-                        <td className="ps-4">{contract?.customers.citizenCode}</td>
+                        <td className="ps-4">{contract?.customers?.citizenCode}</td>
                     </tr>
                     <tr>
                         <th style={{lineHeight: "270px"}} className="ps-4">
@@ -130,7 +134,7 @@ export function TransactionHistoryDetail() {
                         <td className="text-center" style={{verticalAlign: "middle"}}>
                             <img
                                 style={{objectFit: "cover"}}
-                                src={contract?.customers.image === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers.image}
+                                src={contract?.customers?.image === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers?.image}
                                 width={180}
                                 height={250}
                                 alt=""
@@ -142,7 +146,7 @@ export function TransactionHistoryDetail() {
                         <td className="text-center" style={{verticalAlign: "middle"}}>
                             <img
                                 style={{objectFit: "cover"}}
-                                src={contract?.customers.frontCitizen === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers.frontCitizen}
+                                src={contract?.customers?.frontCitizen === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers?.frontCitizen}
                                 width={300}
                                 height={180}
                                 alt=""
@@ -154,7 +158,7 @@ export function TransactionHistoryDetail() {
                         <td className="text-center" style={{verticalAlign: "middle"}}>
                             <img
                                 style={{objectFit: "cover"}}
-                                src={contract?.customers.backCitizen === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers.backCitizen}
+                                src={contract?.customers?.backCitizen === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract?.customers?.backCitizen}
                                 width={290}
                                 height={180}
                                 alt=""

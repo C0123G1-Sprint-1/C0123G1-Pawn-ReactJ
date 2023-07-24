@@ -14,6 +14,7 @@ export default function Profit() {
     const [isActives, setIsActive] = useState(true);
     const [totalPage, setTotalPage] = useState();
     const [totalProfit, setTotalProfit] = useState(0);
+    const [yearCurrent,setYearCurrent] =useState(" (2023) ");
     const params = useParams();
     const [dataProfit, setDataProfit] = useState();
     const [dateTimeProfit, setDateTimeProfit] = useState({
@@ -97,6 +98,7 @@ export default function Profit() {
             startDate: "",
             endDate: ""
         })
+        await setYearCurrent(" (2023) ")
     }
     useEffect(() => {
         const fectData = async () => {
@@ -176,6 +178,10 @@ export default function Profit() {
                                     endDate: ""
                                 }}
                                 onSubmit={async (values) => {
+                                    await setYearCurrent("")
+                                    if(dateTimeProfit.startDate === "" && dateTimeProfit.endDate === ""){
+                                        setYearCurrent(" (2023) ")
+                                    }
                                     await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, params.profitType || profitType)
                                     await getDataProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
                                     await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
@@ -233,14 +239,14 @@ export default function Profit() {
                         <label className="mt-3 p-0 ms-5" style={{color: "indianred"}}>
                             <span style={{fontWeight: "500"}}>Tổng lợi nhuận :{" "}</span>
                             <input type="text" disabled value={" " +
-                            totalProfit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + " VND "
+                            totalProfit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + " VNĐ "
                             }/>
                         </label>
                     </div>
                     <div className="container" style={{height: "45vh"}}>
                         {
                             dataProfit ?
-                                <ChartComponent data={dataProfit} title={profitType}/>
+                                <ChartComponent data={dataProfit} title={profitType} yearCurrent={yearCurrent}/>
                                 : ""
                         }
                     </div>

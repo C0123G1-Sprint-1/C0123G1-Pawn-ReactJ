@@ -33,7 +33,7 @@ export const update = async (customer) => {
 export const findAllRegisterPawn = async () => {
     const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/register-pawn`,
+        const result = await axios.get(`http://localhost:8080/api/register/list`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,

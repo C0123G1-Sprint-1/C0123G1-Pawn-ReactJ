@@ -1,8 +1,8 @@
 import axios from "axios";
-export const findById = async (id) => {
+export const findById = async () => {
     const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/employee/detail/${id}`,
+        const result = await axios.get(`http://localhost:8080/api/employee/detail`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,

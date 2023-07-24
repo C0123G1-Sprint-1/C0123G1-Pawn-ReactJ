@@ -1,8 +1,7 @@
-import {useNavigate} from "react-router-dom";
-import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {RegisterPawn} from "./RegisterPawn";
-import {ListPosts} from "../post/ListPosts";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { RegisterPawn } from "./RegisterPawn";
 // import "../../css/home.css"
 // import io from "socket.io-client"
 // import data from "bootstrap/js/src/dom/data";

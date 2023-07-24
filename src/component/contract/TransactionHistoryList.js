@@ -14,6 +14,7 @@ export default function TransactionHistoryList() {
     const [contracts, setContract] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
+    const [statisticsStatus, setStatisticsStatus] = useState(true);
     const getContractStatusApi = async () => {
         const res = await contractService.findAllContractStatus();
         setContractStatus(res.data)
@@ -58,7 +59,22 @@ export default function TransactionHistoryList() {
         },
         buttonsStyling: false
     })
+    const setCancel = async () => {
+        await setStatisticsStatus(!statisticsStatus)
+        setSearch({
+            customerName: '',
+            productName: '',
+            startDate: '',
+            endDate: '',
+            contractType: '',
+            contractStatus: ''
+        })
+        setPageCount(0);
+    }
 
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
 
     useEffect(() => {
         getContractStatusApi();
@@ -76,13 +92,13 @@ export default function TransactionHistoryList() {
                 Swal.fire({
                     icon: "success",
                     title: "Xóa thành công !",
-                    timer: 3000
+                    timer: 2000
                 })
             } else {
                 Swal.fire({
                     icon: "error",
                     title: "Xóa thất bại !",
-                    timer: 3000
+                    timer: 2000
                 })
 
             }
@@ -181,9 +197,10 @@ export default function TransactionHistoryList() {
                                     </div>
                                     <div className=" col-lg-10 my-4">
                                         <div className="d-flex justify-content-end">
-                                            <button type="reset" className="btn btn-outline-secondary me-3"
-                                            >Nhập lại</button>
-                                            <button type="submit" className="btn btn-outline-success">Tìm kiếm
+                                            <button type="reset" onClick={()=>setCancel()} className="btn btn-outline-secondary me-3"
+                                            ><i className="bi bi-arrow-repeat"/></button>
+                                            <button type="submit" className="btn btn-outline-success"><i
+                                                className="bi bi-search"/>
                                             </button>
                                         </div>
                                     </div>
@@ -197,7 +214,7 @@ export default function TransactionHistoryList() {
                 <div className="col-lg-12">
                     <table className="table table table-striped" border="1">
                         <thead>
-                        <tr style={{textAlign: "center"}}>
+                        <tr style={{textAlign: "start"}}>
                             <th>Mã HĐ</th>
                             <th>Tên đồ</th>
                             <th>Tên khách hàng</th>
@@ -211,17 +228,17 @@ export default function TransactionHistoryList() {
                         {
                             contracts?.length === 0 && (search.customerName !== "" || search.productName !== "" || search.contractType !== ""
                                 || search.contractStatus !== "" || search.startDate !== "" || search.endDate !== "") ? (
-                                    <tr className="text-center">
+                                    <tr>
                                         <td colSpan={7}>
-                                            <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
+                                            <h4 style={{color: "red",textAlign:"center"}}>Dữ liệu không tồn tại</h4>
                                         </td>
                                     </tr>
                                 ) :
                                 contracts.map((th, index) => (
-                                    <tr key={index} className="text-center">
+                                    <tr key={index} style={{textAlign: "start"}}>
                                         <td >HD-{th?.contractCode}</td>
-                                        <td style={{textAlign: "start"}} className="ps-3">{th?.productName}</td>
-                                        <td style={{textAlign: "start"}}>{th?.customers}</td>
+                                        <td>{th?.productName}</td>
+                                        <td>{th?.customers}</td>
                                         <td >{
                                             th?.startDate===""?"":
                                             moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
@@ -239,7 +256,7 @@ export default function TransactionHistoryList() {
                                                 swalWithBootstrapButtons.fire({
                                                     icon: "warning",
                                                     title: "Xác nhận xóa",
-                                                    html: `Bạn có muốn xoá lịch sử giao dịch có mã hợp đồng <span style="color: red">HD-${th?.contractCode}</span> không ?`,
+                                                    html: `Bạn có muốn xoá lịch sử giao dịch có mã <span style="color: red">HD-${th?.contractCode}</span> không?`,
                                                     showCancelButton: true,
                                                     confirmButtonText: 'Có',
                                                     cancelButtonText: 'Không',
