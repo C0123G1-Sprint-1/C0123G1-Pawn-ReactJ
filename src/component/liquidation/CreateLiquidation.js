@@ -174,10 +174,10 @@ export function CreateLiquidation() {
                 totalPrice: 0,
                 createTime: null
             }}
-                // validationSchema={yup.object({
-                //     customers: yup.string().required("Vui lòng chọn khách hàng."),
-                //     products: yup.string().required("Vui lòng chọn sản phẩm.")
-                // })}
+                    // validationSchema={yup.object({
+                    //     customers: yup.number().min(1, "Vui lòng chọn khách hàng."),
+                    //     products: yup.number().min(1, "Vui lòng chọn sản phẩm.")
+                    // })}
                     onSubmit={async (values) => {
                         await saveLiquidationAPI({
                             ...values,
