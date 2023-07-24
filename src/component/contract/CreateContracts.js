@@ -11,6 +11,7 @@ import {ThreeCircles} from "react-loader-spinner";
 import {FormattedNumber} from "react-intl";
 import ReactPaginate from "react-paginate";
 import * as yup from "yup";
+import {useOutletContext} from "react-router";
 
 export const CreateContracts = () => {
 
@@ -107,6 +108,7 @@ export const CreateContracts = () => {
         } catch (e) {
         }
     }
+
     //  Sổ list  chọn khách hàng
     useEffect(() => {
         getAllCustomer()
@@ -162,7 +164,9 @@ export const CreateContracts = () => {
         }
     }
 
-
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     useEffect(() => {
         getAllProductType()
         getAllContractType()
@@ -196,8 +200,8 @@ export const CreateContracts = () => {
 
     return (
         <>
-            <div className="container" >
-                <div className="row height d-flex justify-content-center align-items-center" style={{height: "80vh"}}>
+            <div className="container">
+                <div className="row d-flex justify-content-center align-items-center" style={{minHeight: "80vh"}}>
                     <div className="col-md-6">
                         <div className="card px-5 py-4">
                             <div style={{textAlign: "center"}}>
@@ -283,7 +287,7 @@ export const CreateContracts = () => {
                                             })
 
                                         }
-
+                                        await showLoadingScreen()
                                         await createContracts()
                                         // resetForm(false)
                                         Swal.fire({
@@ -395,7 +399,7 @@ export const CreateContracts = () => {
                                         </div>
                                         <div className="row mt-2">
                                             <div className=" col-md-6 mt-2 inputs">
-                                                <label>Tiền cho vay <span style={{color: "red"}}>*</span></label>
+                                                <label>Tiền cho vay (VNĐ) <span style={{color: "red"}}>*</span></label>
                                                 <Field
                                                     type="number"
                                                     className="form-control"
@@ -410,7 +414,7 @@ export const CreateContracts = () => {
                                                 <ErrorMessage name="loans" component="p" style={{color: "red"}}/>
                                             </div>
                                             <div className=" col-md-6 mt-2 inputs">
-                                                <label>Tiền lãi</label>
+                                                <label>Tiền lãi (VNĐ) <span style={{fontStyle: "italic",color:"gray"}}>0.67% / ngày</span></label>
                                                 <div aria-disabled style={{
                                                     border: "1px solid #DDDDDD",
                                                     fontSize: "0.9rem",
@@ -419,9 +423,11 @@ export const CreateContracts = () => {
                                                     display: "flex",
                                                     backgroundColor: "#EEEEEE",
                                                     height: "4.5vh",
-                                                    borderRadius: "7px"
+                                                    borderRadius: "7px",
+                                                    // height: '35px',
+                                                    paddingLeft: '10px'
                                                 }}
-                                                     className="p-0 m-0">
+                                                     className="m-0">
                                                     <FormattedNumber
                                                         value={profits || 0} disabled
                                                         thousandSeparator={true} currency="VND"
@@ -510,13 +516,13 @@ export const CreateContracts = () => {
                                             <div className="text-center m-auto">
                                                 <div className="text-center">
                                                     <button disabled={!idCustomer} type="submit"
-                                                            className="btn btn-success" onClick={showLoadingScreen}>
+                                                            className="btn btn-success">
                                                         <b className="text-center">Thêm mới</b>
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
-                                       
+
                                     </Form>
                                 )}
                             </Formik>
@@ -551,7 +557,8 @@ export const CreateContracts = () => {
                             <Modal.Body>
                                 <div className="controlsmodal-body d-flex justify-content-between">
                                     <div style={{marginTop: "0.6%"}}>
-                                        <Link to="/nav/manager-customer/create" type="submit" className="btn btn-outline-success ">
+                                        <Link to="/nav/manager-customer/create" type="submit"
+                                              className="btn btn-outline-success ">
                                             <b className="textcenter">Thêm khách hàng</b>
                                         </Link>
                                     </div>
@@ -605,7 +612,7 @@ export const CreateContracts = () => {
                                         <tbody>
                                         {customer.map((list, index) => (
                                             <tr key={index}>
-                                                <td >{list.id}</td>
+                                                <td>{list.id}</td>
                                                 <td className=" ">{list.name}</td>
                                                 <td className="">{list.citizenCode}</td>
                                                 <td className="text-center">

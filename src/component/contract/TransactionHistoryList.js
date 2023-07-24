@@ -14,6 +14,8 @@ export default function TransactionHistoryList() {
     const [contracts, setContract] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
+    const role = localStorage.getItem("role");
+
     const getContractStatusApi = async () => {
         const res = await contractService.findAllContractStatus();
         setContractStatus(res.data)
@@ -59,6 +61,9 @@ export default function TransactionHistoryList() {
         buttonsStyling: false
     })
 
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
 
     useEffect(() => {
         getContractStatusApi();
@@ -76,13 +81,13 @@ export default function TransactionHistoryList() {
                 Swal.fire({
                     icon: "success",
                     title: "Xóa thành công !",
-                    timer: 3000
+                    timer: 2000
                 })
             } else {
                 Swal.fire({
                     icon: "error",
                     title: "Xóa thất bại !",
-                    timer: 3000
+                    timer: 2000
                 })
 
             }
@@ -182,8 +187,9 @@ export default function TransactionHistoryList() {
                                     <div className=" col-lg-10 my-4">
                                         <div className="d-flex justify-content-end">
                                             <button type="reset" className="btn btn-outline-secondary me-3"
-                                            >Nhập lại</button>
-                                            <button type="submit" className="btn btn-outline-primary">Tìm kiếm
+                                            ><i className="bi bi-arrow-repeat"/></button>
+                                            <button type="submit" className="btn btn-outline-success"><i
+                                                className="bi bi-search"/>
                                             </button>
                                         </div>
                                     </div>
@@ -213,7 +219,7 @@ export default function TransactionHistoryList() {
                                 || search.contractStatus !== "" || search.startDate !== "" || search.endDate !== "") ? (
                                     <tr>
                                         <td colSpan={7}>
-                                            <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
+                                            <h4 style={{color: "red",textAlign:"center"}}>Dữ liệu không tồn tại</h4>
                                         </td>
                                     </tr>
                                 ) :
@@ -234,12 +240,14 @@ export default function TransactionHistoryList() {
                                             <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}
                                                   className="me-3"><i style={{color: "orange"}}
                                                                       className="bi bi-pencil-square"/></Link>
+                                            {
+                                                role === ("ROLE_ADMIN")?
                                             <a type="button"
                                                data-bs-target="#exampleModal" onClick={() => {
                                                 swalWithBootstrapButtons.fire({
                                                     icon: "warning",
                                                     title: "Xác nhận xóa",
-                                                    html: `Bạn có muốn xoá lịch sử giao dịch có mã hợp đồng <span style="color: red">HD-${th?.contractCode}</span> không ?`,
+                                                    html: `Bạn có muốn xoá lịch sử giao dịch có mã <span style="color: red">HD-${th?.contractCode}</span> không?`,
                                                     showCancelButton: true,
                                                     confirmButtonText: 'Có',
                                                     cancelButtonText: 'Không',
@@ -252,6 +260,7 @@ export default function TransactionHistoryList() {
                                             }}><i
                                                 style={{color: "red"}}
                                                 className="bi bi-trash3"/></a>
+                                                :""}
                                         </td>
                                     </tr>
                                 ))}
@@ -265,14 +274,14 @@ export default function TransactionHistoryList() {
                     <div className="d-grid">
                         <ReactPaginate
                             breakLabel="..."
-                            nextLabel={contracts.length===0&&pageCount===1?"":"Sau"}
+                            nextLabel={contracts.length===0||pageCount===1?"":"Sau"}
                             onPageChange={handlePageClick}
                             pageCount={pageCount}
-                            previousLabel={contracts.length===0&&pageCount===1?"":"Trước"}
+                            previousLabel={contracts.length===0||pageCount===1?"":"Trước"}
                             containerClassName="pagination"
-                            pageLinkClassName="page-num"
-                            nextLinkClassName="page-num"
-                            previousLinkClassName="page-num"
+                            pageLinkClassName={contracts.length===0?"":"page-num"}
+                            nextLinkClassName={contracts.length===0?"":"page-num"}
+                            previousLinkClassName={contracts.length===0?"":"page-num"}
                             activeClassName="active"
                             disabledClassName="d-none"
                         />

@@ -166,10 +166,6 @@ export function UpdateCustomer() {
                     name: Yup.string().required("Tên không được để trống")
                         .min(5, 'Ký tự phải nhiều hơn 5')
                         .max(100, 'Ký tự phải ít hơn 100')
-                        .matches(
-                            /^[A-Z][A-Za-z0-9\s]*$/,
-                            "Tên không được chứa ký tự đặc biệt và chữ cái đầu tiên phải viết hoa"
-                        )
                         .test('no-special-characters', 'Tên không được chứa các ký tự đặc biệt như @, #, !', value => {
                             return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
                         }),
@@ -264,7 +260,7 @@ export function UpdateCustomer() {
             >
                 {({isSubmitting}) => (
                     <div className="dat-nt container mt-5 mb-5">
-                        <div className="row height d-flex justify-content-center align-items-center">
+                        <div className="row d-flex justify-content-center align-items-center">
                             <div className="col-md-8 col-sm-12">
                                 <div className="card px-5 py-4">
                                     <div
@@ -379,11 +375,12 @@ export function UpdateCustomer() {
                                                         className="text-danger"
                                                     />
                                                 </div>
-                                                <div className="mt-2 row">
-                                                    <div className="col-md-">
+                                                <div className="mt-2">
+                                                    <div className="mt-2">
                                                         <label id="label-dat" htmlFor="gender" className="form-label">
                                                             Giới tính<span style={{color: "red"}}> *</span>
                                                         </label>
+                                                    </div>
                                                         <label className='m-2'>
                                                             <Field type="radio" name="gender" value="0"/>
                                                             {' '}Nam
@@ -401,7 +398,7 @@ export function UpdateCustomer() {
                                                             name="gender"
                                                             className="text-danger"
                                                         />
-                                                    </div>
+
                                                 </div>
                                                 <div className="mt-2">
                                                     <label id="label-dat" htmlFor="f-email">

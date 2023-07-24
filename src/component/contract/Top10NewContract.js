@@ -7,10 +7,10 @@ import Swal from "sweetalert2";
 import moment from "moment";
 
 
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
+// const token = localStorage.getItem('token');
+// const decodedToken = jwt(token);
+// console.log(decodedToken.sub)
+// console.log(decodedToken.role)
 
 
 export function Top10NewContract() {
@@ -25,6 +25,7 @@ export function Top10NewContract() {
     }
     useEffect(() => {
         fetchTop10NewContract();
+            window.scrollTo(0,0)
     }, [])
     const indexOfLastContract = currentPage * contractsPerPage;
     const indexOfFirstContract = indexOfLastContract - contractsPerPage;
@@ -32,6 +33,13 @@ export function Top10NewContract() {
         indexOfFirstContract,
         indexOfLastContract
     );
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-danger',
+            cancelButton: 'btn btn-secondary me-3'
+        },
+        buttonsStyling: false
+    })
 
     const totalPages = Math.ceil(contracts.length / contractsPerPage);
 
@@ -51,13 +59,13 @@ export function Top10NewContract() {
                 Swal.fire({
                     icon: "success",
                     title: "Xóa thành công !",
-                    timer: 3000
+                    timer: 2000
                 })
             } else {
                 Swal.fire({
                     icon: "error",
                     title: "Xóa thất bại !",
-                    timer: 3000
+                    timer: 2000
                 })
 
             }
@@ -70,7 +78,7 @@ export function Top10NewContract() {
                 <div className="row ">
                     <div className="container">
                         <h2>
-                            <div style={{textAlign: "center" ,marginTop: "3rem"}}>TOP 10 HỢP ĐỒNG MỚI NHẤT</div>
+                            <div style={{textAlign: "center" }}>TOP 10 HỢP ĐỒNG MỚI NHẤT</div>
                         </h2>
                         <table className="table table-striped">
                             <thead>
@@ -90,7 +98,12 @@ export function Top10NewContract() {
                                 currentContracts.map((contract) => (
                                     <tr key={contract.id} >
                                         <td>HD-{contract.contractCode}</td>
-                                        <td>{contract.productName}</td>
+                                        <td style={{
+                                            maxWidth: '12vw',
+                                            overflow: 'hidden',
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis'
+                                        }} title={contract.productName}>{contract.productName}</td>
                                         <td>{contract.customers?.name}</td>
                                         <td>{
                                             moment(contract?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
@@ -107,22 +120,19 @@ export function Top10NewContract() {
                                                                     className="bi bi-pencil-square"/></Link>
                                             <a type="button"
                                                data-bs-target="#exampleModal" onClick={() => {
-                                                Swal.fire({
+                                                swalWithBootstrapButtons.fire({
                                                     icon: "warning",
-                                                    title: "Xóa",
-                                                    html: `Bạn có muốn xoá lịch sử giao dịch có mã hợp đồng <span style="color: red">HD-${contract?.contractCode}</span> không ?`,
+                                                    title: "Xác nhận xóa",
+                                                    html: `Bạn có muốn xoá lịch sử giao dịch có mã <span style="color: red">HD-${contract?.contractCode}</span> không?`,
                                                     showCancelButton: true,
-                                                    cancelButtonText: "Hủy",
-                                                    confirmButtonText: "Có",
-                                                    cancelButtonColor: "rgba(118,112,112,0.51)",
-                                                    confirmButtonColor: "#d33"
+                                                    confirmButtonText: 'Có',
+                                                    cancelButtonText: 'Không',
+                                                    reverseButtons: true
+                                                }).then((res) => {
+                                                    if (res.isConfirmed) {
+                                                        deleteTransactionHistory(+contract?.id)
+                                                    }
                                                 })
-                                                    .then((res) => {
-                                                        if (res.isConfirmed) {
-                                                            deleteTransactionHistory(+contract?.id)
-                                                        }
-                                                    })
-
                                             }}><i
                                                 style={{color: "red"}}
                                                 className="bi bi-trash3"/></a>

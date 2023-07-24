@@ -146,7 +146,7 @@ export function RegisterPawn() {
                         </div>
                         <div id="create" className="card-register-right ">
                             <div className="container-fluid">
-                                <div className="height d-flex justify-content-center align-items-center">
+                                <div className=" d-flex justify-content-center align-items-center">
                                     <div className="register-form">
                                         <div style={{textAlign: "center"}}>
                                             <h3 style={{textTransform: "uppercase",
@@ -174,26 +174,26 @@ export function RegisterPawn() {
                                                 <label style={{marginTop:"-2rem"}} className="label-thang" >Họ tên <span style={{color : "red"}}>*</span></label>
                                                 <Field type="text" className="form-control" name='name'/>
                                                 <ErrorMessage className='form-err' component='span' name='name'/>
-                                                <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{name}</p>
+                                                 <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{name}</p>
                                             </div>
                                             <div className="mt-2 inputs">
                                                 <label  className="label-thang" >Số điện thoại <span style={{color : "red"}}>*</span></label>
                                                 <Field type="text" className="form-control" name='phone'/>
                                                 <ErrorMessage className='form-err' component='span' name='phone'/>
-                                                <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{phone}</p>
+                                                 <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{phone}</p>
                                             </div>
                                             <div className="mt-2 inputs">
                                                 <label  className="label-thang" >Email <span style={{color : "red"}}>*</span></label>
                                                 <Field type="text" className="form-control" name='email'/>
                                                 <ErrorMessage className='form-err' component='span' name='email'/>
-                                                <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{email}</p>
+                                                 <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{email}</p>
 
                                             </div>
                                             <div className="mt-2 inputs">
                                                 <label  className="label-thang" >Địa chỉ <span style={{color : "red"}}>*</span></label>
                                                 <Field type="text" className="form-control" name='address'/>
                                                 <ErrorMessage className='form-err' component='span' name='address'/>
-                                                <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{address}</p>
+                                                 <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{address}</p>
 
                                             </div>
                                             <div className="mt-2 inputs">
@@ -201,7 +201,7 @@ export function RegisterPawn() {
                                                 <Field id="select-pawn" as="textarea" type="text" className="form-control"
                                                        name='contentNote'/>
                                                 <ErrorMessage className='form-err' component='span' name='contentNote'/>
-                                                <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{contentNote}</p>
+                                                 <p style={{color: "red",fontFamily : "Times New Roman",fontWeight:"500"}}>{contentNote}</p>
 
                                             </div>
                                             <div className="text-center mt-4 btn-group">

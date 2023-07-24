@@ -59,6 +59,9 @@ export const ShowContract = () => {
         await setShowModal(true)
     }
     console.log("id cua contract: " + productName)
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <>
 

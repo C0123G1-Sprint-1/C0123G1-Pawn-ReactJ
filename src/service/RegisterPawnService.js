@@ -1,5 +1,4 @@
 import axios from "axios";
-import {useState} from "react";
 export async function checkEmail(email) {
     const token = localStorage.getItem('token')
     try{
@@ -64,14 +63,9 @@ export async function save(registerPawn) {
 
 
 export const getAllServicePawn = async () => {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     try {
-        const res = await axios.get("http://localhost:8080/api/employee/type/contract/productType",
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            })
+        const res = await axios.get("http://localhost:8080/api/employee/type/contract/productType")
         return res.data
     }catch (e) {
         console.log(e)

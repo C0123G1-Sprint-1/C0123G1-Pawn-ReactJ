@@ -9,6 +9,7 @@ import {storage} from "../../firebase";
 import {useParams} from "react-router";
 import {ThreeCircles} from "react-loader-spinner";
 import bcrypt from "bcryptjs";
+import {toast} from "react-toastify";
 
 export default function EmployeeInformation() {
     const [employeeDetail, setEmployeeDetail] = useState()
@@ -20,7 +21,7 @@ export default function EmployeeInformation() {
     const [avatar, setAvatarFile] = useState();
     const [avatarUrl, setAvatarUrl] = useState();
     const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
-    const messageError = "Ảnh không được để trống!!";
+    // const messageError = "Ảnh không được để trống!!";
     const [isEditing, setIsEditing] = useState(true);
     const [newPass, setNewPass] = useState(0);
 
@@ -56,7 +57,7 @@ export default function EmployeeInformation() {
     useEffect(() => {
         const fectApi = async () => {
             try {
-                const res = await employeeInformationService.findById(params.id);
+                const res = await employeeInformationService.findById();
                 setEmployeeDetail(res);
                 console.log(res)
 
@@ -67,58 +68,59 @@ export default function EmployeeInformation() {
         fectApi()
     }, [params.id])
 
-    const handleFileSelect = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setAvatarFile(file);
-        }
-    };
+    // const handleFileSelect = (event) => {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         setAvatarFile(file);
+    //     }
+    // };
 
-    const handleFileUpload = async () => {
-        return new Promise((resolve, reject) => {
-            const file = setAvatarFile;
-            if (!file) return reject("No file selected");
-            const newName = "pawn_shop_topvn" + Date.now() + "_" + file.name;
-            const storageRef = ref(storage, `files/${newName}`);
-            const uploadTask = uploadBytesResumable(storageRef, file);
-
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    console.log(`Upload progress: ${progress}%`);
-                },
-                (error) => {
-                    reject(error);
-                },
-                async () => {
-                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    resolve(downloadURL);
-                }
-            );
-        });
-    };
+    // const handleFileUpload = async () => {
+    //     return new Promise((resolve, reject) => {
+    //         const file = setAvatarFile;
+    //         if (!file) return reject("No file selected");
+    //         const newName = "pawn_shop_topvn" + Date.now() + "_" + file.name;
+    //         const storageRef = ref(storage, `files/${newName}`);
+    //         const uploadTask = uploadBytesResumable(storageRef, file);
+    //
+    //         uploadTask.on(
+    //             "state_changed",
+    //             (snapshot) => {
+    //                 const progress = Math.round(
+    //                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //                 );
+    //                 console.log(`Upload progress: ${progress}%`);
+    //             },
+    //             (error) => {
+    //                 reject(error);
+    //             },
+    //             async () => {
+    //                 const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+    //                 resolve(downloadURL);
+    //             }
+    //         );
+    //     });
+    // };
 
     useEffect(() => {
         document.title = "Thông tin tài khoản";
+            window.scrollTo(0,0)
     }, [])
     useEffect(() => {
         setAvatarUrl(employeeDetail?.image)
         setGetPassword(employeeDetail?.users.password)
     }, [employeeDetail?.image])
 
-    const handleAvatarFileSelect = (event) => {
-        handleFileSelect(event, setAvatarFile);
-    };
-
-    const handleAvatarFileUpload = async () => {
-        if (avatarUrl) {
-            return avatarUrl
-        } else
-            return await handleFileUpload(avatar, setAvatarUrl);
-    };
+    // const handleAvatarFileSelect = (event) => {
+    //     handleFileSelect(event, setAvatarFile);
+    // };
+    //
+    // const handleAvatarFileUpload = async () => {
+    //     if (avatarUrl) {
+    //         return avatarUrl
+    //     } else
+    //         return await handleFileUpload(avatar, setAvatarUrl);
+    // };
 
     const handleSubmit = async (values, {setSubmitting}) => {
         try {
@@ -133,16 +135,37 @@ export default function EmployeeInformation() {
                 });
                 setSubmitting(false);
                 setNewPass(newPass + 1);
-                console.log(newPass)
+                if (newPass >= 5) {
+                    Swal.fire({
+                        title: 'Xác nhận đổi mật khẩu?',
+                        text: "Bạn đã nhập sai quá 5 lần!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Đồng ý đổi!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate("/login/forgot")
+                        } else {
+                            setIsEditing(false)
+                            setNewPass(0)
+                            localStorage.removeItem("token");
+                            toast.success("Đăng xuất thành công !!");
+                            navigate("/login")
+                        }
+                    })
+                    return;
+                }
                 return;
             }
 
             values.gender = parseInt(values.gender);
-            await handleAvatarFileUpload()
-            const newValues = {...values, image: firebaseImg};
-            newValues.image = await handleAvatarFileUpload();
+            // await handleAvatarFileUpload()
+            // const newValues = {...values, image: firebaseImg};
+            // newValues.image = await handleAvatarFileUpload();
             await employeeInformationService.update({
-                ...newValues,
+                ...values,
             })
 
             setSubmitting(false)
@@ -184,7 +207,7 @@ export default function EmployeeInformation() {
                 }}
                 validationSchema={Yup.object({
                     name: Yup.string().required('Không được bỏ trống')
-                        .matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
+                        .matches(/^([a-zA-Z\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
                         .min(5, 'Ký tự phải nhiều hơn 5')
                         .max(100, 'Ký tự phải ít hơn 100'),
                     birthDay: Yup.date().required('Không được bỏ trống').max(getMinDate(), 'Người dùng phải từ 15 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
@@ -201,7 +224,7 @@ export default function EmployeeInformation() {
                 {
                     ({isSubmitting}) => (
                         <div className="dat-nt container mt-5 mb-5">
-                            <div className="row height d-flex justify-content-center align-items-center">
+                            <div className="row d-flex justify-content-center align-items-center">
                                 <div className="col-md-8 col-sm-12">
                                     <div className="card px-5 py-4">
                                         <div
@@ -219,62 +242,62 @@ export default function EmployeeInformation() {
                                                         style={{width: "100%"}}
                                                         alt="avatar"
                                                     />
-                                                    {avatarUrl && (
-                                                        <div className="mt-2">
-                                                            <button
-                                                                type="button"
-                                                                className="btn btn-danger btn-sm mt-2"
-                                                                onClick={() => {
-                                                                    setAvatarUrl(null);
-                                                                    setAvatarFile(null);
-                                                                    setFileSelected(false);
-                                                                }}
-                                                            >
-                                                                Xoá
-                                                            </button>
-                                                        </div>
-                                                    )}
+                                                    {/*{avatarUrl && (*/}
+                                                    {/*    <div className="mt-2">*/}
+                                                    {/*        <button*/}
+                                                    {/*            type="button"*/}
+                                                    {/*            className="btn btn-danger btn-sm mt-2"*/}
+                                                    {/*            onClick={() => {*/}
+                                                    {/*                setAvatarUrl(null);*/}
+                                                    {/*                setAvatarFile(null);*/}
+                                                    {/*                setFileSelected(false);*/}
+                                                    {/*            }}*/}
+                                                    {/*        >*/}
+                                                    {/*            Xoá*/}
+                                                    {/*        </button>*/}
+                                                    {/*    </div>*/}
+                                                    {/*)}*/}
 
                                                     <label id="label-dat" className="mt-2 text-file-name">
                                                         Ảnh chân dung
                                                     </label>
-                                                    {!avatarUrl && (
-                                                        <label htmlFor="file-upload-avatar"
-                                                               className="text-name-file mt-4">
-                                                            Thêm ảnh chân dung <span style={{color: "red"}}>*</span>
-                                                        </label>
-                                                    )}
-                                                    <input
-                                                        type="file"
-                                                        onChange={(event) => {
-                                                            handleAvatarFileSelect(event);
-                                                            setFileSelected(true);
-                                                        }}
-                                                        id="image"
-                                                        name="image"
-                                                        className="form-control-plaintext d-none"
-                                                    />
-                                                    {!avatarUrl && (
-                                                        <p>
-                                                            <label
-                                                                htmlFor="image"
-                                                                style={{
-                                                                    display: "flex",
-                                                                    padding: "6px 12px",
-                                                                    border: "1px ",
-                                                                    borderRadius: "4px",
-                                                                    backgroundColor: "#ccffc6",
-                                                                    justifyContent: "center",
+                                                    {/*{!avatarUrl && (*/}
+                                                    {/*    <label htmlFor="file-upload-avatar"*/}
+                                                    {/*           className="text-name-file mt-4">*/}
+                                                    {/*        Thêm ảnh chân dung <span style={{color: "red"}}>*</span>*/}
+                                                    {/*    </label>*/}
+                                                    {/*)}*/}
+                                                    {/*<input*/}
+                                                    {/*    type="file"*/}
+                                                    {/*    onChange={(event) => {*/}
+                                                    {/*        handleAvatarFileSelect(event);*/}
+                                                    {/*        setFileSelected(true);*/}
+                                                    {/*    }}*/}
+                                                    {/*    id="image"*/}
+                                                    {/*    name="image"*/}
+                                                    {/*    className="form-control-plaintext d-none"*/}
+                                                    {/*/>*/}
+                                                    {/*{!avatarUrl && (*/}
+                                                    {/*    <p>*/}
+                                                    {/*        <label*/}
+                                                    {/*            htmlFor="image"*/}
+                                                    {/*            style={{*/}
+                                                    {/*                display: "flex",*/}
+                                                    {/*                padding: "6px 12px",*/}
+                                                    {/*                border: "1px ",*/}
+                                                    {/*                borderRadius: "4px",*/}
+                                                    {/*                backgroundColor: "#ccffc6",*/}
+                                                    {/*                justifyContent: "center",*/}
 
-                                                                }}
-                                                            >
-                                                                <i className="bi bi-upload"> Chọn hình ảnh</i>
-                                                            </label>
-                                                        </p>
-                                                    )}
-                                                    {fileSelected || avatarUrl ? null : (
-                                                        <span className="text-danger"><br/> {messageError}</span>
-                                                    )}
+                                                    {/*            }}*/}
+                                                    {/*        >*/}
+                                                    {/*            <i className="bi bi-upload"> Chọn hình ảnh</i>*/}
+                                                    {/*        </label>*/}
+                                                    {/*    </p>*/}
+                                                    {/*)}*/}
+                                                    {/*{fileSelected || avatarUrl ? null : (*/}
+                                                    {/*    <span className="text-danger"><br/> {messageError}</span>*/}
+                                                    {/*)}*/}
                                                 </div>
                                                 <div className="col-md-8">
                                                     <label id="label-dat" htmlFor="tenDangNhap">
@@ -414,6 +437,13 @@ export default function EmployeeInformation() {
                                                                         <i class="bi bi-eye"></i>}
                                                                 </button>
                                                             </div>
+                                                            {newPass === 0 ? (
+                                                                <div className='mt-2 text-danger'>Bạn cần nhập mật khẩu để xác
+                                                                    nhận.</div>
+                                                            ) : (
+                                                                <span
+                                                                    className="text-danger"> Bạn nhập sai mật khẩu {newPass}/5 lần</span>
+                                                            )}
                                                         </>
                                                     )}
                                                 </div>
