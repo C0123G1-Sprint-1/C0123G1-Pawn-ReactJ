@@ -1,8 +1,14 @@
 import axios from "axios";
 
 export const findAllAndSearch = async (search) => {
+    const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/employee?search=${search}`);
+        const result = await axios.get(`http://localhost:8080/api/employee?search=${search}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
         console.log(result.data);
         return result.data;
     } catch (error) {
@@ -11,8 +17,14 @@ export const findAllAndSearch = async (search) => {
 }
 
 export const createEmployee = async (employeeDTO) => {
+    const token = localStorage.getItem('token')
     try {
-        const result = await axios.post(`http://localhost:8080/api/employee/create-employee`, {...employeeDTO});
+        const result = await axios.post(`http://localhost:8080/api/employee/create-employee`, {...employeeDTO},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
         console.log(result.data);
         return result.data;
     } catch (error) {
@@ -20,10 +32,11 @@ export const createEmployee = async (employeeDTO) => {
     }
 }
 
-export const search = async (name, page, auth) => {
-    const headers = {
-        Authorization: "Bearer " + auth,
-    };
+export const search = async (name, page) => {
+    const token = localStorage.getItem('token')
+    // const headers = {
+    //     Authorization: "Bearer " + auth,
+    // };
     try {
         const res = await axios.get(
             `http://localhost:8080/api/employee?search=${name}&page=${
