@@ -1,9 +1,45 @@
 import axios from "axios";
-import {useState} from "react";
+export async function checkEmail(email) {
+    const token = localStorage.getItem('token')
+    try{
+        const  result = await axios.get("http://localhost:8080/api/register/check-email/"+email,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+        return result.data
+    }catch (e) {
+        console.log(e)
+    }
+}
+
+
+export async function checkPhone(phone) {
+    const token = localStorage.getItem('token')
+    try{
+        const  result = await axios.get("http://localhost:8080/api/register/check-phone/"+phone,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+        return result.data
+    }catch (e) {
+        console.log(e)
+    }
+}
+
 
 export async function getById(id) {
-        try{
-            await axios.delete("http://localhost:8080/api/register/"+id)
+    const token = localStorage.getItem('token')
+    try{
+            await axios.delete("http://localhost:8080/api/register/"+id,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
 
         }catch (e) {
             console.log(e)

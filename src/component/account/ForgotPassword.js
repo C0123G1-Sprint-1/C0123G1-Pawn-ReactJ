@@ -53,7 +53,7 @@ export function ForgotPassword() {
                                     className="form-control"
                                     placeholder="Email của bạn"
                                 />
-                                <ErrorMessage name="email" component="span" className="error-r" />
+                                <ErrorMessage name="email" component="span" className="error-r mx-1" />
 
                             </fieldset>
                             <div className="input-group mb-3">

@@ -44,7 +44,7 @@ export function ConfirmCode() {
                                 navigate("/login/newPassword", { state: { data: response.data } })
                             } catch (error) {
                                 console.log(error)
-                                toast.error(error.response.data.error);
+                                toast.error(error.response.data);
                             } finally {
                                 setSubmitting(false);
                             }

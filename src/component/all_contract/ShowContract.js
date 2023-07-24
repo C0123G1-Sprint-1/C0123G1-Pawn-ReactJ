@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {Modal} from "react-bootstrap";
 
 import * as showAllContractService from '../../service/ShowAllContractServices'
+import {Field, Form, Formik} from "formik";
+import moment from "moment";
 
 export const ShowContract = () => {
     const [showModal, setShowModal] = useState(false);
@@ -37,7 +39,7 @@ export const ShowContract = () => {
 
     }
     const getTypeId = (id) => {
-        setPage(0)
+
         setSearchType(id)
     }
     const handleInput = async (value) => {
@@ -48,7 +50,7 @@ export const ShowContract = () => {
 
     useEffect(() => {
         fetchAPI(page, contracts)
-    }, [page, productName, searchType])
+    }, [page, productName])
 
     console.log("loai do" + searchType)
 
@@ -57,18 +59,21 @@ export const ShowContract = () => {
         await setShowModal(true)
     }
     console.log("id cua contract: " + productName)
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <>
 
             <meta charSet="UTF-8"/>
             <title>Title</title>
-            <link
-                href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-                rel="stylesheet"
-                integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-                crossOrigin="anonymous"
-            />
-            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+            {/*<link*/}
+            {/*    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"*/}
+            {/*    rel="stylesheet"*/}
+            {/*    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"*/}
+            {/*    crossOrigin="anonymous"*/}
+            {/*/>*/}
+            {/*<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>*/}
             <link
                 rel="stylesheet"
                 href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
@@ -87,23 +92,37 @@ export const ShowContract = () => {
                             <div className="modal-body">
                                 <div>
 
+                                    <Formik initialValues={{
+                                        productName: productName,
+                                        typeProduct: searchType
+                                    }} onSubmit={(value) => {
+                                        const rs = async () => {
+                                            await setProductName(value.productName)
+                                            await setPage(0)
+
+
+                                        }
+                                        rs()
+                                        fetchAPI()
+                                    }}>
+                                        <Form>
+
 
                                     <div
                                         className="row"
                                         style={{display: "flex", justifyContent: "end"}}
                                     >
+
+
+
                                         <div className="col-lg-3">
                                             <div className="form-group">
-                                                <input
+                                                <Field
                                                     style={{borderColor: "black"}}
                                                     id=""
                                                     type="text"
                                                     name="productName"
                                                     className="form-control"
-                                                    onChange={(event) => {
-                                                        handleInput(event.target.value)
-                                                    }}
-                                                    value={productName}
                                                     placeholder={"Tên đồ cầm"}
                                                 />
                                             </div>
@@ -111,15 +130,15 @@ export const ShowContract = () => {
 
                                         <div className="col-lg-3">
                                             <div className="form-group">
-                                                <select onChange={(event) => {
+                                                <Field onClick={(event) => {
                                                     getTypeId(event.target.value)
                                                 }}
                                                         style={{borderColor: "black"}}
                                                         id="doCam"
-
+                                                        as="select"
                                                         name="typeProduct"
                                                         className="form-control"
-                                                        value={searchType}
+
 
                                                 >
                                                     <option value=''>Chọn loại đồ</option>
@@ -131,54 +150,81 @@ export const ShowContract = () => {
 
                                                         ))
                                                     }
-                                                </select>
+                                                </Field>
+                                            </div>
+
+                                        </div>
+                                        <div className="col-lg-1">
+                                            <div className="form-group">
+                                                <button type="submit"
+                                                        className="btn btn-outline-success " style={{width: "auto"}}><i
+                                                    className="bi bi-search"></i>
+                                                </button>
                                             </div>
                                         </div>
 
+
                                     </div>
                                     <br/>
-
+                                </Form>
+                            </Formik>
                                 </div>
                                 <div>
                                     <table className="table table-striped">
                                         <thead>
-                                        <tr className="text-center">
-                                            <th>Mã hợp đồng</th>
+                                        <tr style={{textAlign: "start"}}>
+                                            <th>Mã HĐ</th>
                                             <th>Tên đồ</th>
                                             <th>Loại đồ</th>
                                             <th>Trạng thái</th>
-                                            <th>Giá mua(VND)</th>
-                                            <th>Hành động</th>
+                                            <th>Giá mua(VNĐ)</th>
+                                            <th>Chức Năng</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        {
-                                            contracts && contracts.map((value) => (
-                                                <tr key={value.contractId} className="text-center">
-                                                    <td>{value.contractCode}</td>
-                                                    <td>{value.productName}</td>
-                                                    <td>{value.productType}</td>
-                                                    <td>{value.contractStatus}</td>
-                                                    <td>{value.loans}</td>
-                                                    <td>
-                                                        <button className="btn btn-sm btn-info" data-bs-toggle="modal"
-                                                                data-bs-target="#staticBackdrop"
-                                                                onClick={() => handleShowDetail(value.contractId)}>Chi
-                                                            tiết
-                                                        </button>
 
-                                                    </td>
-                                                </tr>
-                                            ))
+
+                                        {contracts.length === 0 ? <tr>
+                                                <td colSpan="6" className="text-center">
+                                                    <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
+                                                </td>
+                                            </tr>
+                                            :
+                                            <tbody>
+                                            {
+                                                contracts.map((value) => (
+                                                    <tr key={value.contractId} style={{textAlign: "start"}}>
+                                                        <td>{value.contractCode}</td>
+                                                        <td>{value.productName}</td>
+                                                        <td>{value.productType}</td>
+                                                        <td>{value.contractStatus}</td>
+                                                        <td>{value.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                                        <td>
+                                                            <a style={{cursor: "pointer"}} >
+                                                                <i style={{color: 'blue'}}
+                                                                   onClick={() => handleShowDetail(value.contractId)}
+                                                                   className=" bi bi-info-circle me-2"></i>
+                                                            </a>
+
+
+
+                                                        </td>
+                                                    </tr>
+
+
+                                                ))
+                                            }
+
+                                            </tbody>
                                         }
 
-                                        </tbody>
+
                                     </table>
                                     <div className="d-flex col-12 justify-content-end">
                                         <nav aria-label="...">
                                             <ul className="pagination">
                                                 <li hidden={page === 0} className="page-item ">
-                                                    <button className="page-link" tabIndex={-1}
+                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
                                                             onClick={() => paginate(page - 1)}>
                                                         Trước
                                                     </button>
@@ -192,7 +238,8 @@ export const ShowContract = () => {
                                                     Array.from({length: totalPage}, (a, index) => index).map((pageNum) => (
                                                         <li className="page-item">
                                                             <button
-                                                                className={pageNum === page ? "page-link active" : "page-link"}
+                                                                style={{border: "1px solid gray", borderRadius: "5px"}}
+                                                                className={pageNum === page ? "page-link-active" : "page-link-khanh"}
                                                                 key={pageNum}
                                                                 onClick={() => paginate(pageNum)}>
                                                                 {pageNum + 1}
@@ -207,11 +254,12 @@ export const ShowContract = () => {
                                                 {/*        3*/}
                                                 {/*    </a>*/}
                                                 {/*</li>*/}
-                                                <li hidden={page + 1 === totalPage}
+                                                <li hidden={page + 1 === totalPage || totalPage === 0}
                                                     className="page-item">
-                                                    <button className="page-link" tabIndex={-1}
+                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
                                                             onClick={() => paginate(page + 1)}>
-                                                        Tiếp
+                                                        Sau
                                                     </button>
                                                 </li>
                                             </ul>
@@ -238,7 +286,7 @@ export const ShowContract = () => {
             >
                 <div className="modal-dialog  modal-dialog-centered modal-xl">
                     <div className="modal-content">
-                        <div className="modal-header" align="center">
+                        <div style={{marginTop:"-1.79rem"}} className="modal-header" align="center">
                             <h1 className="modal-title text-center align-content-center" id="staticBackdropLabel"><b>
                                 {" "}
                                 Chi tiết đồ cầm{" "}
@@ -287,16 +335,17 @@ export const ShowContract = () => {
                                                 <td className="col-sm-6">{contracts.find((c) => c.contractId == showDetail)?.productType}</td>
                                             </tr>
                                             <tr className="row">
-                                                <th className="col-sm-6">Giá mua</th>
-                                                <td className="col-sm-6">{contracts.find((c) => c.contractId == showDetail)?.loans}</td>
+                                                <th className="col-sm-6">Giá mua (VNĐ)</th>
+                                                <td className="col-sm-6">{contracts.find((c) => c.contractId == showDetail)?.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                             </tr>
                                             <tr className="row">
                                                 <th className="col-sm-6"> Ngày bắt đầu</th>
-                                                <td className="col-sm-6">{contracts.find((c) => c.contractId == showDetail)?.startDate}</td>
+                                                <td className="col-sm-6">{moment(contracts.find((c) => c.contractId == showDetail)?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+
                                             </tr>
                                             <tr className="row">
                                                 <th className="col-sm-6">Ngày kết thúc</th>
-                                                <td className="col-sm-6">{contracts.find((c) => c.contractId == showDetail)?.endDate}</td>
+                                                <td className="col-sm-6">{moment(contracts.find((c) => c.contractId == showDetail)?.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
                                             </tr>
                                             </tbody>
                                         </table>

@@ -1,15 +1,28 @@
 import axios from "axios";
 
 export const getAllContract = async (startDate, endDate, page, profitType) => {
+    const token = localStorage.getItem('token')
     try {
-        return await axios.get("http://localhost:8080/api/employee/profit?startDate=" + startDate + "&endDate=" + endDate + "&page=" + (page || 0) + "&profitType=" + profitType);
+        return await axios.get("http://localhost:8080/api/employee/profit?startDate=" + startDate + "&endDate=" + endDate + "&page=" + (page || 0) + "&profitType=" + profitType
+            ,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }
+        );
     } catch (e) {
+        console.log(e)
         return null;
     }
 }
 export const getDataChart = async (startDate, endDate, profitType) => {
+    const token = localStorage.getItem('token')
     try {
-        return await axios.get("http://localhost:8080/api/employee/profit/statistics-profit?startDate=" + startDate + "&endDate=" + endDate + "&profitType=" + profitType);
+        return await axios.get("http://localhost:8080/api/employee/profit/statistics-profit?startDate=" + startDate + "&endDate=" + endDate + "&profitType=" + profitType
+            ,
+            {
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
             }

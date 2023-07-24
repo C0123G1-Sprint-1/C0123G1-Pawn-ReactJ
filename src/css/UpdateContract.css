@@ -1,44 +1,79 @@
-.card {
-    border: none;
-    padding: 20px;
-    position: relative;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 20px;
-}
+
 
 @media screen and (max-width: 768px) {
 
     body {
         font-size: 14px;
         background-color: #eee;
-        font-family: "Poppins", sans-serif;
+        font-family: "Times New Roman", sans-serif;
         font-weight: 300
     }
 }
 
-
-body {
-    font-family: 'Poppins', sans-serif;
-}
-
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
-body {
-    background-color: #eee;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300
-}
 
-.height {
+
+.height-tri {
     height: 100vh
 }
 
-.card {
-    border: none;
+.card-tri {
     padding: 20px;
     position: relative
 }
 
-.btn-group {
+.btn-group-tri {
     display: flex;
     justify-content: space-between;
 }
+
+
+
+.pagination-container-tri {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.pagination-container-tri button {
+    padding: 6px 12px;
+    margin: 0;
+    margin-right: 10px; /* Thêm khoảng cách giữa các nút trừ nút cuối cùng */
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #00833e;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+/* CSS cho nút cuối cùng */
+.pagination-container-tri button:last-child {
+    margin-right: 0; /* Loại bỏ khoảng cách cho nút cuối cùng */
+}
+
+.pagination-container-tri button:hover {
+    background-color: #fff;
+}
+
+.pagination-container-tri button[disabled] {
+    cursor: not-allowed;
+}
+
+/* CSS cho nút chuyển trang hiện tại */
+.pagination-container-tri button[style*="bold"] {
+    font-weight: bold;
+    background-color: #00833e;
+    color: white;
+    border-color: #00833e;
+}
+
+.pagination-container-tri button[style*="bold"]:hover {
+    background-color: #00833e;
+}
+
+
+
+
