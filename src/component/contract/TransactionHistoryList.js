@@ -29,7 +29,6 @@ export default function TransactionHistoryList() {
     const showList = async () => {
         try {
             const result = await contractService.searchTransactionHistory(currentPage, search);
-            console.log(result);
             setContract(result.content);
             const totalPages = result.totalPages;
             setPageCount(totalPages);
@@ -60,8 +59,9 @@ export default function TransactionHistoryList() {
         },
         buttonsStyling: false
     })
-
+    const pageTitle="Lịch sử giao dịch";
     useEffect(()=>{
+        document.title=pageTitle;
         window.scrollTo(0,0)
     },[])
 
@@ -72,10 +72,10 @@ export default function TransactionHistoryList() {
     }, [search, currentPage]);
     const deleteTransactionHistory = async (id) => {
         let res = await contractService.deleteTransactionHistoryByID(id);
-        result(res.data)
+        showResultAlert(res.data)
         showList()
     }
-    const result = (res) => {
+    const showResultAlert = (res) => {
         if (res != null) {
             if (res) {
                 Swal.fire({
@@ -203,14 +203,14 @@ export default function TransactionHistoryList() {
                 <div className="col-lg-12">
                     <table className="table table table-striped" border="1">
                         <thead>
-                        <tr style={{textAlign: "start"}}>
-                            <th>Mã HĐ</th>
-                            <th>Tên đồ</th>
-                            <th>Tên khách hàng</th>
-                            <th>Ngày làm HĐ</th>
-                            <th>Loại HĐ</th>
-                            <th>Trạng thái</th>
-                            <th>Chức năng</th>
+                        <tr style={{textAlign: "center",fontSize:"15px"}}>
+                            <th style={{width:"10%"}}>Mã HĐ</th>
+                            <th style={{width:"28%"}}>Tên đồ</th>
+                            <th style={{width:"20%"}}>Tên khách hàng</th>
+                            <th style={{width:"10%"}}>Ngày làm HĐ</th>
+                            <th style={{width:"10%"}}>Loại HĐ</th>
+                            <th style={{width:"10%"}}>Trạng thái</th>
+                            <th style={{width:"12%"}}>Chức năng</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -224,10 +224,17 @@ export default function TransactionHistoryList() {
                                     </tr>
                                 ) :
                                 contracts.map((th, index) => (
-                                    <tr key={index} style={{textAlign: "start"}}>
+                                    <tr key={index} style={{textAlign: "center"}}>
                                         <td >HD-{th?.contractCode}</td>
-                                        <td>{th?.productName}</td>
-                                        <td>{th?.customers}</td>
+                                        <td
+                                            style={{
+                                                textAlign:"start",
+                                                maxWidth: '28%',
+                                                overflow: 'hidden',
+                                                whiteSpace: 'nowrap',
+                                                textOverflow: 'ellipsis'
+                                            }} title={th.productName}>{th?.productName}</td>
+                                        <td style={{textAlign:"start"}}>{th?.customers}</td>
                                         <td >{
                                             th?.startDate===""?"":
                                             moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
