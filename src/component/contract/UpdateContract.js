@@ -126,7 +126,7 @@ export function UpdateContract() {
                                         <ErrorMessage name="contractCode" component="span" className="err-mess"/>
                                     </div>
 
-                                    <div className="mt-2 inputs"><label htmlFor="productName">Tên Đồ <span
+                                    <div className="mt-2 inputs"><label htmlFor="productName" style={{fontWeight:"500"}}>Tên đồ <span
                                         style={{color: "red"}}>*</span></label>
                                         <Field type="text" className="form-control" name="productName"
                                         />
