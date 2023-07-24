@@ -1,14 +1,14 @@
 import * as contractService from "../../service/ContractService";
-import React, {useEffect, useState} from "react";
-import {Button, Modal} from "react-bootstrap";
-import {ErrorMessage, Field, Form, Formik} from "formik";
-import {Link, useNavigate} from "react-router-dom";
-import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import {storage} from "../../firebase";
+import React, { useEffect, useState } from "react";
+import { Button, Modal } from "react-bootstrap";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../firebase";
 import Swal from "sweetalert2";
 import * as Yup from 'yup';
-import {ThreeCircles} from "react-loader-spinner";
-import {FormattedNumber} from "react-intl";
+import { ThreeCircles } from "react-loader-spinner";
+import { FormattedNumber } from "react-intl";
 import ReactPaginate from "react-paginate";
 import * as yup from "yup";
 
@@ -197,10 +197,10 @@ export const CreateContracts = () => {
     return (
         <>
             <div className="container" >
-                <div className="row height d-flex justify-content-center align-items-center" style={{height: "80vh"}}>
+                <div className="row height d-flex justify-content-center align-items-center" style={{ height: "80vh" }}>
                     <div className="col-md-6">
                         <div className="card px-5 py-4">
-                            <div style={{textAlign: "center"}}>
+                            <div style={{ textAlign: "center" }}>
                                 <h1>CẦM ĐỒ</h1>
                             </div>
                             <Formik initialValues={{
@@ -217,84 +217,84 @@ export const CreateContracts = () => {
                                 contractType: 1,
                                 employees: 1
                             }}
-                                    validationSchema={Yup.object({
-                                        productName: Yup.string()
-                                            .trim()
-                                            .required('Không được để trống')
-                                            .matches(/^[^!@#$%^&*()+=\[\]{};':"\\|.<>?`~/]+$/, "Tên không chứa ký tự đặc biệt như @#$.."),
-                                        loans: Yup.number()
-                                            .required('Không được để trống')
-                                            .min(500000, 'Tiền cho vay phải lớn hớn 500.000'),
-                                        productType: yup.number()
-                                            .required('Không được để trống')
-                                            .min(1, 'Không được để trống'),
+                                validationSchema={Yup.object({
+                                    productName: Yup.string()
+                                        .trim()
+                                        .required('Không được để trống')
+                                        .matches(/^[^!@#$%^&*()+=\[\]{};':"\\|.<>?`~/]+$/, "Tên không chứa ký tự đặc biệt như @#$.."),
+                                    loans: Yup.number()
+                                        .required('Không được để trống')
+                                        .min(500000, 'Tiền cho vay phải lớn hớn 500.000'),
+                                    productType: yup.number()
+                                        .required('Không được để trống')
+                                        .min(1, 'Không được để trống'),
 
-                                        startDate: Yup.date()
-                                            .required('Không được để trống')
-                                            .test("date", "Không được chọn quá khứ chỉ chọn hiện tại và tương lai",
-                                                function (value) {
-                                                    const buyDate = value.getDay()
-                                                    const month = value.getMonth()
-                                                    const year = value.getFullYear()
-                                                    const dateNow = new Date()
-                                                    if (year >= dateNow.getFullYear()) {
-                                                        if (month > dateNow.getMonth()) {
+                                    startDate: Yup.date()
+                                        .required('Không được để trống')
+                                        .test("date", "Không được chọn quá khứ chỉ chọn hiện tại và tương lai",
+                                            function (value) {
+                                                const buyDate = value.getDay()
+                                                const month = value.getMonth()
+                                                const year = value.getFullYear()
+                                                const dateNow = new Date()
+                                                if (year >= dateNow.getFullYear()) {
+                                                    if (month > dateNow.getMonth()) {
+                                                        return true
+                                                    } else if (month === dateNow.getMonth()) {
+                                                        if (buyDate >= dateNow.getDay()) {
                                                             return true
-                                                        } else if (month === dateNow.getMonth()) {
-                                                            if (buyDate >= dateNow.getDay()) {
-                                                                return true
-                                                            }
                                                         }
                                                     }
-                                                    return false;
-                                                }),
-                                        endDate: Yup.date()
-                                            .required('Không được để trống')
-                                            .test("date", "Ngày kết thúc phải lớn hơn ngày bắt đầu",
-                                                function (value) {
-                                                    const startDate = this.resolve(Yup.ref('startDate'));
-                                                    return value > startDate;
-                                                }),
-                                        image: Yup.string()
-                                            .required('Không được để trống')
-                                    })}
+                                                }
+                                                return false;
+                                            }),
+                                    endDate: Yup.date()
+                                        .required('Không được để trống')
+                                        .test("date", "Ngày kết thúc phải lớn hơn ngày bắt đầu",
+                                            function (value) {
+                                                const startDate = this.resolve(Yup.ref('startDate'));
+                                                return value > startDate;
+                                            }),
+                                    image: Yup.string()
+                                        .required('Không được để trống')
+                                })}
 
 
-                                    onSubmit={async (values, {resetForm}) => {
-                                        const createContracts = async () => {
-                                            const newValue = {
-                                                ...values,
-                                                image: firebaseImg,
-                                            };
-                                            newValue.image = await handleSubmitAsyncs();
-                                            await contractService.createContract({
-                                                ...newValue,
-                                                image: newValue.image,
-                                                customers: customer.find((cus) => cus.id === idCustomer),
-                                                contractType: +values.contractType,
-                                                contractStatus: +values.contractStatus,
-                                                contractCode: code + values.contractCode,
-                                                productType: getIdProductTypes(+values.productType),
-                                                profit: +(profits),
-                                                employees: +values.employees,
-                                                startDate: startDate,
-                                                endDate: endDate,
-                                                loans: +loans
-                                            })
-
-                                        }
-
-                                        await createContracts()
-                                        // resetForm(false)
-                                        Swal.fire({
-                                            icon: "success",
-                                            title: "Thêm mới thành công",
-                                            timer: 3000
+                                onSubmit={async (values, { resetForm }) => {
+                                    const createContracts = async () => {
+                                        const newValue = {
+                                            ...values,
+                                            image: firebaseImg,
+                                        };
+                                        newValue.image = await handleSubmitAsyncs();
+                                        await contractService.createContract({
+                                            ...newValue,
+                                            image: newValue.image,
+                                            customers: customer.find((cus) => cus.id === idCustomer),
+                                            contractType: +values.contractType,
+                                            contractStatus: +values.contractStatus,
+                                            contractCode: code + values.contractCode,
+                                            productType: getIdProductTypes(+values.productType),
+                                            profit: +(profits),
+                                            employees: +values.employees,
+                                            startDate: startDate,
+                                            endDate: endDate,
+                                            loans: +loans
                                         })
-                                        n("/nav/info-store/transaction-history")
-                                    }}
+
+                                    }
+
+                                    await createContracts()
+                                    // resetForm(false)
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "Thêm mới thành công",
+                                        timer: 3000
+                                    })
+                                    n("/nav/info-store/transaction-history")
+                                }}
                             >
-                                {({isSubmitting, setFieldValue}) => (
+                                {({ isSubmitting, setFieldValue }) => (
                                     <Form>
                                         <div className="text-center m-2">
                                             <button
@@ -318,96 +318,96 @@ export const CreateContracts = () => {
                                                     type='text'
                                                     className="form-control"
                                                     data-error="Please specify your need."
-                                                    style={{height: 35}}
+                                                    style={{ height: 35 }}
                                                     value={customer.find((cus) => cus.id === idCustomer)?.name}
                                                 />
                                             </div>
                                             <div className="col-md-6 inputs"><label>Mã hợp đồng </label>
                                                 <Field type="text" className="form-control" name="contractCode"
-                                                       disabled
-                                                       aria-label="Small"
-                                                       value={'HD-' + code}
-                                                       style={{height: "35px"}}
+                                                    disabled
+                                                    aria-label="Small"
+                                                    value={'HD-' + code}
+                                                    style={{ height: "35px" }}
                                                 />
                                             </div>
                                         </div>
                                         <div className="row mt-2">
                                             <div className="col-md-6 inputs">
-                                                <label>Đồ cầm <span style={{color: "red"}}>*</span></label>
+                                                <label>Đồ cầm <span style={{ color: "red" }}>*</span></label>
                                                 <Field
                                                     type="text"
                                                     className="form-control"
                                                     name="productName"
-                                                    style={{height: 35}}
+                                                    style={{ height: 35 }}
                                                 />
-                                                <ErrorMessage name="productName" component="p" style={{color: "red"}}/>
+                                                <ErrorMessage name="productName" component="p" style={{ color: "red" }} />
 
                                             </div>
                                             <div className="col-md-6 inputs">
-                                                <label>Loại đồ cầm <span style={{color: "red"}}>*</span></label>
+                                                <label>Loại đồ cầm <span style={{ color: "red" }}>*</span></label>
                                                 <Field
                                                     name="productType"
                                                     as="select"
                                                     className="form-control"
                                                     type="number"
                                                     data-error="Please specify your need."
-                                                    style={{height: 35}}
+                                                    style={{ height: 35 }}
                                                 >
                                                     <option value={0} selected="">Chọn loại đồ cầm</option>
                                                     {productType.map((list, index) => (
                                                         <option key={index} value={list.id}>{list.name}</option>
                                                     ))}
                                                 </Field>
-                                                <ErrorMessage name="productType" component="p" style={{color: "red"}}/>
+                                                <ErrorMessage name="productType" component="p" style={{ color: "red" }} />
                                             </div>
                                         </div>
                                         <div className="row mt-2  ">
                                             <div className="col-md-6 form-group">
-                                                <label>Ngày bắt đầu <span style={{color: "red"}}>*</span></label>
+                                                <label>Ngày bắt đầu <span style={{ color: "red" }}>*</span></label>
                                                 <Field
                                                     type="date"
                                                     className="form-control"
                                                     name="startDate"
-                                                    style={{height: 36}}
+                                                    style={{ height: 36 }}
                                                     onChange={(event) => {
                                                         handleStartDate(event);
                                                         setFieldValue('startDate', event.target.value);
                                                     }}
                                                     value={startDate.startDate}
                                                 />
-                                                <ErrorMessage name="startDate" component="p" style={{color: "red"}}/>
+                                                <ErrorMessage name="startDate" component="p" style={{ color: "red" }} />
                                             </div>
                                             <div className="col-md-6 form-group">
-                                                <label>Ngày kết thúc <span style={{color: "red"}}>*</span></label>
+                                                <label>Ngày kết thúc <span style={{ color: "red" }}>*</span></label>
                                                 <Field
                                                     type="date"
                                                     className="form-control"
                                                     name="endDate"
-                                                    style={{height: 36}}
+                                                    style={{ height: 36 }}
                                                     onChange={(event) => {
                                                         handleEndDay(event);
                                                         setFieldValue('endDate', event.target.value);
                                                     }}
                                                     value={endDate}
                                                 />
-                                                <ErrorMessage name="endDate" component="p" style={{color: "red"}}/>
+                                                <ErrorMessage name="endDate" component="p" style={{ color: "red" }} />
                                             </div>
                                         </div>
                                         <div className="row mt-2">
                                             <div className=" col-md-6 mt-2 inputs">
-                                                <label>Tiền cho vay <span style={{color: "red"}}>*</span></label>
+                                                <label>Tiền cho vay <span style={{ color: "red" }}>*</span></label>
                                                 <Field
                                                     type="number"
                                                     className="form-control"
                                                     name="loans"
-                                                    style={{height: 35}}
+                                                    style={{ height: 35 }}
                                                     onChange={(event) => {
                                                         handleLoans(event);
                                                         setFieldValue('loans', event.target.value);
                                                     }}
                                                     value={loans.loans}
                                                 />
-                                                <ErrorMessage name="loans" component="p" style={{color: "red"}}/>
+                                                <ErrorMessage name="loans" component="p" style={{ color: "red" }} />
                                             </div>
                                             <div className=" col-md-6 mt-2 inputs">
                                                 <label>Tiền lãi</label>
@@ -419,9 +419,11 @@ export const CreateContracts = () => {
                                                     display: "flex",
                                                     backgroundColor: "#EEEEEE",
                                                     height: "4.5vh",
-                                                    borderRadius: "7px"
+                                                    borderRadius: "7px",
+                                                    height: '35px',
+                                                    paddingLeft: '10px'
                                                 }}
-                                                     className="p-0 m-0">
+                                                    className="m-0">
                                                     <FormattedNumber
                                                         value={profits || 0} disabled
                                                         thousandSeparator={true} currency="VND"
@@ -435,7 +437,7 @@ export const CreateContracts = () => {
 
                                         <div className="mt-2 inputs">
                                             <label htmlFor="image">Hình ảnh <span
-                                                style={{color: "red"}}>*</span></label>
+                                                style={{ color: "red" }}>*</span></label>
                                             <Field
                                                 type="file"
                                                 className="form-control"
@@ -445,11 +447,11 @@ export const CreateContracts = () => {
                                                     setFieldValue('image', event.target.value);
                                                 }}
                                                 id="image"
-                                                style={{height: 35}}
+                                                style={{ height: 35 }}
                                                 values={firebaseImg}
                                             />
                                         </div>
-                                        <ErrorMessage name="image" component="p" style={{color: "red"}}/>
+                                        <ErrorMessage name="image" component="p" style={{ color: "red" }} />
                                         <div className="mt-2 inputs">
                                             {/*<label>Trạng thái</label>*/}
                                             <Field
@@ -459,7 +461,7 @@ export const CreateContracts = () => {
                                                 className="form-control"
                                                 value="2"
                                                 name="contractStatus"
-                                                style={{height: 35}}
+                                                style={{ height: 35 }}
                                             />
                                         </div>
                                         <div className="mt-2 inputs">
@@ -471,7 +473,7 @@ export const CreateContracts = () => {
                                                 className="form-control"
                                                 value="1"
                                                 name="contractType"
-                                                style={{height: 35}}
+                                                style={{ height: 35 }}
                                             />
                                         </div>
                                         <div className="mt-2 inputs">
@@ -483,40 +485,40 @@ export const CreateContracts = () => {
                                                 className="form-control"
                                                 value="1"
                                                 name="employees"
-                                                style={{height: 35}}
+                                                style={{ height: 35 }}
                                             />
                                         </div>
                                         <div className="col-4">
                                             <div
                                                 className="column-gap-lg-3"
-                                                style={{width: "100%", marginBottom: "5%", marginLeft: "3%"}}
+                                                style={{ width: "100%", marginBottom: "5%", marginLeft: "3%" }}
                                             >
                                                 {selectedFile && (
                                                     <img
                                                         className={"mt-2"}
                                                         src={URL.createObjectURL(selectedFile)}
-                                                        style={{width: "100%", marginLeft: "90%"}}
+                                                        style={{ width: "100%", marginLeft: "90%" }}
                                                     />
                                                 )}
                                             </div>
                                         </div>
                                         <div className="d-flex mt-4 justify-content-between">
-                                            <div className="text-center" style={{marginLeft: "23.6%"}}>
+                                            <div className="text-center" style={{ marginLeft: "23.6%" }}>
                                                 <Link to="/nav/info-store/transaction-history"
-                                                      className="btn btn-secondary ">
+                                                    className="btn btn-secondary ">
                                                     <b className="text-center">Quay lại</b>
                                                 </Link>
                                             </div>
                                             <div className="text-center m-auto">
                                                 <div className="text-center">
                                                     <button disabled={!idCustomer} type="submit"
-                                                            className="btn btn-success" onClick={showLoadingScreen}>
+                                                        className="btn btn-success" onClick={showLoadingScreen}>
                                                         <b className="text-center">Thêm mới</b>
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
-                                       
+
                                     </Form>
                                 )}
                             </Formik>
@@ -537,20 +539,20 @@ export const CreateContracts = () => {
                             keyboard={false}
                             centered
                         >
-                            <Modal.Header style={{backgroundColor: "#00833e", color: "white"}}>
-                                <Modal.Title style={{width: "100%", textAlign: "center"}}>
+                            <Modal.Header style={{ backgroundColor: "#00833e", color: "white" }}>
+                                <Modal.Title style={{ width: "100%", textAlign: "center" }}>
                                     <b>Chọn khách hàng</b>
                                 </Modal.Title>
                                 <Button
                                     variant="secondary"
                                     className="btn-close"
-                                    style={{marginLeft: 0}}
+                                    style={{ marginLeft: 0 }}
                                     onClick={handleModalClose}
                                 />
                             </Modal.Header>
                             <Modal.Body>
                                 <div className="controlsmodal-body d-flex justify-content-between">
-                                    <div style={{marginTop: "0.6%"}}>
+                                    <div style={{ marginTop: "0.6%" }}>
                                         <Link to="/nav/manager-customer/create" type="submit" className="btn btn-outline-success ">
                                             <b className="textcenter">Thêm khách hàng</b>
                                         </Link>
@@ -558,21 +560,21 @@ export const CreateContracts = () => {
                                     <Formik initialValues={{
                                         name: ""
                                     }}
-                                            onSubmit={async (values) => {
+                                        onSubmit={async (values) => {
 
-                                                const search = async () => {
-                                                    await setCustomerName(values.name)
-                                                    const res = await contractService.findAllCustomer(pageCount, values.name)
-                                                    setCustomer(res.content)
-                                                    setPageCount(0)
-                                                    console.log(values)
-                                                }
-                                                search()
+                                            const search = async () => {
+                                                await setCustomerName(values.name)
+                                                const res = await contractService.findAllCustomer(pageCount, values.name)
+                                                setCustomer(res.content)
+                                                setPageCount(0)
+                                                console.log(values)
+                                            }
+                                            search()
 
-                                            }}>
+                                        }}>
                                         <Form className="d-flex m-1">
                                             <Field
-                                                style={{width: "18vw", height: "38px"}}
+                                                style={{ width: "18vw", height: "38px" }}
                                                 className="form-control me-3"
                                                 type="text"
                                                 name="name"
@@ -581,45 +583,45 @@ export const CreateContracts = () => {
 
                                             />
                                             <button className="btn btn-outline-success" type="submit">
-                                                <i className="bi bi-search"/>
+                                                <i className="bi bi-search" />
                                             </button>
                                         </Form>
                                     </Formik>
                                 </div>
                                 <table className="table table-striped">
                                     <thead>
-                                    <tr style={{textAlign: "start"}}>
-                                        <th className="">STT</th>
-                                        <th className="">Tên khách hàng</th>
-                                        <th className="">CMND/CCCD</th>
-                                        <th className="text-center">Chức Năng</th>
-                                    </tr>
+                                        <tr style={{ textAlign: "start" }}>
+                                            <th className="">STT</th>
+                                            <th className="">Tên khách hàng</th>
+                                            <th className="">CMND/CCCD</th>
+                                            <th className="text-center">Chức Năng</th>
+                                        </tr>
                                     </thead>
                                     {customer.length === 0 ?
                                         <tr>
                                             <td colSpan="4" className="text-center">
-                                                <h4 style={{color: "red"}}>Dữ liêu không tồn tại</h4>
+                                                <h4 style={{ color: "red" }}>Dữ liêu không tồn tại</h4>
                                             </td>
                                         </tr>
                                         :
                                         <tbody>
-                                        {customer.map((list, index) => (
-                                            <tr key={index}>
-                                                <td >{list.id}</td>
-                                                <td className=" ">{list.name}</td>
-                                                <td className="">{list.citizenCode}</td>
-                                                <td className="text-center">
-                                                    <button onClick={() => {
-                                                        setIdCustomer(list.id)
-                                                        handleModalClose(true);
-                                                    }} className="btn btn-success text-center">
-                                                        Chọn
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                        }
-                                        {/* Other table rows */}
+                                            {customer.map((list, index) => (
+                                                <tr key={index}>
+                                                    <td >{list.id}</td>
+                                                    <td className=" ">{list.name}</td>
+                                                    <td className="">{list.citizenCode}</td>
+                                                    <td className="text-center">
+                                                        <button onClick={() => {
+                                                            setIdCustomer(list.id)
+                                                            handleModalClose(true);
+                                                        }} className="btn btn-success text-center">
+                                                            Chọn
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                            }
+                                            {/* Other table rows */}
                                         </tbody>
                                     }
                                 </table>

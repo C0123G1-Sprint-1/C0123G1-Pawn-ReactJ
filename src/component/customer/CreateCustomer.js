@@ -50,7 +50,6 @@ export function CreateCustomer() {
 
     useEffect((e) => {
         if (registerPawn) {
-
             Swal.fire({
                 position: 'center',
                 icon: "success",

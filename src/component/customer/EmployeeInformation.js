@@ -56,7 +56,7 @@ export default function EmployeeInformation() {
     useEffect(() => {
         const fectApi = async () => {
             try {
-                const res = await employeeInformationService.findById(params.id);
+                const res = await employeeInformationService.findById();
                 setEmployeeDetail(res);
                 console.log(res)
 

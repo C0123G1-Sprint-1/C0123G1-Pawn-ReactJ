@@ -14,10 +14,10 @@ import {Link, NavLink} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
 
-const token = localStorage.getItem('token');
-const decodedToken = jwt(token);
-console.log(decodedToken.sub)
-console.log(decodedToken.role)
+// const token = localStorage.getItem('token');
+// const decodedToken = jwt(token);
+// console.log(decodedToken.sub)
+// console.log(decodedToken.role)
 
 export function CreateLiquidation() {
     const navigate = useNavigate();
