@@ -14,8 +14,6 @@ export default function TransactionHistoryList() {
     const [contracts, setContract] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
-    const [statisticsStatus, setStatisticsStatus] = useState(true);
-    const token = localStorage.getItem('token');
     const role = localStorage.getItem("role");
 
     const getContractStatusApi = async () => {
@@ -62,18 +60,6 @@ export default function TransactionHistoryList() {
         },
         buttonsStyling: false
     })
-    const setCancel = async () => {
-        await setStatisticsStatus(!statisticsStatus)
-        setSearch({
-            customerName: '',
-            productName: '',
-            startDate: '',
-            endDate: '',
-            contractType: '',
-            contractStatus: ''
-        })
-        setPageCount(0);
-    }
 
     useEffect(()=>{
         window.scrollTo(0,0)
@@ -200,7 +186,7 @@ export default function TransactionHistoryList() {
                                     </div>
                                     <div className=" col-lg-10 my-4">
                                         <div className="d-flex justify-content-end">
-                                            <button type="reset" onClick={()=>setCancel()} className="btn btn-outline-secondary me-3"
+                                            <button type="reset" className="btn btn-outline-secondary me-3"
                                             ><i className="bi bi-arrow-repeat"/></button>
                                             <button type="submit" className="btn btn-outline-success"><i
                                                 className="bi bi-search"/>
