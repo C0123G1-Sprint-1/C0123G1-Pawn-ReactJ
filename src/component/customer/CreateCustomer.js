@@ -713,6 +713,16 @@ catch
                                             </button>
                                             <span>{responseText}</span>
                                             </div>
+                                            {/*<div className="mt-3">*/}
+                                            {/*    <button*/}
+                                            {/*        id="show-alert-button"*/}
+                                            {/*        type="button"*/}
+                                            {/*        className="btn btn-sm btn-success"*/}
+                                            {/*        onClick={handleSubmitScanOcr}*/}
+                                            {/*    >*/}
+                                            {/*        Phân tích hình ảnh lấy dữ liệu*/}
+                                            {/*    </button>*/}
+                                            {/*</div>*/}
                                         </div>
                                         <div className="row">
                                             {isSubmitting ? (
