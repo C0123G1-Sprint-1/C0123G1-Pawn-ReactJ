@@ -31,6 +31,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
+
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
       <change beforePath="$PROJECT_DIR$/src/component/customer/CustomerListMOI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CustomerListMOI.js" afterDir="false" />
     </list>
@@ -107,6 +108,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.start" />
         <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
