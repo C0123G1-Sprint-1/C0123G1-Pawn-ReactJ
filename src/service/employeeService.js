@@ -32,11 +32,11 @@ export const createEmployee = async (employeeDTO) => {
     }
 }
 
-export const search = async (name, page, auth) => {
+export const search = async (name, page) => {
     const token = localStorage.getItem('token')
-    const headers = {
-        Authorization: "Bearer " + auth,
-    };
+    // const headers = {
+    //     Authorization: "Bearer " + auth,
+    // };
     try {
         const res = await axios.get(
             `http://localhost:8080/api/employee?search=${name}&page=${

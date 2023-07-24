@@ -9,8 +9,8 @@ import jwt from "jwt-decode";
 import {Modal} from "reactstrap";
 
 export default function EmployeeList() {
-    const token = localStorage.getItem("token");
-    const decodedToken = jwt(token);
+    // const token = localStorage.getItem("token");
+    // const decodedToken = jwt(token);
     const param = useParams();
 
     const [employeeList, setEmployeeList] = useState([]);
@@ -42,13 +42,13 @@ export default function EmployeeList() {
 
     useEffect(() => {
         (async () => {
-            const res = await employeeService.search(name, currentPage, token);
+            const res = await employeeService.search(name, currentPage);
             setEmployeeList(res.content);
             setPageCount(res.totalPages);
             setCurrentPage(res.number)
             setSize(res.size)
         })()
-    }, [currentPage, name, token])
+    }, [currentPage, name])
 
     useEffect(() => {
         (async () => {
@@ -197,7 +197,7 @@ export default function EmployeeList() {
                                 )}
                             </table>
                         {employeeList?.length === 0 ? (
-                            ""
+                            <></>
                         ) : (
                             <div className="d-grid">
                                 <ReactPaginate
