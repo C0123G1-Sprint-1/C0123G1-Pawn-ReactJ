@@ -207,7 +207,7 @@ export default function EmployeeInformation() {
                 }}
                 validationSchema={Yup.object({
                     name: Yup.string().required('Không được bỏ trống')
-                        .matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
+                        .matches(/^([a-zA-Z\s]+)$/, 'Tên phải đúng định dạng. VD: Nguyễn Văn A')
                         .min(5, 'Ký tự phải nhiều hơn 5')
                         .max(100, 'Ký tự phải ít hơn 100'),
                     birthDay: Yup.date().required('Không được bỏ trống').max(getMinDate(), 'Người dùng phải từ 15 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
@@ -224,7 +224,7 @@ export default function EmployeeInformation() {
                 {
                     ({isSubmitting}) => (
                         <div className="dat-nt container mt-5 mb-5">
-                            <div className="row height d-flex justify-content-center align-items-center">
+                            <div className="row d-flex justify-content-center align-items-center">
                                 <div className="col-md-8 col-sm-12">
                                     <div className="card px-5 py-4">
                                         <div
