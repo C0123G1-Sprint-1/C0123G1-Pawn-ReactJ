@@ -45,6 +45,14 @@ export function CustomerListMOI() {
         }
     };
 
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-danger',
+            cancelButton: 'btn btn-secondary me-3'
+        },
+        buttonsStyling: false
+    })
+
     useEffect(()=>{
         window.scrollTo(0,0)
     },[])

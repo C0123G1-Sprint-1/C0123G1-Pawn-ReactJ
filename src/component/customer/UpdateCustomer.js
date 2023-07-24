@@ -166,10 +166,6 @@ export function UpdateCustomer() {
                     name: Yup.string().required("Tên không được để trống")
                         .min(5, 'Ký tự phải nhiều hơn 5')
                         .max(100, 'Ký tự phải ít hơn 100')
-                        .matches(
-                            /^[A-Z][A-Za-z0-9\s]*$/,
-                            "Tên không được chứa ký tự đặc biệt và chữ cái đầu tiên phải viết hoa"
-                        )
                         .test('no-special-characters', 'Tên không được chứa các ký tự đặc biệt như @, #, !', value => {
                             return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
                         }),
