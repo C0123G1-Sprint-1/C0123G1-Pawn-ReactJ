@@ -111,6 +111,7 @@ export default function Profit() {
         await setYearCurrent(" (2023) ")
     }
     useEffect(() => {
+        document.title = "Thống kê lợi nhuận";
         const fectData = async () => {
             await setCurrentPage(0);
             await getContract("", "", "2023", 0, params.profitType || profitType)
@@ -191,16 +192,22 @@ export default function Profit() {
                                 validationSchema={yup.object({
                                     years: yup.string().matches(/^[0-9]+$/,'Năm phải là số').matches(/^[1-9][0-9]{3,}$/,'Năm tối thiểu 4 số')
                                 })}
-                                onSubmit={async (values,{resetForm}) => {
+                                onSubmit={async (values) => {
                                     if (dateTimeProfit?.startDate === "" && dateTimeProfit?.endDate === "" && dateTimeProfit?.years === "" || dateTimeProfit?.years === "") {
                                         await setYearCurrent(" (2023) ")
                                     } else {
                                         await setYearCurrent(" ( " + dateTimeProfit?.years + " ) ")
                                     }
+
+                                    // await getContract(values.startDate, values.endDate, values.years, 0, params.profitType || profitType)
+                                    // await getDataProfit(values.startDate, values.endDate, values.years, params.profitType || profitType)
+                                    // await getProfit(values.startDate, values.endDate, values.years, params.profitType || profitType)
+                                    // await setStartDate(values.startDate);
+                                    // await setEndDate(values.endDate);
+                                    // await setYears(values.years)
                                     await getContract(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, 0, params.profitType || profitType)
                                     await getDataProfit(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, params.profitType || profitType)
                                     await getProfit(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, params.profitType || profitType)
-                                    resetForm()
                                 }}>
                                 <Form className="ps-5 col-lg-12 col-md-12 col-12" style={{boxSizing: "border-box"}}>
                                     <div
@@ -247,8 +254,8 @@ export default function Profit() {
                                                 <Field name="years"
                                                        type="text"
                                                        className="form-control"
-                                                       // onChange={(event) => setYears(event)}
-                                                       // value={dateTimeProfit?.years}
+                                                       onChange={(event) => setYears(event)}
+                                                       value={dateTimeProfit?.years}
                                                        placeholder="Vui lòng nhập năm"
                                                 />
                                                 <ErrorMessage name="years" component="p" style={{color: "red"}}/>
@@ -269,7 +276,8 @@ export default function Profit() {
                                                         justifyContent: "center"
                                                     }}>Thống kê
                                             </button>
-                                            <button type="button" onClick={() => setCancel()}
+                                            <button type="button"
+                                                    onClick={() => setCancel()}
                                                     className="btn btn-sm btn-outline-secondary col-lg-6 col-md-6 col-6 ms-1"
                                                     style={{
                                                         height: "100%",

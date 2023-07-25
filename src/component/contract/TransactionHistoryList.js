@@ -224,14 +224,14 @@ export default function TransactionHistoryList() {
                 <div className="col-lg-12">
                     <table className="table table table-striped" border="1">
                         <thead>
-                        <tr style={{textAlign: "center", fontSize: "15px"}}>
-                            <th style={{width: "10%"}}>Mã HĐ</th>
-                            <th style={{width: "28%"}}>Tên đồ</th>
-                            <th style={{width: "20%"}}>Tên khách hàng</th>
-                            <th style={{width: "10%"}}>Ngày làm HĐ</th>
-                            <th style={{width: "10%"}}>Loại HĐ</th>
-                            <th style={{width: "10%"}}>Trạng thái</th>
-                            <th style={{width: "12%"}}>Chức năng</th>
+                        <tr style={{textAlign: "start", fontSize: "15px"}}>
+                            <th>Mã HĐ</th>
+                            <th>Tên đồ</th>
+                            <th>Tên khách hàng</th>
+                            <th>Ngày làm HĐ</th>
+                            <th>Loại HĐ</th>
+                            <th>Trạng thái</th>
+                            <th>Chức năng</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -245,7 +245,7 @@ export default function TransactionHistoryList() {
                                     </tr>
                                 ) :
                                 contracts.map((th, index) => (
-                                    <tr key={index} style={{textAlign: "center"}}>
+                                    <tr key={index} style={{textAlign: "start"}}>
                                         <td>HD-{th?.contractCode}</td>
                                         <td
                                             style={{
