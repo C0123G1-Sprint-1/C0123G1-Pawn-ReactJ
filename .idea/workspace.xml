@@ -79,19 +79,19 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\employee" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\contract" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\public\anh" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\liquidation" />
-      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\register-pawn" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\service" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\redeem" />
       <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\all_contract" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\employee" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\contract" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\public\anh" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\component\liquidation" />
+      <recent name="D:\C0123G1-CodegymPawn\C0123G1-Pawn-reactjs\src\css" />
     </key>
   </component>
   <component name="RunManager">
