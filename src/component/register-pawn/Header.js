@@ -82,8 +82,6 @@ export function Header() {
                                         kiện</NavLink>
                                 </li>
 
-
-
                                 <li style={{
                                     display: "flex", textAlign: "center",
                                     alignItems: "center", color: "white", fontWeight: "300"

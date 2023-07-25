@@ -20,15 +20,15 @@ export default function Profit() {
     const params = useParams();
     const [dataProfit, setDataProfit] = useState();
     const [dateTimeProfit, setDateTimeProfit] = useState({
-        startDate: "",
-        endDate: "",
+        startMonth: "",
+        endMonth: "",
         years: ""
     })
     const [currentPage, setCurrentPage] = useState(0);
     const [statisticsStatus, setStatisticsStatus] = useState(true);
 
-    const getContractByPage = async (startDate, endDate, years, page, profitType) => {
-        await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, dateTimeProfit.years, page, params.profitType || profitType)
+    const getContractByPage = async (startMonth, endMonth, years, page, profitType) => {
+        await getContract(dateTimeProfit.startMonth, dateTimeProfit.endMonth, dateTimeProfit.years, page, params.profitType || profitType)
         setCurrentPage(page);
     }
     const pagination = () => {
@@ -40,7 +40,7 @@ export default function Profit() {
                 <li className="page-item" key={i}>
                     <button className={pageLinkClassName}
                             style={{border: "1px solid gray", borderRadius: "5px"}}
-                            onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, dateTimeProfit.years, i, params.profitType || profitType)}>
+                            onClick={() => getContractByPage(dateTimeProfit.startMonth, dateTimeProfit.endMonth, dateTimeProfit.years, i, params.profitType || profitType)}>
                         {i + 1}
                     </button>
                 </li>
@@ -48,8 +48,8 @@ export default function Profit() {
         }
         return page;
     }
-    const getProfit = async (startDate, endDate, years, profitType) => {
-        const res = await ProfitService.getProfit(startDate, endDate, years, profitType)
+    const getProfit = async (startMonth, endMonth, years, profitType) => {
+        const res = await ProfitService.getProfit(startMonth, endMonth, years, profitType)
         if (res === null) {
             setTotalProfit(0)
         } else {
@@ -58,8 +58,8 @@ export default function Profit() {
         }
     }
 
-    const getDataProfit = async (startDate, endDate, years, profitType) => {
-        const res = await ProfitService.getDataChart(startDate, endDate, years, profitType)
+    const getDataProfit = async (startMonth, endMonth, years, profitType) => {
+        const res = await ProfitService.getDataChart(startMonth, endMonth, years, profitType)
         if (res === null) {
             setDataProfit([{
                 month: null,
@@ -69,8 +69,8 @@ export default function Profit() {
             setDataProfit(res.data)
         }
     }
-    const getContract = async (startDate, endDate, years, page, profitType) => {
-        const res = await ProfitService.getAllContract(startDate, endDate, years, page, profitType)
+    const getContract = async (startMonth, endMonth, years, page, profitType) => {
+        const res = await ProfitService.getAllContract(startMonth, endMonth, years, page, profitType)
         if (res === null) {
             setTotalPage(null)
             setContract(null)
@@ -83,16 +83,16 @@ export default function Profit() {
         await setCancel()
         await setProfitType(() => profitType)
     }
-    const setStartDate = async (event) => {
+    const setStartMonth = async (event) => {
         await setDateTimeProfit({
             ...dateTimeProfit,
-            startDate: event.target.value
+            startMonth: event.target.value
         })
     }
-    const setEndDate = async (event) => {
+    const setEndMonth = async (event) => {
         await setDateTimeProfit({
             ...dateTimeProfit,
-            endDate: event.target.value
+            endMonth: event.target.value
         })
     }
     const setYears = async (event) => {
@@ -104,8 +104,8 @@ export default function Profit() {
     const setCancel = async () => {
         await setStatisticsStatus(!statisticsStatus)
         await setDateTimeProfit({
-            startDate: "",
-            endDate: "",
+            startMonth: "",
+            endMonth: "",
             years: ""
         })
         await setYearCurrent(" (2023) ")
@@ -185,29 +185,29 @@ export default function Profit() {
                         <div className="p-0 pb-2">
                             <Formik
                                 initialValues={{
-                                    startDate: "",
-                                    endDate: "",
+                                    startMonth: "",
+                                    endMonth: "",
                                     years: ""
                                 }}
                                 validationSchema={yup.object({
                                     years: yup.string().matches(/^[0-9]+$/,'Năm phải là số').matches(/^[1-9][0-9]{3,}$/,'Năm tối thiểu 4 số')
                                 })}
                                 onSubmit={async (values) => {
-                                    if (dateTimeProfit?.startDate === "" && dateTimeProfit?.endDate === "" && dateTimeProfit?.years === "" || dateTimeProfit?.years === "") {
+                                    if (dateTimeProfit?.startMonth === "" && dateTimeProfit?.endMonth === "" && dateTimeProfit?.years === "" || dateTimeProfit?.years === "") {
                                         await setYearCurrent(" (2023) ")
                                     } else {
                                         await setYearCurrent(" ( " + dateTimeProfit?.years + " ) ")
                                     }
 
-                                    // await getContract(values.startDate, values.endDate, values.years, 0, params.profitType || profitType)
-                                    // await getDataProfit(values.startDate, values.endDate, values.years, params.profitType || profitType)
-                                    // await getProfit(values.startDate, values.endDate, values.years, params.profitType || profitType)
-                                    // await setStartDate(values.startDate);
-                                    // await setEndDate(values.endDate);
+                                    // await getContract(values.startMonth, values.endMonth, values.years, 0, params.profitType || profitType)
+                                    // await getDataProfit(values.startMonth, values.endMonth, values.years, params.profitType || profitType)
+                                    // await getProfit(values.startMonth, values.endMonth, values.years, params.profitType || profitType)
+                                    // await setStartMonth(values.startMonth);
+                                    // await setEndMonth(values.endMonth);
                                     // await setYears(values.years)
-                                    await getContract(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, 0, params.profitType || profitType)
-                                    await getDataProfit(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, params.profitType || profitType)
-                                    await getProfit(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, params.profitType || profitType)
+                                    await getContract(dateTimeProfit?.startMonth, dateTimeProfit?.endMonth, dateTimeProfit?.years, 0, params.profitType || profitType)
+                                    await getDataProfit(dateTimeProfit?.startMonth, dateTimeProfit?.endMonth, dateTimeProfit?.years, params.profitType || profitType)
+                                    await getProfit(dateTimeProfit?.startMonth, dateTimeProfit?.endMonth, dateTimeProfit?.years, params.profitType || profitType)
                                 }}>
                                 <Form className="ps-5 col-lg-12 col-md-12 col-12" style={{boxSizing: "border-box"}}>
                                     <div
@@ -217,11 +217,11 @@ export default function Profit() {
                                         }}>
                                         <div className="col-lg-3 col-md-3 col-6 p-0">
                                             <span style={{fontWeight: "500"}}>
-                                                <Field name="startDate"
+                                                <Field name="startMonth"
                                                        as="select"
                                                        className="form-control text-center"
-                                                       onChange={(event) => setStartDate(event)}
-                                                       value={dateTimeProfit?.startDate}
+                                                       onChange={(event) => setStartMonth(event)}
+                                                       value={dateTimeProfit?.startMonth}
                                                 >
                                                     <option value={""}>Tháng bắt đầu</option>
                                                     {
@@ -234,11 +234,11 @@ export default function Profit() {
                                         </div>
                                         <div className="col-lg-3 col-md-3 col-6">
                                             <span style={{fontWeight: "500"}}>
-                                                <Field name="endDate"
+                                                <Field name="endMonth"
                                                        as="select"
                                                        className="form-control text-center"
-                                                       onChange={(event) => setEndDate(event)}
-                                                       value={dateTimeProfit?.endDate}
+                                                       onChange={(event) => setEndMonth(event)}
+                                                       value={dateTimeProfit?.endMonth}
                                                 >
                                                     <option value={""}>Tháng kết thúc</option>
                                                     {
@@ -327,7 +327,7 @@ export default function Profit() {
                                             currentPage !== 0 ?
                                                 <button className="page-link page-link-khanhh btn-outline-secondary"
                                                         style={{border: "1px solid gray", borderRadius: "5px"}}
-                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate,dateTimeProfit.years ,currentPage - 1, params.profitType || profitType)}>
+                                                        onClick={() => getContractByPage(dateTimeProfit.startMonth, dateTimeProfit.endMonth,dateTimeProfit.years ,currentPage - 1, params.profitType || profitType)}>
                                                     Trước
                                                 </button>
                                                 :
@@ -342,7 +342,7 @@ export default function Profit() {
                                             currentPage !== totalPage - 1 ?
                                                 <button className="page-link page-link-khanhh btn-outline-secondary"
                                                         style={{border: "1px solid gray", borderRadius: "5px"}}
-                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, dateTimeProfit.years,currentPage + 1, params.profitType || profitType)}>
+                                                        onClick={() => getContractByPage(dateTimeProfit.startMonth, dateTimeProfit.endMonth, dateTimeProfit.years,currentPage + 1, params.profitType || profitType)}>
                                                     Sau
                                                 </button>
                                                 :
