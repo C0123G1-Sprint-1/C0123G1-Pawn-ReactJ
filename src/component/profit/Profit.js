@@ -3,10 +3,11 @@ import {NavLink, useParams} from "react-router-dom"
 import {Chart} from "chart.js/auto"
 import React, {useEffect, useState} from "react";
 import {Outlet} from "react-router";
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as ProfitService from "../../service/ProfitService"
 import "../../css/interest.css"
 import ExportExcelButton from "./ExportExcelButton";
+import * as yup from "yup"
 
 export default function Profit() {
     const [contracts, setContract] = useState()
@@ -187,6 +188,9 @@ export default function Profit() {
                                     endDate: "",
                                     years: ""
                                 }}
+                                validationSchema={yup.object({
+                                    years: yup.string().matches(/^[0-9]+$/,'Năm phải là số').matches(/^[1-9][0-9]{3,}$/,'Năm tối thiểu 4 số')
+                                })}
                                 onSubmit={async (values) => {
                                     if (dateTimeProfit?.startDate === "" && dateTimeProfit?.endDate === "" && dateTimeProfit?.years === "" || dateTimeProfit?.years === "") {
                                         await setYearCurrent(" (2023) ")
@@ -242,10 +246,11 @@ export default function Profit() {
                                                 <Field name="years"
                                                        type="text"
                                                        className="form-control"
-                                                       onChange={(event) => setYears(event)}
-                                                       value={dateTimeProfit?.years}
+                                                       // onChange={(event) => setYears(event)}
+                                                       // value={dateTimeProfit?.years}
                                                        placeholder="Vui lòng nhập năm"
                                                 />
+                                                <ErrorMessage name="years" component="p" style={{color: "red"}}/>
                                             </span>
                                         </div>
                                         <div className=" col-lg-3 col-md-3 col-12 p-0 d-flex justify-content-end"
@@ -313,7 +318,7 @@ export default function Profit() {
                                             currentPage !== 0 ?
                                                 <button className="page-link page-link-khanhh btn-outline-secondary"
                                                         style={{border: "1px solid gray", borderRadius: "5px"}}
-                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage - 1, params.profitType || profitType)}>
+                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate,dateTimeProfit.years ,currentPage - 1, params.profitType || profitType)}>
                                                     Trước
                                                 </button>
                                                 :
@@ -328,7 +333,7 @@ export default function Profit() {
                                             currentPage !== totalPage - 1 ?
                                                 <button className="page-link page-link-khanhh btn-outline-secondary"
                                                         style={{border: "1px solid gray", borderRadius: "5px"}}
-                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage + 1, params.profitType || profitType)}>
+                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, dateTimeProfit.years,currentPage + 1, params.profitType || profitType)}>
                                                     Sau
                                                 </button>
                                                 :
