@@ -35,7 +35,7 @@ import {CreateCustomer} from "./component/customer/CreateCustomer";
 import ImageUploaderFile from "./component/customer/OCRCitizen";
 import {UpdateCustomer} from "./component/customer/UpdateCustomer";
 import {Top10NewContract} from "./component/contract/Top10NewContract";
-import {CreateContracts} from "./component/contract/CreateContracts";
+import {CreateContracts} from "./component/contract/createContract/CreateContracts";
 import {List} from "./component/register-pawn/List";
 import {Header} from "./component/register-pawn/Header";
 import {RegisterPawn} from "./component/register-pawn/RegisterPawn";
