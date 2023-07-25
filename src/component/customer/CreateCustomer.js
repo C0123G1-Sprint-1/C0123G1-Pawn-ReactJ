@@ -22,7 +22,6 @@ export function CreateCustomer() {
     const [backCitizenUrl, setBackCitizenUrl] = useState(null);
     const [fileSelected, setFileSelected] = useState(false);
     const messageError = "Ảnh không được để trống!!";
-    const [responseText, setResponseText] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
     const [registerPawn, setRegisterPawn] = useState(null);
@@ -167,7 +166,7 @@ export function CreateCustomer() {
         );
     };
 
-     const transformData = (data) => {
+    const transformData = (data) => {
         const formatName = (name) => {
             return name
                 .split(' ')
@@ -203,46 +202,97 @@ export function CreateCustomer() {
                 timer: 1500,
             });
             return;
-        }
+        } else {
+            let data;
+            Swal.fire({
+                html: '<div className="loading-screen" style={{position: "fixed",\n' +
+                    '  top: "0;",\n' +
+                    '  left: "0",\n' +
+                    '  width: "100%",\n' +
+                    '  height: "100%",\n' +
+                    '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
+                timer: 5000,
+                title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                didOpen: async () => {
+                    await Swal.showLoading();
+                    const url = 'https://api.fpt.ai/vision/idr/vnm';
+                    const apiKey = 'zK7kxLghksbFG8TL39p8buAeb4TP3QY6';
 
-        const url = 'https://api.fpt.ai/vision/idr/vnm';
-        const apiKey = 'm13aY7m758e1ejzmiSfs3BxyIYcHy1T8';
+                    const formData = new FormData();
+                    formData.append('image', frontCitizen);
 
-        const formData = new FormData();
-        formData.append('image', frontCitizen);
+                    const headers = {
+                        'api-key': apiKey,
+                    };
 
-        const headers = {
-            'api-key': apiKey,
-        };
 
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: headers,
-                body: formData,
-            });
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: headers,
+                            body: formData,
+                        });
 
-            const data = await response.json();
-            console.log(data.data[0])
-            const transformedData = transformData(data.data[0]);
-            setInitValues({
-                name: transformedData.name,
-                birthday: transformedData.dob,
-                gender: transformedData.sex,
-                address: transformedData.address,
-                citizenCode: data.data[0].id,
-            });
-        }
+                        data = await response.json();
+                        console.log(data.data[0])
+                        const transformedData = transformData(data.data[0]);
+                        if (!transformedData.name) {
+                            {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Ảnh bạn upload không phải MẠt trước Căn cước.',
+                                    text: 'Hãy kiểm tra và thử lại sau ít phút.',
+                                    timer: 1500,
+                                });
+                            }
+                            return;
+                        }
+                        setInitValues({
+                            name: transformedData.name,
+                            birthday: transformedData.dob,
+                            gender: transformedData.sex,
+                            address: transformedData.address,
+                            citizenCode: data.data[0].id,
+                        });
+                    } catch
+                        (error) {
+                        console.error('Error:', error);
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Gặp sự cố với server.',
+                            text: 'Hãy thử lại sau ít phút.',
+                            timer: 1500,
+                        });
+                    }
 
-catch
-    (error)
-    {
-            console.error('Error:', error);
-            await Swal.fire({
-            icon: 'error',
-            title: 'Gặp sự cố với server.',
-            text: 'Hãy thử lại sau ít phút.',
-            timer: 1500,
+                },
+                willClose: () => {
+                    if (data.data[0].type === "chip_front") {
+                        console.log(data.data[0])
+                        const transformedData = transformData(data.data[0]);
+                        setInitValues({
+                            name: transformedData.name,
+                            birthday: transformedData.dob,
+                            gender: transformedData.sex,
+                            address: transformedData.address,
+                            citizenCode: data.data[0].id,
+                        });
+                        Swal.fire({
+                            position: 'center',
+                            icon: "success",
+                            title: "Phân tích thành công.",
+                            text: "Khách hàng " + transformedData.name,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                    }
+                }
+
             });
         }
     };
@@ -250,19 +300,12 @@ catch
     return (
         <>
             <Formik
-            initialValues={initValues} enableReinitialize
+                initialValues={initValues} enableReinitialize
                 validationSchema={Yup.object({
                     name: Yup.string().required("Tên không được để trống")
                         .min(5, 'Ký tự phải nhiều hơn 5')
                         .max(100, 'Ký tự phải ít hơn 100')
-                        .matches(/^[\p{Lu}\p{Ll}\p{N}\s]+$/u, "Tên sản phẩm không được chứa ký tự đặc biệt")
-                        .test('first-letter-capitalized', 'Chữ đầu tiên của tên sản phẩm phải viết hoa', value => {
-                            const firstLetter = value.charAt(0);
-                            return firstLetter === firstLetter.toUpperCase();
-                        })
-                        .test('no-special-characters', 'Tên sản phẩm không được chứa các ký tự đặc biệt như @, #, !', value => {
-                            return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
-                        }),
+                        .matches(/^[a-zA-ZÀ-ỹ\s ]*$/, "Tên không được chứa số, ký tự đặc biệt. VD: Nguyễn Tiến Đạt"),
 
                     birthday: Yup.date().required("Ngày, tháng, năm sinh không được để trống").max(getMinDate(), 'Người dùng phải từ 18 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
                     gender: Yup.number().required("Giới tính không được để trống"),
@@ -431,9 +474,9 @@ catch
                                                 )}
                                                 <hr/>
 
-                                            <button type="button"
-                                                    className="btn btn-sm btn-success float-start mb-1"
-                                                        onClick = {(e)=> handleGetInfoClick()}>Lấy thông tin KH Online
+                                                <button type="button"
+                                                        className="btn btn-sm btn-success float-start mb-1"
+                                                        onClick={(e) => handleGetInfoClick()}>Lấy thông tin KH Online
                                                 </button>
                                                 <input
                                                     className="form-control"
@@ -478,29 +521,29 @@ catch
                                                         className="text-danger"
                                                     />
                                                 </div>
-                                            <div className="mt-2">
                                                 <div className="mt-2">
+                                                    <div className="mt-2">
                                                         <label id="label-dat" htmlFor="gender" className="form-label">
                                                             Giới tính<span style={{color: "red"}}> *</span>
                                                         </label>
-                                                </div>
-                                                        <label className='m-2'>
-                                                            <Field type="radio" name="gender" value="0"/>
-                                                            {' '}Nam
-                                                        </label>
-                                                        <label className='m-2'>
-                                                            <Field type="radio" name="gender" value="1"/>
-                                                            {' '}Nữ
-                                                        </label>
-                                                        <label className='m-2'>
-                                                            <Field type="radio" name="gender" value="2"/>
-                                                            {' '}Khác
-                                                        </label>
-                                                        <ErrorMessage
-                                                            component="div"
-                                                            name="gender"
-                                                            className="text-danger"
-                                                        />
+                                                    </div>
+                                                    <label className='m-2'>
+                                                        <Field type="radio" name="gender" value="0"/>
+                                                        {' '}Nam
+                                                    </label>
+                                                    <label className='m-2'>
+                                                        <Field type="radio" name="gender" value="1"/>
+                                                        {' '}Nữ
+                                                    </label>
+                                                    <label className='m-2'>
+                                                        <Field type="radio" name="gender" value="2"/>
+                                                        {' '}Khác
+                                                    </label>
+                                                    <ErrorMessage
+                                                        component="div"
+                                                        name="gender"
+                                                        className="text-danger"
+                                                    />
 
                                                 </div>
                                                 <div className="mt-2">
@@ -700,33 +743,24 @@ catch
                                                             </button>
                                                         </div>
                                                     )}
-                                            </div>
                                                 </div>
-                                        <div className="m-3 d-flex justify-content-center">
-                                            <button
-                                                id="show-alert-button"
-                                                type="button"
-                                                className="btn btn-sm btn-success"
-                                                onClick={handleSubmitScanOcr}
-                                            >
-                                                Phân tích hình ảnh lấy dữ liệu
-                                            </button>
-                                            <span>{responseText}</span>
                                             </div>
-                                            {/*<div className="mt-3">*/}
-                                            {/*    <button*/}
-                                            {/*        id="show-alert-button"*/}
-                                            {/*        type="button"*/}
-                                            {/*        className="btn btn-sm btn-success"*/}
-                                            {/*        onClick={handleSubmitScanOcr}*/}
-                                            {/*    >*/}
-                                            {/*        Phân tích hình ảnh lấy dữ liệu*/}
-                                            {/*    </button>*/}
-                                            {/*</div>*/}
+                                            <div className="m-3 d-flex justify-content-center">
+                                                <button
+                                                    id="show-alert-button"
+                                                    type="button"
+                                                    className="btn btn-sm btn-success"
+                                                    onClick={handleSubmitScanOcr}
+                                                >
+                                                    Phân tích hình ảnh lấy dữ liệu
+                                                </button>
+                                            </div>
                                         </div>
                                         <div className="row">
                                             {isSubmitting ? (
-                                                (<ThreeCircles
+                                                <div
+                                                    className="d-flex justify-content-center mt-4 ms-4">
+                                                    (<ThreeCircles
                                                     height="60"
                                                     width="60"
                                                     color="#4fa94d"
@@ -737,7 +771,7 @@ catch
                                                     outerCircleColor=""
                                                     innerCircleColor=""
                                                     middleCircleColor=""
-                                                />)
+                                                />) </div>
                                             ) : (
                                                 <div className="text-center m-auto">
                                                     <div className="d-flex justify-content-center">

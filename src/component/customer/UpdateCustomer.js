@@ -166,13 +166,8 @@ export function UpdateCustomer() {
                     name: Yup.string().required("Tên không được để trống")
                         .min(5, 'Ký tự phải nhiều hơn 5')
                         .max(100, 'Ký tự phải ít hơn 100')
-                        .matches(
-                            /^[A-Z][A-Za-z0-9\s]*$/,
-                            "Tên không được chứa ký tự đặc biệt và chữ cái đầu tiên phải viết hoa"
-                        )
-                        .test('no-special-characters', 'Tên không được chứa các ký tự đặc biệt như @, #, !', value => {
-                            return !/[!@#\$%\^&*()_\+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
-                        }),
+                        .matches(/^[a-zA-ZÀ-ỹ\s ]*$/, "Tên không được chứa số, ký tự đặc biệt. VD: Nguyễn Tiến Đạt"),
+
 
                     birthday: Yup.date().required("Ngày, tháng, năm sinh không được để trống").max(getMinDate(), 'Người dùng phải từ 18 tuổi trở lên').min(getMaxDate(), 'Người dùng không được quá 100 tuổi'),
                     gender: Yup.number().required("Giới tính không được để trống"),
@@ -187,8 +182,8 @@ export function UpdateCustomer() {
                                 } else if (!value) {
                                     return true;
                                 } else {
-                                const isPhoneNumberExists = await checkPhoneNumberExists(value);
-                                return !isPhoneNumberExists;
+                                    const isPhoneNumberExists = await checkPhoneNumberExists(value);
+                                    return !isPhoneNumberExists;
                                 }
                             }),
                     email: Yup.string().required("Email không được để trống").email('Nhập đúng định dạng email')
@@ -279,9 +274,11 @@ export function UpdateCustomer() {
                                                     <img
                                                         id="avatar-img"
                                                         src={avatarUrl ? avatarUrl : (avatar ? URL.createObjectURL(avatar) : defaultAvatar)}
-                                                        style={{width: "100%",
+                                                        style={{
+                                                            width: "100%",
                                                             height: "auto",
-                                                            objectFit: "contain" }}
+                                                            objectFit: "contain"
+                                                        }}
                                                         alt="Image Loading.."/>
                                                     {avatarUrl && (
                                                         <button
@@ -385,23 +382,23 @@ export function UpdateCustomer() {
                                                             Giới tính<span style={{color: "red"}}> *</span>
                                                         </label>
                                                     </div>
-                                                        <label className='m-2'>
-                                                            <Field type="radio" name="gender" value="0"/>
-                                                            {' '}Nam
-                                                        </label>
-                                                        <label className='m-2'>
-                                                            <Field type="radio" name="gender" value="1"/>
-                                                            {' '}Nữ
-                                                        </label>
-                                                        <label className='m-2'>
-                                                            <Field type="radio" name="gender" value="2"/>
-                                                            {' '}Khác
-                                                        </label>
-                                                        <ErrorMessage
-                                                            component="span"
-                                                            name="gender"
-                                                            className="text-danger"
-                                                        />
+                                                    <label className='m-2'>
+                                                        <Field type="radio" name="gender" value="0"/>
+                                                        {' '}Nam
+                                                    </label>
+                                                    <label className='m-2'>
+                                                        <Field type="radio" name="gender" value="1"/>
+                                                        {' '}Nữ
+                                                    </label>
+                                                    <label className='m-2'>
+                                                        <Field type="radio" name="gender" value="2"/>
+                                                        {' '}Khác
+                                                    </label>
+                                                    <ErrorMessage
+                                                        component="span"
+                                                        name="gender"
+                                                        className="text-danger"
+                                                    />
 
                                                 </div>
                                                 <div className="mt-2">
@@ -595,7 +592,9 @@ export function UpdateCustomer() {
                                             </div>
                                             <div className="row">
                                                 {isSubmitting ? (
-                                                    (<ThreeCircles
+                                                    <div
+                                                        className="d-flex justify-content-center mt-4 ms-4">
+                                                        (<ThreeCircles
                                                         height="60"
                                                         width="60"
                                                         color="#4fa94d"
@@ -606,7 +605,7 @@ export function UpdateCustomer() {
                                                         outerCircleColor=""
                                                         innerCircleColor=""
                                                         middleCircleColor=""
-                                                    />)
+                                                    />) </div>
                                                 ) : (
                                                     <div>
                                                         <div className="text-center m-auto">
@@ -615,7 +614,7 @@ export function UpdateCustomer() {
                                                                     className="text-center">
                                                                     <Link
 
-                                                                        style={{marginLeft:"4vw",width:"130px"}}
+                                                                        style={{marginLeft: "4vw", width: "130px"}}
                                                                         type="button"
                                                                         className="btn btn-secondary m-0"
                                                                         to={"/nav/manager-customer"}
@@ -628,7 +627,7 @@ export function UpdateCustomer() {
                                                                     <button
                                                                         type="submit"
                                                                         className="btn btn-success"
-                                                                        style={{marginLeft:"4vw",width:"130px"}}
+                                                                        style={{marginLeft: "4vw", width: "130px"}}
                                                                     >
                                                                         <b className="text-center">Cập nhật</b>
                                                                     </button>
