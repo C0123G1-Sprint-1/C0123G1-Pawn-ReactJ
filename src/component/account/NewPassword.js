@@ -29,6 +29,7 @@ export function NewPassword() {
     useEffect(()=>{
         passwordInputHandler(confirmPassword)
     },[password1])
+    
     return (
         <>
             <div className="col-md-6 right-box">

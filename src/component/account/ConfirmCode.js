@@ -15,7 +15,7 @@ export function ConfirmCode() {
     const navigate = useNavigate();
     const location = useLocation();
     const data = location.state && location.state.data;
-
+    
     return (
         <>
             <div className="col-md-6 right-box">

@@ -6,11 +6,16 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
+import {  useEffect } from "react";
 import "./Style.css";
 
 export function LoginForm() {
   const navigate = useNavigate();
+  useEffect(() => {
+    document.title = "Đăng nhập"; // Thay đổi title
 
+        window.scrollTo(0,0)
+}, []);
   return (
     <>
       <div className="col-md-6 right-box">

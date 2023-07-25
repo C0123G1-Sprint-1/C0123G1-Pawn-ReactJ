@@ -19,9 +19,10 @@ export function TransactionHistoryDetail() {
         getContractApi();
     }, [param.id])
 
-    useEffect(()=>{
-        window.scrollTo(0,0)
-    },[])
+    useEffect(() => {
+        document.title = "Chi tiết giao dịch";
+        window.scrollTo(0, 0)
+    }, [])
     if (!contract) {
         return null;
     }
@@ -30,6 +31,7 @@ export function TransactionHistoryDetail() {
         <>
             <div className="col-lg-9 col-md-9">
                 <h2 className="text-center mt-2 mb-4">CHI TIẾT GIAO DỊCH</h2>
+
                 <table className="table table-bordered">
                     <tbody>
                     <tr>
@@ -53,12 +55,13 @@ export function TransactionHistoryDetail() {
                         <td className="ps-4">{contract?.productType.name}</td>
                     </tr>
                     <tr>
-                        <th style={{lineHeight: "240px"}} className="ps-4">Ảnh đồ cầm</th>
-                        <td className="text-center" style={{verticalAlign: "middle",maxWidth:"100%",maxHeight:"100%"}}>
+                        <th style={{lineHeight: "250px"}} className="ps-4">Ảnh đồ cầm</th>
+                        <td className="text-center"
+                            style={{verticalAlign: "middle", maxWidth: "100%", maxHeight: "100%"}}>
                             <img
-                                style={{objectFit:"cover",maxWidth:"100%"}}
+                                style={{objectFit: "cover", maxWidth: "100%"}}
                                 src={contract.image === "" ? "https://vpubnd.quangnam.gov.vn/bootstrapv2/resources/portal/vpubnd/images/placeholder.jpg" : contract.image}
-                                height={280}
+                                height={250}
                                 alt=""
                             />
                         </td>

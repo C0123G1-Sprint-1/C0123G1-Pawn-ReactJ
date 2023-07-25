@@ -13,7 +13,33 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 
 export function ForgotPassword() {
     const navigate = useNavigate();
+    useEffect(() => {
+        document.title = "Lấy lại mật khẩu"; // Thay đổi title
 
+            window.scrollTo(0,0)
+    }, []);
+    const loadSubmit = () => {
+        Swal.fire({
+            html: '<div className="loading-screen" style={{position: "fixed",\n' +
+                '  top: "0;",\n' +
+                '  left: "0",\n' +
+                '  width: "100%",\n' +
+                '  height: "100%",\n' +
+                '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
+            timer: 4000,
+            title: "Vui lòng đợi chúng tôi xác nhận email!",
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: async () => {
+                await Swal.showLoading();
+            },
+            willClose: () => {
+                // Thêm xử lý khi SweetAlert2 đóng (nếu cần thiết).
+            }
+        });
+    };
 
     return (
         <>
@@ -34,7 +60,9 @@ export function ForgotPassword() {
                         })}
                         onSubmit={async (values, { setSubmitting }) => {
                             try {
+                                await loadSubmit()
                                 const response = await axios.post('http://localhost:8080/api/user/checkEmail', values)
+                            
                                 navigate("/login/confirmCode", { state: { data: response.data } })
                             } catch (error) {
                                 console.log(error.response.data)
