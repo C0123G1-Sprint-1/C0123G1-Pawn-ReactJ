@@ -3,10 +3,11 @@ import {NavLink, useParams} from "react-router-dom"
 import {Chart} from "chart.js/auto"
 import React, {useEffect, useState} from "react";
 import {Outlet} from "react-router";
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as ProfitService from "../../service/ProfitService"
 import "../../css/interest.css"
 import ExportExcelButton from "./ExportExcelButton";
+import * as yup from "yup"
 
 export default function Profit() {
     const [contracts, setContract] = useState()
@@ -14,18 +15,20 @@ export default function Profit() {
     const [isActives, setIsActive] = useState(true);
     const [totalPage, setTotalPage] = useState();
     const [totalProfit, setTotalProfit] = useState(0);
-    const [yearCurrent,setYearCurrent] =useState(" (2023) ");
+    const [yearCurrent, setYearCurrent] = useState(" (2023) ");
+    const [months, setMonths] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
     const params = useParams();
     const [dataProfit, setDataProfit] = useState();
     const [dateTimeProfit, setDateTimeProfit] = useState({
         startDate: "",
-        endDate: ""
+        endDate: "",
+        years: ""
     })
     const [currentPage, setCurrentPage] = useState(0);
     const [statisticsStatus, setStatisticsStatus] = useState(true);
 
-    const getContractByPage = async (startDate, endDate, page, profitType) => {
-        await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, page, params.profitType || profitType)
+    const getContractByPage = async (startDate, endDate, years, page, profitType) => {
+        await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, dateTimeProfit.years, page, params.profitType || profitType)
         setCurrentPage(page);
     }
     const pagination = () => {
@@ -37,7 +40,7 @@ export default function Profit() {
                 <li className="page-item" key={i}>
                     <button className={pageLinkClassName}
                             style={{border: "1px solid gray", borderRadius: "5px"}}
-                            onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, i, params.profitType || profitType)}>
+                            onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, dateTimeProfit.years, i, params.profitType || profitType)}>
                         {i + 1}
                     </button>
                 </li>
@@ -45,8 +48,8 @@ export default function Profit() {
         }
         return page;
     }
-    const getProfit = async (startDate, endDate, profitType) => {
-        const res = await ProfitService.getProfit(startDate, endDate, profitType)
+    const getProfit = async (startDate, endDate, years, profitType) => {
+        const res = await ProfitService.getProfit(startDate, endDate, years, profitType)
         if (res === null) {
             setTotalProfit(0)
         } else {
@@ -55,8 +58,8 @@ export default function Profit() {
         }
     }
 
-    const getDataProfit = async (startDate, endDate, profitType) => {
-        const res = await ProfitService.getDataChart(startDate, endDate, profitType)
+    const getDataProfit = async (startDate, endDate, years, profitType) => {
+        const res = await ProfitService.getDataChart(startDate, endDate, years, profitType)
         if (res === null) {
             setDataProfit([{
                 month: null,
@@ -66,8 +69,8 @@ export default function Profit() {
             setDataProfit(res.data)
         }
     }
-    const getContract = async (startDate, endDate, page, profitType) => {
-        const res = await ProfitService.getAllContract(startDate, endDate, page, profitType)
+    const getContract = async (startDate, endDate, years, page, profitType) => {
+        const res = await ProfitService.getAllContract(startDate, endDate, years, page, profitType)
         if (res === null) {
             setTotalPage(null)
             setContract(null)
@@ -92,20 +95,27 @@ export default function Profit() {
             endDate: event.target.value
         })
     }
+    const setYears = async (event) => {
+        await setDateTimeProfit({
+            ...dateTimeProfit,
+            years: event.target.value
+        })
+    }
     const setCancel = async () => {
         await setStatisticsStatus(!statisticsStatus)
         await setDateTimeProfit({
             startDate: "",
-            endDate: ""
+            endDate: "",
+            years: ""
         })
         await setYearCurrent(" (2023) ")
     }
     useEffect(() => {
         const fectData = async () => {
             await setCurrentPage(0);
-            await getContract("", "", 0, params.profitType || profitType)
-            await getDataProfit("", "", params.profitType || profitType)
-            await getProfit("", "", params.profitType || profitType)
+            await getContract("", "", "2023", 0, params.profitType || profitType)
+            await getDataProfit("", "", "2023", params.profitType || profitType)
+            await getProfit("", "", "2023", params.profitType || profitType)
         }
         fectData()
     }, [profitType, statisticsStatus])
@@ -170,42 +180,80 @@ export default function Profit() {
                             </li>
                         </ul>
                     </div>
-                    <div className="row  col-lg-12 mt-3 p-0">
+                    <div className="row  col-lg-12 p-0">
                         <div className="p-0 pb-2">
                             <Formik
                                 initialValues={{
                                     startDate: "",
-                                    endDate: ""
+                                    endDate: "",
+                                    years: ""
                                 }}
+                                validationSchema={yup.object({
+                                    years: yup.string().matches(/^[0-9]+$/,'Năm phải là số').matches(/^[1-9][0-9]{3,}$/,'Năm tối thiểu 4 số')
+                                })}
                                 onSubmit={async (values) => {
-                                    await setYearCurrent("")
-                                    if(dateTimeProfit.startDate === "" && dateTimeProfit.endDate === ""){
-                                        setYearCurrent(" (2023) ")
+                                    if (dateTimeProfit?.startDate === "" && dateTimeProfit?.endDate === "" && dateTimeProfit?.years === "" || dateTimeProfit?.years === "") {
+                                        await setYearCurrent(" (2023) ")
+                                    } else {
+                                        await setYearCurrent(" ( " + dateTimeProfit?.years + " ) ")
                                     }
-                                    await getContract(dateTimeProfit.startDate, dateTimeProfit.endDate, 0, params.profitType || profitType)
-                                    await getDataProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
-                                    await getProfit(dateTimeProfit.startDate, dateTimeProfit.endDate, params.profitType || profitType)
+                                    await getContract(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, 0, params.profitType || profitType)
+                                    await getDataProfit(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, params.profitType || profitType)
+                                    await getProfit(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, params.profitType || profitType)
                                 }}>
                                 <Form className="ps-5 col-lg-12 col-md-12 col-12" style={{boxSizing: "border-box"}}>
                                     <div
                                         className="d-flex row col-lg-12 col-md-12 col-12 justify-content-between p-0 m-0"
                                         style={{
-                                            height: "3.7vh"
+                                            height: "4.8vh"
                                         }}>
-                                        <div className=" col-lg-4 col-md-4 col-6 p-0">
-                                            <span style={{fontWeight: "500"}}>Từ ngày : <Field name="startDate"
-                                                                                               type="date"
-                                                                                               onChange={(event) => setStartDate(event)}
-                                                                                               value={dateTimeProfit?.startDate}
-                                            /></span>
+                                        <div className="col-lg-3 col-md-3 col-6 p-0">
+                                            <span style={{fontWeight: "500"}}>
+                                                <Field name="startDate"
+                                                       as="select"
+                                                       className="form-control text-center"
+                                                       onChange={(event) => setStartDate(event)}
+                                                       value={dateTimeProfit?.startDate}
+                                                >
+                                                    <option value={""}>Tháng bắt đầu</option>
+                                                    {
+                                                        months.map((month, index) =>
+                                                            <option key={index} value={month}>Tháng {month}</option>
+                                                        )
+                                                    }
+                                                </Field>
+                                            </span>
                                         </div>
-                                        <div className=" col-lg-4 col-md-4 col-6">
-                                            <span style={{fontWeight: "500"}}>Đến : <Field name="endDate" type="date"
-                                                                                           onChange={(event) => setEndDate(event)}
-                                                                                           value={dateTimeProfit?.endDate}
-                                            /></span>
+                                        <div className="col-lg-3 col-md-3 col-6">
+                                            <span style={{fontWeight: "500"}}>
+                                                <Field name="endDate"
+                                                       as="select"
+                                                       className="form-control text-center"
+                                                       onChange={(event) => setEndDate(event)}
+                                                       value={dateTimeProfit?.endDate}
+                                                >
+                                                    <option value={""}>Tháng kết thúc</option>
+                                                    {
+                                                        months.map((month, index) =>
+                                                            <option key={index} value={month}>Tháng {month}</option>
+                                                        )
+                                                    }
+                                                </Field>
+                                            </span>
                                         </div>
-                                        <div className=" col-lg-4 col-md-4 col-12 p-0 d-flex justify-content-end"
+                                        <div className="col-lg-3 col-md-3 col-6">
+                                            <span style={{fontWeight: "500"}}>
+                                                <Field name="years"
+                                                       type="text"
+                                                       className="form-control"
+                                                       // onChange={(event) => setYears(event)}
+                                                       // value={dateTimeProfit?.years}
+                                                       placeholder="Vui lòng nhập năm"
+                                                />
+                                                <ErrorMessage name="years" component="p" style={{color: "red"}}/>
+                                            </span>
+                                        </div>
+                                        <div className=" col-lg-3 col-md-3 col-12 p-0 d-flex justify-content-end"
                                              style={{
                                                  displayFlex: "flex",
                                                  height: "100%",
@@ -270,7 +318,7 @@ export default function Profit() {
                                             currentPage !== 0 ?
                                                 <button className="page-link page-link-khanhh btn-outline-secondary"
                                                         style={{border: "1px solid gray", borderRadius: "5px"}}
-                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage - 1, params.profitType || profitType)}>
+                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate,dateTimeProfit.years ,currentPage - 1, params.profitType || profitType)}>
                                                     Trước
                                                 </button>
                                                 :
@@ -278,14 +326,14 @@ export default function Profit() {
                                         }
                                     </li>
                                     {
-                                       totalPage === 1 ? "" : pagination()
+                                        totalPage === 1 ? "" : pagination()
                                     }
                                     <li className="page-item">
                                         {
                                             currentPage !== totalPage - 1 ?
                                                 <button className="page-link page-link-khanhh btn-outline-secondary"
                                                         style={{border: "1px solid gray", borderRadius: "5px"}}
-                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, currentPage + 1, params.profitType || profitType)}>
+                                                        onClick={() => getContractByPage(dateTimeProfit.startDate, dateTimeProfit.endDate, dateTimeProfit.years,currentPage + 1, params.profitType || profitType)}>
                                                     Sau
                                                 </button>
                                                 :

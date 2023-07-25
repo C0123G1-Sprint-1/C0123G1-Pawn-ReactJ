@@ -46,6 +46,7 @@ export const findAllContractStatus = async () => {
                     Authorization: `Bearer ${token}`,
                 }
             });
+
         return res;
     } catch (e) {
         console.log(e)
@@ -61,6 +62,7 @@ export const findAllContractType = async () => {
                     Authorization: `Bearer ${token}`,
                 }
             });
+
         return res;
     } catch (e) {
         console.log(e)

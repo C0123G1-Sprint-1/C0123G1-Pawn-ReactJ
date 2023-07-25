@@ -12,9 +12,10 @@ export function Header() {
     const navigate = useNavigate();
     const [isLogin, setIsLogin] = useState();
     const token = localStorage.getItem('token');
+    const currentUserName = localStorage.getItem('username');
 
     // const [decodedToken, setDecodedToken] = useState("");
-    const [username, setUsername] = useState(localStorage.getItem('username'));
+    const [username, setUsername] = useState(currentUserName);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -27,6 +28,15 @@ export function Header() {
             // Xử lý khi không có token trong localStorage
         }
     }, [token]);
+
+    useEffect(() => {
+        if (token) {
+            setIsLogin(true);
+            setUsername(currentUserName)
+        } else {
+            // Xử lý khi không có token trong localStorage
+        }
+    }, [token, currentUserName]);
 
 
     const handlerLogout = () => {
@@ -41,7 +51,6 @@ export function Header() {
     return (
         <>
             <>
-                {/*header*/}
 
                 <header id="header" className="header d-flex align-items-center">
                     <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
@@ -73,40 +82,6 @@ export function Header() {
                                         kiện</NavLink>
                                 </li>
 
-                                {/*<li className="dropdown">*/}
-                                {/*    <a href="#">*/}
-                                {/*        <span>Cầm Đồ Theo Tỉnh</span>{" "}*/}
-                                {/*        <i className="bi bi-chevron-down dropdown-indicator" />*/}
-                                {/*    </a>*/}
-                                {/*    <ul>*/}
-                                {/*        <li>*/}
-                                {/*            <a href="#">Cầm Đồ Quảng Nam</a>*/}
-                                {/*        </li>*/}
-                                {/*        <li className="dropdown">*/}
-                                {/*            <a href="#">*/}
-                                {/*                <span>Cầm Đồ Đà Nẵng</span>{" "}*/}
-                                {/*                <i className="bi bi-chevron-down dropdown-indicator" />*/}
-                                {/*            </a>*/}
-                                {/*            <ul>*/}
-                                {/*                <li>*/}
-                                {/*                    <a href="#">Quận Hải Châu</a>*/}
-                                {/*                </li>*/}
-                                {/*                <li>*/}
-                                {/*                    <a href="#">Quận Thanh Khê</a>*/}
-                                {/*                </li>*/}
-                                {/*                <li>*/}
-                                {/*                    <a href="#">Quận Cẩm Lệ</a>*/}
-                                {/*                </li>*/}
-                                {/*                <li>*/}
-                                {/*                    <a href="#">Huyện Hòa Vang</a>*/}
-                                {/*                </li>*/}
-                                {/*            </ul>*/}
-                                {/*        </li>*/}
-                                {/*        <li>*/}
-                                {/*            <a href="#">Cầm Đồ Huế</a>*/}
-                                {/*        </li>*/}
-                                {/*    </ul>*/}
-                                {/*</li>*/}
 
 
                                 <li style={{

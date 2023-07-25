@@ -44,6 +44,7 @@ import {UpdateContract} from "./component/contract/UpdateContract";
 import {Condition} from "./component/register-pawn/Condition";
 import {CustomerListMOI} from "./component/customer/CustomerListMOI";
 import {RegisterPawnAnhQoc} from "./component/customer/RegisterPawnAnhQoc";
+import CustomerList from "./component/customer/CustomerList";
 
 function App() {
     const navigate = useNavigate();
@@ -83,22 +84,29 @@ function App() {
                 </Route>
 
 
-                <Route path='/register-pawn' element={<RegisterPawn/>}/>
+                {/* <Route path="/api/employee" element={<EmployeeList/>}/>
+                    <Route path="/api/employee/create-employee" element={<CreateEmployee/>}/>
+                    <Route path="/redeem" element={<Redeeming/>}/> */}
+                <Route path='/create' element={<RegisterPawn/>}/>
+                <Route path='/' element={<List/>}/>
+                {/*<Route path="/" element={<Header/>} />*/}
+                {/*<Route path="/" element={<Footer/>} />*/}
+                {/*<Route path="/" element={<Navigate/>} />*/}
+                <Route path="/create" element={<RegisterPawn/>}/>
                 <Route path={"/login"} element={<LoginHome/>}>
                     <Route path="/login" element={<LoginForm/>}/>
                     <Route path="/login/forgot" element={<ForgotPassword/>}/>
                     <Route path="/login/confirmCode" element={<ConfirmCode/>}/>
                     <Route path="/login/newPassword" element={<NewPassword/>}/>
                 </Route>
-                <Route path={'/listPosts'} element={<ListPosts/>}/>
-                <Route path={'/listPosts/detail/:id'} element={<DetailPosts/>}/>
-                <Route path={'/listPosts/createPosts'} element={<CreatePosts/>}/>
-                <Route path={"/scanfile"} element={<ImageUploaderFile/>}/>
+                <Route path={'/listPost'} element={<ListPosts/>}/>
+                <Route path={'/detail/:id'} element={<DetailPosts/>}/>
+                <Route path={'/createPosts'} element={<CreatePosts/>}/>
+                <Route path={'/manager-customer'} element={<CustomerList/>}/>
             </Routes>
             <Footer/>
-
         </>
-    );
+    )
 }
 
 export default App;
