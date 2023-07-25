@@ -32,7 +32,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="408a7072-13f1-45a7-b3bd-fa2769ec348f" name="Default Changelist" comment="&quot;add component TransactionHistoryList&quot;">
-      <change beforePath="$PROJECT_DIR$/src/component/customer/CustomerListMOI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/customer/CustomerListMOI.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/profit/Profit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/profit/Profit.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +75,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/component/employee" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Thư mục mới/C0123G1-Pawn-reactjs" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
@@ -429,7 +430,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690180068880</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Up">
+      <created>1690250437136</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1690250437136</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -467,10 +475,10 @@
       <screen x="0" y="0" width="1440" height="852" />
     </state>
     <state x="93" y="93" width="1253" height="665" key="DiffContextDialog/0.0.1440.852@0.0.1440.852" timestamp="1690172742682" />
-    <state x="515" y="173" key="FileChooserDialogImpl" timestamp="1689754775251">
+    <state x="515" y="173" key="FileChooserDialogImpl" timestamp="1690250957328">
       <screen x="0" y="0" width="1440" height="852" />
     </state>
-    <state x="515" y="173" key="FileChooserDialogImpl/0.0.1440.852@0.0.1440.852" timestamp="1689754775251" />
+    <state x="515" y="173" key="FileChooserDialogImpl/0.0.1440.852@0.0.1440.852" timestamp="1690250957328" />
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1689586329113" />
     <state width="1420" height="94" key="GridCell.Tab.0.bottom" timestamp="1690177335399">
       <screen x="0" y="0" width="1440" height="852" />

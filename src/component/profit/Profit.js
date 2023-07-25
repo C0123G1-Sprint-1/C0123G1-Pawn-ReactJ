@@ -191,7 +191,7 @@ export default function Profit() {
                                 validationSchema={yup.object({
                                     years: yup.string().matches(/^[0-9]+$/,'Năm phải là số').matches(/^[1-9][0-9]{3,}$/,'Năm tối thiểu 4 số')
                                 })}
-                                onSubmit={async (values) => {
+                                onSubmit={async (values,{resetForm}) => {
                                     if (dateTimeProfit?.startDate === "" && dateTimeProfit?.endDate === "" && dateTimeProfit?.years === "" || dateTimeProfit?.years === "") {
                                         await setYearCurrent(" (2023) ")
                                     } else {
@@ -200,6 +200,7 @@ export default function Profit() {
                                     await getContract(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, 0, params.profitType || profitType)
                                     await getDataProfit(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, params.profitType || profitType)
                                     await getProfit(dateTimeProfit?.startDate, dateTimeProfit?.endDate, dateTimeProfit?.years, params.profitType || profitType)
+                                    resetForm()
                                 }}>
                                 <Form className="ps-5 col-lg-12 col-md-12 col-12" style={{boxSizing: "border-box"}}>
                                     <div
