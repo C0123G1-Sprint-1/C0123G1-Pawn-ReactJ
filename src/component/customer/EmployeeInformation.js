@@ -21,7 +21,7 @@ export default function EmployeeInformation() {
     const [avatar, setAvatarFile] = useState();
     const [avatarUrl, setAvatarUrl] = useState();
     const defaultAvatar = "https://politicalscience.columbian.gwu.edu/sites/g/files/zaxdzs4796/files/image/profile_graphic_1080x1080.png";
-    const messageError = "Ảnh không được để trống!!";
+    // const messageError = "Ảnh không được để trống!!";
     const [isEditing, setIsEditing] = useState(true);
     const [newPass, setNewPass] = useState(0);
 
@@ -68,59 +68,59 @@ export default function EmployeeInformation() {
         fectApi()
     }, [params.id])
 
-    const handleFileSelect = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setAvatarFile(file);
-        }
-    };
-
-    const handleFileUpload = async () => {
-        return new Promise((resolve, reject) => {
-            const file = setAvatarFile;
-            if (!file) return reject("No file selected");
-            const newName = "pawn_shop_topvn" + Date.now() + "_" + file.name;
-            const storageRef = ref(storage, `files/${newName}`);
-            const uploadTask = uploadBytesResumable(storageRef, file);
-
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    console.log(`Upload progress: ${progress}%`);
-                },
-                (error) => {
-                    reject(error);
-                },
-                async () => {
-                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    resolve(downloadURL);
-                }
-            );
-        });
-    };
+    // const handleFileSelect = (event) => {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         setAvatarFile(file);
+    //     }
+    // };
+    //
+    // const handleFileUpload = async () => {
+    //     return new Promise((resolve, reject) => {
+    //         const file = setAvatarFile;
+    //         if (!file) return reject("No file selected");
+    //         const newName = "pawn_shop_topvn" + Date.now() + "_" + file.name;
+    //         const storageRef = ref(storage, `files/${newName}`);
+    //         const uploadTask = uploadBytesResumable(storageRef, file);
+    //
+    //         uploadTask.on(
+    //             "state_changed",
+    //             (snapshot) => {
+    //                 const progress = Math.round(
+    //                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //                 );
+    //                 console.log(`Upload progress: ${progress}%`);
+    //             },
+    //             (error) => {
+    //                 reject(error);
+    //             },
+    //             async () => {
+    //                 const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+    //                 resolve(downloadURL);
+    //             }
+    //         );
+    //     });
+    // };
 
     useEffect(() => {
         document.title = "Thông tin tài khoản";
         window.scrollTo(0, 0)
     }, [])
-    useEffect(() => {
-        setAvatarUrl(employeeDetail?.image)
-        setGetPassword(employeeDetail?.users.password)
-    }, [employeeDetail?.image])
+    // useEffect(() => {
+    //     setAvatarUrl(employeeDetail?.image)
+    //     setGetPassword(employeeDetail?.users.password)
+    // }, [employeeDetail?.image])
 
-    const handleAvatarFileSelect = (event) => {
-        handleFileSelect(event, setAvatarFile);
-    };
+    // const handleAvatarFileSelect = (event) => {
+    //     handleFileSelect(event, setAvatarFile);
+    // };
 
-    const handleAvatarFileUpload = async () => {
-        if (avatarUrl) {
-            return avatarUrl
-        } else
-            return await handleFileUpload(avatar, setAvatarUrl);
-    };
+    // const handleAvatarFileUpload = async () => {
+    //     if (avatarUrl) {
+    //         return avatarUrl
+    //     } else
+    //         return await handleFileUpload(avatar, setAvatarUrl);
+    // };
 
     const handleSubmit = async (values, {setSubmitting}) => {
         try {
@@ -161,11 +161,11 @@ export default function EmployeeInformation() {
             }
 
             values.gender = parseInt(values.gender);
-            await handleAvatarFileUpload()
-            const newValues = {...values, image: firebaseImg};
-            newValues.image = await handleAvatarFileUpload();
+            // await handleAvatarFileUpload()
+            // const newValues = {...values, image: firebaseImg};
+            // newValues.image = await handleAvatarFileUpload();
             await employeeInformationService.update({
-                ...newValues,
+                ...values,
             })
 
             setSubmitting(false)

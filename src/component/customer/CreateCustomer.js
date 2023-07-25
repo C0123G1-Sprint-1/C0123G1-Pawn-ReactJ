@@ -73,7 +73,7 @@ export function CreateCustomer() {
                 address: foundRegisterPawn?.address,
                 citizenCode: '',
             });
-            Swal.fire({
+            await Swal.fire({
                 position: 'center',
                 icon: "success",
                 title: "Tìm thông tin thành công.",
@@ -82,7 +82,7 @@ export function CreateCustomer() {
                 timer: 1500
             });
         } else {
-            Swal.fire({
+            await Swal.fire({
                 icon: 'error',
                 title: 'Thất bại',
                 text: 'Không tìm thấy dữ liệu',
