@@ -1,27 +1,5 @@
 import axios from "axios";
-// export const showTop10NewContract = async () => {
-//     try {
-//         const result = await axios.get("http://localhost:8080/api/employee/contract/top10?_sort=createTime&_order=desc&_limit=10");
-//         return result.data;
-//     } catch (err) {
-//         console.log(err);
-//     }
-// }
-// export const findContractById = async (id) => {
-//     try {
-//         const result = await axios.get(`http://localhost:8080/api/employee/contract/findContractById/${id}`);
-//         return result.data;
-//     } catch (err) {
-//         console.log(err)
-//     }
-// }
-// export const updateContract=async (contract)=>{
-//     try {
-//         await axios.patch(`http://localhost:8080/api/employee/contract/update`,contract)
-//     }catch (err) {
-//       console.log(err)
-//     }
-// }
+
 export const deleteTransactionHistoryByID = async (id) => {
     const token = localStorage.getItem('token');
     try {
@@ -106,6 +84,17 @@ export const searchTransactionHistory = async (page, value) => {
     }
 }
 
+export const getMinAndMaxDate = () => {
+    const token = localStorage.getItem('token')
+    const res = axios.get("http://localhost:8080/api/employee/contract/minAndMAxDate",
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+    return res;
+}
+
 //Dịnh
 
 export const findAllProductType = async () => {
@@ -136,7 +125,7 @@ export const findAllAndEmployee = async () => {
         console.log(error)
     }
 }
-export const findAllCustomer = async (page,name) => {
+export const findAllCustomer = async (page, name) => {
     const token = localStorage.getItem('token')
     try {
         const res = (await axios.get(`http://localhost:8080/api/employee/contract/customer/?page=${page}&name=${name}`,
@@ -243,16 +232,16 @@ export const findContractById = async (id) => {
         console.log(err)
     }
 }
-export const updateContract=async (contract)=>{
+export const updateContract = async (contract) => {
     const token = localStorage.getItem('token')
     try {
-        await axios.patch(`http://localhost:8080/api/employee/contract/update`,contract,
+        await axios.patch(`http://localhost:8080/api/employee/contract/update`, contract,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             })
-    }catch (err) {
+    } catch (err) {
         console.log(err)
     }
 }

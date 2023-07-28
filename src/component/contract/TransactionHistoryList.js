@@ -1,28 +1,55 @@
-import React, {useEffect, useState} from "react";
 import * as contractService from '../../service/ContractService';
+import "../../component/employee/employee.css";
+
 import {Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../component/employee/employee.css"
+import React, {useEffect, useState} from "react";
 import * as Swal from "sweetalert2";
 import moment from "moment";
 import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
+// import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css';
 
 export default function TransactionHistoryList() {
-    const [contractStatus, setContractStatus] = useState([])
-    const [contractType, setContractType] = useState([])
+
+    const [contractStatus, setContractStatus] = useState([]);
+    const [contractType, setContractType] = useState([]);
     const [contracts, setContract] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
+    // const [selectedMinDate, setSelectedMinDate] = useState(null)
+    // const [selectedMaxDate, setSelectedMaxDate] = useState(null)
+    //
+    // const [minAndMax, setMinAndMax] = useState({
+    //     min: "",
+    //     max: ""
+    // });
+    //
+    //
+    // const getMinAndMaxApi = async () => {
+    //     try {
+    //         const res = await contractService.getMinAndMaxDate()
+    //         console.log(res.data)
+    //         setMinAndMax({
+    //             min: res.data.minDate,
+    //             max: res.data.maxDate
+    //         })
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
+
+
     const role = localStorage.getItem("role");
 
     const getContractStatusApi = async () => {
         const res = await contractService.findAllContractStatus();
-        setContractStatus(res.data)
+        setContractStatus(res.data);
     }
     const getContractTypeApi = async () => {
         const res = await contractService.findAllContractType();
-        setContractType(res.data)
+        setContractType(res.data);
     }
 
 
@@ -59,21 +86,30 @@ export default function TransactionHistoryList() {
         },
         buttonsStyling: false
     })
-    const pageTitle="Lịch sử giao dịch";
-    useEffect(()=>{
-        document.title=pageTitle;
-        window.scrollTo(0,0)
-    },[])
+    useEffect(() => {
+        document.title = "Lịch sử giao dịch";
+        window.scrollTo(0, 0);
+    }, [])
 
     useEffect(() => {
         getContractStatusApi();
         getContractTypeApi();
         showList()
+        // getMinAndMaxApi()
     }, [search, currentPage]);
     const deleteTransactionHistory = async (id) => {
-        let res = await contractService.deleteTransactionHistoryByID(id);
-        showResultAlert(res.data)
-        showList()
+        try {
+            let res = await contractService.deleteTransactionHistoryByID(id);
+            showResultAlert(res.data);
+        } catch (e) {
+            Swal.fire({
+                icon: "error",
+                title: "Xóa thất bại !",
+                text: "Lịch sử không tồn tại!",
+                timer: 2000
+            })
+        }
+        showList();
     }
     const showResultAlert = (res) => {
         if (res != null) {
@@ -144,13 +180,29 @@ export default function TransactionHistoryList() {
                                         <Field style={{borderColor: "black"}} type="date" id="startDate"
                                                className="form-control"
                                                name="startDate"/>
+                                        {/*<Field style={{borderColor: "black"}} id="startDate" className="form-control"*/}
+                                        {/*       name="startDate"*/}
+                                        {/*       component={DatePicker}*/}
+                                        {/*       selected={selectedMinDate}*/}
+                                        {/*       onChange={date => setSelectedMinDate(date)}*/}
+                                        {/*       dateFormat="dd/MM/yyyy"*/}
+                                        {/*       minDate={new Date(minAndMax.min)}*/}
+                                        {/*/>*/}
                                     </div>
-                                    <div className="col-lg-5 col-xl-5 col-md-5">
-                                        <label htmlFor="endDate" className="form-label me-2"
+                                    <div className="col-lg-5 col-xl-5 col-md-5" >
+                                        <label htmlFor="endDate" className="form-label"
                                                style={{color: "black"}}>Đến:</label>
                                         <Field style={{borderColor: "black"}} type="date" id="endDate"
                                                className="form-control"
                                                name="endDate"/>
+                                        {/*<Field style={{borderColor: "black"}} id="endDate" className="form-control"*/}
+                                        {/*       name="endDate"*/}
+                                        {/*       component={DatePicker}*/}
+                                        {/*       selected={selectedMaxDate}*/}
+                                        {/*       onChange={date => setSelectedMaxDate(date)}*/}
+                                        {/*       dateFormat="dd/MM/yyyy"*/}
+                                        {/*       maxDate={new Date(minAndMax.max)}*/}
+                                        {/*/>*/}
                                     </div>
                                 </div>
                                 <div className="row d-flex justify-content-center align-items-center mt-3">
@@ -203,14 +255,14 @@ export default function TransactionHistoryList() {
                 <div className="col-lg-12">
                     <table className="table table table-striped" border="1">
                         <thead>
-                        <tr style={{textAlign: "center",fontSize:"15px"}}>
-                            <th style={{width:"10%"}}>Mã HĐ</th>
-                            <th style={{width:"28%"}}>Tên đồ</th>
-                            <th style={{width:"20%"}}>Tên khách hàng</th>
-                            <th style={{width:"10%"}}>Ngày làm HĐ</th>
-                            <th style={{width:"10%"}}>Loại HĐ</th>
-                            <th style={{width:"10%"}}>Trạng thái</th>
-                            <th style={{width:"12%"}}>Chức năng</th>
+                        <tr style={{textAlign: "center", fontSize: "15px"}}>
+                            <th style={{width: "10%"}}>Mã HĐ</th>
+                            <th style={{width: "28%"}}>Tên đồ</th>
+                            <th style={{width: "20%"}}>Tên khách hàng</th>
+                            <th style={{width: "10%"}}>Ngày làm HĐ</th>
+                            <th style={{width: "10%"}}>Loại HĐ</th>
+                            <th style={{width: "10%"}}>Trạng thái</th>
+                            <th style={{width: "12%"}}>Chức năng</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -219,55 +271,54 @@ export default function TransactionHistoryList() {
                                 || search.contractStatus !== "" || search.startDate !== "" || search.endDate !== "") ? (
                                     <tr>
                                         <td colSpan={7}>
-                                            <h4 style={{color: "red",textAlign:"center"}}>Dữ liệu không tồn tại</h4>
+                                            <h4 style={{color: "red", textAlign: "center"}}>Dữ liệu không tồn tại</h4>
                                         </td>
                                     </tr>
                                 ) :
                                 contracts.map((th, index) => (
                                     <tr key={index} style={{textAlign: "center"}}>
-                                        <td >HD-{th?.contractCode}</td>
+                                        <td>HD-{th?.contractCode}</td>
                                         <td
                                             style={{
-                                                textAlign:"start",
+                                                textAlign: "start",
                                                 maxWidth: '28%',
                                                 overflow: 'hidden',
                                                 whiteSpace: 'nowrap',
                                                 textOverflow: 'ellipsis'
                                             }} title={th.productName}>{th?.productName}</td>
-                                        <td style={{textAlign:"start"}}>{th?.customers}</td>
-                                        <td >{
-                                            th?.startDate===""?"":
-                                            moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
+                                        <td style={{textAlign: "start"}}>{th?.customers}</td>
+                                        <td>{
+                                            th?.startDate === "" ? "" :
+                                                moment(th?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')
                                         }</td>
-                                        <td >{th?.contractType}</td>
-                                        <td >{th?.contractStatus}</td>
-                                        <td >
+                                        <td>{th?.contractType}</td>
+                                        <td>{th?.contractStatus}</td>
+                                        <td>
                                             <Link to={`/nav/info-store/transaction-history/detail/${th?.id}`}><i
                                                 className="bi bi-info-circle me-3"/></Link>
                                             <Link to={`/nav/info-store/transaction-history/update-contract/${th?.id}`}
                                                   className="me-3"><i style={{color: "orange"}}
                                                                       className="bi bi-pencil-square"/></Link>
                                             {
-                                                role === ("ROLE_ADMIN")?
-                                            <a type="button"
-                                               data-bs-target="#exampleModal" onClick={() => {
-                                                swalWithBootstrapButtons.fire({
-                                                    icon: "warning",
-                                                    title: "Xác nhận xóa",
-                                                    html: `Bạn có muốn xoá lịch sử giao dịch có mã <span style="color: red">HD-${th?.contractCode}</span> không?`,
-                                                    showCancelButton: true,
-                                                    confirmButtonText: 'Có',
-                                                    cancelButtonText: 'Không',
-                                                    reverseButtons: true
-                                                }).then((res) => {
-                                                        if (res.isConfirmed) {
-                                                            deleteTransactionHistory(+th?.id)
-                                                        }
-                                                    })
-                                            }}><i
-                                                style={{color: "red"}}
-                                                className="bi bi-trash3"/></a>
-                                                :""}
+                                                role === ("ROLE_ADMIN") ?
+                                                    <a type="button" onClick={() => {
+                                                        swalWithBootstrapButtons.fire({
+                                                            icon: "warning",
+                                                            title: "Xác nhận xóa",
+                                                            html: `Bạn có muốn xoá lịch sử giao dịch có mã <span style="color: red">HD-${th?.contractCode}</span> không?`,
+                                                            showCancelButton: true,
+                                                            confirmButtonText: 'Có',
+                                                            cancelButtonText: 'Không',
+                                                            reverseButtons: true
+                                                        }).then((res) => {
+                                                            if (res.isConfirmed) {
+                                                                deleteTransactionHistory(+th?.id)
+                                                            }
+                                                        })
+                                                    }}><i
+                                                        style={{color: "red"}}
+                                                        className="bi bi-trash3"/></a>
+                                                    : ""}
                                         </td>
                                     </tr>
                                 ))}
@@ -281,14 +332,14 @@ export default function TransactionHistoryList() {
                     <div className="d-grid">
                         <ReactPaginate
                             breakLabel="..."
-                            nextLabel={contracts.length===0||pageCount===1?"":"Sau"}
+                            nextLabel={contracts.length === 0 || pageCount === 1 ? "" : "Sau"}
                             onPageChange={handlePageClick}
                             pageCount={pageCount}
-                            previousLabel={contracts.length===0||pageCount===1?"":"Trước"}
+                            previousLabel={contracts.length === 0 || pageCount === 1 ? "" : "Trước"}
                             containerClassName="pagination"
-                            pageLinkClassName={contracts.length===0?"":"page-num"}
-                            nextLinkClassName={contracts.length===0?"":"page-num"}
-                            previousLinkClassName={contracts.length===0?"":"page-num"}
+                            pageLinkClassName={contracts.length === 0 ? "" : "page-num"}
+                            nextLinkClassName={contracts.length === 0 ? "" : "page-num"}
+                            previousLinkClassName={contracts.length === 0 ? "" : "page-num"}
                             activeClassName="active"
                             disabledClassName="d-none"
                         />
