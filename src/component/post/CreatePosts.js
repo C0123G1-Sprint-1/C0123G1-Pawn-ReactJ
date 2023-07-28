@@ -79,7 +79,11 @@ export function CreatePosts() {
         }
         findAllEmployees()
     }, [])
+    useEffect(() => {
+        document.title = "Thêm mới tin tức "; // Thay đổi title
 
+        window.scrollTo(0,0)
+    }, []);
     return (
         <>
             <div className=" mt-5 mb-5 d-flex justify-content-center">

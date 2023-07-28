@@ -76,9 +76,14 @@ export function ListPosts() {
     };
     const showPreviousButton = currentPage > 1;
     const showNextButton = currentPage < totalPages;
-    if (posts.length === 0) {
-        return null;
-    }
+    // if (posts.length === 0) {
+    //     return null;
+    // }
+    useEffect(() => {
+        document.title = "Danh sách tin tức "; // Thay đổi title
+
+        window.scrollTo(0,0)
+    }, []);
     return (
         <>
             <div className="mb-5 mt-5">
@@ -132,7 +137,7 @@ export function ListPosts() {
             </div>
 
             {
-                role === ("ROLE_ADMIN" || "ROLE_EMPLOYEE") ?
+                role === ("ROLE_ADMIN")  || role === ("ROLE_EMPLOYEE") ?
                     <button className="btn btn-success ms-5">
                         <NavLink className="text-decoration-none text-white" to={'/listPosts/createPosts'}>Đăng Tin</NavLink>
                     </button>
@@ -164,8 +169,7 @@ export function ListPosts() {
                                     </div>
                                     <div className="d-flex justify-content-end">
                                         {
-
-                                            role === ("ROLE_ADMIN" || "ROLE_EMPLOYEE") ?
+                                            role === ("ROLE_ADMIN")  || role === ("ROLE_EMPLOYEE") ?
                                                 <>
                                                     <button className=" btn btn-outline-danger m-2"
                                                         onClick={() => {

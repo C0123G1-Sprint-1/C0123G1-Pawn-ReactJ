@@ -28,9 +28,15 @@ export function DetailPosts() {
     useEffect(() => {
         findDetailPosts()
     }, [param.id])
+    useEffect(() => {
+        document.title = "Chi tiết tin tức "; // Thay đổi title
+
+        window.scrollTo(0,0)
+    }, []);
     if (!postsDetail) {
         return null
     }
+
     return (
         <>
             <h2 className="d-flex justify-content-center mt-5" style={{fontFamily: "Times New Roman",background: "url(https://chovayhanoi.com/wp-content/uploads/2020/04/border-title-02.png) no-repeat center bottom",
@@ -76,7 +82,7 @@ export function DetailPosts() {
                     </div>
                     <div className="col-lg-4 col-xl-3">
                         <div className="right-pane">
-                            <div className="main-news-other"><h2 className="title-other text-posts">Tin liên quan</h2>
+                            <div className="main-news-other"><h2 className="title-other text-posts">Các tin khác </h2>
                                 <div className="list-news-other">{
                                     posts.map((post) => (
                                             <div className="row mt-3">
@@ -86,7 +92,7 @@ export function DetailPosts() {
                                                         src={post.image} alt=""/> </a></div>
                                                 </div>
                                                 <div className="col-8 mt-2">
-                                                    <a className="text-decoration-none" href={`/detail/${post.id}`}><h3 className="title-post text-posts ms-2">{post.title}</h3></a>
+                                                    <a className="text-decoration-none" href={`/listPosts/detail/${post.id}`}><h3 className="title-post text-posts ms-2">{post.title}</h3></a>
                                                     <span className="time-post1 d-flex justify-content-end text-posts">{formatDateTime(post.createDate)}</span>
                                                 </div>
                                             </div>
