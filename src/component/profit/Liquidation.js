@@ -1,20 +1,24 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useOutletContext} from "react-router";
+import moment from "moment";
 
 export default function Liquidation() {
     const liquidations = useOutletContext();
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <>
-            <div style={{height: ""}}>
+            <div style={{minHeight: "53vh"}}>
                 <table className="table table-hover table-striped" border={1}>
                     <thead>
-                    <tr>
-                        <th>Mã Hd</th>
-                        <th>Tiền mua</th>
-                        <th>Tiền bán</th>
+                    <tr style={{textAlign: "start"}}>
+                        <th>Mã HĐ</th>
+                        <th>Tiền mua (VNĐ)</th>
+                        <th>Tiền bán (VNĐ)</th>
                         <th>Ngày thanh lý</th>
-                        <th>Lợi nhuận</th>
-                        <th id="actions">Tùy chọn</th>
+                        <th>Lợi nhuận (VNĐ)</th>
+                        {/*<th id="actions">Chức năng</th>*/}
                     </tr>
                     </thead>
                     <tbody>
@@ -22,26 +26,26 @@ export default function Liquidation() {
                         liquidations ?
                             liquidations.map((liquidation, index) =>
                                 <tr key={index}>
-                                    <td>{liquidation.contractCode}</td>
-                                    <td>{liquidation.loans}</td>
-                                    <td>{liquidation.proceedsOfSale}</td>
-                                    <td>{liquidation.createDate}</td>
-                                    <td>{liquidation.profit}</td>
-                                    <td className="detail-button">
-                                        <a href="#">
-                                            <i
-                                                className="bi bi-info-circle detail"
-                                                title="Chi tiết"
-                                            />
-                                        </a>
-                                    </td>
+                                    <td>{"HD-"+liquidation.contractCode}</td>
+                                    <td>{liquidation.loans?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td>{liquidation.proceedsOfSale?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    <td>{moment(liquidation.createDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                    <td>{liquidation.profit?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                    {/*<td className="detail-button">*/}
+                                    {/*    <a href="#">*/}
+                                    {/*        <i*/}
+                                    {/*            className="bi bi-info-circle detail"*/}
+                                    {/*            title="Chi tiết"*/}
+                                    {/*        />*/}
+                                    {/*    </a>*/}
+                                    {/*</td>*/}
                                 </tr>
                             )
                             :
                             <tr>
                                 <td colSpan="7">
                                     <div align="center">
-                                        <h1>Data Not Found</h1>
+                                        <h4 className="text-danger">Dữ liệu không tồn tại</h4>
                                     </div>
                                 </td>
                             </tr>

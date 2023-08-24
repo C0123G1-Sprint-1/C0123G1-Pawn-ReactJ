@@ -4,13 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
-import Navbars from "./component/navbar/Navbars";
-
+import IntlProvider from "react-intl/lib/src/components/provider";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BrowserRouter>
-        <App/>
-    </BrowserRouter>
+  <BrowserRouter>
+      <IntlProvider locale="en">
+          <App />
+      </IntlProvider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
