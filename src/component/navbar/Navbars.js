@@ -7,18 +7,6 @@ import jwt from "jwt-decode";
 
 export default function Navbars() {
   const role = localStorage.getItem("role");
-  // const [decodedToken, setDecodedToken] = useState(0);
-
-//   useEffect(() => {
-//     if (token) {
-//       console.log("token: " + token);
-//       const decoded = jwt(token);
-//       setDecodedToken(decoded);
-//       // alert(decoded.id)
-//     } else {
-//       // Xử lý khi không có token trong localStorage
-//     }
-//   }, [token]);
   return (
     <>
       <nav

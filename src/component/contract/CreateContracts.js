@@ -241,7 +241,7 @@ export const CreateContracts = () => {
                                                     const month = value.getMonth()
                                                     const year = value.getFullYear()
                                                     const dateNow = new Date()
-                                                    if (year >= dateNow.getFullYear()) {
+                                                    if (year && year >= dateNow.getFullYear()) {
                                                         if (month > dateNow.getMonth()) {
                                                             return true
                                                         } else if (month === dateNow.getMonth()) {
