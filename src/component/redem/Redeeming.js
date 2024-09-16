@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Modal} from 'react-bootstrap';
 import * as redeemingService from '../../service/RedeemingService'
-import {Field, Form, Formik} from "formik";
+import {Field, Form, Formik, isNaN} from "formik";
 import * as Swal from "sweetalert2";
-import {getTimerProgressBar} from "sweetalert2";
-import {ThreeCircles} from "react-loader-spinner";
+import moment from "moment";
+import {Link, useNavigate} from "react-router-dom";
 
 
 export const Redeeming = () => {
+    const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [contractCode, setContractCode] = useState('');
     const [customerName, setCustomerName] = useState('');
     const [productName, setProductName] = useState('');
@@ -20,12 +20,25 @@ export const Redeeming = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0); // Tổng số trang
 
+    const getToday = () => {
+        const today = new Date();
+        // Đặt giờ, phút, giây và mili giây về 0 để so sánh ngày mà không tính đến thời gian.
+        today.setHours(0, 0, 0, 0);
+        return today;
+    };
     const handleModalClose = () => {
         setShowModal(false);
+        setStartDate('')
+        setCustomerName('')
+        setContractCode('')
+        setProductName('')
+
     };
 
     const handleModalOpen = () => {
+        setPage(0)
         setShowModal(true);
+        fetchContract()
     };
 
 
@@ -68,12 +81,38 @@ export const Redeeming = () => {
 
 
     const reset = async () => {
-        await setContractCode('');
-        await  setCustomerName('');
-        await setProductName('');
-        await  setStartDate('');
-        await setSelectedContract(0);
+
+        setSelectedContract(0)
+
+        // window.location.reload(false);
     }
+    const loadContracts = async () => {
+
+
+        Swal.fire({
+            html: '<div className="loading-screen" style={{position: "fixed",\n' +
+                '  top: "0;",\n' +
+                '  left: "0",\n' +
+                '  width: "100%",\n' +
+                '  height: "100%",\n' +
+                '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
+            timer: 5000,
+            title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: async () => {
+                await Swal.showLoading();
+            },
+            willClose: () => {
+                // Thêm xử lý khi SweetAlert2 đóng (nếu cần thiết).
+            }
+        });
+    };
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
 
     return (
 
@@ -82,21 +121,23 @@ export const Redeeming = () => {
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"/>
             <meta charSet="UTF-8"/>
             <title>Title</title>
-            <link
-                href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-                rel="stylesheet"
-                integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-                crossOrigin="anonymous"
-            />
-            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+            {/*<link*/}
+            {/*    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"*/}
+            {/*    rel="stylesheet"*/}
+            {/*    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"*/}
+            {/*    crossOrigin="anonymous"*/}
+            {/*/>*/}
+            {/*<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>*/}
             <link
                 rel="stylesheet"
                 href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
             />
             <style
                 dangerouslySetInnerHTML={{
+
+
                     __html:
-                        '\n        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");\n\n        .card {\n            border: none;\n            padding: 20px;\n            position: relative;\n            background-color: rgba(255, 255, 255, 0.7);\n            border-radius: 20px;\n        }\n\n        body {\n        }\n\n        body {\n            background-color: #eee;\n            font-family: "Poppins", sans-serif;\n            font-weight: 300\n        }\n\n        .height {\n            height: 100vh\n        }\n\n        .card {\n            border: none;\n            padding: 20px;\n            position: relative\n        }\n\n        .btn-group {\n            display: flex;\n            justify-content: space-between;\n        }\n\n        label {\n            font-family: Arial, sans-serif;\n            font-size: 14px;\n            font-weight: bold;\n            color: #222222;\n            margin-bottom: 5px;\n            display: inline-block;\n        }\n\n    '
+                        '\n        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");\n\n       .card {\n            border: none;\n            padding: 20px;\n            position: relative;\n            background-color: rgba(255, 255, 255, 0.7);\n            border-radius: 20px;\n        }\n\n        body {\n        }\n\n        body {\n            background-color: #eee;\n            font-family: "Poppins", sans-serif;\n            font-weight: 300\n        }\n\n        .height {\n            height: 100vh\n        }\n\n        .card {\n            border: none;\n            padding: 20px;\n            position: relative\n        }\n\n        .btn-group {\n            display: flex;\n            justify-content: space-between;\n        }\n\n        label {\n            font-family: Arial, sans-serif;\n            font-size: 14px;\n            font-weight: bold;\n            color: #222222;\n            margin-bottom: 5px;\n            display: inline-block;\n        }\n\n    '
                 }}
             />
             <br/>
@@ -105,13 +146,13 @@ export const Redeeming = () => {
             {/*top: "50%",*/}
             {/*transform: "translate(-50%, -50%)",*/}
             {/*paddingRight: "20px"}}*/}
-            <div className="container mt-5 mb-5" >
-                <div className="row height d-flex justify-content-center align-items-center">
+            <div className="container pt-3 pb-5">
+                <div className="row height d-flex justify-content-center align-items-center" style={{height: "85vh"}}>
                     <div className="col-md-6">
-                        <div className="card px-5 py-4">
+                        <div className="card px-5 py-4" style={{borderRadius: "7px",border: "1px solid rgba(0,0,0,0.17)"}}>
                             <div style={{textAlign: "center"}}>
                                 <h1>
-                                    <b>Trả Đồ</b>
+                                    TRẢ ĐỒ
                                 </h1>
                             </div>
 
@@ -134,11 +175,13 @@ export const Redeeming = () => {
                                         backdrop="static"
                                         keyboard={false}
                                         centered
-                                        style={{position: "fixed",
+                                        style={{
+                                            position: "fixed",
                                             left: "50%",
                                             top: "50%",
                                             transform: "translate(-50%, -50%)",
-                                            paddingRight: "20px"}}
+                                            paddingRight: "20px"
+                                        }}
 
                                     >
                                         <Modal.Header style={{backgroundColor: "#00833e", color: "white"}}>
@@ -174,9 +217,9 @@ export const Redeeming = () => {
                                                 }}>
                                                     <Form>
                                                         <div className="row">
-                                                            <div className="col-lg-3">
+                                                            <div className="col-lg-2">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="ma">Mã HĐ</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="ma">Mã hợp đồng</label>
                                                                     <Field id="ma"
                                                                            type="text" name="contractCode"
                                                                            className="form-control"/>
@@ -185,7 +228,7 @@ export const Redeeming = () => {
                                                             </div>
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="kh">Tên khách hàng</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="kh">Tên khách hàng</label>
                                                                     <Field id="kh"
                                                                            type="text" name="customerName"
                                                                            className="form-control"/>
@@ -193,7 +236,7 @@ export const Redeeming = () => {
                                                             </div>
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="doCam">Đồ cầm</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="doCam">Đồ cầm</label>
                                                                     <Field id="doCam"
                                                                            type="text" name="productName"
                                                                            className="form-control"/>
@@ -202,26 +245,23 @@ export const Redeeming = () => {
                                                             </div>
                                                             <div className="col-lg-3">
                                                                 <div className="form-group">
-                                                                    <label htmlFor="dateStart">Ngày làm hợp
-                                                                        đòng</label>
+                                                                    <label style={{fontWeight: 500}} htmlFor="dateStart">Ngày làm hợp
+                                                                        đồng</label>
                                                                     <Field
                                                                         id="dateStart" type="date" name="startDate"
                                                                         className="form-control"/>
                                                                 </div>
 
                                                             </div>
-
-                                                        </div>
-
-
-                                                        <div className="row">
-                                                            <div className="col-md-12 d-flex justify-content-end">
+                                                            <div className="col-lg-1 d-flex justify-content-end">
                                                                 <button type="submit"
-                                                                        className="btn btn-outline-primary "><i
+                                                                        className="btn btn-outline-success "
+                                                                        style={{width: "auto",height: "37px",marginTop: "3.7vh"}}><i
                                                                     className="bi bi-search"></i>
                                                                 </button>
 
                                                             </div>
+
                                                         </div>
 
                                                     </Form>
@@ -230,273 +270,294 @@ export const Redeeming = () => {
                                             </div>
                                             <table className="table table-striped">
                                                 <thead>
-                                                <tr>
-                                                    <th className="text-center">Mã HĐ</th>
-                                                    <th className="text-center">Khách Hàng</th>
-                                                    <th className="text-center">Đồ Cầm</th>
-                                                    <th className="text-center">Tiền Cho Vay (VNĐ)</th>
-                                                    <th className="text-center">Ngày Làm HĐ</th>
-                                                    <th className="text-center">Chức Năng</th>
+                                                <tr style={{textAlign: "start"}}>
+                                                    <th >Mã HĐ</th>
+                                                    <th >Khách Hàng</th>
+                                                    <th >Đồ Cầm</th>
+                                                    <th >Tiền Cho Vay (VNĐ)</th>
+                                                    <th >Ngày Làm HĐ</th>
+                                                    <th >Chức Năng</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
 
                                                 {
-                                                    contracts.map((contract) => (
-                                                        <tr key={contract.contractId}>
-                                                            <td className="text-center">{contract.contractCode}</td>
-                                                            <td className="text-center">{contract.customerName}</td>
-                                                            <td className="text-center">{contract.productName}</td>
-                                                            <td className="text-center">{contract.loans}</td>
-                                                            <td className="text-center">{contract.startDate}</td>
-                                                            <td className="text-center">
-                                                                <button onClick={() => {
-                                                                    handleModalClose(true);
-                                                                    setSelectedContract(contract.contractId)
-                                                                }} className="btn btn-success text-center">
-                                                                    Chọn
-                                                                </button>
+                                                    contracts.length === 0 ?
+                                                        <tr>
+                                                            <td colSpan="6" className="text-center">
+                                                                <h4 style={{color: "red"}}>Dữ liệu không tồn tại</h4>
                                                             </td>
                                                         </tr>
-                                                    ))
-                                                }
+                                                        :
+                                                        <tbody>
 
-
-                                                {/* Other table rows */}
-                                                </tbody>
-                                            </table>
-                                            <div className="d-flex col-12 justify-content-end">
-                                                <nav aria-label="...">
-                                                    <ul className="pagination">
-                                                        <li hidden={page === 0} className="page-item ">
-                                                            <button className="page-link" tabIndex={-1}
-                                                                    onClick={() => paginate(page - 1)}>
-                                                                Trước
-                                                            </button>
-                                                        </li>
-                                                        {/*<li className="page-item active" aria-current="page">*/}
-                                                        {/*    <a className="page-link" href="#">*/}
-                                                        {/*        1*/}
-                                                        {/*    </a>*/}
-                                                        {/*</li>*/}
                                                         {
-                                                            Array.from({length: totalPages}, (a, index) => index).map((page) => (
-                                                                <li className="page-item">
-                                                                    <button className="page-link " key={page}
-                                                                            onClick={() => paginate(page)}>
-                                                                        {page + 1}
-                                                                    </button>
-                                                                </li>
+                                                            contracts.map((contract) => (
+                                                                <tr key={contract.contractId} style={{textAlign: "start"}}>
+                                                                    <td >HD-{contract.contractCode}</td>
+                                                                    <td>{contract.customerName}</td>
+                                                                    <td >{contract.productName}</td>
+                                                                    <td >{contract.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
+                                                                    <td >{moment(contract.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY')}</td>
+                                                                    <td >
+                                                                        <button onClick={() => {
+                                                                            handleModalClose(true);
+                                                                            setSelectedContract(contract.contractId)
+                                                                        }} className="btn btn-success text-center">
+                                                                            Chọn
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
                                                             ))
                                                         }
 
 
-                                                        {/*<li className="page-item">*/}
-                                                        {/*    <a className="page-link" href="#">*/}
-                                                        {/*        3*/}
-                                                        {/*    </a>*/}
-                                                        {/*</li>*/}
-                                                        <li hidden={page + 1 === totalPages}
-                                                            className="page-item">
-                                                            <button className="page-link" tabIndex={-1}
-                                                                    onClick={() => paginate(page + 1)}>
-                                                                Tiếp
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
+                                                        {/* Other table rows */}
+                                                        </tbody>
+
+                                                }
+
+
+                                                {/* Other table rows */}
+                                            </table>
+                                            {
+                                                contracts.length === 0 ? '' :
+                                                    <div className="d-flex col-12 justify-content-end">
+                                                        <nav aria-label="...">
+                                                            <ul className="pagination">
+                                                                <li hidden={page === 0} className="page-item ">
+                                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
+
+                                                                            onClick={() => paginate(page - 1)}>
+                                                                        Trước
+                                                                    </button>
+                                                                </li>
+
+
+                                                                {
+                                                                    Array.from({length: totalPages}, (a, index) => index).map((pageNum) => (
+                                                                        <li className="page-item">
+                                                                            <button
+                                                                                className={page === pageNum ? "page-link-active" : "page-link-khanh"}
+                                                                                style={{border: "1px solid gray", borderRadius: "5px"}}
+                                                                                key={pageNum}
+                                                                                onClick={() => paginate(pageNum)}>
+                                                                                {pageNum + 1}
+                                                                            </button>
+                                                                        </li>
+                                                                    ))
+                                                                }
+
+                                                                <li hidden={page + 1 === totalPages}
+                                                                    className="page-item">
+                                                                    <button className="page-link page-link-khanhh" tabIndex={-1}
+                                                                            style={{border: "1px solid gray", borderRadius: "5px"}}
+
+                                                                            onClick={() => paginate(page + 1)}>
+                                                                        Sau
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                            }
                                         </Modal.Body>
                                     </Modal>
                                 </div>
                             </div>
 
-                            <Formik initialValues={{
-                                contractId: selectedContract,
-                                redeemDate: '',
-                                total: '',
-                                contractCode: '',
-                                customerName: '',
-                                name: '',
-                                loans: '',
-                                profit: '',
-                                startDate: '',
-                                endDate: '',
+                            <Formik initialValues={{}}
 
 
+                                    onSubmit={async (value) => {
+                                        const res = async () => {
+                                            try {
+                                                await redeemingService.redeem(selectedContract);
+
+                                            } catch (e) {
+                                                console.log(e)
+                                            }
+                                        }
+
+                                       await loadContracts()
+                                       await res()
+
+                                        Swal.fire({
+                                            icon:"success",
+                                            title:"Trả đồ thành công",
+                                            timer:2000
+                                        })
+                                        navigate('/nav/info-store/all-contract')
 
 
-                            }} onSubmit={(value, {setSubmitting}) => {
-                                setTimeout(() => {
-                                    setSubmitting(false)
-                                }, 5000)
-                                const res = async () => {
-                                    try {
-                                        const rs = await redeemingService.redeem(selectedContract, value.redeemDate);
-                                    } catch (e) {
-                                        console.log(e)
-                                    }
-                                }
-                                res().then(Swal.fire({
-                                    icon: "success",
-                                    title: "Đã chuộc thành công",
+                                        reset()
+                                        fetchContract()
+                                    }}>
 
-                                }))
-                                reset()
-                                fetchContract()
 
-                            }}>
-                                {
-                                    ({isSubmitting}) => (
                                         <>
                                             <Form>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Mã HĐ</label>
-                                                        <Field
-                                                            disabled
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="contractCode"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.contractCode}
-                                                        />
+                                                        <label style={{fontWeight: 500}}>Mã HĐ</label>
+
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
+                                                            className="p-0 m-0">
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.contractCode}
+                                                        </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Tên khách hàng</label>
-                                                        <Field
-                                                            disabled
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="customerName"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.customerName}
+                                                        <label style={{fontWeight: 500}}>Tên khách hàng</label>
 
-                                                        />
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
+                                                            className="p-0 m-0">
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.customerName}
+                                                        </h5>
                                                     </div>
                                                 </div>
                                                 <div className="mt-2 inputs form-group">
-                                                    <label>Đồ cầm</label>
-                                                    <Field
-                                                        disabled
-                                                        defaultValue=""
-                                                        type="text"
-                                                        className="form-control"
-                                                        name="name"
-                                                        value={contracts.find((c) => c.contractId == selectedContract)?.productName}
+                                                    <label style={{fontWeight: 500}}>Đồ cầm</label>
 
-                                                    />
+                                                    <h5 style={{
+                                                        border: "0px solid gray",
+                                                        alignItems: "center",
+                                                        display: "flex",
+                                                        backgroundColor: "#e9ecef",
+                                                        height: "4.9vh",
+                                                        borderRadius: "7px"
+                                                    }}
+                                                        className="p-0 m-0">
+                                                        {contracts.find((c) => c.contractId == selectedContract)?.productName}
+                                                    </h5>
                                                 </div>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs ">
-                                                        <label>Tiền cho vay</label>
-                                                        <Field
-                                                            disabled
-                                                            type="number"
-                                                            className="form-control"
-                                                            name="loans"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.loans}
-
-                                                        />
+                                                        <label style={{fontWeight: 500}}>Tiền cho vay (VNĐ)</label>
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
+                                                            className="p-0 m-0">
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.loans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                                                        </h5>
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Tiền lãi</label>
-                                                        <Field
-                                                            disabled
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="profit"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.profit}
+                                                        <label style={{fontWeight: 500}}>Tiền lãi (VNĐ)</label>
 
-
-                                                        />
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
+                                                            className="p-0 m-0">
+                                                            {contracts.find((c) => c.contractId == selectedContract)?.profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                                                        </h5>
                                                     </div>
                                                 </div>
                                                 <div className="row mt-2  ">
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Ngày bắt đầu</label>
-                                                        <Field
-                                                            disabled
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="startDate"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.startDate}
+                                                        <label style={{fontWeight: 500}}>Ngày bắt đầu</label>
 
-                                                        />
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
+                                                            className="p-0 m-0">
+                                                            {selectedContract ? moment(contracts.find((c) => c.contractId == selectedContract)?.startDate, 'YYYY/MM/DD').format('DD/MM/YYYY') : ''}
+                                                        </h5>
+
                                                     </div>
                                                     <div className="col-lg-6 inputs form-group">
-                                                        <label>Ngày kết thúc</label>
-                                                        <Field
-                                                            disabled
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="endDate"
-                                                            value={contracts.find((c) => c.contractId == selectedContract)?.endDate}
+                                                        <label style={{fontWeight: 500}}>Ngày kết thúc</label>
 
-                                                        />
+                                                        <h5 style={{
+                                                            border: "0px solid gray",
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            backgroundColor: "#e9ecef",
+                                                            height: "4.9vh",
+                                                            borderRadius: "7px"
+                                                        }}
+                                                            className="p-0 m-0">
+                                                            {selectedContract ? moment(contracts.find((c) => c.contractId == selectedContract)?.endDate, 'YYYY/MM/DD').format('DD/MM/YYYY') : ''}
+                                                        </h5>
                                                     </div>
                                                 </div>
                                                 <div className="mt-2 inputs">
-                                                    <label>Tiền thanh toán</label>
-                                                    <Field
-                                                        disabled
-                                                        type="number"
-                                                        className="form-control"
-                                                        name="total"
+                                                    <label style={{fontWeight: 500}}>Tiền thanh toán (VNĐ)</label>
+                                                    <h5 style={{
+                                                        border: "0px solid gray",
+                                                        alignItems: "center",
+                                                        display: "flex",
+                                                        backgroundColor: "#e9ecef",
+                                                        height: "4.9vh",
+                                                        borderRadius: "7px"
+                                                    }}
+                                                        className="p-0 m-0">
 
-                                                        value={contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit}
+                                                        {isNaN(contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')) ? '' : (contracts.find((c) => c.contractId == selectedContract)?.loans + contracts.find((c) => c.contractId == selectedContract)?.profit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} </h5>
+                                                </div>
 
-                                                    />
-                                                </div>
-                                                <div className="mt-2 inputs">
-                                                    <label>Ngày trả đồ</label>
-                                                    <Field
-                                                        type="date"
-                                                        className="form-control"
-                                                        name="redeemDate"
-                                                    />
-                                                </div>
                                                 <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                                    {/*<div className="text-center m-auto">*/}
-                                                    {/*    <button*/}
-                                                    {/*        type="button"*/}
-                                                    {/*        className="btn btn-secondary "*/}
-                                                    {/*        data-bs-toggle="modal"*/}
-                                                    {/*        data-bs-target="#staticBackdrop"*/}
-                                                    {/*    >*/}
-                                                    {/*        <b className="text-center">Quay lại</b>*/}
-                                                    {/*    </button>*/}
-                                                    {/*</div>*/}
+                                                    <div className="text-center m-auto">
 
-                                                    <div  className="text-center m-auto">
-                                                    {
-                                                      isSubmitting ? (<ThreeCircles
-                                                                height="100"
-                                                                width="100"
-                                                                color="#4fa94d"
-                                                                wrapperStyle={{}}
-                                                                wrapperClass=""
-                                                                visible={true}
-                                                                ariaLabel="three-circles-rotating"
-                                                                outerCircleColor=""
-                                                                innerCircleColor=""
-                                                                middleCircleColor=""
-                                                            />) :
-                                                            ( <div  className="text-center m-auto">
-                                                                    <button onClick={() => fetchContract()} hidden={!selectedContract} type="submit"
-                                                                            className="btn btn-success">
-                                                                        <b className="text-center">Thanh toán</b>
-                                                                    </button>
-                                                                </div>
-                                                            )
+                                                        <div className="text-center m-auto">
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-secondary "
+                                                                style={{width: '130px'}}>
+                                                                <Link to="/nav/info-store/"
+                                                                      className="text-center text-light"><b>Quay lại</b></Link>
+                                                            </button>
+                                                        </div>
+                                                    </div>
 
-                                                    }
+                                                    <div className="text-center m-auto">
+
+
+                                                        <div className="text-center m-auto">
+                                                            <button
+                                                                    disabled={!selectedContract} type="submit"
+                                                                    className="btn btn-success"
+                                                                    style={{width: '130px'}}>
+                                                                <b className="text-center">Thanh toán</b>
+                                                            </button>
+                                                        </div>
+
+
                                                     </div>
 
                                                 </div>
                                             </Form>
                                         </>
 
-                                    )
-                                }
+
+
 
                             </Formik>
 

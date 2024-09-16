@@ -1,11 +1,13 @@
 /* Font */
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
 
+
 /* Design */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
+    font-family: "Font Awesome 6 Free";
 }
 
 html {
@@ -65,32 +67,66 @@ h2 {
 /*    !*background-color: rgba(255, 255, 255, 0.12);*!*/
 /*}*/
 
-.cards {
+
+
+.cards-post {
+
     display: flex;
     flex-wrap: wrap;
-    list-style: none;
+    list-style: initial;
     margin: 0;
-    padding: 0;
+    /*padding: 0;*/
 }
 
 .cards_item {
     display: flex;
     padding: 1rem;
 }
+.text-posts {
+    font-family: "Times New Roman"!important;
+}
 
-@media (min-width: 40rem) {
+/* Điều chỉnh cho màn hình nhỏ hơn 40rem */
+@media (max-width: 40rem) {
     .cards_item {
-        width: 50%;
+        width: 100%; /* Chuyển từ hiển thị 2 cột sang hiển thị 1 cột */
+    }
+    .image-post {
+        width: 60px; /* Giảm kích thước hình ảnh */
+        height: 60px;
+    }
+    .title-post {
+        font-size: 14px; /* Giảm kích thước chữ tiêu đề */
     }
 }
 
-@media (min-width: 56rem) {
+/* Điều chỉnh cho màn hình nhỏ hơn 56rem */
+@media (max-width: 56rem) {
     .cards_item {
-        width: 33.3333%;
+        width: 33.3333%; /* Chuyển từ hiển thị 3 cột sang hiển thị 2 cột */
     }
 }
 
-.card {
+/* Điều chỉnh cho màn hình nhỏ hơn 768px (kích thước màn hình điện thoại) */
+@media (max-width: 768px) {
+    .cards_item {
+        /* Thêm các điều chỉnh thích hợp với kích thước màn hình điện thoại */
+        width: 100%; /* Chuyển về hiển thị 1 cột trên điện thoại */
+    }
+    .image-post {
+        width: 40px; /* Giảm kích thước hình ảnh cho màn hình điện thoại */
+        height: 40px;
+    }
+    .title-post {
+        font-size: 12px; /* Giảm kích thước chữ tiêu đề cho màn hình điện thoại */
+    }
+}
+
+/* Điều chỉnh cho màn hình nhỏ hơn 992px (kích thước màn hình máy tính bảng) */
+@media (max-width: 992px) {
+    /* Thêm các điều chỉnh thích hợp với kích thước màn hình máy tính bảng */
+}
+.card-post {
     background-color: white;
     border-radius: 0.25rem;
     box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
@@ -100,32 +136,27 @@ h2 {
 }
 
 .card_content {
-    padding: 0.5rem;
-    /*background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);*/
+    height: 3rem;
+}
+.card-date {
+    height: 2rem;
 }
 
 .card_title {
-    /*color: #ffffff;*/
     font-size: 1rem;
     font-weight: 700;
-    letter-spacing: 1px;
+    /*letter-spacing: 1px;*/
     text-transform: capitalize;
-    margin: 0;
+    margin-top: 1rem;
     text-align: center;
-    /*font-family: SVN-Gilroy!important;*/
-
+    width: 290px;
 }
-.time {
-    margin-top: 10px;
-    text-align: right;
-    color: #999;
-    font-size: 16px;
-}
-.time1 {
-    margin-top: 4px;
-    text-align: right;
-    color: #999;
-    font-size: 13px;
+.card_title.long-text {
+    /* Các thuộc tính giới hạn đoạn văn bản */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
 }
 .card_text {
     color: #ffffff;
@@ -134,6 +165,21 @@ h2 {
     margin-bottom: 1.25rem;
     font-weight: 400;
 }
+.time-post {
+    margin-top: 10px;
+    margin-right: 1rem;
+    text-align: right;
+    color: #999;
+    font-size: 16px;
+}
+.time-post1 {
+    margin-top: 4px;
+    margin-right: 4px;
+    text-align: right;
+    color: #999;
+    font-size: 16px;
+}
+
 .hideContent {
     overflow: hidden;
     line-height: 1em;
@@ -144,20 +190,22 @@ h2 {
     line-height: 1em;
     height: auto;
 }
-label {
+.label-post {
+    font-family: "Times New Roman";
     display: block;
-    font-weight: bold;
+    font-weight: bold ;
     color: #333;
 }
 .title-news{
     color: #00833e;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 700;
+    margin: 2rem 4rem;
 }
-textarea {
+.textarea-posts {
     width: 100%;
     padding: 10px;
-    height: 200px;
+    /*height: 100px;*/
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -195,6 +243,7 @@ textarea {
     background: #fff;
     padding: 0 15px;
 }
+
 /*.image {*/
 /*    -webkit-box-pack: center;*/
 /*    -ms-flex-pack: center;*/
@@ -210,11 +259,28 @@ textarea {
 /*    height: 70px;*/
 /*    overflow: hidden;*/
 /*}*/
+
+.image-post {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    min-width: 80px;
+    height: 80px;
+    overflow: hidden;
+}
+
 .other-item .content {
     padding-left: 10px;
     width: calc(100% - 70px);
 }
-.title {
+.title-post {
     -webkit-transition: all .4s ease-in-out;
     -o-transition: .4s ease-in-out all;
     -webkit-line-clamp: 2;
@@ -235,29 +301,42 @@ textarea {
     max-width: 100%;
     height: auto;
 }
-/* Pageable.css */
 
-.pagination-container {
+.pagination-container-huy {
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
-
-.pagination-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    margin: 0 5px;
+.pagination-container-huy button {
+    padding: 10px 20px;
+    margin: 0;
     border: 1px solid #ccc;
-    border-radius: 50%;
+    background-color: #fff;
+    color: #333;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
 }
 
-.pagination-button.active {
-    background-color: #007bff;
+.pagination-container-huy button:hover {
+    background-color: #f5f5f5;
+}
+
+
+.pagination-container-huy button[disabled] {
+    cursor: not-allowed;
+}
+
+/* CSS cho nút chuyển trang hiện tại */
+.pagination-container-huy button[style*="bold"] {
+    font-weight: bold;
+    background-color: #00833e;
     color: #fff;
-    border: none;
+    border-color: #00833e;
+}
+
+.pagination-container-huy button[style*="bold"]:hover {
+    background-color: #00833e;
 }

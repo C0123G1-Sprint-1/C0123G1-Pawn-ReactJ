@@ -1,27 +1,48 @@
-import {useNavigate} from "react-router-dom";
-import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {RegisterPawn} from "./RegisterPawn";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { RegisterPawn } from "./RegisterPawn";
 // import "../../css/home.css"
 // import io from "socket.io-client"
 // import data from "bootstrap/js/src/dom/data";
-
-// const socket =io.connect("http://localhost:8080");
+//
+// const socket =io.connect("http://localhost:8080/api/register/create");
+// import SockJsClient from 'react-stomp';
 export function List() {
     const navigate = useNavigate();
-    //
+
     // const [messageReceived,setMessageReceived] = useState("");
     // useEffect(() => {
     //     socket.on("receive_message",(data) => {
     //         setMessageReceived(data.message)
     //     })
     // },[socket])
-    // <h1>Message : </h1>{messageReceived}
+
+
 
 
     return (
         <>
 
+
+            {/*<SockJsClient url='http://localhost:8080/api/register/'*/}
+            {/*              topics={['/topic/user']}*/}
+            {/*              onConnect={() => {*/}
+            {/*                  console.log("connected");*/}
+            {/*              }}*/}
+            {/*              onDisconnect={() => {*/}
+            {/*                  console.log("Disconnected");*/}
+            {/*              }}*/}
+            {/*              onMessage={(msg) => {*/}
+            {/*                  console.log(msg);*/}
+            {/*              }}*/}
+            {/*              ref={(client) => {*/}
+            {/*                  this.clientRef = client*/}
+            {/*              }}/>*/}
+
+            {/*<h1>Message : {messageReceived}</h1>*/}
+
+            {/*<ListPosts/>*/}
             <div>
                 <div id="demo" class="carousel slide" data-bs-ride="carousel">
 
@@ -33,7 +54,7 @@ export function List() {
 
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="anh/z4495656532190_6887c6aeaabc3b081c72e969ab66c288.jpg" alt="Los Angeles" class="d-block" style={{width:"100%"}}/>
+                            <img src="anh/anhmoi.jpg" alt="Los Angeles" class="d-block" style={{width:"100%"}}/>
                         </div>
                         <div class="carousel-item">
                             <img src="anh/z4495656624664_bd45947738323e226dfe27013a92ff29.jpg" alt="Chicago" class="d-block" style={{width:"100%"}}/>
@@ -52,58 +73,20 @@ export function List() {
                 </div>
 
 
-                {/*<header>*/}
-                {/*    <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">*/}
-                {/*        <div className="carousel-indicators">*/}
-                {/*            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to={0}*/}
-                {/*                    className="active" aria-current="true" aria-label="Slide 1"/>*/}
-                {/*            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to={1}*/}
-                {/*                    aria-label="Slide 2"/>*/}
-                {/*            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to={2}*/}
-                {/*                    aria-label="Slide 3"/>*/}
-                {/*        </div>*/}
 
-                {/*        <div className="carousel-inner row">*/}
-                {/*            <div className="carousel-item active col-12"*/}
-                {/*                 style={{backgroundImage: 'url("anh/z4495656532190_6887c6aeaabc3b081c72e969ab66c288.jpg")'}}>*/}
-                {/*                <div className="carousel-caption">*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-
-                {/*            <div className="carousel-item active col-12"*/}
-                {/*                 style={{backgroundImage: 'url("anh/z4495656624664_bd45947738323e226dfe27013a92ff29.jpg")'}}>*/}
-
-                {/*            </div>*/}
-                {/*            <div className="carousel-item  active col-12"*/}
-                {/*                 style={{backgroundImage: 'url("anh/z4495656653609_0a57b810f61e9f559a15eef36a363504.jpg")'}}>*/}
-
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*        <button className="carousel-control-prev" type="button"*/}
-                {/*                data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">*/}
-                {/*            <span className="carousel-control-prev-icon" aria-hidden="true"/>*/}
-                {/*            <span className="visually-hidden">Previous</span>*/}
-                {/*        </button>*/}
-                {/*        <button className="carousel-control-next" type="button"*/}
-                {/*                data-bs-target="#carouselExampleCaptions" data-bs-slide="next">*/}
-                {/*            <span className="carousel-control-next-icon" aria-hidden="true"/>*/}
-                {/*            <span className="visually-hidden">Next</span>*/}
-                {/*        </button>*/}
-                {/*    </div>*/}
-                {/*</header>*/}
                 <div className="recommend">
-                    <h2 className="title">DỊCH VỤ CẦM ĐỒ PAWN SHOP </h2>
+                    <h2 style={{padding : "1.5rem",marginTop:"-1rem",fontFamily :"Times New Roman"}} className="title-thang">DỊCH VỤ CẦM ĐỒ PAWN SHOP </h2>
                     <div className="recommend-content">
                         <img src="./anh/tempsnip.png" alt=""/>
-                        <div className="description" style={{textAlign: "justify"}}>
+                        <div  className="description" style={{textAlign: "justify",fontWeight:"400",fontSize : "18px"}}>
                             <p>
-                                <strong>Pawnshop.com</strong> với gần 10 năm kinh nghiệm cung cấp dịch vụ
+                                <strong>Pawnshop.com</strong> với gần 10 năm kinh nghiệm cung cấp dịch vụ {""}
                                 <a href="https://vi.wikipedia.org/wiki/Cầm_đồ" target="_blank" rel="noopener">
-                                    <strong>cầm đồ</strong>
+                                    <strong className="text-success">cầm đồ</strong>
                                 </a>
                                 . Cam kết đảm bảo bạn sẽ hài lòng vì tài sản của bạn được{" "}
                                 <b>niêm phong có chữ ký xác nhận và bảo hiểm 100% giá trị tài sản</b>{" "}
-                                khi bạn chọn <b>Cầm Đồ </b>tại đây.
+                                khi bạn chọn <b>Cầm đồ </b>tại đây.
                             </p>
                             <p>
                                 Thời hạn cầm cố tài sản linh động, có thể trả trước hạn linh hoạt tùy
@@ -116,32 +99,33 @@ export function List() {
             </div>
 
             <div className="title-css">
-                <h2 className="title" style={{fontWeight: "600"}}>DỊCH VỤ NỔI BẬT</h2>
+                <h2 className="title-thang" style={{fontWeight: "600" ,   color: "#c57101",
+                    textAlign: "center",padding:"0.5rem" , fontSize: "30px" }}>DỊCH VỤ NỔI BẬT</h2>
 
             </div>
-            <p style={{textAlign: "center", justifyContent: "center"}}>
+            <p style={{textAlign: "center",fontFamily :"Times New Roman", justifyContent: "center",fontWeight:"400",fontSize : "18px"}}>
                 {" "}
                 Khám phá các dịch vụ được khách hàng cầm nhiều nhất tại pawn shop{" "}
             </p>
             <div id="exTab" className="container">
                 <ul className="nav nav-pills">
                     <li className="active">
-                        <a href="#1a" data-toggle="tab">
+                        <a style={{fontFamily : "Times New Roman",fontSize:"20px",color:"green"}} href="#1a" data-toggle="tab">
                             Cầm xe
                         </a>
                     </li>
                     <li>
-                        <a href="#2a" data-toggle="tab">
-                            Cầm sổ đỏ
+                        <a style={{fontFamily : "Times New Roman",fontSize:"20px",color:"green"}} href="#2a" data-toggle="tab">
+                            Cầm điện thoại
                         </a>
                     </li>
                     <li>
-                        <a href="#3a" data-toggle="tab">
+                        <a style={{fontFamily : "Times New Roman",fontSize:"20px",color:"green"}} href="#3a" data-toggle="tab">
                             Cầm trang sức
                         </a>
                     </li>
                     <li>
-                        <a href="#4a" data-toggle="tab">
+                        <a  style={{fontFamily : "Times New Roman",fontSize:"20px",color:"green"}} href="#4a" data-toggle="tab">
                             Cầm laptop
                         </a>
                     </li>
@@ -151,7 +135,7 @@ export function List() {
                         <div className="tab-item" style={{display: "flex"}}>
                             <div className="tab-item-content">
                                 <div className="form-intro">
-                                    <h1> Xe máy </h1>
+                                    <h1 style={{fontWeight :"600",fontSize:"20px"}}> Xe máy </h1>
                                     <div className="box-content-info">
                                         <div className="item-option">
                                             <i className="fa-solid fa-check"/>
@@ -172,7 +156,7 @@ export function List() {
                                     </div>
                                 </div>
                                 <div className="wrapper-img-option">
-                                    <img style={{marginTop :"2rem"}} src="./anh/home-image-1.jpg" alt=""/>
+                                    <img style={{marginTop :"2rem",marginBottom:"2rem"}} src="./anh/home-image-1.jpg" alt=""/>
                                 </div>
                             </div>
                         </div>
@@ -181,11 +165,11 @@ export function List() {
                         <div className="tab-item" id="tab-2" style={{display: "flex"}}>
                             <div className="tab-item-content">
                                 <div className="form-intro">
-                                    <h1> SỔ đỏ </h1>
+                                    <h1  style={{fontWeight :"600",fontSize:"20px"}}> Điện thoại </h1>
                                     <div className="box-content-info">
                                         <div className="item-option">
                                             <i className="fa-solid fa-check"/>
-                                            <p> Cầm sổ đỏ uy tin </p>
+                                            <p> Cầm điện thoại uy tín </p>
                                         </div>
                                         <div className="item-option">
                                             <i className="fa-solid fa-check"/>
@@ -203,7 +187,7 @@ export function List() {
                                 </div>
                                 <div className="wrapper-img-option">
                                     <img  style={{marginTop :"2rem",height: "85%"}}
-                                          src="https://vietsinggroup.com/wp-content/uploads/2021/09/cach-doc-thong-tin-so-do.jpg"
+                                          src="https://hc.com.vn/i/ecommerce/media/GS.008502_FEATURE_93970.jpg"
                                         alt=""
                                     />
                                 </div>
@@ -214,7 +198,7 @@ export function List() {
                         <div className="tab-item" style={{display: "flex"}}>
                             <div className="tab-item-content">
                                 <div className="form-intro">
-                                    <h1> Trang sức </h1>
+                                    <h1  style={{fontWeight :"600",fontSize:"20px"}}> Trang sức </h1>
                                     <div className="box-content-info">
                                         <div className="item-option">
                                             <i className="fa-solid fa-check"/>
@@ -247,7 +231,7 @@ export function List() {
                         <div className="tab-item" style={{display: "flex"}}>
                             <div className="tab-item-content">
                                 <div className="form-intro">
-                                    <h1> Laptop</h1>
+                                    <h1  style={{fontWeight :"600",fontSize:"20px"}}> Laptop</h1>
                                     <div className="box-content-info">
                                         <div className="item-option">
                                             <i className="fa-solid fa-check"/>
@@ -284,10 +268,10 @@ export function List() {
                     <div className="section-content relative">
                         <h2
                             className="title-main"
-                            style={{textAlign: "center", marginBottom: "0.5rem"}}>
+                            style={{textAlign: "center",margin: "0",marginTop :"-2rem" ,padding:"1.5rem"}}>
                             Bạn đã đúng khi chọn chúng tôi?
                         </h2>
-                        <p style={{textAlign: "center"}}>
+                        <p  style={{textAlign: "center",marginTop : "1rem",fontWeight:"400",fontFamily:"Times New Roman",fontSize:"18.75px", maxWidth: "100%",padding: "0 10px"}}>
                             Khi lựa chọn cầm cố tài sản tại{" "}
                             <span style={{color: "red"}}>Pawn Shop</span> thì đảm bảo quý khách sẽ
                             nhận được rất nhiều ưu điểm của chúng tôi như nhiệt tình, thủ tục nhanh,
@@ -310,7 +294,7 @@ export function List() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="card ">
+                                <div className="card " >
                                     <div>
                                         <img
                                             src="https://chovayhanoi.com/wp-content/uploads/2020/04/refund.png"
@@ -332,7 +316,7 @@ export function List() {
                                         />
                                     </div>
                                     <div>
-                                        <div className="card-body">
+                                        <div className="card-body" >
                                             <h5 className="uppercase">ĐƠN GIẢN – NHANH CHÓNG</h5>{" "}
                                             <h6>Thủ tục đơn giản, giải ngân chỉ trong 30 phút</h6>
                                         </div>
@@ -359,6 +343,7 @@ export function List() {
 
                 <RegisterPawn/>
 
+                {/*<ListPosts/>*/}
 
                 <div className="mb-3">
                     <iframe

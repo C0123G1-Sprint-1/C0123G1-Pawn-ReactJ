@@ -1,17 +1,23 @@
 import React, {useEffect, useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import * as yup from "yup";
+import jwt from 'jwt-decode';
 import {Modal} from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css"
 import '../../css/liquidation.css';
 import {
     getListCustomerAPI,
     getListProductAPI,
-    getListProductTypeAPI, saveLiquidationAPI, searchContractAPI,
-    searchCustomerAPI
+    getListProductTypeAPI, saveLiquidationAPI,
 } from "../../service/LiquidationService";
 import {useNavigate} from "react-router";
 import * as Swal from "sweetalert2";
+import {Link, NavLink} from "react-router-dom";
+import ReactPaginate from "react-paginate";
+
+
+// const token = localStorage.getItem('token');
+// const decodedToken = jwt(token);
+// console.log(decodedToken.sub)
+// console.log(decodedToken.role)
 
 export function CreateLiquidation() {
     const navigate = useNavigate();
@@ -20,17 +26,33 @@ export function CreateLiquidation() {
     const [contracts, setContracts] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [showModal1, setShowModal1] = useState(false);
-    const [productType, setProductType] = useState([]);
+    const [productTypes, setProductTypes] = useState([]);
     const [listProduct, setListProduct] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
-    const [page, setPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
+    const [customerPage, setCustomerPage] = useState(0);
+    const [contractPage, setContractPage] = useState(0);
+    const [customerTotalPages, setCustomerTotalPages] = useState(0);
+    const [contractTotalPages, setContractTotalPages] = useState(0);
+    const [name, setName] = useState('');
+    const [productName, setProductName] = useState('');
+    const [productType, setProductType] = useState('');
+    const [loans, setLoans] = useState('');
+
+
+    const formatCurrency = (amount) => {
+        return amount.toLocaleString({style: 'currency', currency: 'VND'});
+    };
+
+    const handleDeleteProduct = (productId) => {
+        const updatedList = listProduct.filter((p) => p.id !== productId);
+        setListProduct(updatedList);
+    };
 
     const getListCustomer = async () => {
         try {
-            const response = await getListCustomerAPI(page);
-            setCustomers(response.data.content);
-            setTotalPages(response.data.totalPages);
+            const response = await getListCustomerAPI(customerPage, name);
+            setCustomers(response.data?.content);
+            setCustomerTotalPages(response?.data.totalPages);
         } catch (error) {
             console.error('Error while loading customers:', error);
         }
@@ -38,29 +60,39 @@ export function CreateLiquidation() {
 
     const getListProduct = async () => {
         try {
-            const response = await getListProductAPI(page);
-            setContracts(response.data.content);
-            setTotalPages(response.data.totalPages);
+            const response = await getListProductAPI(contractPage, productName, productType, loans);
+            setContracts(response?.data.content);
+            setContractTotalPages(response?.data.totalPages);
         } catch (error) {
             console.error('Error while loading products:', error);
         }
     };
     const getListProductType = async () => {
         const res = await getListProductTypeAPI();
-        setProductType(res.data);
+        setProductTypes(res.data);
     }
-    const paginate = (page) => {
-        setPage(page)
+    const handlePage1 = async (pages) => {
+        setCustomerPage(+pages.selected);
+        const res = await getListCustomerAPI(customerPage, name);
+        setCustomers(res.data.content)
     }
-    useEffect(() => {
-        getListCustomer();
-        getListProduct()
-        getListProductType();
-    }, [page]);
 
-    const getProduct = (id) => {
+    const handlePage = async (pages) => {
+        setContractPage(+pages.selected);
+        const res = await getListProductAPI(contractPage, productType, productName, loans)
+        setContracts(res.data.content)
+    }
+
+    useEffect(() => {
+        getListProductType();
+        getListCustomer();
+        getListProduct();
+    }, [customerPage, name, contractPage, productType, productName, loans]);
+
+
+    const onSelectContract = (id) => {
         const selectedContract = contracts.find((c) => c.id === id);
-        if (selectedContract) {
+        if (selectedContract && !listProduct.filter(lp => lp.id === selectedContract.id)[0]) {
             setListProduct([...listProduct, selectedContract]);
         }
     };
@@ -77,22 +109,54 @@ export function CreateLiquidation() {
     }, [listProduct]);
 
     const data = {
-        products: listProduct.map((p) => p.productName).join(",")
+        products: listProduct.map((p) => p.id).join(",")
     };
 
     const handleModalClose = () => {
+        setCustomerPage(0);
         setShowModal(false);
+        setName('');
     };
     const handleModalOpen = () => {
         setShowModal(true);
     };
 
     const handleModalClose1 = () => {
+        setContractPage(0);
         setShowModal1(false);
+        setProductType('');
+        setProductName('');
+        setProductName('');
     };
     const handleModalOpen1 = () => {
         setShowModal1(true);
     };
+
+    const loadContracts = async () => {
+        Swal.fire({
+            html: '<div className="loading-screen" style={{position: "fixed",\n' +
+                '  top: "0;",\n' +
+                '  left: "0",\n' +
+                '  width: "100%",\n' +
+                '  height: "100%",\n' +
+                '  background-color: "rgba(0, 0, 0, 0.5)" }}/* Màu nền màn hình đen với độ mờ */></div>', // Sử dụng CSS để tạo màn hình đen.
+            timer: 4000,
+            title: "Vui lòng đợi chúng tôi xử lí trong vòng vài giây",
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: async () => {
+                await Swal.showLoading();
+            },
+            willClose: () => {
+                // Thêm xử lý khi SweetAlert2 đóng (nếu cần thiết).
+            }
+        });
+    };
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     if (!customers) {
         return null
     }
@@ -102,15 +166,17 @@ export function CreateLiquidation() {
     return (
         <>
             <Formik initialValues={{
-                id: '',
+                contractType: 2,
+                contractStatus: 5,
                 customers: '',
-                products: [''],
+                image: contracts.image,
+                products: '',
                 totalPrice: 0,
                 createTime: null
             }}
                 // validationSchema={yup.object({
-                //     customers: yup.number().required("Vui lòng chọn khách hàng."),
-                //     products: yup.array().required("Vui lòng chọn sản phẩm.")
+                //     customers: yup.string().required("Vui lòng chọn khách hàng."),
+                //     products: yup.string().required("Vui lòng chọn sản phẩm.")
                 // })}
                     onSubmit={async (values) => {
                         await saveLiquidationAPI({
@@ -119,24 +185,27 @@ export function CreateLiquidation() {
                             customers: customers.find((c) => c.id === idCustomer),
                             products: data.products
                         });
-                        navigate("/")
+                        navigate("/nav/info-store/transaction-history")
                         const save = () => {
                             Swal.fire({
                                 position: 'center',
                                 icon: 'success',
-                                title: 'Thêm mới tin thành công ',
-                                showConfirmButton: false,
-                                timer: 1500
+                                title: 'Thanh lý thành công ',
+                                showConfirmButton: true,
+                                timer: 2000
                             })
                         }
                         save();
                     }}>
-                <div className="container mb-5">
-                    <div className="row height d-flex justify-content-center align-items-center">
+
+                <div className="container " style={{marginTop: "4.5vh"}}>
+                    <div className="row  d-flex justify-content-center align-items-center" style={{minHeight: "80vh"}}>
                         <div className="col-md-6">
-                            <div className="card px-5 py-4">
+                            <div className="card px-5 py-4" style={{marginBottom: "3vw"}}>
                                 <div style={{textAlign: "center"}}>
-                                    <h1>Thanh lý hàng</h1>
+                                    <h1>
+                                        THANH LÝ
+                                    </h1>
                                 </div>
                                 <Form>
                                     <div className="text-center mt-4 btn-group p-3 m-l-2">
@@ -148,57 +217,87 @@ export function CreateLiquidation() {
                                         </div>
                                     </div>
                                     <ErrorMessage name="customers" component="span" style={{color: "red"}}/>
-                                    <Field type="text" className="form-control" id="name" name="customers" hidden
+                                    <Field type="text" className="form-control" id="name" name="customers"
+                                           hidden
                                            value={customers.find((c) => c.id === idCustomer)?.id}/>
 
                                     <div className="mt-4 inputs"><label>Tên khách hàng</label>
-                                        <Field type="text" className="form-control" id="name" name="name" disabled
+                                        <Field type="text" className="form-control" id="name" name="name"
+                                               disabled
                                                value={customers.find((c) => c.id === idCustomer)?.name}/>
                                     </div>
                                     <div className="mt-4 inputs"><label>CMND</label>
-                                        <Field type="text" className="form-control" id="cmnd" name="citizenCode"
+                                        <Field type="text" className="form-control" id="cmnd"
+                                               name="citizenCode"
                                                disabled
                                                value={customers.find((c) => c.id === idCustomer)?.citizenCode}/>
                                     </div>
                                     <div className="mt-4 inputs">
                                         <label>Đồ thanh lý</label>
+
+                                        <div className="justify-content-between mt-4">
+                                            <div className="input-group">
+                                                <div className="product-list">
+                                                    {listProduct.map((p) => (
+                                                        <div style={{position: 'relative'}}>
+                                                            <div style={{
+                                                                position: 'absolute',
+                                                                top: -5,
+                                                                right: -5,
+                                                                width: '15px',
+                                                                height: '15px',
+                                                                border: '1px solid gray',
+                                                                borderRadius: '50%',
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                justifyContent: 'center',
+                                                                fontSize: '10px',
+                                                                cursor: 'pointer'
+                                                            }} onClick={() => handleDeleteProduct(p.id)}>
+                                                                <span>x</span>
+                                                            </div>
+                                                            <div
+                                                                key={p.id}
+                                                                className="product-item"
+                                                            >{p.productName}</div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div className="text-center m-auto">
                                             <button type="button" className="btn btn-outline-success"
                                                     onClick={handleModalOpen1}>
                                                 <b className="text-center">Chọn đồ thanh lý</b>
                                             </button>
                                         </div>
-                                        <ErrorMessage name="products" component="span" style={{color: "red"}}/>
-                                        <div className="justify-content-between mt-4">
-                                            <div className="input-group">
-                                                <div className="product-list">
-                                                    {listProduct.map((p) => (
-                                                        <Field
-                                                            key={p.id}
-                                                            name="products"
-                                                            type="text"
-                                                            className="product-item"
-                                                            value={p.productName}
-                                                        />
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <ErrorMessage name="products" component="span"
+                                                      style={{color: "red"}}/>
                                     </div>
 
                                     <div className="mt-2 inputs"><label>Tổng tiền</label>
                                         <Field type="text" className="form-control" id="" name="totalPrice"
-                                               value={totalPrice} disabled/>
+                                               value={formatCurrency(totalPrice) + " VNĐ"} disabled/>
                                     </div>
                                     <div className="text-center mt-4 btn-group p-3 m-l-2">
-                                        <div className="text-center" style={{marginLeft: "23%"}}>
-                                            <button type="button" className="btn btn-secondary ">
+                                        <div className="text-center m-auto">
+                                            <NavLink
+                                                style={{marginLeft: "4vw", width: "130px"}}
+                                                type="button"
+                                                className="btn btn-secondary"
+                                                to={"/nav/info-store"}>
                                                 <b className="text-center">Quay lại</b>
-                                            </button>
+                                            </NavLink>
                                         </div>
-                                        <div className="text-center" style={{marginRight: "23%"}}>
-                                            <button type="submit" className="btn btn-success">
-                                                <b className="text-center">Thêm mới</b>
+                                        <div
+                                            className="text-center m-auto">
+
+
+                                            <button type="submit" className="btn btn-success"
+                                                    style={{marginRight: "4vw", width: "130px"}}
+                                                    onClick={loadContracts}
+                                                    disabled={!idCustomer || listProduct.length === 0}>
+                                                <b className="text-center">Thanh lý</b>
                                             </button>
                                         </div>
                                     </div>
@@ -208,6 +307,7 @@ export function CreateLiquidation() {
                     </div>
                 </div>
             </Formik>
+
 
             <Modal
                 className="modal-lg"
@@ -221,24 +321,24 @@ export function CreateLiquidation() {
                     <Modal.Title className="text-center" style={{width: "100%", textAlign: "center"}}>Chọn khách
                         hàng</Modal.Title>
                     <button type="button" className="btn-close" onClick={handleModalClose} aria-label="Close"></button>
-
                 </Modal.Header>
+
                 <Modal.Body>
                     <Formik initialValues={{
                         name: "",
                     }} onSubmit={async (values) => {
                         const searchCustomer = async () => {
-                            const res = await searchCustomerAPI(0, values.name);
-                            setCustomers(res.data.content);
+                            await setName(values.name)
+                            const res = await getListCustomerAPI(customerPage, values.name);
+                            await setCustomerPage(0);
+                            await setCustomers(res.data.content);
                         }
                         searchCustomer();
-
-                    }
-                    }>
-                        <div className="d-flex justify-content-between">
-                            <button type="submit" className="btn btn-outline-success ">
-                                <b className="textcenter">Thêm khách hàng</b>
-                            </button>
+                    }}>
+                        <div className="d-flex justify-content-between" style={{alignItems:"center"}}>
+                            <Link to="/nav/manager-customer/create" type="submit" className="btn btn-outline-success " style={{alignItems: "center",display: "flex",height:"95%"}}>
+                                <b className="textcenter" >Thêm khách hàng</b>
+                            </Link>
                             <Form className="d-flex m-1">
 
                                 <Field style={{width: "18vw", borderColor: "black"}}
@@ -247,7 +347,7 @@ export function CreateLiquidation() {
                                        placeholder="Tìm kiếm"
                                        aria-label="Search" name="name"/>
 
-                                <button className="btn btn-outline-primary" type="submit">
+                                <button className="btn btn-outline-success" type="submit">
                                     <i className="bi bi-search"></i>
                                 </button>
                             </Form>
@@ -257,71 +357,66 @@ export function CreateLiquidation() {
 
                     <table className=" table table-striped">
                         <thead>
-                        <tr>
-                            <th className="text-center">Tên khách hàng</th>
-                            <th className="text-center">CMND</th>
-                            <th className="text-center">Số lượng HĐ</th>
+                        <tr style={{textAlign: "start"}}>
+                            <th >Tên khách hàng</th>
+                            <th >CMND</th>
+                            <th >Số lượng HĐ</th>
+                            <th >Chức năng</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {
-                            customers.map((c) => {
-                                return (
-                                    <tr key={c.id}>
-                                        <td className="text-center">{c.name}</td>
-                                        <td className="text-center">{c.citizenCode}</td>
-                                        <td className="text-center">{c.quantityContract}</td>
-                                        <td className="text-center">
-                                            <button className="btn btn-success text-center" onClick={async () => {
-                                                await setIdCustomer(c.id)
-                                                handleModalClose(true)
-                                            }}>
-                                                Chọn
-                                            </button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
+                        {customers.length === 0 ?
+                            <tr>
+                                <td colSpan="5" className="text-center">
+                                    <h4 style={{color: "red"}}>Dữ liêu không tồn tại</h4>
+                                </td>
+                            </tr>
+                            :
+                            <tbody>
+                            {
+                                customers.map((c) => {
+                                    return (
+                                        <tr key={c.id}>
+                                            <td >{c.name}</td>
+                                            <td >{c.citizenCode}</td>
+                                            <td >{c.quantityContract}</td>
+                                            <td >
+                                                <button className="btn btn-success text-center" onClick={async () => {
+                                                    await setIdCustomer(c.id)
+                                                    handleModalClose(true)
+                                                }}>
+                                                    Chọn
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            </tbody>
                         }
-                        </tbody>
                     </table>
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <div className="d-flex col-12 justify-content-end" style={{marginLeft: "-5%"}}>
-                        <nav aria-label="...">
-                            <ul className="pagination">
-                                <li hidden={page === 0} className="page-item ">
-                                    <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginate(page - 1)}>
-                                        Trước
-                                    </button>
-                                </li>
-                                {
-                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
-                                        <li className="page-item">
-                                            <button className="page-link " key={page}
-                                                    onClick={() => paginate(page)}>
-                                                {page + 1}
-                                            </button>
-                                        </li>
-                                    ))
-                                }
-                                <li disabled={page + 1 === totalPages}
-                                    className="page-item">
-                                    <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginate(page + 1)}>
-                                        Tiếp
-                                    </button>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                    {customers.length === 0 ? '' :
+                        <div className="d-grid">
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Sau"
+                                onPageChange={handlePage1}
+                                pageCount={customerTotalPages}
+                                previousLabel="Trước"
+                                containerClassName="pagination"
+                                pageLinkClassName="page-num"
+                                nextLinkClassName="page-num"
+                                previousLinkClassName="page-num"
+                                activeClassName="active"
+                                disabledClassName="d-none"
+                            />
+                        </div>
+                    }
                 </Modal.Footer>
             </Modal>
 
-
-            (
             <Modal
                 className="modal-lg"
                 show={showModal1}
@@ -341,11 +436,15 @@ export function CreateLiquidation() {
                     <Formik initialValues={{
                         productName: "",
                         productType: "",
-                        loans: ""
+                        loans: "",
                     }} onSubmit={async (values) => {
                         const searchProduct = async () => {
-                            const res = await searchContractAPI(0, values.productName, values.productType, values.loans);
-                            setContracts(res.data.content);
+                            await setProductName(values.productName)
+                            await setProductType(values.productType)
+                            await setLoans(values.loans)
+                            const res = await getListProductAPI(contractPage, values.productName, values.productType, values.loans);
+                            await setContractPage(0)
+                            await setContracts(res.data.content);
                         }
                         searchProduct();
                     }}>
@@ -368,7 +467,7 @@ export function CreateLiquidation() {
                                                        name="productType" className="form-control">
                                                     <option value="">--Chọn--</option>
                                                     {
-                                                        productType.map((pt) => (
+                                                        productTypes.map((pt) => (
                                                             <option key={pt.id} value={pt.id}>
                                                                 {pt.name}
                                                             </option>
@@ -394,9 +493,9 @@ export function CreateLiquidation() {
                                                 </Field>
                                             </div>
                                         </div>
-                                        <div className="col-lg-2" style={{marginTop: "1.5vw"}}>
+                                        <div className="col-lg-2" style={{marginTop: "1.6vw"}}>
                                             <div className="form-group">
-                                                <button type="submit" className="btn btn-outline-primary ">
+                                                <button type="submit" className="btn btn-outline-success ">
                                                     <i className="bi bi-search"></i></button>
                                             </div>
                                         </div>
@@ -409,76 +508,67 @@ export function CreateLiquidation() {
 
                     <table className="table table-striped">
                         <thead>
-                        <tr>
-                            <th className="text-center">Tên đồ</th>
-                            <th className="text-center">Loại đồ</th>
-                            <th className="text-center">Số lượng</th>
-                            <th className="text-center">Giá</th>
+                        <tr style={{textAlign: "start"}}>
+                            <th >Tên đồ</th>
+                            <th >Loại đồ</th>
+                            <th >Số lượng</th>
+                            <th >Giá (VNĐ)</th>
+                            <th >Chức năng</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {
-                            contracts.map((ct) => {
-                                return (
-                                    <tr key={ct.id}>
-                                        <td className="text-center">{ct.productName}</td>
-                                        <td className="text-center">{ct.productType}</td>
-                                        <td className="text-center">1</td>
-                                        <td className="text-center">{ct.loans}</td>
-                                        <td className="text-center">
-                                            <button type="button" onClick={() => {
-                                                getProduct(ct.id);
-                                                handleModalClose1(true);
-                                            }}
-                                                    className="btn btn-success text-center">Chọn
-                                            </button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
+                        {contracts.length === 0 ? <tr>
+                                <td colSpan="5" className="text-center">
+                                    <h4 style={{color: "red"}}>Dữ liêu không tồn tại</h4>
+                                </td>
+                            </tr>
+                            :
+                            <tbody>
+                            {
+                                contracts.map((ct) => {
+                                    return (
+                                        <tr key={ct.id}>
+                                            <td >{ct.productName}</td>
+                                            <td >{ct.productType}</td>
+                                            <td >1</td>
+                                            <td >{(+ct.loans).toLocaleString()}</td>
+                                            <td >
+                                                <button type="button" onClick={() => {
+                                                    onSelectContract(ct.id);
+                                                    handleModalClose1(true);
+                                                }}
+                                                        className="btn btn-success text-center">Chọn
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            </tbody>
                         }
-                        </tbody>
                     </table>
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <div className="d-flex col-12 justify-content-end" style={{marginLeft: '-5%'}}>
-                        <nav aria-label="...">
-                            <ul className="pagination">
-                                <li hidden={page === 0} className="page-item ">
-                                    <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginate(page - 1)}>
-                                        Trước
-                                    </button>
-                                </li>
-                                {
-                                    Array.from({length: totalPages}, (a, index) => index).map((page) => (
-                                        <li className="page-item">
-                                            <button className="page-link " key={page}
-                                                    onClick={() => paginate(page)}>
-                                                {page + 1}
-                                            </button>
-                                        </li>
-                                    ))
-                                }
-                                <li disabled={page + 1 === totalPages}
-                                    className="page-item">
-                                    <button className="page-link" tabIndex={-1}
-                                            onClick={() => paginate(page + 1)}>
-                                        Tiếp
-                                    </button>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                    {contracts.length === 0 ? '' :
+                        <div className="d-grid">
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Sau"
+                                onPageChange={handlePage}
+                                pageCount={contractTotalPages}
+                                previousLabel="Trước"
+                                containerClassName="pagination"
+                                pageLinkClassName="page-num"
+                                nextLinkClassName="page-num"
+                                previousLinkClassName="page-num"
+                                activeClassName="active"
+                                disabledClassName="d-none"
+                            />
+                        </div>
+                    }
 
                 </Modal.Footer>
             </Modal>
-
-
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-                    crossorigin="anonymous"/>
         </>
     )
 }
